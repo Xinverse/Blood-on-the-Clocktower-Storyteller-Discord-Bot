@@ -1,3 +1,5 @@
+"""Contains the Saint Character class"""
+
 class Saint:
     """Saint:
     If you die by execution, your team loses.

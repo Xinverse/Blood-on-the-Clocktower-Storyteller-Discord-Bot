@@ -1,3 +1,5 @@
+"""Contains the Washerwoman Character class"""
+
 class Washerwoman:
     """Washerwoman:
     You start knowing 1 of 2 players is a particular Townsfolk.

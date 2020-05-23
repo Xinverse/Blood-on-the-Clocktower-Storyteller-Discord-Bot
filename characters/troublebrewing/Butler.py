@@ -1,3 +1,5 @@
+"""Contains the Butler Character class"""
+
 class Butler:
     """Butler:
     Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting 

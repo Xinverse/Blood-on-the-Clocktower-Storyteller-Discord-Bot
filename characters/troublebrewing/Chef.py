@@ -1,3 +1,5 @@
+"""Contains the Chef Character class"""
+
 class Chef:
     """Chef:
     You start knowing how many pairs of evil players there are.

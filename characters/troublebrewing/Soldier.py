@@ -1,3 +1,5 @@
+"""Contains the Soldier Character class"""
+
 class Soldier:
     """Soldier:
     You are safe from the Demon.

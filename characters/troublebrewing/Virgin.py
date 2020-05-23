@@ -1,3 +1,5 @@
+"""Contains the Virgin Character class"""
+
 class Virgin:
     """Virgin:
     The 1st time you are nominated, if the nominator is a Townsfolk, 

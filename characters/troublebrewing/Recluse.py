@@ -1,3 +1,5 @@
+"""Contains the Recluse Character class"""
+
 class Recluse:
     """Recluse:
     You might register as evil & as a Minion or Demon, even if dead.

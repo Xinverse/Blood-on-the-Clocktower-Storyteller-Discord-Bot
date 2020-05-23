@@ -1,3 +1,5 @@
+"""Contains the Scarlet Woman Character class"""
+
 class ScarletWoman:
     """Scarlet Woman:
     If there are 5 or more players alive & the Demon dies, you become the Demon.

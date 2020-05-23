@@ -1,3 +1,5 @@
+"""Contains the Librarian Character class"""
+
 class Librarian:
     """Librarian:
     You start knowing that 1 of 2 players is a particular Outsider.

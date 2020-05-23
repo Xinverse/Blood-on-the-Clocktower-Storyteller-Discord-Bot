@@ -1,3 +1,5 @@
+"""Contains the Poisoner Character class"""
+
 class Poisoner:
     """Poisoner:
     Each night, choose a player, their ability malfunctions tonight and tomorrow day.

@@ -1,3 +1,5 @@
+"""Contains the Ravenkeeper Character class"""
+
 class Ravenkeeper:
     """Ravenkeeper:
     If you die at night, you are woken to choose a player: you learn their character.

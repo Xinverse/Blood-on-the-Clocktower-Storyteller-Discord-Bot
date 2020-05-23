@@ -1,3 +1,5 @@
+"""Contains the Empath Character class"""
+
 class Empath:
     """Empath:
     Each night, you learn how many of your 2 alive neighbors are evil.

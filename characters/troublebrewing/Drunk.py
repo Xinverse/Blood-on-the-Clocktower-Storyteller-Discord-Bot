@@ -1,3 +1,5 @@
+"""Contains the Drunk Character class"""
+
 class Drunk:
     """Drunk:
     You think you are a Townsfolk, but your ability malfunctions.

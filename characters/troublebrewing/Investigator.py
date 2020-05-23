@@ -1,3 +1,5 @@
+"""Contains the Investigator Character class"""
+
 class Investigator:
     """Investigator:
     You start knowing 1 of 2 players is a particular Minion.

@@ -1,3 +1,5 @@
+"""Contains the Baron Character class"""
+
 class Baron:
     """Baron:
     There are extra Outsiders in play [+2 Outsiders]

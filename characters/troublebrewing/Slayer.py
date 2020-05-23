@@ -1,3 +1,5 @@
+"""Contains the Slayer Character class"""
+
 class Slayer:
     """Slayer:
     Once per game, during the day, publicly choose a player: if they are the Demon, they die.

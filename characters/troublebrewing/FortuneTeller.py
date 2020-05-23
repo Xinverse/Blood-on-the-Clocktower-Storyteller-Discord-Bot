@@ -1,3 +1,5 @@
+"""Contains the Fortune Teller Character class"""
+
 class FortuneTeller:
     """Fortune Teller:
     Each night, choose 2 players: you learn if either is a Demon. There is 1 good player 

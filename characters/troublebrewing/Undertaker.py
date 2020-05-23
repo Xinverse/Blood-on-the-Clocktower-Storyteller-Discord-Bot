@@ -1,3 +1,5 @@
+"""Contains the Undertaker Character class"""
+
 class Undertaker:
     """Undertaker:
     Each night, you learn which character died by execution today.

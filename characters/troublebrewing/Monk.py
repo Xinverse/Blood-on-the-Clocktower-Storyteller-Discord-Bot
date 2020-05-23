@@ -1,3 +1,5 @@
+"""Contains the Monk Character class"""
+
 class Monk:
     """Monk:
     Each night*, choose a player (not yourself): they are safe from the Demon tonight.

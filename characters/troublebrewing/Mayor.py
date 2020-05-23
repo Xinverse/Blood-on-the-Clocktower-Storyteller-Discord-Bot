@@ -1,4 +1,6 @@
-class CityMayor:
+"""Contains the Mayor Character class"""
+
+class Mayor:
     """Mayor:
     If only 3 players live and no execution occurs, your team wins. If you die at night, another
     player might die instead.
