@@ -133,3 +133,7 @@ dmypy.json
 
 # VS code
 botc_bot.code-workspace
+
+# local
+config.py
+settings.py
