@@ -6,6 +6,7 @@ class Investigator:
     """
 
     def __init__(self):
+
         self._desc_string = "The Investigator learns that a particular Minion character is in play, " \
                             "but not exactly which player it is.\n" \
                             "- During the first night, the Investigator is woken and shown two players, " \
@@ -21,6 +22,7 @@ class Investigator:
         self._instr_string = "You start knowing 1 of 2 players is a particular Minion."
         self._lore_string = "It is a fine night for a stroll, wouldn't you say, Mister Morozov? " \
                             "Or should I say... BARON Morozov?"
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/e/ec/Investigator_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Investigator"
 

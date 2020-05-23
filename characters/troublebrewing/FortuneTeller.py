@@ -7,6 +7,7 @@ class FortuneTeller:
     """
     
     def __init__(self):
+
         self._desc_string = "The Fortune Teller detects who the Demon is, " \
                             "but sometimes thinks good players are Demons.\n" \
                             "- Each night, the Fortune Teller chooses two players and learns if at " \
@@ -33,6 +34,7 @@ class FortuneTeller:
                              "There is 1 good player that registers falsely to you."
         self._lore_string = "I sense great evil in your soul! But... that could just be " \
                             "your perfume. I am allergic to elderberry."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/3/3a/Fortune_Teller_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Fortune_Teller"
 

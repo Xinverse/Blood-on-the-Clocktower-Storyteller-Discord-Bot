@@ -7,6 +7,7 @@ class Virgin:
     """
 
     def __init__(self):
+
         self._desc_string = "The Virgin is safe from execution...perhaps. In the process, " \
                             "they confirm if their nominator is a Townsfolk.\n" \
                             "- If a Townsfolk nominates the Virgin, then that Townsfolk is " \
@@ -32,5 +33,6 @@ class Virgin:
         self._lore_string = "I am pure. Let those who are without sin cast themself down " \
                             "and suffer in my stead. My reputation shall not be stained with " \
                             "your venomous accusations."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/5/5e/Virgin_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Virgin"

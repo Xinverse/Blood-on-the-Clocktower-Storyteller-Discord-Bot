@@ -6,6 +6,7 @@ class Soldier:
     """
 
     def __init__(self):
+
         self._desc_string = "The Soldier can not be killed by the Demon.\n" \
                             "- The Soldier cannot die due to the Demon’s ability. So, if the Imp attacks " \
                             "the Soldier at night, nothing happens. Nobody dies. The Imp does not get to " \
@@ -25,5 +26,6 @@ class Soldier:
         self._instr_string = "You are safe from the Demon."
         self._lore_string = "As David said to Goliath, as Theseus said to the Minotaur, as Arjuna " \
                             "said to Bhagadatta... No."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/9/9e/Soldier_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Soldier"

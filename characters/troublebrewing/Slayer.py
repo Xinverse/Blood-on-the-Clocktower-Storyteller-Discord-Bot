@@ -6,6 +6,7 @@ class Slayer:
     """
 
     def __init__(self):
+
         self._desc_string = "The Slayer can kill the Demon by guessing who it is.\n" \
                             "- The Slayer can choose to use their ability at any time during " \
                             "the day, and must declare to everyone when they’re using it. If " \
@@ -27,6 +28,7 @@ class Slayer:
         self._instr_string = "Once per game, during the day, publicly choose a player: " \
                              "if they are the Demon, they die."
         self._lore_string = "Die."
+        
         self._art_link = "http://bloodontheclocktower.com/wiki/images/2/2f/Slayer_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Slayer"
 

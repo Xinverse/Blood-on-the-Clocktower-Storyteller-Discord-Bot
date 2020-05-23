@@ -6,6 +6,7 @@ class Monk:
     """
     
     def __init__(self):
+
         self._desc_string = "The Monk protects other people from the Demon.\n" \
                             "- Each night except the first, the Monk may choose to protect any " \
                             "player except themself.\n" \
@@ -28,6 +29,7 @@ class Monk:
         self._lore_string = "Tis an ill and deathly wind that blows tonight. Come, my " \
                             "brother, take shelter in the abbey while the storm rages. By my " \
                             "word, or by my life, you will be safe."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/1/1b/Monk_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Monk"
 

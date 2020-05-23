@@ -6,6 +6,7 @@ class Washerwoman:
     """
 
     def __init__(self):
+
         self._desc_string = "- The Washerwoman learns that a particular Townsfolk character is in play, " \
                             "but not exactly who is playing it.\n" \
                             "- During the first night, the Washerwoman is woken, shown two players, " \
@@ -20,5 +21,6 @@ class Washerwoman:
                              "is registering as a Townsfolk— in this case, the Ravenkeeper.)"
         self._instr_string = "You start knowing 1 of 2 players is a particular Townsfolk."
         self._lore_string = "Bloodstains on a dinner jacket? No. This is cooking sherry. How careless."
+        
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4d/Washerwoman_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Washerwoman"

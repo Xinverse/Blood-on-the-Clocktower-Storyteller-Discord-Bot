@@ -7,6 +7,7 @@ class Librarian:
     """
     
     def __init__(self):
+
         self._desc_string = "The Librarian learns that a particular Outsider character is in play, " \
                             "but not who is playing it.\n" \
                             "- During the first night, the Librarian learns that one of two players " \
@@ -27,5 +28,6 @@ class Librarian:
                              "(Or that zero are in play)"
         self._lore_string = "Certainly, madam, you may borrow the Codex Malificarium from the " \
                             "library vaults."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/8/86/Librarian_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Librarian"

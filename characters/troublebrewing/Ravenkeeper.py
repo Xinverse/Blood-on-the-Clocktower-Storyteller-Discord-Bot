@@ -6,6 +6,7 @@ class Ravenkeeper:
     """
     
     def __init__(self):
+
         self._desc_string = "The Ravenkeeper learns any player's character, but only if they die " \
                             "at night.\n" \
                             "- The Ravenkeeper is woken on the night that they die, and chooses a " \
@@ -24,5 +25,6 @@ class Ravenkeeper:
         self._lore_string = "My birds will avenge me! Fly! Fly, my sweet and dutiful pets! Take " \
                             "your message to those in dark corners! To the manor and to the river! " \
                             "Let them read of the nature of my death."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/45/Ravenkeeper_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Ravenkeeper"

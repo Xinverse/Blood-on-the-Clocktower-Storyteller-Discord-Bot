@@ -6,6 +6,7 @@ class Empath:
     """
     
     def __init__(self):
+
         self._desc_string = "The Empath keeps learning if their living neighbors are good or evil.\n" \
                             "- The Empath only learns how many of their neighbors are evil, not " \
                             "which one is evil.\n" \
@@ -26,6 +27,7 @@ class Empath:
                              "'2.'\n"
         self._instr_string = "Each night, you learn how many of your 2 alive neighbors are evil."
         self._lore_string = "My skin prickles. Something is not right here. I can feel it."
+        
         self._art_link = "http://bloodontheclocktower.com/wiki/images/6/61/Empath_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Empath"
 

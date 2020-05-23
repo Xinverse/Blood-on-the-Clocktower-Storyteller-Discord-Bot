@@ -6,6 +6,7 @@ class Chef:
     """
     
     def __init__(self):
+
         self._desc_string = "The Chef knows if evil players are sitting next to each other.\n" \
                             "- On the first night, the Chef learns exactly how many pairs there " \
                             "are in total. A pair is two players, but one player may be a part of " \
@@ -24,6 +25,7 @@ class Chef:
         self._instr_string = "You start knowing how many pairs of evil players there are."
         self._lore_string = "This evening's reservations seem odd. Never before has Mrs. " \
                             "Mayweather kept company with that scamp from Hudson Lane."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4c/Chef_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Chef"
 

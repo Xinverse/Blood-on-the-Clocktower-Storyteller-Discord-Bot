@@ -6,6 +6,7 @@ class Undertaker:
     """
 
     def __init__(self):
+
         self._desc_string = "The Undertaker learns which character was executed today.\n" \
                             "- The player must have died from execution for the Undertaker to " \
                             "learn who they are. Deaths during the day for other reasons, such " \
@@ -34,6 +35,7 @@ class Undertaker:
         self._lore_string = "Hmmm....what have we here? The left boot is worn down to the " \
                             "heel, with flint shavings under the tongue. This is the garb of " \
                             "a military man."
+                            
         self._art_link = "http://bloodontheclocktower.com/wiki/images/f/fe/Undertaker_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Undertaker"
 
