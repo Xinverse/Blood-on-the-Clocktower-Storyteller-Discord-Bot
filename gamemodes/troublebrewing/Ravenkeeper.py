@@ -1,14 +1,17 @@
 """Contains the Ravenkeeper Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Ravenkeeper(Townsfolk):
+class Ravenkeeper(Townsfolk, TroubleBrewing):
     """Ravenkeeper:
     If you die at night, you are woken to choose a player: you learn their character.
     """
     
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Ravenkeeper learns any player's character, but only if they die " \
@@ -32,3 +35,6 @@ class Ravenkeeper(Townsfolk):
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/45/Ravenkeeper_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Ravenkeeper"
+        
+        self._role_name = TBRole.ravenkeeper
+        

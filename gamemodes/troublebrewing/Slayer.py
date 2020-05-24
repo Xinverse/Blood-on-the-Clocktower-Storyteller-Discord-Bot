@@ -1,14 +1,17 @@
 """Contains the Slayer Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Slayer(Townsfolk):
+class Slayer(Townsfolk, TroubleBrewing):
     """Slayer:
     Once per game, during the day, publicly choose a player: if they are the Demon, they die.
     """
 
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Slayer can kill the Demon by guessing who it is.\n" \
@@ -35,4 +38,6 @@ class Slayer(Townsfolk):
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/2/2f/Slayer_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Slayer"
+
+        self._role_name = TBRole.slayer
 

@@ -1,14 +1,17 @@
 """Contains the Washerwoman Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Washerwoman(Townsfolk):
+class Washerwoman(Townsfolk, TroubleBrewing):
     """Washerwoman:
     You start knowing 1 of 2 players is a particular Townsfolk.
     """
 
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "- The Washerwoman learns that a particular Townsfolk character is in play, " \
@@ -28,3 +31,5 @@ class Washerwoman(Townsfolk):
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4d/Washerwoman_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Washerwoman"
+
+        self._role_name = TBRole.washerwoman

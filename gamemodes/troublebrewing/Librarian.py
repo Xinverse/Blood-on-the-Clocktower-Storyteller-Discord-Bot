@@ -1,8 +1,10 @@
 """Contains the Librarian Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Librarian(Townsfolk):
+class Librarian(Townsfolk, TroubleBrewing):
     """Librarian:
     You start knowing that 1 of 2 players is a particular Outsider.
     (Or that zero are in play)
@@ -10,6 +12,7 @@ class Librarian(Townsfolk):
     
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Librarian learns that a particular Outsider character is in play, " \
@@ -35,3 +38,5 @@ class Librarian(Townsfolk):
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/8/86/Librarian_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Librarian"
+
+        self._role_name = TBRole.librarian

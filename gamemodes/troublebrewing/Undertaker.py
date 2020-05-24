@@ -1,14 +1,17 @@
 """Contains the Undertaker Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Undertaker(Townsfolk):
+class Undertaker(Townsfolk, TroubleBrewing):
     """Undertaker:
     Each night, you learn which character died by execution today.
     """
 
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Undertaker learns which character was executed today.\n" \
@@ -42,4 +45,6 @@ class Undertaker(Townsfolk):
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/f/fe/Undertaker_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Undertaker"
+
+        self._role_name = TBRole.undertaker
 

@@ -1,14 +1,17 @@
 """Contains the Monk Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Monk(Townsfolk):
+class Monk(Townsfolk, TroubleBrewing):
     """Monk:
     Each night*, choose a player (not yourself): they are safe from the Demon tonight.
     """
     
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Monk protects other people from the Demon.\n" \
@@ -37,3 +40,4 @@ class Monk(Townsfolk):
         self._art_link = "http://bloodontheclocktower.com/wiki/images/1/1b/Monk_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Monk"
 
+        self._role_name = TBRole.monk

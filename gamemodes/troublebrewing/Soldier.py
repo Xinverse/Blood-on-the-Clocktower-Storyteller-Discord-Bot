@@ -1,14 +1,17 @@
 """Contains the Soldier Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Soldier(Townsfolk):
+class Soldier(Townsfolk, TroubleBrewing):
     """Soldier:
     You are safe from the Demon.
     """
 
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Soldier can not be killed by the Demon.\n" \
@@ -33,3 +36,5 @@ class Soldier(Townsfolk):
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/9/9e/Soldier_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Soldier"
+
+        self._role_name = TBRole.soldier

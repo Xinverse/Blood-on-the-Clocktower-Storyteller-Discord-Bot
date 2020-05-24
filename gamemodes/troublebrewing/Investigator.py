@@ -1,14 +1,17 @@
 """Contains the Investigator Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Investigator(Townsfolk):
+class Investigator(Townsfolk, TroubleBrewing):
     """Investigator:
     You start knowing 1 of 2 players is a particular Minion.
     """
 
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Investigator learns that a particular Minion character is in play, " \
@@ -30,3 +33,4 @@ class Investigator(Townsfolk):
         self._art_link = "http://bloodontheclocktower.com/wiki/images/e/ec/Investigator_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Investigator"
 
+        self._role_name = TBRole.investigator

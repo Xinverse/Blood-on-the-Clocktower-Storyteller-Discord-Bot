@@ -1,8 +1,10 @@
 """Contains the Fortune Teller Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class FortuneTeller(Townsfolk):
+class FortuneTeller(Townsfolk, TroubleBrewing):
     """Fortune Teller:
     Each night, choose 2 players: you learn if either is a Demon. There is 1 good player 
     that registers falsely to you.
@@ -10,6 +12,7 @@ class FortuneTeller(Townsfolk):
     
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Fortune Teller detects who the Demon is, " \
@@ -42,3 +45,4 @@ class FortuneTeller(Townsfolk):
         self._art_link = "http://bloodontheclocktower.com/wiki/images/3/3a/Fortune_Teller_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Fortune_Teller"
 
+        self._role_name = TBRole.fortuneteller

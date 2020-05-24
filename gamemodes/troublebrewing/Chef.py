@@ -1,14 +1,17 @@
 """Contains the Chef Character class"""
 
 from botc import Townsfolk
+from ._utils import TroubleBrewing
+from ._utils import TBRole
 
-class Chef(Townsfolk):
+class Chef(Townsfolk, TroubleBrewing):
     """Chef:
     You start knowing how many pairs of evil players there are.
     """
     
     def __init__(self):
 
+        TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
         self._desc_string = "The Chef knows if evil players are sitting next to each other.\n" \
@@ -32,4 +35,6 @@ class Chef(Townsfolk):
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4c/Chef_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Chef"
+
+        self._role_name = TBRole.chef
 
