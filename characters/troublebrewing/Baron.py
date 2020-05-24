@@ -1,11 +1,15 @@
 """Contains the Baron Character class"""
 
-class Baron:
+from botc import Minion
+
+class Baron(Minion):
     """Baron:
     There are extra Outsiders in play [+2 Outsiders]
     """
 
     def __init__(self):
+
+        Minion.__init__(self)
 
         self._desc_string = "The Baron changes the number of Outsiders present in the game."
         self._examp_string = ""

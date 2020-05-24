@@ -1,11 +1,15 @@
 """Contains the Empath Character class"""
 
-class Empath:
+from botc import Townsfolk
+
+class Empath(Townsfolk):
     """Empath:
     Each night, you learn how many of your 2 alive neighbors are evil.
     """
     
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Empath keeps learning if their living neighbors are good or evil.\n" \
                             "- The Empath only learns how many of their neighbors are evil, not " \

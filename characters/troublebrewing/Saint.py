@@ -1,11 +1,15 @@
 """Contains the Saint Character class"""
 
-class Saint:
+from botc import Outsider
+
+class Saint(Outsider):
     """Saint:
     If you die by execution, your team loses.
     """
 
     def __init__(self):
+
+        Outsider.__init__(self)
 
         self._desc_string = "The Saint ends the game if they are executed."
         self._examp_string = ""

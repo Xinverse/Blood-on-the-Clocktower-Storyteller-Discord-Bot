@@ -1,11 +1,15 @@
 """Contains the Soldier Character class"""
 
-class Soldier:
+from botc import Townsfolk
+
+class Soldier(Townsfolk):
     """Soldier:
     You are safe from the Demon.
     """
 
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Soldier can not be killed by the Demon.\n" \
                             "- The Soldier cannot die due to the Demon’s ability. So, if the Imp attacks " \

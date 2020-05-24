@@ -3,7 +3,7 @@
 import enum
 
 class Team(enum.Enum):
-    """BoTC alliance/team enum object: Good, Evil"""
+    """BoTC alliance/team enum class: Good, Evil"""
 
     good = "Good"
     evil = "Evil"

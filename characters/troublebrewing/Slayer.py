@@ -1,11 +1,15 @@
 """Contains the Slayer Character class"""
 
-class Slayer:
+from botc import Townsfolk
+
+class Slayer(Townsfolk):
     """Slayer:
     Once per game, during the day, publicly choose a player: if they are the Demon, they die.
     """
 
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Slayer can kill the Demon by guessing who it is.\n" \
                             "- The Slayer can choose to use their ability at any time during " \

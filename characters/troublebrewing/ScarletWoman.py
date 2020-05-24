@@ -1,11 +1,15 @@
 """Contains the Scarlet Woman Character class"""
 
-class ScarletWoman:
+from botc import Minion
+
+class ScarletWoman(Minion):
     """Scarlet Woman:
     If there are 5 or more players alive & the Demon dies, you become the Demon.
     """
 
     def __init__(self):
+
+        Minion.__init__(self)
 
         self._desc_string = "The Scarlet Woman becomes the Demon when the Demon dies."
         self._examp_string = ""

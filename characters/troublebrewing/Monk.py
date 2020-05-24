@@ -1,11 +1,15 @@
 """Contains the Monk Character class"""
 
-class Monk:
+from botc import Townsfolk
+
+class Monk(Townsfolk):
     """Monk:
     Each night*, choose a player (not yourself): they are safe from the Demon tonight.
     """
     
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Monk protects other people from the Demon.\n" \
                             "- Each night except the first, the Monk may choose to protect any " \

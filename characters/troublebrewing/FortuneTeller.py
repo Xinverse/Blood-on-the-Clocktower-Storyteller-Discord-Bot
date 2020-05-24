@@ -1,12 +1,16 @@
 """Contains the Fortune Teller Character class"""
 
-class FortuneTeller:
+from botc import Townsfolk
+
+class FortuneTeller(Townsfolk):
     """Fortune Teller:
     Each night, choose 2 players: you learn if either is a Demon. There is 1 good player 
     that registers falsely to you.
     """
     
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Fortune Teller detects who the Demon is, " \
                             "but sometimes thinks good players are Demons.\n" \

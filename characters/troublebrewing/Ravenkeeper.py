@@ -1,11 +1,15 @@
 """Contains the Ravenkeeper Character class"""
 
-class Ravenkeeper:
+from botc import Townsfolk
+
+class Ravenkeeper(Townsfolk):
     """Ravenkeeper:
     If you die at night, you are woken to choose a player: you learn their character.
     """
     
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Ravenkeeper learns any player's character, but only if they die " \
                             "at night.\n" \

@@ -1,11 +1,15 @@
 """Contains the Washerwoman Character class"""
 
-class Washerwoman:
+from botc import Townsfolk
+
+class Washerwoman(Townsfolk):
     """Washerwoman:
     You start knowing 1 of 2 players is a particular Townsfolk.
     """
 
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "- The Washerwoman learns that a particular Townsfolk character is in play, " \
                             "but not exactly who is playing it.\n" \

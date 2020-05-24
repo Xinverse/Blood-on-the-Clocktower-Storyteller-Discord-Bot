@@ -1,12 +1,16 @@
 """Contains the Virgin Character class"""
 
-class Virgin:
+from botc import Townsfolk
+
+class Virgin(Townsfolk):
     """Virgin:
     The 1st time you are nominated, if the nominator is a Townsfolk, 
     they are executed immediately.
     """
 
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Virgin is safe from execution...perhaps. In the process, " \
                             "they confirm if their nominator is a Townsfolk.\n" \

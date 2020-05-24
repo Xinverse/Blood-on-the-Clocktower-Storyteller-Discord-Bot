@@ -1,11 +1,15 @@
 """Contains the Chef Character class"""
 
-class Chef:
+from botc import Townsfolk
+
+class Chef(Townsfolk):
     """Chef:
     You start knowing how many pairs of evil players there are.
     """
     
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Chef knows if evil players are sitting next to each other.\n" \
                             "- On the first night, the Chef learns exactly how many pairs there " \

@@ -1,11 +1,15 @@
 """Contains the Imp Character class"""
 
-class Imp:
+from botc import Demon
+
+class Imp(Demon):
     """Imp:
     Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.
     """
 
     def __init__(self):
+
+        Demon.__init__(self)
 
         self._desc_string = "The Imp kills a player each night, and can make copies of itself... " \
                             "for a terrible price."

@@ -1,11 +1,15 @@
 """Contains the Undertaker Character class"""
 
-class Undertaker:
+from botc import Townsfolk
+
+class Undertaker(Townsfolk):
     """Undertaker:
     Each night, you learn which character died by execution today.
     """
 
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Undertaker learns which character was executed today.\n" \
                             "- The player must have died from execution for the Undertaker to " \

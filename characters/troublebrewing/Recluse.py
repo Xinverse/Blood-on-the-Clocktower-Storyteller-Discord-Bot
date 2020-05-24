@@ -1,11 +1,15 @@
 """Contains the Recluse Character class"""
 
-class Recluse:
+from botc import Outsider
+
+class Recluse(Outsider):
     """Recluse:
     You might register as evil & as a Minion or Demon, even if dead.
     """
 
     def __init__(self):
+
+        Outsider.__init__(self)
 
         self._desc_string = "The Recluse might appear to be an evil character, but is actually good."
         self._examp_string = ""

@@ -1,12 +1,16 @@
 """Contains the Mayor Character class"""
 
-class Mayor:
+from botc import Townsfolk
+
+class Mayor(Townsfolk):
     """Mayor:
     If only 3 players live and no execution occurs, your team wins. If you die at night, another
     player might die instead.
     """
 
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Mayor can win by peaceful means on the final day."
         self._examp_string = ""

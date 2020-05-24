@@ -1,11 +1,15 @@
 """Contains the Poisoner Character class"""
 
-class Poisoner:
+from botc import Minion
+
+class Poisoner(Minion):
     """Poisoner:
     Each night, choose a player, their ability malfunctions tonight and tomorrow day.
     """
 
     def __init__(self):
+
+        Minion.__init__(self)
 
         self._desc_string = "The Poisoner secretly disrupts character abilities."
         self._examp_string = ""

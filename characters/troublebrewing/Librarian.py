@@ -1,12 +1,16 @@
 """Contains the Librarian Character class"""
 
-class Librarian:
+from botc import Townsfolk
+
+class Librarian(Townsfolk):
     """Librarian:
     You start knowing that 1 of 2 players is a particular Outsider.
     (Or that zero are in play)
     """
     
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Librarian learns that a particular Outsider character is in play, " \
                             "but not who is playing it.\n" \

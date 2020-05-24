@@ -3,7 +3,7 @@
 import enum
 
 class Gamemode(enum.Enum):
-    """BoTC gamemode enum object: TB, BMR, S&V"""
+    """BoTC gamemode enum class: TB, BMR, S&V"""
 
     trouble_brewing = "Trouble-Brewing"
     bad_moon_rising = "Bad-Moon-Rising"

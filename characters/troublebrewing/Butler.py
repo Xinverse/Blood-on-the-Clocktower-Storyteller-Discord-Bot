@@ -1,12 +1,16 @@
 """Contains the Butler Character class"""
 
-class Butler:
+from botc import Outsider
+
+class Butler(Outsider):
     """Butler:
     Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting 
     too.
     """
 
     def __init__(self):
+
+        Outsider.__init__(self)
 
         self._desc_string = "The Butler may only vote when their Master (another player) votes."
         self._examp_string = ""

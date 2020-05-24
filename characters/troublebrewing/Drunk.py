@@ -1,11 +1,15 @@
 """Contains the Drunk Character class"""
 
-class Drunk:
+from botc import Outsider
+
+class Drunk(Outsider):
     """Drunk:
     You think you are a Townsfolk, but your ability malfunctions.
     """
 
     def __init__(self):
+
+        Outsider.__init__(self)
 
         self._desc_string = "The Drunk player thinks that they are a Townsfolk, " \
                             "and has no idea that they are actually the Drunk."

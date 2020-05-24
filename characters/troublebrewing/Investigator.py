@@ -1,11 +1,15 @@
 """Contains the Investigator Character class"""
 
-class Investigator:
+from botc import Townsfolk
+
+class Investigator(Townsfolk):
     """Investigator:
     You start knowing 1 of 2 players is a particular Minion.
     """
 
     def __init__(self):
+
+        Townsfolk.__init__(self)
 
         self._desc_string = "The Investigator learns that a particular Minion character is in play, " \
                             "but not exactly which player it is.\n" \
