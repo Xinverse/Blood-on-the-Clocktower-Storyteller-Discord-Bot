@@ -3,6 +3,7 @@
 from .Ballot import Ballot
 from .Category import Category
 from .Demon import Demon
+from .GameError import GameError
 from .Gamemode import Gamemode
 from .Minion import Minion
 from .Nomination import Nomination
