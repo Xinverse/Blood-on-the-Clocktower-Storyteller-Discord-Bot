@@ -135,5 +135,4 @@ dmypy.json
 botc_bot.code-workspace
 
 # local
-config.py
-settings.py
+config.INI

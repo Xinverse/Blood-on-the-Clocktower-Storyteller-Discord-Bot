@@ -1,1 +1,0 @@
-"""Blood on the Clocktower (BoTC) game logic"""

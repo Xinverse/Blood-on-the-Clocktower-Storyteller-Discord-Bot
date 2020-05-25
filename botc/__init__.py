@@ -9,6 +9,8 @@ from .Nomination import Nomination
 from .Outsider import Outsider
 from .Player import Player
 from .PlayerState import PlayerState
+from .RoleGuide import RoleGuide
 from .Team import Team
 from .Townsfolk import Townsfolk
+from .Townsquare import TownSquare
 from .Vote import Vote
