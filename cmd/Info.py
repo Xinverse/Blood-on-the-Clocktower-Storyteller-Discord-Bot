@@ -16,11 +16,10 @@ color = int(color, 16)
 Config.read("config.INI")
 PREFIX = Config["settings"]["PREFIX"]
 
-with open('lorestore.json') as json_file: 
-    lorestore = json.load(json_file) 
+from main import language
 
-copyrights_str = lorestore["misc"]["copyrights"]
-how_to_play = lorestore["info"]["how_to_play"]
+copyrights_str = language["misc"]["copyrights"]
+how_to_play = language["info"]["how_to_play"]
 
 class Info(commands.Cog):
     """Info cog"""

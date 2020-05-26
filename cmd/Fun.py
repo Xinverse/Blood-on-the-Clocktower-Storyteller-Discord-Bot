@@ -42,14 +42,6 @@ class Fun(commands.Cog):
         possibilities = ['heads'] * 50 + ['tails'] * 50 + ['side'] * 1
         result = random.choice(possibilities)
         await ctx.send(f"The coin landed on its **{result}**")
-    
-    @commands.command(pass_context=True, aliases = ["die", "dice", "dices"])
-    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
-    async def roll(self, ctx):
-        """Roll command"""
-        possibilities = ['heads'] * 50 + ['tails'] * 50 + ['side'] * 1
-        result = random.choice(possibilities)
-        await ctx.send(f"The coin landed on its **{result}**")
 
 
 def setup(client):

@@ -4,6 +4,8 @@ import time
 import logging
 from discord.ext import commands
 
+bootTime = time.time()
+
 Config = configparser.ConfigParser()
 Config.read("config.INI")
 
@@ -14,11 +16,12 @@ PREFIX = Config["settings"]["PREFIX"]
 client = commands.Bot(command_prefix=PREFIX, owner_id=OWNER_ID)
 logging.basicConfig(level=logging.WARNING)
 
-bootTime = time.time()
+with open('lang/en.json') as json_file: 
+    language = json.load(json_file) 
 
-extensions = ["admins_only", "Fun", "Gameplay", "Info"]
+extensions = ["Admin", "Fun", "Gameplay", "Info"]
 
 if __name__ == "__main__":
     for extension in extensions:
-        client.load_extension(f"cogs.{extension}")
+        client.load_extension(f"cmd.{extension}")
     client.run(TOKEN)
