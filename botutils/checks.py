@@ -1,3 +1,5 @@
+"""Contains checks"""
+
 import configparser
 import json
 
@@ -13,11 +15,18 @@ def __is_lobby(ctx):
     return ctx.channel.id == int(LOBBY_CHANNEL_ID)
 
 def __is_admin(ctx):
-    """Check the author of the context, return True if they have admin perms or higher"""
+    """Check the author of the context, return True if they have admin perms or higher."""
     return ctx.author.id in ADMINS_ID or ctx.author.id == int(OWNER_ID)
 
-def check_if_lobby_or_dm(ctx):
+def check_if_lobby_or_dm_or_admin(ctx):
     """Check the channel of the context, return True if it is sent in either 
-    lobby or in a private channel or if the user is an admin
+    lobby or in a private channel.
+    Admins can bypass.
     """
     return ctx.guild is None or __is_lobby(ctx) or __is_admin(ctx)
+
+def check_if_dm(ctx):
+    """Check the channel of the context, return True if it is sent in a private channel.
+    Admins cannot bypass.
+    """
+    return ctx.guild is None

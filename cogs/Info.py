@@ -10,14 +10,17 @@ from discord.ext import commands
 Config = configparser.ConfigParser()
 
 Config.read("preferences.INI")
-
-color = Config["Colors"]["CARD_NORMAL"]
+color = Config["colors"]["CARD_NORMAL"]
 color = int(color, 16)
+
+Config.read("config.INI")
+PREFIX = Config["settings"]["PREFIX"]
 
 with open('lorestore.json') as json_file: 
     lorestore = json.load(json_file) 
 
 copyrights_str = lorestore["misc"]["copyrights"]
+how_to_play = lorestore["info"]["how_to_play"]
 
 class Info(commands.Cog):
     """Info cog"""
@@ -26,15 +29,15 @@ class Info(commands.Cog):
         self.client = client
 
     @commands.command(pass_context=True, aliases = ["git"])
-    @commands.check(botutils.check_if_lobby_or_dm)
+    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     async def github(self, ctx):
         await ctx.send("The Github page of the bot can be found here: " \
                        "<https://github.com/Xinverse/BOTC-Bot>")
 
     @commands.command(pass_context=True, aliases = ["credit", "cred"])
-    @commands.check(botutils.check_if_lobby_or_dm)
+    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     async def credits(self, ctx):
-        embed = discord.Embed(title="CREDITS - Blood on the Clocktower Storyteller Bot", color=color)
+        embed = discord.Embed(title="CREDITS - Blood on the Clocktower [Storyteller Bot]", color=color)
         embed.set_author(name="Discord Werewolf Server", icon_url=self.client.get_guild(ctx.guild.id).icon_url)
         embed.set_footer(text=copyrights_str)
         msg1 = "Programming by **Xinverse#4011**. Please privately message them for any bugs or suggestions."
@@ -45,6 +48,19 @@ class Info(commands.Cog):
                "independent project, and the Developer is not affiliated with TPI in any way."
         embed.add_field(name="**Acknowledgements**", value=msg2, inline=False)
         await ctx.send(embed=embed)
+    
+    @commands.command(pass_context=True, aliases = ["information"])
+    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    async def info(self, ctx):
+        embed = discord.Embed(title="INFO - Blood on the Clocktower [Storyteller Bot]", color=color)
+        embed.set_author(name="Discord Werewolf Server", icon_url=self.client.get_guild(ctx.guild.id).icon_url)
+        embed.set_footer(text=copyrights_str)
+        msg1 = how_to_play
+        embed.add_field(name="**What is Blood on the Clocktower?**", value=msg1, inline=False)
+        msg2 = f"To join a game, use `{PREFIX}join`. For a list of roles, use `{PREFIX}roles`."
+        embed.add_field(name="**Getting started**", value=msg2, inline=False)
+        await ctx.send(embed=embed)
+
 
 def setup(client):
     client.add_cog(Info(client))
