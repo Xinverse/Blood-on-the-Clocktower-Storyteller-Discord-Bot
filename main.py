@@ -16,13 +16,7 @@ logging.basicConfig(level=logging.WARNING)
 
 bootTime = time.time()
 
-extensions = ["Fun", "Gameplay", "Info"]
-
-@client.event
-async def on_ready():
-    print(f"Logged in as {client.user.name}")
-    print(f"Bot ID {client.user.id}")
-    print("----------")
+extensions = ["admins_only", "Fun", "Gameplay", "Info"]
 
 if __name__ == "__main__":
     for extension in extensions:

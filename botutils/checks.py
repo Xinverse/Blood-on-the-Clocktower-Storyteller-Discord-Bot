@@ -30,3 +30,7 @@ def check_if_dm(ctx):
     Admins cannot bypass.
     """
     return ctx.guild is None
+
+def check_if_admin(ctx):
+    """Check the author of the context, return True if they have admin perms or higher."""
+    return __is_admin(ctx)

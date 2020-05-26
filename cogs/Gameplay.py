@@ -14,7 +14,7 @@ class Gamplay(commands.Cog):
     @commands.cooldown(1, 30, commands.BucketType.channel)
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     async def seating(self, ctx):
-        """Stats command"""
+        """Seating command"""
         await ctx.send("To-do")
 
 def setup(client):
