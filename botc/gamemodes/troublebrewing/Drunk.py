@@ -1,27 +1,31 @@
 """Contains the Drunk Character class"""
 
-from botc import Outsider
-from ._utils import TroubleBrewing
-from ._utils import TBRole
+import json 
+from botc import Outsider, Character
+from ._utils import TroubleBrewing, TBRole
 
-class Drunk(Outsider, TroubleBrewing):
+with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
+    character_text = json.load(json_file)[TBRole.drunk.value.lower()]
+
+class Drunk(Outsider, TroubleBrewing, Character):
     """Drunk:
     You think you are a Townsfolk, but your ability malfunctions.
     """
 
     def __init__(self):
-
+        
+        Character.__init__(self)
         TroubleBrewing.__init__(self)
         Outsider.__init__(self)
 
-        self._desc_string = "The Drunk player thinks that they are a Townsfolk, " \
-                            "and has no idea that they are actually the Drunk."
-        self._examp_string = ""
-        self._instr_string = "You do not know you are the Drunk. " \
-                             "You think you are a Townsfolk, but your ability malfunctions."
-        self._lore_string = ""
+        self._role_enum = TBRole.drunk
+
+        self._desc_string = character_text[self.name]["description"]
+        self._examp_string = character_text[self.name]["examples"]
+        self._instr_string = character_text[self.name]["instruction"]
+        self._lore_string = character_text[self.name]["lore"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/0/03/Drunk_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Drunk"
 
-        self._role_name = TBRole.drunk
+        

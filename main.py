@@ -16,10 +16,11 @@ PREFIX = Config["settings"]["PREFIX"]
 client = commands.Bot(command_prefix=PREFIX, owner_id=OWNER_ID)
 logging.basicConfig(level=logging.WARNING)
 
-with open('lang/en.json') as json_file: 
-    language = json.load(json_file) 
-
 extensions = ["Admin", "Fun", "Gameplay", "Info"]
+
+
+from botc.gamemodes.troublebrewing import Baron
+print(Baron()._lore_string)
 
 if __name__ == "__main__":
     for extension in extensions:

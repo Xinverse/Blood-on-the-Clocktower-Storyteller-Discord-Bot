@@ -5,7 +5,6 @@ import configparser
 import json 
 import botutils
 from discord.ext import commands
-from discord.ext import commands
 
 Config = configparser.ConfigParser()
 
@@ -16,7 +15,6 @@ color = int(color, 16)
 Config.read("config.INI")
 PREFIX = Config["settings"]["PREFIX"]
 
-from main import language
 
 copyrights_str = language["misc"]["copyrights"]
 how_to_play = language["info"]["how_to_play"]
