@@ -18,10 +18,10 @@ class Soldier(Townsfolk, TroubleBrewing, Character):
         TroubleBrewing.__init__(self)
         Townsfolk.__init__(self)
 
-        self._desc_string = character_text[self.name]["description"]
-        self._examp_string = character_text[self.name]["examples"]
-        self._instr_string = character_text[self.name]["instruction"]
-        self._lore_string = character_text[self.name]["lore"]
+        self._desc_string = character_text["description"]
+        self._examp_string = character_text["examples"]
+        self._instr_string = character_text["instruction"]
+        self._lore_string = character_text["lore"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/9/9e/Soldier_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Soldier"

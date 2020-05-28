@@ -16,9 +16,7 @@ class Baron(Minion, TroubleBrewing, Character):
         
         Character.__init__(self)
         TroubleBrewing.__init__(self)
-        Minion.__init__(self)
-
-        self._role_enum = TBRole.baron
+        Minion.__init__(self)  
 
         self._desc_string = character_text["description"]
         self._examp_string = character_text["examples"]
@@ -27,5 +25,7 @@ class Baron(Minion, TroubleBrewing, Character):
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/b/ba/Baron_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Baron"
+
+        self._role_enum = TBRole.baron
 
         
