@@ -20,9 +20,11 @@ extensions = ["Admin", "Fun", "Gameplay", "Info"]
 
 
 from botc.gamemodes.troublebrewing import Baron
-print(Baron()._lore_string)
+print(Baron().name)
 
+"""
 if __name__ == "__main__":
     for extension in extensions:
         client.load_extension(f"cmd.{extension}")
     client.run(TOKEN)
+"""

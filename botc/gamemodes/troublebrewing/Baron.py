@@ -1,7 +1,9 @@
 """Contains the Baron Character class"""
 
 import json
+import random
 from botc import Minion, Character
+from botc.Outsider import Outsider
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -27,5 +29,26 @@ class Baron(Minion, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Baron"
 
         self._role_enum = TBRole.baron
+    
+    def exec_init_setup(self, townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list):
+        """Add two outsiders to the setup, remove two townsfolks from the setup"""
+
+        random.shuffle(townsfolk_obj_list)
+        townsfolk_obj_list.pop()
+        townsfolk_obj_list.pop()
+        tb_outsider_all = [role_obj() for role_obj in Outsider.__subclasses__()]
+        random.shuffle(tb_outsider_all)
+
+        count = 0
+
+        for outsider in tb_outsider_all:
+            if count >= 2:
+                break
+            else:
+                if str(outsider) not in [str(role) for role in outsider_obj_list]:
+                    outsider_obj_list.append(outsider)
+                    count += 1
+
+        return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list]
 
         
