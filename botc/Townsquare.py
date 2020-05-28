@@ -56,7 +56,7 @@ class TownSquare:
             # Draw the username labels
             member = player_obj._user_obj
             label = member.name[:10]
-            unicode_font = ImageFont.truetype("assets/DejaVuSans.ttf", 12)
+            unicode_font = ImageFont.truetype("botc/assets/DejaVuSans.ttf", 12)
             w, h = unicode_font.getsize(label)
             x = center_x - 1.2 * self.TOKEN_RADIUS
             y = center_y + 1.2 * self.TOKEN_RADIUS
@@ -81,14 +81,14 @@ class TownSquare:
                          str(nb_demon)
                     )
 
-        font_path = "assets/wilson.ttf"
+        font_path = "botc/assets/wilson.ttf"
         font = ImageFont.truetype(font_path, 22)
         draw.text((180, 180), center_msg, fill=self.TEXT_COLOR, font=font)
 
-        im.save('assets/botctownsquare.jpg', quality=95)
+        im.save('botc/assets/botctownsquare.jpg', quality=95)
 
-        background = Image.open("assets/botctownsquare.jpg")
-        chair = Image.open("assets/chair.png")
+        background = Image.open("botc/assets/botctownsquare.jpg")
+        chair = Image.open("botc/assets/chair.png")
         chair_size_width, chair_size_height = chair.size[0], chair.size[1]
 
         # Draw the chairs
@@ -101,7 +101,7 @@ class TownSquare:
             transposed  = rotated.transpose(Image.ROTATE_180)
             background.paste(transposed, (int(x), int(y)), transposed)
 
-        background.save("assets/botctownsquare.jpg", "JPEG")
+        background.save("botc/assets/botctownsquare.jpg", "JPEG")
     
     @staticmethod
     def get_x_center():
@@ -141,5 +141,5 @@ class TownSquare:
         return (center_x - r, center_y - r, center_x + r, center_y + r)
     
     def get_image(self):
-        return 'assets/botctownsquare.jpg'
+        return 'botc/assets/botctownsquare.jpg'
 

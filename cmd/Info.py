@@ -15,6 +15,8 @@ color = int(color, 16)
 Config.read("config.INI")
 PREFIX = Config["settings"]["PREFIX"]
 
+with open('lang/en.json') as json_file: 
+    language = json.load(json_file)
 
 copyrights_str = language["misc"]["copyrights"]
 how_to_play = language["info"]["how_to_play"]
