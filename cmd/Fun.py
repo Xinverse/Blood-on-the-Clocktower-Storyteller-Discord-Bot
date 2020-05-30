@@ -36,8 +36,8 @@ class Fun(commands.Cog):
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     async def uptime(self, ctx):
         """Check the uptime."""
-        from main import bootTime
-        uptime = time() - bootTime
+        from main import master_state
+        uptime = time() - master_state.boottime
         uptime = round(uptime)
         uptime_formatted = str(timedelta(seconds=uptime))
         await ctx.send(uptime_str.format(uptime_formatted))

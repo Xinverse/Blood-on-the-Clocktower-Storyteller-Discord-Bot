@@ -13,7 +13,7 @@ class Gamplay(commands.Cog):
     @commands.check(botutils.check_if_lobby)
     async def join(self, ctx):
         """Join command"""
-        await botutils.Adds(self.client).add_alive_role(ctx.author)
+        await botutils.add_alive_role(self.client, ctx.author)
         await ctx.send(f"{ctx.author.name} joined the game.")
 
 def setup(client):

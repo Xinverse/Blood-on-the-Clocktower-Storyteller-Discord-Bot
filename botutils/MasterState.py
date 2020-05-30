@@ -1,11 +1,18 @@
 """Contains the Master State class"""
 
+import time
+
 class MasterState:
     """Master State class: the bot's global state"""
 
     def __init__(self):
+        self._boottime = time.time()
         self._pregame = None
         self._game = None
+    
+    @property
+    def boottime(self):
+        return self._boottime
 
     @property
     def pregame(self):

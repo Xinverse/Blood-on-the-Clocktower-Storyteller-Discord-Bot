@@ -8,6 +8,12 @@
 
     },
 
+    "system" : {
+
+        "restart" : "Rebooted, powered on."
+        
+    },
+
     "formats" : {
 
         "server_header": "Discord Werewolf Server"

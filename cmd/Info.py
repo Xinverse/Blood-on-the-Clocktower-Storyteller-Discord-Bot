@@ -12,10 +12,10 @@ Config.read("preferences.INI")
 COLOR = Config["colors"]["CARD_NORMAL"]
 COLOR = int(COLOR, 16)
 
-Config.read("botutils/config.INI")
+Config.read("config.INI")
 PREFIX = Config["settings"]["PREFIX"]
 
-with open('bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
 
 github_str = language["cmd"]["github"]
