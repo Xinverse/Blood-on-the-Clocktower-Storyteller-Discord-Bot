@@ -1,6 +1,5 @@
 """Contains event listeners"""
 
-import sys
 import json
 import botutils
 from discord.ext import commands
@@ -20,6 +19,7 @@ class Listeners(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         """On_ready event"""
+        
         print(f"Logged in as {self.client.user.name}")
         print(f"Bot ID {self.client.user.id}")
         print("----------")

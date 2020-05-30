@@ -33,6 +33,17 @@ class Info(commands.Cog):
     @commands.check(botutils.check_if_not_ignored)
     async def github(self, ctx):
         await ctx.send(github_str)
+    
+
+    @github.error
+    async def arg_error(self, ctx, error):
+        """Error handling on commands"""
+
+        # Case: check failure
+        if isinstance(error, commands.errors.CheckFailure):
+            return
+        else:
+            raise error
 
 
 def setup(client):

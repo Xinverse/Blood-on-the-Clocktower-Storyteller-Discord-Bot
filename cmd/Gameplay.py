@@ -26,6 +26,7 @@ class Gamplay(commands.Cog):
     @commands.check(botutils.check_if_not_ignored)
     async def join(self, ctx):
         """Join command"""
+
         import main
         if main.master_state.pregame.is_joined(ctx.author.id):
             await ctx.send(joined_str.format(ctx.author.mention))
@@ -41,6 +42,7 @@ class Gamplay(commands.Cog):
     @commands.check(botutils.check_if_not_ignored)
     async def quit(self, ctx):
         """Join command"""
+
         import main
         if main.master_state.pregame.is_joined(ctx.author.id):
             main.master_state.pregame.safe_remove_player(ctx.author.id)
@@ -48,7 +50,31 @@ class Gamplay(commands.Cog):
         else:
             await ctx.send(quitted_str.format(ctx.author.mention))
         await botutils.remove_alive_role(self.client, ctx.author)
-        
+    
+
+    # ---------- STATS COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "stats", aliases = ["statistics"])
+    @commands.check(botutils.check_if_lobby)
+    @commands.check(botutils.check_if_not_ignored)
+    async def stats(self, ctx):
+        """Stats command"""
+
+        import main
+        return 
+    
+
+    @join.error
+    @quit.error
+    @stats.error
+    async def arg_error(self, ctx, error):
+        """Error handling on commands"""
+
+        # Case: check failure
+        if isinstance(error, commands.errors.CheckFailure):
+            return
+        else:
+            raise error
+
 
 def setup(client):
     client.add_cog(Gamplay(client))

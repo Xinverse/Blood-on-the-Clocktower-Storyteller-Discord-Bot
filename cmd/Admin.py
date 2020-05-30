@@ -14,6 +14,7 @@ fjoined_str = language["cmd"]["fjoined"]
 fleave_str = language["cmd"]["fleave"]
 fleaved_str = language["cmd"]["fleaved"]
 user_not_found_str = language["errors"]["user_not_found"]
+missing_user_str = language["errors"]["missing_user"]
 
 
 class Admin(commands.Cog):
@@ -37,13 +38,6 @@ class Admin(commands.Cog):
             await ctx.send(fjoin_str.format(member.name, len(main.master_state.pregame)))
         await botutils.add_alive_role(self.client, member)
     
-    @fjoin.error
-    async def fjoin_error(self, ctx, error):
-        """Error handling on fjoin command"""
-
-        if isinstance(error, commands.BadArgument):
-            await ctx.send(user_not_found_str.format(ctx.author.mention))
-
 
     # ---------- FLEAVE COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "fleave")
@@ -59,13 +53,20 @@ class Admin(commands.Cog):
             await ctx.send(fleaved_str.format(ctx.author.mention, member.name))
         await botutils.remove_alive_role(self.client, member)
 
+
+    @fjoin.error
     @fleave.error
-    async def fleave_error(self, ctx, error):
-        """Error handling on fleave command"""
+    async def arg_error(self, ctx, error):
+        """Error handling on command"""
 
         # Case: bad argument (user not found)
         if isinstance(error, commands.BadArgument):
             await ctx.send(user_not_found_str.format(ctx.author.mention))
+        # Case: missing required argument (user not specified)
+        elif isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(missing_user_str.format(ctx.author.mention))
+        else:
+            raise error
       
 
 def setup(client):

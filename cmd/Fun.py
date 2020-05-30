@@ -27,6 +27,7 @@ class Fun(commands.Cog):
     @commands.check(botutils.check_if_not_ignored)
     async def dog(self, ctx):
         """Flip a dog."""
+
         await ctx.send(dog_str)
 
 
@@ -36,6 +37,7 @@ class Fun(commands.Cog):
     @commands.check(botutils.check_if_not_ignored)
     async def ping(self, ctx):
         """Check the latency."""
+
         await ctx.send(ping_str.format(round(self.client.latency, 4)))
 
 
@@ -45,11 +47,25 @@ class Fun(commands.Cog):
     @commands.check(botutils.check_if_not_ignored)
     async def uptime(self, ctx):
         """Check the uptime."""
+
         from main import master_state
         uptime = time() - master_state.boottime
         uptime = round(uptime)
         uptime_formatted = str(timedelta(seconds=uptime))
         await ctx.send(uptime_str.format(uptime_formatted))
+    
+
+    @dog.error
+    @ping.error
+    @uptime.error
+    async def arg_error(self, ctx, error):
+        """Error handling on commands"""
+
+        # Case: check failure
+        if isinstance(error, commands.errors.CheckFailure):
+            return
+        else:
+            raise error
 
 
 def setup(client):
