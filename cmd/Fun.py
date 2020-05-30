@@ -22,18 +22,21 @@ class Fun(commands.Cog):
 
     @commands.command(pass_context=True, name = "dog")
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    @commands.check(botutils.check_if_not_ignored)
     async def dog(self, ctx):
         """Flip a dog."""
         await ctx.send(dog_str)
 
     @commands.command(pass_context=True, name = "ping", aliases = ["pong"])
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    @commands.check(botutils.check_if_not_ignored)
     async def ping(self, ctx):
         """Check the latency."""
         await ctx.send(ping_str.format(round(self.client.latency, 4)))
 
     @commands.command(pass_context=True, name = "uptime")
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    @commands.check(botutils.check_if_not_ignored)
     async def uptime(self, ctx):
         """Check the uptime."""
         from main import master_state

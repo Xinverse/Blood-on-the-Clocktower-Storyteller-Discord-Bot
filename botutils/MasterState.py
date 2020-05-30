@@ -1,13 +1,14 @@
 """Contains the Master State class"""
 
 import time
+from .Pregame import Pregame
 
 class MasterState:
     """Master State class: the bot's global state"""
 
     def __init__(self):
         self._boottime = time.time()
-        self._pregame = None
+        self._pregame = Pregame()
         self._game = None
     
     @property

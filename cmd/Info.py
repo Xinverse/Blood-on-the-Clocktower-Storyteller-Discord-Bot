@@ -28,6 +28,7 @@ class Info(commands.Cog):
 
     @commands.command(pass_context=True, name = "github", aliases = ["git"])
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    @commands.check(botutils.check_if_not_ignored)
     async def github(self, ctx):
         await ctx.send(github_str)
 

@@ -4,14 +4,18 @@
         "github" : "The Github page of the bot can be found here: <https://github.com/Xinverse/BOTC-Bot>",
         "dog" : "Did the dog land on its feet?",
         "ping" : ":ping_pong: **Pong!** Latency: **{}** seconds.",
-        "uptime" : ":clock: **uptime:** {}"
+        "uptime" : ":clock: **uptime:** {}",
+        "join" : "**{}** joined the game and raised the number of players to **{}**.",
+        "joined" : "{} You are already in the game!",
+        "quit" : "**{}** left the game. There are **{}** players remaining.",
+        "quitted" : "{} You are already not in the game!"
 
     },
 
     "system" : {
 
         "restart" : "Rebooted, powered on."
-        
+
     },
 
     "formats" : {

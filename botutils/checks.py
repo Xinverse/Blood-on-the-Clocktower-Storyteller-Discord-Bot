@@ -38,3 +38,7 @@ def check_if_admin(ctx):
 def check_if_lobby(ctx):
     """Check the channel of the context, return True if it is sent in the lobby channel"""
     return __is_lobby(ctx)
+
+def check_if_not_ignored(ctx):
+    """Check the author of the context, return True if they are not ignored."""
+    return True

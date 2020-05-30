@@ -13,8 +13,22 @@ class Pregame:
 
     def remove_player(self, userid):
         """Remove a player based on its user ID"""
-        if userid not in self._userid_list:
+        if userid in self._userid_list:
             self._userid_list.remove(userid)
+    
+    def is_joined(self, userid):
+        """Check if a userid is already in self._userid_list"""
+        return userid in self._userid_list
+    
+    def safe_add_player(self, userid):
+        """Add a player based on its user ID only if the player has joined"""
+        if not self.is_joined(userid):
+            self.add_player(userid)
+
+    def safe_remove_player(self, userid):
+        """Remove a player based on its user ID only if the player has joined"""
+        if self.is_joined(userid):
+            self.remove_player(userid)
     
     def clear(self):
         """Clear the user ID list"""
