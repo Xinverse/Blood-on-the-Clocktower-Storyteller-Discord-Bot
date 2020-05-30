@@ -1,6 +1,7 @@
 """Contains the Gamplay cog: gameplay related commands"""
 
 import botutils
+import traceback
 import json
 from discord.ext import commands
 
@@ -13,17 +14,19 @@ quit_str = language["cmd"]["quit"]
 quitted_str = language["cmd"]["quitted"]
 
 
-class Gamplay(commands.Cog):
+class Gamplay(commands.Cog, name="Gameplay Commands"):
     """Gamplay cog"""
     
     def __init__(self, client):
         self.client = client
     
+    def cog_check(self, ctx):
+        return botutils.check_if_not_ignored(ctx)
+    
 
     # ---------- JOIN COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "join", aliases = ["j"])
     @commands.check(botutils.check_if_lobby)
-    @commands.check(botutils.check_if_not_ignored)
     async def join(self, ctx):
         """Join command"""
 
@@ -39,7 +42,6 @@ class Gamplay(commands.Cog):
     # ---------- QUIT COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "quit", aliases = ["q"])
     @commands.check(botutils.check_if_lobby)
-    @commands.check(botutils.check_if_not_ignored)
     async def quit(self, ctx):
         """Join command"""
 
@@ -55,25 +57,24 @@ class Gamplay(commands.Cog):
     # ---------- STATS COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "stats", aliases = ["statistics"])
     @commands.check(botutils.check_if_lobby)
-    @commands.check(botutils.check_if_not_ignored)
+    @commands.cooldown(1, 30, commands.BucketType.user)
     async def stats(self, ctx):
         """Stats command"""
 
-        import main
-        return 
+        pass
     
 
-    @join.error
-    @quit.error
-    @stats.error
-    async def arg_error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         """Error handling on commands"""
 
         # Case: check failure
         if isinstance(error, commands.errors.CheckFailure):
             return
         else:
-            raise error
+            try:
+                raise error
+            except Exception:
+                await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
 
 
 def setup(client):

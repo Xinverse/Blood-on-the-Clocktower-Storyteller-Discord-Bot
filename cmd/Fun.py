@@ -2,70 +2,45 @@
 
 import botutils
 import random
+import traceback
 import json
 from discord.ext import commands
-from time import time
-from datetime import timedelta
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
 
 dog_str = language["cmd"]["dog"]
-ping_str = language["cmd"]["ping"]
-uptime_str = language["cmd"]["uptime"]
 
 
-class Fun(commands.Cog):
+class Fun(commands.Cog, name="Fun Commands"):
     """Fun cog"""
     
     def __init__(self, client):
         self.client = client
+    
+    def cog_check(self, ctx):
+        return botutils.check_if_not_ignored(ctx)
 
     # ---------- DOG COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "dog")
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
-    @commands.check(botutils.check_if_not_ignored)
     async def dog(self, ctx):
         """Flip a dog."""
 
         await ctx.send(dog_str)
-
-
-    # ---------- PING COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "ping", aliases = ["pong"])
-    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
-    @commands.check(botutils.check_if_not_ignored)
-    async def ping(self, ctx):
-        """Check the latency."""
-
-        await ctx.send(ping_str.format(round(self.client.latency, 4)))
-
-
-    # ---------- UPTIME COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "uptime")
-    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
-    @commands.check(botutils.check_if_not_ignored)
-    async def uptime(self, ctx):
-        """Check the uptime."""
-
-        from main import master_state
-        uptime = time() - master_state.boottime
-        uptime = round(uptime)
-        uptime_formatted = str(timedelta(seconds=uptime))
-        await ctx.send(uptime_str.format(uptime_formatted))
     
 
-    @dog.error
-    @ping.error
-    @uptime.error
-    async def arg_error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         """Error handling on commands"""
 
         # Case: check failure
         if isinstance(error, commands.errors.CheckFailure):
             return
         else:
-            raise error
+            try:
+                raise error
+            except Exception:
+                await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
 
 
 def setup(client):

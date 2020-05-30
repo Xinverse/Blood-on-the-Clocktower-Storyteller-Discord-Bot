@@ -20,10 +20,18 @@ async def __send_log(client, message):
     log_channel = client.get_channel(int(LOGGING_CHANNEL_ID))
     await log_channel.send(message)
 
+def __create_python_code_block(client, message):
+    """Create a python code block"""
+    return f"```python\n{message}```"
+
 async def log(client, level, message):
     """Send a message to the logs with a header"""
-    msg = f"{level.value} {message}"
-    await __send_log(client, msg)
+    if level == Level.error:
+        msg = f"{level.value} {__create_python_code_block(client, message)}"
+        await __send_log(client, msg)
+    else:
+        msg = f"{level.value} {message}"
+        await __send_log(client, msg)
 
 async def send_lobby(client, message):
     """Send a message to the lobby"""

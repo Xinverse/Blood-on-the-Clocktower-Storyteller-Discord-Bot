@@ -24,6 +24,19 @@ class Listeners(commands.Cog):
         print(f"Bot ID {self.client.user.id}")
         print("----------")
         await botutils.log(self.client, botutils.Level.info, restart_msg)
+    
+    @commands.Cog.listener()
+    async def on_error(self, event):
+        """On_error event"""
+        await botutils.log(self.client, botutils.Level.error, event)
+    
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        """On_command_error event"""
+        if isinstance(error, commands.CommandNotFound):
+            return
+        else:
+            raise error
 
 
 def setup(client):

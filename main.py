@@ -1,6 +1,6 @@
 # TODO
-# cmd folder
-# botutils folder
+# Catch invalid command exceptions
+# Discord messages of more than 2000 letters
 # Game object
 
 import configparser

@@ -1,6 +1,7 @@
 """Contains admins only commands"""
 
 import configparser
+import traceback
 import json
 import discord
 import botutils
@@ -17,16 +18,18 @@ user_not_found_str = language["errors"]["user_not_found"]
 missing_user_str = language["errors"]["missing_user"]
 
 
-class Admin(commands.Cog):
+class Admin(commands.Cog, name="Admin Commands"):
     """Admins only commands cog"""
     
     def __init__(self, client):
         self.client = client
+
+    def cog_check(self, ctx):
+        return botutils.check_if_admin(ctx)
     
 
     # ---------- FJOIN COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "fjoin")
-    @commands.check(botutils.check_if_admin)
     async def fjoin(self, ctx, *, member: discord.Member):
         """Force join command"""
 
@@ -41,7 +44,6 @@ class Admin(commands.Cog):
 
     # ---------- FLEAVE COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "fleave")
-    @commands.check(botutils.check_if_admin)
     async def fleave(self, ctx, *, member: discord.Member):
         """Force leave command"""
 
@@ -54,19 +56,24 @@ class Admin(commands.Cog):
         await botutils.remove_alive_role(self.client, member)
 
 
-    @fjoin.error
-    @fleave.error
-    async def arg_error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         """Error handling on command"""
 
         # Case: bad argument (user not found)
         if isinstance(error, commands.BadArgument):
             await ctx.send(user_not_found_str.format(ctx.author.mention))
+            return
         # Case: missing required argument (user not specified)
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(missing_user_str.format(ctx.author.mention))
+            return
+        elif isinstance(error, commands.errors.CheckFailure):
+            return
         else:
-            raise error
+            try:
+                raise error
+            except Exception:
+                await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
       
 
 def setup(client):

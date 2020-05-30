@@ -25,7 +25,8 @@
 
     "system" : {
 
-        "restart" : "Rebooted, powered on."
+        "restart" : "Rebooted, powered on.",
+        "error" : "An error occured and has been logged."
 
     },
 
