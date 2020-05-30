@@ -28,5 +28,4 @@ extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners"]
 if __name__ == "__main__":
     for extension in extensions:
         client.load_extension(f"cmd.{extension}")
-    #client.load_extension("botutils.adds")
     client.run(TOKEN)

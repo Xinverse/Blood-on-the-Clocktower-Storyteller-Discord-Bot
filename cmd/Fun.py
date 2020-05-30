@@ -7,7 +7,7 @@ from discord.ext import commands
 from time import time
 from datetime import timedelta
 
-with open('bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
 
 dog_str = language["cmd"]["dog"]

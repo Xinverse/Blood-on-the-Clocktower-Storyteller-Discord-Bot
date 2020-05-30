@@ -12,7 +12,7 @@ Config.read("preferences.INI")
 COLOR = Config["colors"]["CARD_NORMAL"]
 COLOR = int(COLOR, 16)
 
-Config.read("config.INI")
+Config.read("botutils/config.INI")
 PREFIX = Config["settings"]["PREFIX"]
 
 with open('bot_text.json') as json_file: 
