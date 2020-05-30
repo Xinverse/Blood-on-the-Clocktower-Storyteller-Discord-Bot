@@ -40,5 +40,9 @@ def check_if_lobby(ctx):
     return __is_lobby(ctx)
 
 def check_if_not_ignored(ctx):
-    """Check the author of the context, return True if they are not ignored."""
+    """Check the author of the context, return True if they are not ignored"""
     return True
+
+def return_false(ctx):
+    """Always return false. Use for debugging/testing"""
+    return False

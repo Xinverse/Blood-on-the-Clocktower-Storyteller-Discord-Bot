@@ -12,12 +12,15 @@ joined_str = language["cmd"]["joined"]
 quit_str = language["cmd"]["quit"]
 quitted_str = language["cmd"]["quitted"]
 
+
 class Gamplay(commands.Cog):
     """Gamplay cog"""
     
     def __init__(self, client):
         self.client = client
     
+
+    # ---------- JOIN COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "join", aliases = ["j"])
     @commands.check(botutils.check_if_lobby)
     @commands.check(botutils.check_if_not_ignored)
@@ -30,8 +33,9 @@ class Gamplay(commands.Cog):
             main.master_state.pregame.safe_add_player(ctx.author.id)
             await ctx.send(join_str.format(ctx.author.name, len(main.master_state.pregame)))
         await botutils.add_alive_role(self.client, ctx.author)
-        
+
     
+    # ---------- QUIT COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "quit", aliases = ["q"])
     @commands.check(botutils.check_if_lobby)
     @commands.check(botutils.check_if_not_ignored)
