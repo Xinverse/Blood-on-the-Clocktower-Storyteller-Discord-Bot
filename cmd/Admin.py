@@ -16,6 +16,7 @@ fleave_str = language["cmd"]["fleave"]
 fleaved_str = language["cmd"]["fleaved"]
 user_not_found_str = language["errors"]["user_not_found"]
 missing_user_str = language["errors"]["missing_user"]
+error_str = language["system"]["error"]
 
 
 class Admin(commands.Cog, name="Admin Commands"):
@@ -67,12 +68,13 @@ class Admin(commands.Cog, name="Admin Commands"):
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(missing_user_str.format(ctx.author.mention))
             return
-        elif isinstance(error, commands.errors.CheckFailure):
+        elif isinstance(error, commands.CheckFailure):
             return
         else:
             try:
                 raise error
             except Exception:
+                await ctx.send(error_str)
                 await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
       
 

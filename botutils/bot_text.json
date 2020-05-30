@@ -19,7 +19,8 @@
     "errors" : {
 
         "user_not_found" : "{} :x: Specified user is not found!",
-        "missing_user" : "{} :x: Missing argument, please specify a valid user!"
+        "missing_user" : "{} :x: Missing argument, please specify a valid user!",
+        "cmd_cooldown" : "{} :x: This command is ratelimited."
 
     },
 

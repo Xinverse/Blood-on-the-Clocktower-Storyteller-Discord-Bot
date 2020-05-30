@@ -12,7 +12,8 @@ join_str = language["cmd"]["join"]
 joined_str = language["cmd"]["joined"]
 quit_str = language["cmd"]["quit"]
 quitted_str = language["cmd"]["quitted"]
-
+error_str = language["system"]["error"]
+cooldown_str = language["errors"]["cmd_cooldown"]
 
 class Gamplay(commands.Cog, name="Gameplay Commands"):
     """Gamplay cog"""
@@ -61,7 +62,9 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
     async def stats(self, ctx):
         """Stats command"""
 
-        pass
+        import main
+        msg = "Statistics"
+        await ctx.send(msg)
     
 
     async def cog_command_error(self, ctx, error):
@@ -70,10 +73,13 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         # Case: check failure
         if isinstance(error, commands.errors.CheckFailure):
             return
+        elif isinstance(error, commands.errors.CommandOnCooldown):
+            await ctx.send(cooldown_str.format(ctx.author.mention))
         else:
             try:
                 raise error
             except Exception:
+                await ctx.send(error_str)
                 await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
 
 

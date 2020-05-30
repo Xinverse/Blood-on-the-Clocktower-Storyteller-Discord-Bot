@@ -24,6 +24,7 @@ with open('botutils/bot_text.json') as json_file:
 github_str = language["cmd"]["github"]
 uptime_str = language["cmd"]["uptime"]
 ping_str = language["cmd"]["ping"]
+error_str = language["system"]["error"]
 
 class Info(commands.Cog, name="Information Commands"):
     """Info cog"""
@@ -74,6 +75,7 @@ class Info(commands.Cog, name="Information Commands"):
             try:
                 raise error
             except Exception:
+                await ctx.send(error_str)
                 await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
 
 

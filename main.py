@@ -1,7 +1,6 @@
 # TODO
-# Catch invalid command exceptions
-# Discord messages of more than 2000 letters
 # Game object
+# Stats command
 
 import configparser
 import json

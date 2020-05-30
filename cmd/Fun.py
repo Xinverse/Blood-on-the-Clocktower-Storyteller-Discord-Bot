@@ -10,7 +10,7 @@ with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 dog_str = language["cmd"]["dog"]
-
+error_str = language["system"]["error"]
 
 class Fun(commands.Cog, name="Fun Commands"):
     """Fun cog"""
@@ -40,6 +40,7 @@ class Fun(commands.Cog, name="Fun Commands"):
             try:
                 raise error
             except Exception:
+                await ctx.send(error_str)
                 await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
 
 
