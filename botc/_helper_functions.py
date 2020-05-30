@@ -1,2 +1,0 @@
-"""Contains helper functions"""
-

@@ -34,3 +34,7 @@ def check_if_dm(ctx):
 def check_if_admin(ctx):
     """Check the author of the context, return True if they have admin perms or higher."""
     return __is_admin(ctx)
+
+def check_if_lobby(ctx):
+    """Check the channel of the context, return True if it is sent in the lobby channel"""
+    return __is_lobby(ctx)

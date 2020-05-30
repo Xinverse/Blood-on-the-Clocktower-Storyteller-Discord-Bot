@@ -1,37 +1,16 @@
 {
-    
-    "botc" : {
+    "cmd" : {
 
-        "game" : {
+        "github" : "The Github page of the bot can be found here: <https://github.com/Xinverse/BOTC-Bot>",
+        "dog" : "Did the dog land on its feet?",
+        "ping" : ":ping_pong: **Pong!** Latency: **{}** seconds.",
+        "uptime" : ":clock: **uptime:** {}"
 
-            
+    },
 
-        },
+    "formats" : {
 
-        "info" : {
+        "server_header": "Discord Werewolf Server"
 
-            "how_to_play" : "Blood on the Clocktower is a bluffing game enjoyed by 5 to 15 players on opposing teams of Good and Evil, overseen by a Storyteller. During a 'day' phase players socialize openly and whisper privately to trade knowledge or spread lies, culminating in a player's execution if a majority suspects them of being Evil. At 'night' time, players gather information, spread mischief, or kill. Use all your powers of deduction and deception to survive this game of murder and mystery. Players stay in the thick of the action to the very end even if their characters are killed, haunting Ravenswood Bluff as ghosts trying to win from beyond the grave. The tension and excitement builds for everyone as the bodies of victims pile ever higher..."
-
-        },
-
-        "characters" : {
-
-            "trouble_brewing" : {
-
-                
-
-            }
-
-        },
-
-        "cmds" : {
-
-
-
-        }
-
-       
-            
     }
-
 }

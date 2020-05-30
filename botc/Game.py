@@ -1,7 +1,6 @@
 """Contains the BOTC Game class"""
 
-class Game:
+import random
 
-    def __init__(self):
-        pass
-    
+class Game:
+   pass

@@ -20,8 +20,11 @@ class Pregame:
         """Clear the user ID list"""
         self.__init__()
     
-    def __repr__(self):
+    def __str__(self):
         return f"Pregame Object with {len(self)} users"
+
+    def __repr__(self):
+        return self.__str__()
     
     def __len__(self):
         return len(self._userid_list)

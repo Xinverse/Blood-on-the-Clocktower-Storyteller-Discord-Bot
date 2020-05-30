@@ -1,3 +1,8 @@
+# TODO
+# cmd folder
+# botutils folder
+# Game object
+
 import configparser
 import json
 import time
@@ -16,15 +21,12 @@ PREFIX = Config["settings"]["PREFIX"]
 client = commands.Bot(command_prefix=PREFIX, owner_id=OWNER_ID)
 logging.basicConfig(level=logging.WARNING)
 
-extensions = ["Admin", "Fun", "Gameplay", "Info"]
+extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners"]
 
 
-from botc.gamemodes.troublebrewing import Baron
-print(Baron().name)
 
-"""
 if __name__ == "__main__":
     for extension in extensions:
         client.load_extension(f"cmd.{extension}")
+    #client.load_extension("botutils.adds")
     client.run(TOKEN)
-"""
