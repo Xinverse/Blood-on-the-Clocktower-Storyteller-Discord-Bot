@@ -5,6 +5,11 @@ class Pregame:
 
     def __init__(self):
         self._userid_list = []
+    
+    @property
+    def list(self):
+        """Access the list of user id"""
+        return self._userid_list
 
     def add_player(self, userid):
         """Add a player based on its user ID"""

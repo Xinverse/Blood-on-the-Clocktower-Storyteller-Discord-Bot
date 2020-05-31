@@ -31,6 +31,7 @@ quitted_str = language["cmd"]["quitted"]
 error_str = language["system"]["error"]
 cooldown_str = language["errors"]["cmd_cooldown"]
 lobby_timeout_str = language["system"]["lobby_timeout"]
+time_pregame = language["cmd"]["time_pregame"]
 
 # the client object, stored locally
 local_client = None
@@ -80,11 +81,23 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
     
     def cog_check(self, ctx):
         return botutils.check_if_not_ignored(ctx)
+
+    
+    # ---------- START COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "start")
+    @commands.check(botutils.check_if_lobby)
+    @commands.check(botutils.check_if_in_pregame)
+    async def start(self, ctx):
+        """Start command"""
+        import main
+        night_phase.start()
+        main.master_state.pregame.clear()
     
 
     # ---------- JOIN COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "join", aliases = ["j"])
     @commands.check(botutils.check_if_lobby)
+    @commands.check(botutils.check_if_not_in_game)
     async def join(self, ctx):
         """Join command"""
 
@@ -95,8 +108,9 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             main.master_state.pregame.safe_add_player(ctx.author.id)
             await ctx.send(join_str.format(ctx.author.name, len(main.master_state.pregame)))
             # If you are the first player to join the game, then start the lobby timeout loop
-            if len(main.master_state.pregame) == 1:
+            if main.master_state.session == botutils.BotState.empty:
                 lobby_timeout.start()
+                main.master_state.transition_to_pregame()
         await botutils.add_alive_role(self.client, ctx.author)
         
     
@@ -113,24 +127,47 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             # If you are the last player to leave, then cancel the lobby timeout loop
             if len(main.master_state.pregame) == 0:
                 lobby_timeout.cancel()
+                main.master_state.transition_to_empty()
         else:
             await ctx.send(quitted_str.format(ctx.author.mention))
         await botutils.remove_alive_role(self.client, ctx.author)
     
 
+    # ---------- STATS COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "stats", aliases = ["statistics"])
+    @commands.check(botutils.check_if_lobby_or_spec_or_dm_or_admin)
+    @commands.check(botutils.check_if_not_in_empty)
+    async def stats(self, ctx):
+        """Stats command"""
+
+        import main
+        # If we are in pregame:
+        if main.master_state.session == botutils.BotState.pregame:
+            await botutils.send_pregame_stats(self.client, ctx, main.master_state.pregame.list)
+        # If we are in game:
+        elif main.master_state.session == botutils.BotState.game:
+            pass
+    
+
      # ---------- TIME COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "time", aliases = ["t"])
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    @commands.check(botutils.check_if_not_in_empty)
     async def time(self, ctx):
         """Time command"""
+
         import main
-        # If the pre-game lobby contains people, send the time remaining message
-        if len(main.master_state.pregame):
+        # If we are in pregame:
+        if main.master_state.session == botutils.BotState.pregame:
             now = datetime.now(timezone.utc)
             finish = lobby_timeout.next_iteration
             time_left = finish - now
-            await ctx.send(str(time_left.total_seconds()))
-        else:
+            time_left = time_left.total_seconds()
+            time_left = round(time_left)
+            msg = time_pregame.format(botutils.make_time_string(time_left), botutils.make_time_string(LOBBY_TIMEOUT))
+            await ctx.send(msg)
+        # If we are in game:
+        elif main.master_state.session == botutils.BotState.game:
             pass
 
 
@@ -140,8 +177,12 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         # Case: check failure
         if isinstance(error, commands.errors.CheckFailure):
             return
+
+        # Case: command on cooldown
         elif isinstance(error, commands.errors.CommandOnCooldown):
             await ctx.send(cooldown_str.format(ctx.author.mention))
+
+        # For other cases we will want to see the error
         else:
             try:
                 raise error

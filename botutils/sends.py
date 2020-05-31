@@ -2,15 +2,28 @@
 
 import configparser
 import enum
+import json
 from .helpers import make_ping
 
 Config = configparser.ConfigParser()
 Config.read("config.INI")
 
+SERVER_ID = Config["user"]["SERVER_ID"]
+SERVER_ID = int(SERVER_ID)
 LOBBY_CHANNEL_ID = Config["user"]["LOBBY_CHANNEL_ID"]
+LOBBY_CHANNEL_ID = int(LOBBY_CHANNEL_ID)
 LOGGING_CHANNEL_ID = Config["user"]["LOGGING_CHANNEL_ID"]
+LOGGING_CHANNEL_ID = int(LOGGING_CHANNEL_ID)
 OWNER_ID = Config["user"]["OWNER_ID"]
+OWNER_ID = int(OWNER_ID)
 MAX_MESSAGE_LEN = Config["misc"]["MAX_MESSAGE_LEN"]
+MAX_MESSAGE_LEN = int(MAX_MESSAGE_LEN)
+
+
+with open('botutils/bot_text.json') as json_file: 
+    language = json.load(json_file)
+
+stats_pregame_header = language["cmd"]["stats_pregame_header"]
 
 
 class Level(enum.Enum):
@@ -26,9 +39,27 @@ async def __send_log(client, message):
     await log_channel.send(message)
 
 
-def __create_python_code_block(client, message):
+def __create_python_code_block(message):
     """Create a python code block"""
     return f"```python\n{message}```"
+
+
+def __create_code_block(message):
+    """Create a python code block"""
+    return f"```\n{message}```"
+
+
+async def send_pregame_stats(client, ctx, id_list):
+    """Send the pregame stats board"""
+    msg = ctx.author.mention + " " + stats_pregame_header.format(len(id_list))
+    temp = "\n"
+    for userid in id_list:
+        member = client.get_guild(SERVER_ID).get_member(int(userid))
+        name = member.display_name
+        temp += f"{name} ({userid})\n"
+    temp = __create_code_block(temp)
+    msg += temp
+    await ctx.send(msg)
 
 
 async def __send_long_error(client, post, depth=0):
@@ -51,7 +82,7 @@ async def __send_long_error(client, post, depth=0):
 async def log(client, level, message):
     """Send a message to the logs with a header"""
     if level == Level.error:
-        msg = f"{level.value} {make_ping(OWNER_ID)}\n{__create_python_code_block(client, message)}"
+        msg = f"{level.value} {make_ping(OWNER_ID)}\n{__create_python_code_block(message)}"
         await __send_long_error(client, msg)
     else:
         msg = f"{level.value} {message}"

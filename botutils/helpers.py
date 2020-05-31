@@ -1,6 +1,7 @@
 """Contains other helper functions"""
 
 import configparser
+import datetime
 
 Config = configparser.ConfigParser()
 Config.read("config.INI")
@@ -35,3 +36,8 @@ def get_user_obj(client, userid):
 def make_code_block(msg):
     """Turn a message into a code block"""
     return f"```{msg}```"
+
+
+def make_time_string(seconds):
+    """Turn the number of seconds into a formatted time string"""
+    return str(datetime.timedelta(seconds=seconds))
