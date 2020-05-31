@@ -27,7 +27,8 @@
     "system" : {
 
         "restart" : "Rebooted, powered on.",
-        "error" : "An error occured and has been logged."
+        "error" : "An error occured and has been logged.",
+        "lobby_timeout" : "{} The game has taken too long to start and has been cancelled!"
 
     },
 
