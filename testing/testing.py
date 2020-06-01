@@ -1,6 +1,6 @@
 """Contains a dummy game class for testing purposes"""
 
-from .GameMeta import GameMeta
+from botutils import GameMeta
 
 class TestGame(GameMeta):
     """A dummy game class for testing purposes"""

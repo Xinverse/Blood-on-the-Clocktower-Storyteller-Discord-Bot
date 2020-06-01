@@ -63,6 +63,11 @@ async def night_phase():
     """Lobby timeout loop"""
     pass
 
+@night_phase.before_loop
+async def before_night_phase():
+    """Before the night phase loop"""
+    await botutils.send_lobby(local_client, "It is now nighttime.")
+
 # ---------- DAY PHASE LOOP ----------------------------------------
 
 @tasks.loop(seconds=DAY_PHASE, count=2)
@@ -87,8 +92,10 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
     @commands.command(pass_context=True, name = "start")
     @commands.check(botutils.check_if_lobby)
     @commands.check(botutils.check_if_in_pregame)
+    @commands.check(botutils.check_if_is_pregame_player)
     async def start(self, ctx):
         """Start command"""
+        lobby_timeout.cancel()
         import main
         night_phase.start()
         main.master_state.pregame.clear()

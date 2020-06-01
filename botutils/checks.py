@@ -62,6 +62,12 @@ def check_if_lobby_or_spec_or_dm_or_admin(ctx):
     return ctx.guild is None or __is_lobby(ctx) or __is_admin(ctx) or __is_specchat(ctx)
 
 
+def check_if_is_pregame_player(ctx):
+    """Check the author of the context, return True if they are registered in the pregame"""
+    import main
+    return ctx.author.id in main.master_state.pregame
+
+
 def check_if_dm(ctx):
     """Check the channel of the context, return True if it is sent in a private channel.
     Admins cannot bypass.
