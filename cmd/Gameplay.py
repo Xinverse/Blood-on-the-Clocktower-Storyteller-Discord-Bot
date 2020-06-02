@@ -16,10 +16,6 @@ ALIVE_ROLE_ID = int(ALIVE_ROLE_ID)
 Config.read("preferences.INI")
 LOBBY_TIMEOUT = Config["duration"]["LOBBY_TIMEOUT"]
 LOBBY_TIMEOUT = int(LOBBY_TIMEOUT)
-DAY_PHASE = Config["duration"]["DAY_PHASE"]
-DAY_PHASE = int(DAY_PHASE)
-NIGHT_PHASE = Config["duration"]["NIGHT_PHASE"]
-NIGHT_PHASE = int(NIGHT_PHASE)
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
@@ -54,26 +50,7 @@ async def after_lobby_timeout():
     # Remove the alive role from everyone
     await botutils.remove_all_alive_roles_pregame(local_client)
     # Clear the master pregame state
-    main.master_state.pregame.clear()
-
-# ---------- NIGHT PHASE LOOP ----------------------------------------
-
-@tasks.loop(seconds=NIGHT_PHASE, count=2)
-async def night_phase():
-    """Lobby timeout loop"""
-    pass
-
-@night_phase.before_loop
-async def before_night_phase():
-    """Before the night phase loop"""
-    await botutils.send_lobby(local_client, "It is now nighttime.")
-
-# ---------- DAY PHASE LOOP ----------------------------------------
-
-@tasks.loop(seconds=DAY_PHASE, count=2)
-async def day_phase():
-    """Lobby timeout loop"""
-    pass
+    main.master_state.transition_to_empty()
 
 
 class Gamplay(commands.Cog, name="Gameplay Commands"):
@@ -85,20 +62,24 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         local_client = self.client
     
     def cog_check(self, ctx):
+        """Global check for all commands of this cog: ignored users may not use commands"""
         return botutils.check_if_not_ignored(ctx)
 
     
-    # ---------- START COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "start")
-    @commands.check(botutils.check_if_lobby)
-    @commands.check(botutils.check_if_in_pregame)
-    @commands.check(botutils.check_if_is_pregame_player)
-    async def start(self, ctx):
-        """Start command"""
-        lobby_timeout.cancel()
+    # ---------- ROLE COMMAND ----------------------------------------
+    @commands.group(pass_context=True, name = "role")
+    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    async def role(self, ctx):
+        """Role command"""
+
+        if ctx.invoked_subcommand is None:
+            await ctx.send("Role command")
+    
+    @role.command()
+    async def all(self, ctx, *, role_name):
         import main
-        night_phase.start()
-        main.master_state.pregame.clear()
+        test = str(main.master_state.game_packs)
+        await ctx.send(test)
     
 
     # ---------- JOIN COMMAND ----------------------------------------
@@ -109,8 +90,12 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         """Join command"""
 
         import main
+
+        # The command user has already joined
         if main.master_state.pregame.is_joined(ctx.author.id):
             await ctx.send(joined_str.format(ctx.author.mention))
+
+        # The command user has not joined yet; make them join
         else:
             main.master_state.pregame.safe_add_player(ctx.author.id)
             await ctx.send(join_str.format(ctx.author.name, len(main.master_state.pregame)))
@@ -118,6 +103,7 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             if main.master_state.session == botutils.BotState.empty:
                 lobby_timeout.start()
                 main.master_state.transition_to_pregame()
+
         await botutils.add_alive_role(self.client, ctx.author)
         
     
@@ -156,7 +142,7 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             pass
     
 
-     # ---------- TIME COMMAND ----------------------------------------
+    # ---------- TIME COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "time", aliases = ["t"])
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     @commands.check(botutils.check_if_not_in_empty)
@@ -196,6 +182,13 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             except Exception:
                 await ctx.send(error_str)
                 await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
+    
+
+    async def cog_after_invoke(self, ctx):
+        """After invoking each command of this cog, perform some state checks"""
+
+        import main
+        main.master_state.sync_state()
 
 
 def setup(client):

@@ -15,3 +15,4 @@ from .Team import Team
 from .Townsfolk import Townsfolk
 from .Townsquare import TownSquare
 from .Vote import Vote
+from .setups import load_pack

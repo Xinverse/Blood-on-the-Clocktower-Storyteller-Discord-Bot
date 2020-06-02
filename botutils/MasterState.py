@@ -12,6 +12,7 @@ class MasterState:
         self._pregame = Pregame()
         self._game = None
         self._session = BotState.empty
+        self._game_packs = dict()
     
     @property
     def boottime(self):
@@ -37,11 +38,29 @@ class MasterState:
     def session(self):
         return self._session
     
+    @property
+    def game_packs(self):
+        return self._game_packs
+    
+    def add_pack(self, pack):
+        self._game_packs.update(pack)
+    
+    def sync_state(self):
+        if self.session == BotState.pregame:
+            self.transition_to_pregame()
+        elif self.session == BotState.empty:
+            self.transition_to_empty()
+        else:
+            self.transition_to_game()
+    
     def transition_to_pregame(self):
         self._session = BotState.pregame
+        self.game = None
     
     def transition_to_empty(self):
         self._session = BotState.empty
+        self.pregame.clear()
+        self.game = None
     
     def transition_to_game(self):
         self._session = BotState.game

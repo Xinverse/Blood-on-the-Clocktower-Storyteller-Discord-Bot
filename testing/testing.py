@@ -16,4 +16,8 @@ class TestGame(GameMeta):
 
     def end_game(self):
         pass
+
+    @property
+    def phase(self):
+        pass
     
