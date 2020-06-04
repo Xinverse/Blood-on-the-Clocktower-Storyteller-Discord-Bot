@@ -32,7 +32,7 @@
     },
 
     "empath" : {
-        "lore" : "",
+        "lore" : "My skin prickles. Something is not right here. I can feel it.",
         "description" : "The Empath keeps learning whether their neighbors are evil.\n- The Empath only learns how many of their neighbors are evil, not which one is evil.\n- The Empath does not detect dead players. So, if the Empath is sitting next to a dead player, the information refers not to the dead player, but to the closest alive player in that direction.\n- The Empath acts after the Demon, so if the Demon kills one of the Empath’s alive neighbors, the Empath does not learn about the now-dead player. The Empath's information is accurate at dawn, not at dusk.",
         "examples" : "- The Empath neighbors two good players—a Soldier and a Monk. The Empath learns a '0.'\n- The next day, the Soldier is executed. That night, the Monk is killed by the Imp. The Empath now detects the players sitting next to the Soldier and the Monk, which are a Librarian and an evil Gunslinger. The Empath now learns a '1.'\n- There are only three players left alive: the Empath, the Imp, and the Baron. No matter who is seated where, the Empath learns a '2.'",
         "instruction" : "Each night, you learn how many of your 2 alive neighbors are evil."
@@ -102,7 +102,7 @@
     },
 
     "drunk" : {
-        "lore" : "This is all perfectly *burp* logical. I know that Miss Dearheart is a fortune teller. She swears that Jenkins here is her butler. It's simple *hiccup* deduction.",
+        "lore" : "This is all perfectly (burp) logical. I know that Miss Dearheart is a fortune teller. She swears that Jenkins here is her butler. It's simple (hiccup) deduction.",
         "description" : "The Drunk thinks they are a Townsfolk and has no idea that they are actually the Drunk.\n- During setup, the Drunk's token does not go in the bag. Instead, a Townsfolk character token goes in the bag, and the player who draws that token is secretly the Drunk for the whole game. You know. They do not.\n- The Drunk has no ability. Whenever their Townsfolk ability would affect the game in some way, it doesn't. However, you pretend they are the Townsfolk they think they are. If that character would wake at night, wake the Drunk instead and act as if they are the Townsfolk. If that Townsfolk would gain information, you may give them false information instead—and you’re encouraged to do so.",
         "examples" : "- The Drunk, who thinks they are the Soldier, is attacked by the Imp. The Drunk dies.\n- The Drunk, who thinks they are the Empath, wakes and learns a '0,' even though they are sitting next to one evil player. The next night, they learn a '1.'\n- The Drunk, who thinks they are the Ravenkeeper, is killed at night. They choose the Saint, but learn that this player is the Poisoner.\n- The Fortune Teller is executed. That night, the Drunk Undertaker learns that the Drunk died today.",
         "instruction" : "You do not know you are the Drunk. You think you are a Townsfolk, but your ability malfunctions."

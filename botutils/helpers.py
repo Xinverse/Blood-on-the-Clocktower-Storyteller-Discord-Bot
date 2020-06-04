@@ -4,10 +4,12 @@ import configparser
 import datetime
 import globvars
 
+
 Config = configparser.ConfigParser()
 Config.read("config.INI")
 
 SERVER_ID = Config["user"]["SERVER_ID"]
+
 
 def make_ping(userid):
     """Turn a user ID into a ping"""
@@ -51,7 +53,8 @@ def update_state_machine():
 
 def find_role_in_all(role_name):
     """
-    Find a role name amongst all the loaded game packs
+    Find a role name amongst all the loaded game packs. 
+    Return the role class if it is found, else return None
 
     The game_packs variable is coded in the following way:
 
@@ -66,7 +69,7 @@ def find_role_in_all(role_name):
         for gamemode_title in pack_content["gamemodes"]:
             gamemode_content = pack_content["gamemodes"][gamemode_title]
             for role in gamemode_content:
-
                 if role_name.lower() in role.name.lower():
-
                     return role
+        
+

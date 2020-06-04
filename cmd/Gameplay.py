@@ -72,16 +72,35 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
     async def role(self, ctx, *, role_name):
         """Role command"""
 
-        await botutils.find_role_in_all(role_name).send_role_card_embed(ctx)
+        found = botutils.find_role_in_all(role_name)
+        
+        # We did not find the role, send them the whole list
+        if found is None:
+            await ctx.send(globvars.master_state.game_packs["botc"]["formatter"].create_complete_roles_list())
 
-    
+        # We found the role, send them that role card only
+        else:
+            await found.send_role_card_embed(ctx)
+
     @role.error
     async def role_error(self, ctx, error):
- 
-        if isinstance(error, commands.errors.MissingRequiredArgument):
-            await ctx.send("all the roles here")
+        """Error handling of the role command"""
 
-        print(error)
+        # Case: check failure
+        if isinstance(error, commands.errors.CheckFailure):
+            return
+        
+        # Case: missing argument -> we will print the entire list of roles
+        elif isinstance(error, commands.errors.MissingRequiredArgument):
+            await ctx.send(globvars.master_state.game_packs["botc"]["formatter"].create_complete_roles_list())
+        
+        # For other cases we will want to see the error logged
+        else:
+            try:
+                raise error
+            except Exception:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
 
 
     # ---------- JOIN COMMAND ----------------------------------------
@@ -106,6 +125,22 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
 
         # Still give everyone the role just in case of discord sync issue
         await botutils.add_alive_role(ctx.author)
+    
+    @join.error
+    async def join_error(self, ctx, error):
+        """Error handling of the join command"""
+
+        # Case: check failure
+        if isinstance(error, commands.errors.CheckFailure):
+            return
+        
+        # For other cases we will want to see the error logged
+        else:
+            try:
+                raise error
+            except Exception:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
         
     
     # ---------- QUIT COMMAND ----------------------------------------
@@ -130,6 +165,22 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         # Still take away the role from everyone just in case of discord sync issue
         await botutils.remove_alive_role(ctx.author)
     
+    @quit.error
+    async def quit_error(self, ctx, error):
+        """Error handling of the quit command"""
+
+        # Case: check failure
+        if isinstance(error, commands.errors.CheckFailure):
+            return
+        
+        # For other cases we will want to see the error logged
+        else:
+            try:
+                raise error
+            except Exception:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+    
 
     # ---------- STATS COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "stats", aliases = ["statistics"])
@@ -145,6 +196,22 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         # If we are in game:
         elif globvars.master_state.session == botutils.BotState.game:
             pass
+    
+    @stats.error
+    async def stats_error(self, ctx, error):
+        """Error handling of the stats command"""
+
+        # Case: check failure
+        if isinstance(error, commands.errors.CheckFailure):
+            return
+        
+        # For other cases we will want to see the error logged
+        else:
+            try:
+                raise error
+            except Exception:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
     
 
     # ---------- TIME COMMAND ----------------------------------------
@@ -167,20 +234,16 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         # If we are in game:
         elif globvars.master_state.session == botutils.BotState.game:
             pass
-
-
-    async def cog_command_error(self, ctx, error):
-        """Error handling on commands"""
+    
+    @time.error
+    async def time_error(self, ctx, error):
+        """Error handling of the time command"""
 
         # Case: check failure
         if isinstance(error, commands.errors.CheckFailure):
             return
-
-        # Case: command on cooldown
-        elif isinstance(error, commands.errors.CommandOnCooldown):
-            await ctx.send(cooldown_str.format(ctx.author.mention))
-
-        # For other cases we will want to see the error
+        
+        # For other cases we will want to see the error logged
         else:
             try:
                 raise error
@@ -189,6 +252,7 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
                 await botutils.log(botutils.Level.error, traceback.format_exc()) 
     
 
+    # ---------- EXTRA ----------------------------------------
     async def cog_after_invoke(self, ctx):
         """After invoking each command of this cog, perform some state checks"""
 

@@ -13,11 +13,8 @@ affiliated with them in any way.
 
 # TODO
 # BOTC Game object
-# Role command
-# State machine
 
 import configparser
-import json
 import logging
 import botc
 import globvars
@@ -32,7 +29,12 @@ if __name__ == "__main__":
     OWNER_ID = Config["user"]["OWNER_ID"]
     PREFIX = Config["settings"]["PREFIX"]
 
-    client = commands.Bot(command_prefix=PREFIX, owner_id=OWNER_ID, case_insensitive=True)
+    client = commands.Bot(
+        command_prefix=PREFIX, 
+        owner_id=OWNER_ID, 
+        case_insensitive=True, 
+        description="Storyteller Bot"
+        )
     logging.basicConfig(level=logging.WARNING)
 
     print("===== LOADING GAME PACKS =====")
