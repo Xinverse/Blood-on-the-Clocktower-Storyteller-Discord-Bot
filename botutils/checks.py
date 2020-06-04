@@ -3,6 +3,7 @@
 import configparser
 import json
 import botutils
+import globvars
 
 Config = configparser.ConfigParser()
 Config.read("config.INI")
@@ -30,20 +31,17 @@ def __is_admin(ctx):
 
 def check_if_in_pregame(ctx):
     """Check if the global state of the bot is in pregame"""
-    import main
-    return main.master_state.session == botutils.BotState.pregame
+    return globvars.master_state.session == botutils.BotState.pregame
 
 
 def check_if_not_in_game(ctx):
     """Check if the global state of the bot is not in game"""
-    import main
-    return main.master_state.session != botutils.BotState.game
+    return globvars.master_state.session != botutils.BotState.game
 
 
 def check_if_not_in_empty(ctx):
     """Check if the global state of the bot is not in empty state"""
-    import main
-    return main.master_state.session != botutils.BotState.empty
+    return globvars.master_state.session != botutils.BotState.empty
 
 
 def check_if_lobby_or_dm_or_admin(ctx):
@@ -64,8 +62,7 @@ def check_if_lobby_or_spec_or_dm_or_admin(ctx):
 
 def check_if_is_pregame_player(ctx):
     """Check the author of the context, return True if they are registered in the pregame"""
-    import main
-    return ctx.author.id in main.master_state.pregame
+    return ctx.author.id in globvars.master_state.pregame
 
 
 def check_if_dm(ctx):
@@ -93,3 +90,8 @@ def check_if_not_ignored(ctx):
 def return_false(ctx):
     """Always return false. Use for debugging/testing"""
     return False
+
+
+def return_true(ctx):
+    """Always return true. Use for debugging/testing"""
+    return True

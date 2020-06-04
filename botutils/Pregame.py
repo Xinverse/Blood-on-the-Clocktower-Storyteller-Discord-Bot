@@ -10,6 +10,10 @@ class Pregame:
     def list(self):
         """Access the list of user id"""
         return self._userid_list
+    
+    def is_empty(self):
+        """Is the pregame lobby empty? (meaning that there are 0 player who have joined)"""
+        return len(self._userid_list) == 0
 
     def add_player(self, userid):
         """Add a player based on its user ID"""

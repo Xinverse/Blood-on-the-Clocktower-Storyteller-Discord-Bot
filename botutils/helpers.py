@@ -2,6 +2,7 @@
 
 import configparser
 import datetime
+import globvars
 
 Config = configparser.ConfigParser()
 Config.read("config.INI")
@@ -23,14 +24,14 @@ def strip_ping(raw):
     return raw.strip("<@!>")
 
 
-def get_member_obj(client, userid):
+def get_member_obj(userid):
     """Get the member object from the user ID"""
-    return client.get_guild(int(SERVER_ID)).get_member(int(userid))
+    return globvars.client.get_guild(int(SERVER_ID)).get_member(int(userid))
 
 
-def get_user_obj(client, userid):
+def get_user_obj(userid):
     """Get the user object from the user ID"""
-    return client.get_user(int(userid))
+    return globvars.client.get_user(int(userid))
 
 
 def make_code_block(msg):
@@ -41,3 +42,31 @@ def make_code_block(msg):
 def make_time_string(seconds):
     """Turn the number of seconds into a formatted time string"""
     return str(datetime.timedelta(seconds=seconds))
+
+
+def update_state_machine():
+    """Update the state machine"""
+    globvars.master_state.state_machine.run(globvars.master_state)
+
+
+def find_role_in_all(role_name):
+    """
+    Find a role name amongst all the loaded game packs
+
+    The game_packs variable is coded in the following way:
+
+    {'botc': {'game_obj': <botc.Game.Game object at 0x1187bffd0>, 'gamemodes': {'trouble-brewing': 
+    [Baron Obj, Butler Obj, Chef Obj, Drunk Obj, Empath Obj, Fortune Teller Obj, Imp Obj, 
+    Investigator Obj, Librarian Obj, Mayor Obj, Monk Obj, Poisoner Obj, Ravenkeeper Obj, 
+    Recluse Obj, Saint Obj, Scarlet Woman Obj, Slayer Obj, Soldier Obj, Undertaker Obj, 
+    Virgin Obj, Washerwoman Obj]}}}
+    """
+    for game_pack_title in globvars.master_state.game_packs:
+        pack_content = globvars.master_state.game_packs[game_pack_title]
+        for gamemode_title in pack_content["gamemodes"]:
+            gamemode_content = pack_content["gamemodes"][gamemode_title]
+            for role in gamemode_content:
+
+                if role_name.lower() in role.name.lower():
+
+                    return role

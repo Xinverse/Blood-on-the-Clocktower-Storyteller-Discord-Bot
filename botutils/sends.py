@@ -3,6 +3,7 @@
 import configparser
 import enum
 import json
+import globvars
 from .helpers import make_ping
 
 Config = configparser.ConfigParser()
@@ -33,9 +34,9 @@ class Level(enum.Enum):
     error = "**[ERROR]**"
 
 
-async def __send_log(client, message):
+async def __send_log(message):
     """Send a message to the logs"""
-    log_channel = client.get_channel(int(LOGGING_CHANNEL_ID))
+    log_channel = globvars.client.get_channel(int(LOGGING_CHANNEL_ID))
     await log_channel.send(message)
 
 
@@ -49,12 +50,12 @@ def __create_code_block(message):
     return f"```\n{message}```"
 
 
-async def send_pregame_stats(client, ctx, id_list):
+async def send_pregame_stats(ctx, id_list):
     """Send the pregame stats board"""
     msg = ctx.author.mention + " " + stats_pregame_header.format(len(id_list))
     temp = "\n"
     for userid in id_list:
-        member = client.get_guild(SERVER_ID).get_member(int(userid))
+        member = globvars.client.get_guild(SERVER_ID).get_member(int(userid))
         name = member.display_name
         temp += f"{name} ({userid})\n"
     temp = __create_code_block(temp)
@@ -62,34 +63,34 @@ async def send_pregame_stats(client, ctx, id_list):
     await ctx.send(msg)
 
 
-async def __send_long_error(client, post, depth=0):
+async def __send_long_error(post, depth=0):
     """Send a message and break it down if it goes over the Discord message limit"""
     max = int(MAX_MESSAGE_LEN) - 50
     if len(post) <= max:
         if depth:
-            await __send_log(client, "[CONTINUED] " + "```py\n" + post[:max])
+            await __send_log("[CONTINUED] " + "```py\n" + post[:max])
         else:
-            await __send_log(client, post)
+            await __send_log(post)
             return
     else:
         if depth:
-            await __send_log(client, "[CONTINUED] " + "```py\n" + post[:max] + "```")
+            await __send_log("[CONTINUED] " + "```py\n" + post[:max] + "```")
         else:
-            await __send_log(client, post[:max] + "```")
-        await __send_long_error(client, post[max:], depth + 1)
+            await __send_log(post[:max] + "```")
+        await __send_long_error(post[max:], depth + 1)
 
 
-async def log(client, level, message):
+async def log(level, message):
     """Send a message to the logs with a header"""
     if level == Level.error:
         msg = f"{level.value} {make_ping(OWNER_ID)}\n{__create_python_code_block(message)}"
-        await __send_long_error(client, msg)
+        await __send_long_error(msg)
     else:
         msg = f"{level.value} {message}"
-        await __send_log(client, msg)
+        await __send_log(msg)
 
 
-async def send_lobby(client, message):
+async def send_lobby(message):
     """Send a message to the lobby"""
-    lobby_channel = client.get_channel(int(LOBBY_CHANNEL_ID))
+    lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     await lobby_channel.send(message)

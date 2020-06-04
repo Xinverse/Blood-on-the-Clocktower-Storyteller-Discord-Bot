@@ -3,6 +3,7 @@
 import configparser
 import traceback
 import json
+import globvars
 import discord
 import botutils
 from discord.ext import commands
@@ -35,12 +36,12 @@ class Admin(commands.Cog, name="Admin Commands"):
         """Force join command"""
 
         import main
-        if main.master_state.pregame.is_joined(member.id):
+        if globvars.master_state.pregame.is_joined(member.id):
             await ctx.send(fjoined_str.format(ctx.author.mention, member.name))
         else:
-            main.master_state.pregame.safe_add_player(member.id)
-            await ctx.send(fjoin_str.format(member.name, len(main.master_state.pregame)))
-        await botutils.add_alive_role(self.client, member)
+            globvars.master_state.pregame.safe_add_player(member.id)
+            await ctx.send(fjoin_str.format(member.name, len(globvars.master_state.pregame)))
+        await botutils.add_alive_role(member)
     
 
     # ---------- FLEAVE COMMAND ----------------------------------------
@@ -49,12 +50,12 @@ class Admin(commands.Cog, name="Admin Commands"):
         """Force leave command"""
 
         import main
-        if main.master_state.pregame.is_joined(member.id):
-            main.master_state.pregame.safe_remove_player(member.id)
-            await ctx.send(fleave_str.format(member.name, len(main.master_state.pregame)))
+        if globvars.master_state.pregame.is_joined(member.id):
+            globvars.master_state.pregame.safe_remove_player(member.id)
+            await ctx.send(fleave_str.format(member.name, len(globvars.master_state.pregame)))
         else:
             await ctx.send(fleaved_str.format(ctx.author.mention, member.name))
-        await botutils.remove_alive_role(self.client, member)
+        await botutils.remove_alive_role(member)
 
 
     async def cog_command_error(self, ctx, error):
@@ -75,7 +76,7 @@ class Admin(commands.Cog, name="Admin Commands"):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
       
 
 def setup(client):

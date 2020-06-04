@@ -23,12 +23,12 @@ class Listeners(commands.Cog):
         print(f"Logged in as {self.client.user.name}")
         print(f"Bot ID {self.client.user.id}")
         print("----------")
-        await botutils.log(self.client, botutils.Level.info, restart_msg)
+        await botutils.log(botutils.Level.info, restart_msg)
     
     @commands.Cog.listener()
     async def on_error(self, event):
         """On_error event"""
-        await botutils.log(self.client, botutils.Level.error, event)
+        await botutils.log(botutils.Level.error, event)
 
 
 def setup(client):

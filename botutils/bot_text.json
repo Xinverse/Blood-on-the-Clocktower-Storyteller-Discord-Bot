@@ -2,7 +2,6 @@
     "cmd" : {
 
         "github" : "The Github page of the bot can be found here: <https://github.com/Xinverse/BOTC-Bot>",
-        "dog" : "Did the dog land on its feet?",
         "ping" : ":ping_pong: **Pong!** Latency: **{}** seconds.",
         "uptime" : ":clock: **uptime:** {}",
         "join" : "**{}** joined the game and raised the number of players to **{}**.",
@@ -18,25 +17,66 @@
 
     },
 
+    "doc" : {
+
+        "dog" : {
+            "brief" : "flip a dog",
+            "help" : "We know by now that the cat always lands on its feet... but what about dogs? Will we ever find out?...",
+            "description" : "[DOG] command",
+            "outputs" : [
+                "Did the dog land on its feet?",
+                "I really wonder, did the dog land on its feet?",
+                "Now I *really* wonder, did the dog land on its feet?!",
+                "I'm deeply sorry, but the Programmer has forgotten to implement this function, and so the eternal question of the Dog and its legendary Feet will forever remain a mystery."
+            ],
+            "weights" : [
+                0.70,
+                0.27,
+                0.02,
+                0.01
+            ]
+        },
+
+        "coin" : {
+            "brief" : "flip a coin",
+            "help" : "Can't make a decision? What better way than to leave it up for chance! Friendly reminder that the advice offered by the coin comes with no guarantee whatsoever. Use at your own risk.",
+            "description" : "[COIN] command",
+            "outputs" : [
+                "The coin landed on its **head**.",
+                "The coin landed on its **tails**.",
+                "The coin rolled underneath the table, and no one ever found it again.",
+                "The coin landed on its **side**! Consider buying a lottery ticket today?"
+            ],
+            "weights" : [
+                0.49,
+                0.49,
+                0.01,
+                0.01
+            ]
+        }
+
+    },
+
     "errors" : {
 
         "user_not_found" : "{} :x: Specified user is not found!",
         "missing_user" : "{} :x: Missing argument, please specify a valid user!",
         "cmd_cooldown" : "{} :x: This command is ratelimited."
 
-    },
+        },
 
     "system" : {
 
         "restart" : "Rebooted, powered on.",
-        "error" : "An error occured and has been logged.",
+        "error" : "An error occurred and has been logged.",
         "lobby_timeout" : "{} The game has taken too long to start and has been cancelled!"
 
-    },
+        },
 
     "formats" : {
 
         "server_header": "Discord Werewolf Server"
 
     }
+    
 }

@@ -126,7 +126,7 @@ class Character:
         """
         return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list] 
 
-    def create_role_card_embed(self):
+    async def send_role_card_embed(self, ctx):
         """Create the role card embed object and return it"""
 
         def make_embed(role_name, 
@@ -172,7 +172,7 @@ class Character:
                            self.examples, 
                            pic_link, 
                            wiki_link)
-        return embed
+        await ctx.send(embed=embed)
     
     def create_opening_dm_embed(self):
         """Create the opening DM (on game start) embed object and return it"""

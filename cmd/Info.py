@@ -5,6 +5,7 @@ import configparser
 import traceback
 import json 
 import botutils
+import globvars
 from discord.ext import commands
 from time import time
 from datetime import timedelta
@@ -58,8 +59,7 @@ class Info(commands.Cog, name="Information Commands"):
     async def uptime(self, ctx):
         """Check the uptime."""
 
-        from main import master_state
-        uptime = time() - master_state.boottime
+        uptime = time() - globvars.master_state.boottime
         uptime = round(uptime)
         uptime_formatted = str(timedelta(seconds=uptime))
         await ctx.send(uptime_str.format(uptime_formatted))
@@ -76,7 +76,7 @@ class Info(commands.Cog, name="Information Commands"):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(self.client, botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
 
 
 def setup(client):

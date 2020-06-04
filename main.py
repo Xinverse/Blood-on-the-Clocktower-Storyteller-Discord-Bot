@@ -1,16 +1,27 @@
+"""
+
+STORYTELLER BOT
+-------------------------
+[2020] Code by Xinverse
+
+NOTICE: The copyrights of the games belong to their respective holders, 
+unless otherwise specified. This project is an independent adaptation 
+of commercial board games into Discord bot format; the Developer is not 
+affiliated with them in any way. 
+
+"""
+
 # TODO
-# Game object
-# Stats command
+# BOTC Game object
+# Role command
+# State machine
 
 import configparser
 import json
 import logging
 import botc
+import globvars
 from discord.ext import commands
-from botutils import MasterState
-
-# Globals
-master_state = MasterState()
 
 if __name__ == "__main__":
 
@@ -24,12 +35,19 @@ if __name__ == "__main__":
     client = commands.Bot(command_prefix=PREFIX, owner_id=OWNER_ID, case_insensitive=True)
     logging.basicConfig(level=logging.WARNING)
 
-    botc.load_pack(master_state)
-    print(master_state.game_packs)
+    print("===== LOADING GAME PACKS =====")
+    botc.load_pack(globvars.master_state)
+    print(globvars.master_state.game_packs)
+
+    globvars.client = client
 
     extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners"]
 
-    for extension in extensions:
-        client.load_extension(f"cmd.{extension}")
+    print("===== LOADING COMMAND EXTENSIONS =====")
 
-    client.run(TOKEN)
+    for extension in extensions:
+        globvars.client.load_extension(f"cmd.{extension}")
+        print(f"> {extension} cog successfully loaded")
+
+    print("===== LOGGING IN =====")
+    globvars.client.run(TOKEN)
