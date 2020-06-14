@@ -7,10 +7,16 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.librarian.value.lower()]
 
+
 class Librarian(Townsfolk, TroubleBrewing, Character):
-    """Librarian:
-    You start knowing that 1 of 2 players is a particular Outsider.
+    """Librarian: You start knowing that 1 of 2 players is a particular Outsider.
     (Or that zero are in play)
+
+    ===== LIBRARIAN ===== 
+
+    true_self = librarian
+    ego_self = librarian
+    social_self = librarian
     """
     
     def __init__(self):
@@ -28,3 +34,4 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Librarian"
 
         self._role_enum = TBRole.librarian
+    

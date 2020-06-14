@@ -46,8 +46,4 @@ class GameMeta(metaclass=ABCMeta):
         """End the game, compute winners etc."""
         pass
 
-    @abstractproperty
-    def phase(self):
-        """Return the current phase the game is in (day, night, etc.)"""
-        pass
     

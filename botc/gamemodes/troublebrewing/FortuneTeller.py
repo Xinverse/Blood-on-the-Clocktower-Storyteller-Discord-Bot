@@ -8,9 +8,14 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
     character_text = json.load(json_file)[TBRole.fortuneteller.value.lower()]
 
 class FortuneTeller(Townsfolk, TroubleBrewing, Character):
-    """Fortune Teller:
-    Each night, choose 2 players: you learn if either is a Demon. There is 1 good player 
-    that registers falsely to you.
+    """Fortune Teller: Each night, choose 2 players: you learn if either is a Demon. 
+    There is 1 good player that registers falsely to you.
+
+    ===== FORTUNE TELLER ===== 
+
+    true_self = fortune teller
+    ego_self = fortune teller
+    social_self = fortune teller
     """
     
     def __init__(self):

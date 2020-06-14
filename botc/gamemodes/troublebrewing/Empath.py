@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.empath.value.lower()]
 
+
 class Empath(Townsfolk, TroubleBrewing, Character):
-    """Empath:
-    Each night, you learn how many of your 2 alive neighbors are evil.
+    """Empath: Each night, you learn how many of your 2 alive neighbors are evil.
+    
+    ===== EMPATH ===== 
+
+    true_self = empath
+    ego_self = empath
+    social_self = empath
     """
     
     def __init__(self):
@@ -27,4 +33,3 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Empath"
 
         self._role_enum = TBRole.empath
-

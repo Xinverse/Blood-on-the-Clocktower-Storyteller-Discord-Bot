@@ -7,10 +7,16 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.virgin.value.lower()]
 
+
 class Virgin(Townsfolk, TroubleBrewing, Character):
-    """Virgin:
-    The 1st time you are nominated, if the nominator is a Townsfolk, 
+    """Virgin: The 1st time you are nominated, if the nominator is a Townsfolk, 
     they are executed immediately.
+
+    ===== VIRGIN ===== 
+
+    true_self = virgin
+    ego_self = virgin
+    social_self = virgin
     """
 
     def __init__(self):

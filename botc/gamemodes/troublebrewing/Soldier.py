@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.soldier.value.lower()]
 
+
 class Soldier(Townsfolk, TroubleBrewing, Character):
-    """Soldier:
-    You are safe from the Demon.
+    """Soldier: You are safe from the Demon.
+
+    ===== SOLDIER ===== 
+
+    true_self = soldier
+    ego_self = soldier
+    social_self = soldier
     """
 
     def __init__(self):

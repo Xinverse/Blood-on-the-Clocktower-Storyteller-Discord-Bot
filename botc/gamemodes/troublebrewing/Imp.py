@@ -7,9 +7,16 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.imp.value.lower()]
 
+
 class Imp(Demon, TroubleBrewing, Character):
-    """Imp:
-    Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.
+    """Imp: Each night*, choose a player: they die. If you kill yourself this way, 
+    a Minion becomes the Imp.
+
+    ===== IMP ===== 
+
+    true_self = imp
+    ego_self = imp
+    social_self = imp
     """
 
     def __init__(self):

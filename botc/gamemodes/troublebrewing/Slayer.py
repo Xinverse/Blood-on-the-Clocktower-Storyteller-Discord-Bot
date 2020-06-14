@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.slayer.value.lower()]   
 
+
 class Slayer(Townsfolk, TroubleBrewing, Character):
-    """Slayer:
-    Once per game, during the day, publicly choose a player: if they are the Demon, they die.
+    """Slayer: Once per game, during the day, publicly choose a player: if they are the Demon, they die.
+
+    ===== SLAYER ===== 
+
+    true_self = slayer
+    ego_self = slayer
+    social_self = slayer
     """
 
     def __init__(self):

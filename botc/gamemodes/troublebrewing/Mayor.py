@@ -7,10 +7,16 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.mayor.value.lower()]
 
+
 class Mayor(Townsfolk, TroubleBrewing, Character):
-    """Mayor:
-    If only 3 players live and no execution occurs, your team wins. If you die at night, another
-    player might die instead.
+    """Mayor: If only 3 players live and no execution occurs, your team wins. If you die at night, 
+    another player might die instead.
+
+    ===== MAYOR ===== 
+
+    true_self = mayor
+    ego_self = mayor
+    social_self = mayor
     """
 
     def __init__(self):

@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.monk.value.lower()]
 
+
 class Monk(Townsfolk, TroubleBrewing, Character):
-    """Monk:
-    Each night*, choose a player (not yourself): they are safe from the Demon tonight.
+    """Monk: Each night*, choose a player (not yourself): they are safe from the Demon tonight.
+
+    ===== MONK ===== 
+
+    true_self = monk
+    ego_self = monk
+    social_self = monk
     """
     
     def __init__(self):

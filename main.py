@@ -13,12 +13,21 @@ affiliated with them in any way.
 
 # TODO
 # BOTC Game object
+# Gamemode command
+# Design document
+# Start night + first round of dm
 
 import configparser
 import logging
 import botc
 import globvars
 from discord.ext import commands
+
+
+# Playtesting botc
+print(botc.gamemodes.troublebrewing.Recluse().social_self)
+
+"""
 
 if __name__ == "__main__":
 
@@ -37,6 +46,7 @@ if __name__ == "__main__":
         )
     logging.basicConfig(level=logging.WARNING)
 
+    # Loading game packs
     print("===== LOADING GAME PACKS =====")
     botc.load_pack(globvars.master_state)
     print(globvars.master_state.game_packs)
@@ -45,6 +55,7 @@ if __name__ == "__main__":
 
     extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners"]
 
+    # Loading command extensions
     print("===== LOADING COMMAND EXTENSIONS =====")
 
     for extension in extensions:
@@ -53,3 +64,4 @@ if __name__ == "__main__":
 
     print("===== LOGGING IN =====")
     globvars.client.run(TOKEN)
+"""

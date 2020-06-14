@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.poisoner.value.lower()]
 
+
 class Poisoner(Minion, TroubleBrewing, Character):
-    """Poisoner:
-    Each night, choose a player, their ability malfunctions tonight and tomorrow day.
+    """Poisoner: Each night, choose a player, their ability malfunctions tonight and tomorrow day.
+
+    ===== POISONER ===== 
+
+    true_self = poisoner
+    ego_self = poisoner
+    social_self = poisoner
     """
 
     def __init__(self):

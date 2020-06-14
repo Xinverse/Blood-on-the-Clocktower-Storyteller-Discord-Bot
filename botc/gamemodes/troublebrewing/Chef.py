@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.chef.value.lower()]
 
+
 class Chef(Townsfolk, TroubleBrewing, Character):
-    """Chef:
-    You start knowing how many pairs of evil players there are.
+    """Chef: You start knowing how many pairs of evil players there are.
+
+    ===== CHEF ===== 
+
+    true_self = chef
+    ego_self = chef
+    social_self = chef
     """
     
     def __init__(self):
@@ -27,4 +33,3 @@ class Chef(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Chef"
 
         self._role_enum = TBRole.chef
-

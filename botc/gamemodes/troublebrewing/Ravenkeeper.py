@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.ravenkeeper.value.lower()]
 
+
 class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
-    """Ravenkeeper:
-    If you die at night, you are woken to choose a player: you learn their character.
+    """Ravenkeeper: If you die at night, you are woken to choose a player: you learn their character.
+
+    ===== RAVENKEEPER ===== 
+
+    true_self = ravenkeeper
+    ego_self = ravenkeeper
+    social_self = ravenkeeper
     """
     
     def __init__(self):

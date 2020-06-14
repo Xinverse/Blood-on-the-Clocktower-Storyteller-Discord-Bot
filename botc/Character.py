@@ -49,6 +49,9 @@ class Character:
         self._art_link = None
         self._wiki_link = None
         self._role_enum = None
+        self._true_role = None
+        self._ego_role = None
+        self._social_role = None
 
         # Override by gamemode class
         self._gm_of_appearance = None
@@ -57,6 +60,30 @@ class Character:
         # Override by category class
         self._category = None
         self._team = None
+
+        # Other
+        self.__role_class = self.__class__
+    
+    @property
+    def true_self(self):
+        """Layers of Role Identity:
+        1. true_self = what the game uses for win-con computations
+        """
+        return self.__role_class()
+
+    @property
+    def ego_self(self):
+        """Layers of Role Identity:
+        2. ego_self = what the player thinks they are
+        """
+        return self.__role_class()
+
+    @property
+    def social_self(self):
+        """Layers of Role Identity:
+        3. social_self = what the other players think the player is
+        """
+        return self.__role_class()
     
     @property
     def main_wiki_link(self):

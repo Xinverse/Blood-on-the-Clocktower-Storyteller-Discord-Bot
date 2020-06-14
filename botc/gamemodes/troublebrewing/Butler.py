@@ -7,10 +7,16 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.butler.value.lower()]
 
+
 class Butler(Outsider, TroubleBrewing, Character):
-    """Butler:
-    Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting 
-    too.
+    """Butler: Each night, choose a player (not yourself): tomorrow, you may only vote if 
+    they are voting too.
+
+    ===== BUTLER ===== 
+
+    true_self = butler
+    ego_self = butler
+    social_self = butler
     """
 
     def __init__(self):
@@ -28,3 +34,4 @@ class Butler(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Butler"
 
         self._role_enum = TBRole.butler
+    

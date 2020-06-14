@@ -8,8 +8,13 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
     character_text = json.load(json_file)[TBRole.scarletwoman.value.lower()]
 
 class ScarletWoman(Minion, TroubleBrewing, Character):
-    """Scarlet Woman:
-    If there are 5 or more players alive & the Demon dies, you become the Demon.
+    """Scarlet Woman: If there are 5 or more players alive & the Demon dies, you become the Demon.
+
+    ===== SCARLET WASHERWOMAN ===== 
+
+    true_self = washerwoman
+    ego_self = washerwoman
+    social_self = washerwoman
     """
 
     def __init__(self):

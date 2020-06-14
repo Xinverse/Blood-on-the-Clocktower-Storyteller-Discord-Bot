@@ -1,15 +1,22 @@
 """Contains the Recluse Character class"""
 
 import json 
-from botc import Outsider, Character
+import random
+from botc import Outsider, Character, Minion, Demon
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.recluse.value.lower()]
 
+
 class Recluse(Outsider, TroubleBrewing, Character):
-    """Recluse:
-    You might register as evil & as a Minion or Demon, even if dead.
+    """Recluse: You might register as evil & as a Minion or Demon, even if dead.
+
+    ===== RECLUSE ===== 
+
+    true_self = recluse
+    ego_self = recluse
+    social_self = [minion] / [demon] / recluse *ephemeral
     """
 
     def __init__(self):
@@ -27,4 +34,10 @@ class Recluse(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Recluse"
 
         self._role_enum = TBRole.recluse
+    
+    @property
+    def social_self(self):
+        possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
+                         if issubclass(role_class, Demon) or issubclass(role_class, Minion)]
+        return random.choice(possibilities)
         

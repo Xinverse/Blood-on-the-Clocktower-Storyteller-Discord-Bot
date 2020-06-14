@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.investigator.value.lower()]
 
+
 class Investigator(Townsfolk, TroubleBrewing, Character):
-    """Investigator:
-    You start knowing 1 of 2 players is a particular Minion.
+    """Investigator: You start knowing 1 of 2 players is a particular Minion.
+
+    ===== INVESTIGATOR ===== 
+
+    true_self = investigator
+    ego_self = investigator
+    social_self = investigator
     """
 
     def __init__(self):

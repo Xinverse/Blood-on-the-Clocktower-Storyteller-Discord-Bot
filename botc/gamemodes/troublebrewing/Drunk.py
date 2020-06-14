@@ -1,15 +1,21 @@
 """Contains the Drunk Character class"""
 
 import json 
-from botc import Outsider, Character
+import random
+from botc import Outsider, Character, Townsfolk
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.drunk.value.lower()]
 
 class Drunk(Outsider, TroubleBrewing, Character):
-    """Drunk:
-    You think you are a Townsfolk, but your ability malfunctions.
+    """Drunk: You think you are a Townsfolk, but your ability malfunctions.
+
+    ===== DRUNK ===== 
+
+    true_self = drunk
+    ego_self = [townsfolk] *persistent
+    social_self = drunk
     """
 
     def __init__(self):
@@ -27,5 +33,19 @@ class Drunk(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Drunk"
 
         self._role_enum = TBRole.drunk
+
+        self.__init_ego_self()
+    
+    def __init_ego_self(self):
+        """Ego self: what the player thinks they are.
+        Randomly chosen from the list of Townsfolks.
+        """
+        possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() if issubclass(role_class, Townsfolk)]
+        self._ego_role = random.choice(possibilities)
+    
+    @property
+    def ego_self(self):
+        """Inherited from parent Character(), ego self is what the player thinks they are"""
+        return self._ego_role
 
         

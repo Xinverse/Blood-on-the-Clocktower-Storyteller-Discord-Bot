@@ -7,9 +7,15 @@ from ._utils import TroubleBrewing, TBRole
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.saint.value.lower()]
 
+
 class Saint(Outsider, TroubleBrewing, Character):
-    """Saint:
-    If you die by execution, your team loses.
+    """Saint: If you die by execution, your team loses.
+
+    ===== SAINT ===== 
+
+    true_self = saint
+    ego_self = saint
+    social_self = saint
     """
 
     def __init__(self):
