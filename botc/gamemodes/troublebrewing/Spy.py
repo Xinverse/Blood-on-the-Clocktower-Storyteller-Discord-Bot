@@ -18,6 +18,9 @@ class Spy(Minion, TroubleBrewing, Character):
     true_self = spy
     ego_self = spy
     social_self = [townsfolk] / [outsider] / spy *ephemeral
+
+    commands:
+    - None
     """
 
     def __init__(self):

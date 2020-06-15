@@ -1,7 +1,7 @@
 """Contains the Butler Character class"""
 
 import json 
-from botc import Outsider, Character
+from botc import Outsider, Character, IncorrectNumberOfArguments
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -17,6 +17,9 @@ class Butler(Outsider, TroubleBrewing, Character):
     true_self = butler
     ego_self = butler
     social_self = butler
+
+    commands
+    - serve <player>
     """
 
     def __init__(self):
@@ -34,4 +37,13 @@ class Butler(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Butler"
 
         self._role_enum = TBRole.butler
+
+        # role-specifics
+        self._master = None  # A player object
+    
+    def exec_serve(self, *players):
+        if len(players) != 1:
+            raise IncorrectNumberOfArguments("You must serve exactly one master.")
+        else:
+            self._master = players[0]
     

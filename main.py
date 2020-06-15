@@ -16,10 +16,10 @@ affiliated with them in any way.
 # Design document
 # Console based botc game testing system
 
+import globvars
 import configparser
 import logging
 import botc
-import globvars
 from discord.ext import commands
 
 

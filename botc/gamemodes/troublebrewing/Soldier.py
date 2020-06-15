@@ -16,6 +16,9 @@ class Soldier(Townsfolk, TroubleBrewing, Character):
     true_self = soldier
     ego_self = soldier
     social_self = soldier
+
+    commands:
+    - None
     """
 
     def __init__(self):

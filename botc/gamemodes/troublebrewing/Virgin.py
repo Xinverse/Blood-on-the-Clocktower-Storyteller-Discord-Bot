@@ -17,6 +17,9 @@ class Virgin(Townsfolk, TroubleBrewing, Character):
     true_self = virgin
     ego_self = virgin
     social_self = virgin
+
+    commands:
+    - None
     """
 
     def __init__(self):

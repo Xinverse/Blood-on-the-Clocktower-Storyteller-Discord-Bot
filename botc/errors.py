@@ -13,3 +13,8 @@ class TooManyPlayers(Exception):
 class TooFewPlayers(Exception):
     """Too few players"""
     pass
+
+
+class IncorrectNumberOfArguments(Exception):
+    """Incorrect number of arguments passed"""
+    pass

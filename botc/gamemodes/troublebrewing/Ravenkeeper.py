@@ -16,6 +16,9 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
     true_self = ravenkeeper
     ego_self = ravenkeeper
     social_self = ravenkeeper
+
+    commands:
+    - learn <player>
     """
     
     def __init__(self):

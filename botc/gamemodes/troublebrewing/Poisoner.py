@@ -16,6 +16,9 @@ class Poisoner(Minion, TroubleBrewing, Character):
     true_self = poisoner
     ego_self = poisoner
     social_self = poisoner
+
+    commands:
+    - poison <player>
     """
 
     def __init__(self):

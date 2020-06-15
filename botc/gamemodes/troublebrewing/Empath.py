@@ -16,6 +16,9 @@ class Empath(Townsfolk, TroubleBrewing, Character):
     true_self = empath
     ego_self = empath
     social_self = empath
+
+    commands:
+    - None
     """
     
     def __init__(self):

@@ -16,6 +16,9 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
     true_self = investigator
     ego_self = investigator
     social_self = investigator
+
+    commands:
+    - None
     """
 
     def __init__(self):

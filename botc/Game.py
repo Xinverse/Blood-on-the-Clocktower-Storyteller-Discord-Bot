@@ -39,7 +39,11 @@ class Game(GameMeta):
       self._member_obj_list = []  # list object - list of discord member objects 
       self._player_obj_list = []  # list object - list of player objects
       self._sitting_order = tuple()  # tuple object (for immutability)
-      self._current_phase = Phase.idle  
+      self._current_phase = Phase.idle
+   
+   def playtest(self, nb_players):
+      """Create a play testing session"""
+      pass
    
    @property
    def gamemode(self):
@@ -73,7 +77,7 @@ class Game(GameMeta):
          else:
             raise GameError("Member not found, invalid user ID")
 
-   def start_game(self):
+   async def start_game(self):
       """Start the game. 
       Must be implemented.
       """
@@ -82,6 +86,9 @@ class Game(GameMeta):
       setup = self.generate_role_set()
       # Give each player a role
       self.distribute_roles(setup, self.member_obj_list)
+      # Log the game data
+      await botutils.log(botutils.Level.info, "To-Do")
+      # Send the opening dm to all players
 
    def end_game(self):
       """End the game, compute winners etc. 

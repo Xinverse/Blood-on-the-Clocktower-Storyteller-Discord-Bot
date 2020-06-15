@@ -17,6 +17,10 @@ class Imp(Demon, TroubleBrewing, Character):
     true_self = imp
     ego_self = imp
     social_self = imp
+
+    commands:
+    - kill <player>
+    - starpass
     """
 
     def __init__(self):

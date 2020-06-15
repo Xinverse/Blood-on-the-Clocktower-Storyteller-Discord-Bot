@@ -16,6 +16,9 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
     true_self = fortune teller
     ego_self = fortune teller
     social_self = fortune teller
+
+    commands:
+    - read <player> and <player>
     """
     
     def __init__(self):

@@ -15,6 +15,9 @@ class ScarletWoman(Minion, TroubleBrewing, Character):
     true_self = washerwoman
     ego_self = washerwoman
     social_self = washerwoman
+
+    commands:
+    - None
     """
 
     def __init__(self):

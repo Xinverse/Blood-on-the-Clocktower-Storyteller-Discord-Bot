@@ -16,6 +16,9 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
     true_self = slayer
     ego_self = slayer
     social_self = slayer
+
+    commands:
+    - slay <player>
     """
 
     def __init__(self):

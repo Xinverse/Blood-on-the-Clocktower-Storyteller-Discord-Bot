@@ -16,6 +16,9 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     true_self = monk
     ego_self = monk
     social_self = monk
+
+    commands:
+    - protect
     """
     
     def __init__(self):

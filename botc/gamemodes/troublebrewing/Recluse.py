@@ -17,6 +17,9 @@ class Recluse(Outsider, TroubleBrewing, Character):
     true_self = recluse
     ego_self = recluse
     social_self = [minion] / [demon] / recluse *ephemeral
+
+    commands:
+    - None
     """
 
     def __init__(self):

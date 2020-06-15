@@ -18,6 +18,9 @@ class Baron(Minion, TroubleBrewing, Character):
     true_self = baron
     ego_self = baron
     social_self = baron
+
+    commands
+    - None
     """
 
     def __init__(self):

@@ -16,6 +16,9 @@ class Chef(Townsfolk, TroubleBrewing, Character):
     true_self = chef
     ego_self = chef
     social_self = chef
+
+    commands:
+    - None
     """
     
     def __init__(self):

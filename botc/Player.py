@@ -2,6 +2,7 @@
 
 from .PlayerState import PlayerState
 
+
 class Player:
     """Player class"""
 

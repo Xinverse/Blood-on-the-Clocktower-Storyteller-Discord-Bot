@@ -61,6 +61,9 @@ true_self = washerwoman
 ego_self = washerwoman
 social_self = washerwoman
 
+Commands:
+- None
+
 Characteristics
 - First night only, passive
 
@@ -77,6 +80,9 @@ Specifics
 true_self = librarian
 ego_self = librarian
 social_self = librarian
+
+Commands:
+- None
 
 Characteristics
 - First night only, passive

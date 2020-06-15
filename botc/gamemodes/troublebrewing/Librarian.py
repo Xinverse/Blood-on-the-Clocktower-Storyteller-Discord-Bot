@@ -17,6 +17,9 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
     true_self = librarian
     ego_self = librarian
     social_self = librarian
+
+    commands:
+    - None
     """
     
     def __init__(self):

@@ -16,6 +16,9 @@ class Undertaker(Townsfolk, TroubleBrewing, Character):
     true_self = undertaker
     ego_self = undertaker
     social_self = undertaker
+
+    commands:
+    - None
     """
 
     def __init__(self):

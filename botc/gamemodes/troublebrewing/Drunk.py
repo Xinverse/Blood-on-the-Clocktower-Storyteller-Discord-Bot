@@ -16,6 +16,9 @@ class Drunk(Outsider, TroubleBrewing, Character):
     true_self = drunk
     ego_self = [townsfolk] *persistent
     social_self = drunk
+
+    commands:
+    - None
     """
 
     def __init__(self):

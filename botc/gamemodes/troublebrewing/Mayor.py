@@ -17,6 +17,9 @@ class Mayor(Townsfolk, TroubleBrewing, Character):
     true_self = mayor
     ego_self = mayor
     social_self = mayor
+
+    commands:
+    - None
     """
 
     def __init__(self):

@@ -16,6 +16,9 @@ class Saint(Outsider, TroubleBrewing, Character):
     true_self = saint
     ego_self = saint
     social_self = saint
+
+    commands:
+    - None
     """
 
     def __init__(self):
