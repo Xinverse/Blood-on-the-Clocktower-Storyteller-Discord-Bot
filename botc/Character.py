@@ -31,7 +31,9 @@ with open('botc/game_text.json') as json_file:
 
 
 class Character:
-    """Character class"""
+    """Character class
+    Methods starting with "playtest" are used for console game creation for playtesting purposes.
+    """
     
     def __init__(self):
 
@@ -63,6 +65,10 @@ class Character:
 
         # Other
         self.__role_class = self.__class__
+    
+    def playtest_opening_dm(self):
+        """Print a simple string to simulate the opening dm"""
+        print(f"Your role is {self.ego_self.name} [{self.ego_self.category.name}]. {self.ego_self.instruction}")
     
     @property
     def true_self(self):
@@ -204,27 +210,27 @@ class Character:
     def create_opening_dm_embed(self):
         """Create the opening DM (on game start) embed object and return it"""
 
-        if self.category == Category.townsfolk:
+        if self.ego_self.category == Category.townsfolk:
             color = TOWNSFOLK_COLOR  
-        elif self.category == Category.outsider:
+        elif self.ego_self.category == Category.outsider:
             color = OUTSIDER_COLOR
-        elif self.category == Category.minion:
+        elif self.ego_self.category == Category.minion:
             color = MINION_COLOR
         else:
             color = DEMON_COLOR
 
         opening_dm = role_dm.format(
-            role_name_str = self.name,
-            category_str = self.category.value,
-            team_str = self.team.value,
+            role_name_str = self.ego_self.name,
+            category_str = self.ego_self.category.value,
+            team_str = self.ego_self.team.value,
             prefix = PREFIX)
 
-        embed = discord.Embed(title = your_role_is.format(self.name.upper()),
-                              url = self.wiki_link,
+        embed = discord.Embed(title = your_role_is.format(self.ego_self.name.upper()),
+                              url = self.ego_self.wiki_link,
                               description=opening_dm, color=color)
-        embed.set_author(name = "{} Edition - Blood on the Clocktower (BoTC)".format(self.gm_of_appearance.value),
-                         icon_url = self.gm_art_link)
-        embed.set_thumbnail(url = self.art_link)
+        embed.set_author(name = "{} Edition - Blood on the Clocktower (BoTC)".format(self.ego_self.gm_of_appearance.value),
+                         icon_url = self.ego_self.gm_art_link)
+        embed.set_thumbnail(url = self.ego_self.art_link)
         embed.set_footer(text = copyrights_str)
 
         return embed

@@ -37,15 +37,16 @@ class Drunk(Outsider, TroubleBrewing, Character):
         self.__init_ego_self()
     
     def __init_ego_self(self):
-        """Ego self: what the player thinks they are.
-        Randomly chosen from the list of Townsfolks.
+        """Randomly choose a townsfolk. (persistent)
         """
         possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() if issubclass(role_class, Townsfolk)]
         self._ego_role = random.choice(possibilities)
     
     @property
     def ego_self(self):
-        """Inherited from parent Character(), ego self is what the player thinks they are"""
+        """Ego self: what the player thinks they are.
+        The Drunk thinks they are a townsfolk.
+        """
         return self._ego_role
 
         

@@ -37,7 +37,11 @@ class Recluse(Outsider, TroubleBrewing, Character):
     
     @property
     def social_self(self):
+        """Social self: what the other players think he is.
+        The recluse may register as a demon, a minion, or as recluse.
+        """
         possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
                          if issubclass(role_class, Demon) or issubclass(role_class, Minion)]
+        possibilities.append(Recluse())
         return random.choice(possibilities)
         

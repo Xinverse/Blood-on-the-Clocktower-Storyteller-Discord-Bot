@@ -123,7 +123,7 @@
     },
 
     "poisoner" : {
-        "lore" : "Add compound alpha to compound beta... NOTTOO MUCH!",
+        "lore" : "Add compound alpha to compound beta... NOT TOO MUCH!",
         "description" : "The Poisoner secretly disrupts character abilities.\n- Each night, the Poisoner chooses someone to poison for that night and the entire next day.\n- A poisoned player has no ability, but you pretend they do.\n- They do not affect the game in any real way. However, to keep up the illusion that the poisoned player is not poisoned, wake them at the appropriate time and go through the motions as if they were not poisoned. If their ability gives them information, you may give them false information.\n- If a poisoned player uses a 'once per game' ability while poisoned, they cannot use their ability again.",
         "examples" : "- During the night, the Poisoner poisons the Slayer. The next day, the Slayer tries to slay the Imp. Nothing happens. The Slayer now has no ability.\n- The poisoned Empath, who neighbors two evil players, learns a '0.' The next night, the Empath, no longer poisoned, learns the correct information: a '2.'\n- The Investigator is poisoned. They learn that one of two players is the Baron, even though neither is a Minion. (Or even the right players, but the wrong Minion type.)\n- The Undertaker is poisoned. Even though the Imp died today, they learn that the Virgin died. A few days later, a poisoned Saint dies, and the game continues.\n- The Poisoner poisons the Mayor, then becomes the Imp. The Mayor is no longer poisoned because there is no Poisoner in play.",
         "instruction" : "Each night, choose a player: their ability malfunctions tonight and tomorrow day."
@@ -142,6 +142,13 @@
         "examples" : "- The game is being set up for seven players, with five Townsfolk, one Minion, and one Demon. Because the Minion is the Baron, the Storyteller removes two Townsfolk tokens and adds a Saint and a Butler token. In total, three Townsfolk, two Outsider, one Minion, and one Demon tokens go in the bag for the players to draw from.\n- The game is being set up for 15 players, with nine Townsfolk, two Outsiders, three Minions, and one Demon. Because the Baron is in play, the Storyteller must add a Drunk and a Recluse. So, they remove the Monk token and add a Recluse token. Then, instead of adding the Drunk character token, they add the Drunk's 'Is the Drunk' reminder token... because this game, one player isn't a Townsfolk—they are an Outsider: the Drunk. All these character tokens then go into the bag for the players to draw from.",
         "instruction" : "There are extra Outsiders in play. [+2 Outsiders]"
     }, 
+
+    "spy" : {
+        "lore" : "There's a man who leads a life of danger. To every man he meets, he stays a stranger.",
+        "description" : "The Spy knows who everyone is and might appear good, but is actually evil.\n- If any character has an ability that would detect or affect a good player, then the Spy might register as good to that character. If any character has an ability that detects Townsfolk or Outsiders, then the Spy might register as a specific Townsfolk or Outsider to that player. As always, it is your choice as to what the Spy registers as, even as many characters or both alignments during the same night.\n- Remember to keep your Grimoire tidy, and show it to the Spy in the correct orientation, so the Spy can easily see who is who.",
+        "examples" : "- The Washerwoman learns that either Abdallah or Douglas is the Ravenkeeper. Abdallah is the Monk, and Douglas is the Spy registering as the Ravenkeeper.\n- The Spy neighbors the Imp and the Empath. The Chef learns a '1' because the Spy is registering as evil. Later that night, the Empath learns a '0' because the Spy is now registering as good.\n- The Spy nominates the Virgin and is executed by the Virgin’s ability, because the Storyteller chooses that the Spy registers as a Townsfolk. That night, the Undertaker learns that the Drunk died today, because the Spy is now registering as the Drunk.",
+        "instruction" : "Each night, you see the Grimoire. You might register as good & as a Townsfolk or Outsider, even if dead."
+    },
 
     "imp" : {
         "lore" : "We must keep our wits sharp and our sword sharper. Evil walks amongst us and will stop at nothing to destroy us good, simple folk, bringing our fine town to ruin. Trust no one. But if you must trust someone, trust me",

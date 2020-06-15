@@ -18,6 +18,7 @@ from .Saint import Saint
 from .ScarletWoman import ScarletWoman
 from .Slayer import Slayer
 from .Soldier import Soldier
+from .Spy import Spy
 from .Undertaker import Undertaker
 from .Virgin import Virgin
 from .Washerwoman import Washerwoman

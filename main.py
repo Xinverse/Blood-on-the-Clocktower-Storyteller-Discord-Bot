@@ -12,10 +12,9 @@ affiliated with them in any way.
 """
 
 # TODO
-# BOTC Game object
 # Gamemode command
 # Design document
-# Start night + first round of dm
+# Console based botc game testing system
 
 import configparser
 import logging
@@ -25,7 +24,8 @@ from discord.ext import commands
 
 
 # Playtesting botc
-print(botc.gamemodes.troublebrewing.Recluse().social_self)
+role1 = botc.gamemodes.troublebrewing.Drunk()
+role1.playtest_opening_dm()
 
 """
 

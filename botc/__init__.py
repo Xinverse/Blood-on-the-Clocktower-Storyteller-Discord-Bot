@@ -4,7 +4,7 @@ from .Ballot import Ballot
 from .Category import Category
 from .Character import Character
 from .Demon import Demon
-from .GameError import GameError
+from .errors import GameError
 from .Minion import Minion
 from .Nomination import Nomination
 from .Outsider import Outsider

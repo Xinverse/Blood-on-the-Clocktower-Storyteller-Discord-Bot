@@ -322,8 +322,8 @@ Specifics
 ===== SPY =====
 
 true_self = spy
-ego_self = SPY
-social_self = [townsfolk] / [outsider] / spy
+ego_self = spy
+social_self = [townsfolk] / [outsider] / spy *ephemeral
 
 Characteristics
 

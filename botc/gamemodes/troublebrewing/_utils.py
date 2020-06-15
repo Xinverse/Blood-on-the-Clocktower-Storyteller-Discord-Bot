@@ -3,6 +3,7 @@
 import enum
 from botc.gamemodes import Gamemode
 
+
 class TBRole(enum.Enum):
     """Enum object for all Trouble Brewing edition roles"""
 
@@ -26,6 +27,7 @@ class TBRole(enum.Enum):
     poisoner = "Poisoner"
     scarletwoman = "Scarlet Woman"
     baron = "Baron"
+    spy = "Spy"
     imp = "Imp"
 
 
