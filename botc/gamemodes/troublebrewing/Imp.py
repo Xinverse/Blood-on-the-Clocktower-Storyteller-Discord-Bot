@@ -20,7 +20,8 @@ class Imp(Demon, TroubleBrewing, Character):
 
     commands:
     - kill <player>
-    - starpass
+
+    send first night instruction? -> FALSE
     """
 
     def __init__(self):

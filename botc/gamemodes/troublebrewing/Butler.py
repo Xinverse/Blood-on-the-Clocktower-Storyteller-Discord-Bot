@@ -1,11 +1,18 @@
 """Contains the Butler Character class"""
 
 import json 
+import botutils
+import discord
 from botc import Outsider, Character, IncorrectNumberOfArguments
 from ._utils import TroubleBrewing, TBRole
+import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.butler.value.lower()]
+
+with open('botc/game_text.json') as json_file: 
+    strings = json.load(json_file)
+    blocked = strings["gameplay"]["blocked"]
 
 
 class Butler(Outsider, TroubleBrewing, Character):
@@ -20,6 +27,8 @@ class Butler(Outsider, TroubleBrewing, Character):
 
     commands
     - serve <player>
+
+    send first night instruction? -> TRUE
     """
 
     def __init__(self):
@@ -38,12 +47,15 @@ class Butler(Outsider, TroubleBrewing, Character):
 
         self._role_enum = TBRole.butler
 
-        # role-specifics
-        self._master = None  # A player object
+    async def send_first_night_instruction(self, recipient):
+        """Query the player for "serve" command"""
+        msg = self.instruction
+        msg += "\n\n"
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        try: 
+            await recipient.send(msg)
+        except discord.Forbidden:
+            await botutils.send_lobby(blocked)
     
-    def exec_serve(self, *players):
-        if len(players) != 1:
-            raise IncorrectNumberOfArguments("You must serve exactly one master.")
-        else:
-            self._master = players[0]
+
     

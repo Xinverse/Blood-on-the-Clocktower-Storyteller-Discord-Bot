@@ -13,8 +13,7 @@ affiliated with them in any way.
 
 # TODO
 # Gamemode command
-# Design document
-# Console based botc game testing system
+# Chef, Drunk, Empath, Fortune Teller, Investigator, Librarian, Poisoner, Washerwoman
 
 import globvars
 import configparser
@@ -22,12 +21,6 @@ import logging
 import botc
 from discord.ext import commands
 
-
-# Playtesting botc
-role1 = botc.gamemodes.troublebrewing.Drunk()
-role1.playtest_opening_dm()
-
-"""
 
 if __name__ == "__main__":
 
@@ -38,8 +31,14 @@ if __name__ == "__main__":
     OWNER_ID = Config["user"]["OWNER_ID"]
     PREFIX = Config["settings"]["PREFIX"]
 
+    def command_prefix(bot, message):
+        if message.guild is None:
+            return (PREFIX, "")
+        else:
+            return PREFIX
+
     client = commands.Bot(
-        command_prefix=PREFIX, 
+        command_prefix=command_prefix, 
         owner_id=OWNER_ID, 
         case_insensitive=True, 
         description="Storyteller Bot"
@@ -64,4 +63,3 @@ if __name__ == "__main__":
 
     print("===== LOGGING IN =====")
     globvars.client.run(TOKEN)
-"""

@@ -20,6 +20,8 @@ class Mayor(Townsfolk, TroubleBrewing, Character):
 
     commands:
     - None
+
+    send first night instruction? -> FALSE
     """
 
     def __init__(self):

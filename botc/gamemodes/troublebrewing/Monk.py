@@ -19,6 +19,8 @@ class Monk(Townsfolk, TroubleBrewing, Character):
 
     commands:
     - protect
+
+    send first night instruction? -> FALSE
     """
     
     def __init__(self):

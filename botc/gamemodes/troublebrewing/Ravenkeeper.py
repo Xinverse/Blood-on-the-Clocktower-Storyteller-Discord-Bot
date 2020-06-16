@@ -19,6 +19,8 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
 
     commands:
     - learn <player>
+
+    send first night instruction? -> FALSE
     """
     
     def __init__(self):

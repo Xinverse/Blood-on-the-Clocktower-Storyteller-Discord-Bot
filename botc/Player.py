@@ -10,6 +10,15 @@ class Player:
         self._user_obj = user_obj  # Discord user object
         self._role_obj = role_obj  # Role object
         self._state_obj = PlayerState.alive  # Enum object
+    
+    def is_alive(self):
+        return self.state == PlayerState.alive
+    
+    def is_dead(self):
+        return self.state == PlayerState.dead
+
+    def is_fleaved(self):
+        return self.state == PlayerState.fleaved
 
     @property
     def user(self):

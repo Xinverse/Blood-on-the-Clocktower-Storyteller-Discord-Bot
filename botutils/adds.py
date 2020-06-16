@@ -47,9 +47,13 @@ async def remove_all_alive_roles_pregame():
 
 async def lock_lobby():
     """Lock the lobby channel to non players"""
-    pass
+    lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
+    server = globvars.client.get_guild(int(SERVER_ID))
+    await lobby_channel.set_permissions(server.default_role, send_messages=False)
 
 
 async def unlock_lobby():
     """Unlock the lobby channel to non players"""
-    pass
+    lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
+    server = globvars.client.get_guild(int(SERVER_ID))
+    await lobby_channel.set_permissions(server.default_role, send_messages=True)

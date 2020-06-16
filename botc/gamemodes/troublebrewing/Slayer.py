@@ -19,6 +19,8 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
 
     commands:
     - slay <player>
+
+    send first night instruction? -> FALSE
     """
 
     def __init__(self):

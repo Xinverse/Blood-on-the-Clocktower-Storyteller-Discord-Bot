@@ -5,6 +5,7 @@ import traceback
 import json
 import configparser
 import globvars
+import botc
 from datetime import datetime, timezone
 from discord.ext import commands, tasks
 
@@ -64,6 +65,15 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         """Global check for all commands of this cog: ignored users may not use commands"""
         
         return botutils.check_if_not_ignored(ctx)
+
+    
+    # ---------- START COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "fstart")
+    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    async def fstart(self, ctx):
+        """Start command"""
+        globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]
+        await globvars.master_state.game.start_game()
 
     
     # ---------- ROLE COMMAND ----------------------------------------

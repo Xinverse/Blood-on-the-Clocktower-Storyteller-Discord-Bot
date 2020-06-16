@@ -21,6 +21,8 @@ class Baron(Minion, TroubleBrewing, Character):
 
     commands
     - None
+
+    send first night instruction? -> FALSE
     """
 
     def __init__(self):
@@ -59,5 +61,3 @@ class Baron(Minion, TroubleBrewing, Character):
                     count += 1
 
         return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list]
-
-        

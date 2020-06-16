@@ -18,11 +18,6 @@ def check_if_can_read(ctx):
     pass
 
 
-def check_if_can_starpass(ctx):
-    """Can starpass: imp"""
-    pass
-
-
 def check_if_can_kill(ctx):
     """Can kill: imp"""
     pass
@@ -43,6 +38,11 @@ def check_if_is_night(ctx):
     pass
 
 
+def check_if_is_day(ctx):
+    """Check if the game is in day phase"""
+    pass
+
+
 def check_if_dm(ctx):
     """Check if the command is invoked in a dm channel."""
     return ctx.guild is None
@@ -50,6 +50,11 @@ def check_if_dm(ctx):
 
 def check_if_lobby(ctx):
     """Check if the command is invoked in the lobby."""
+    pass
+
+
+def check_if_player_alive(ctx):
+    """Check if the player is alive"""
     pass
 
 
@@ -64,6 +69,8 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.command(pass_context=True, name = "serve")
     @commands.check(check_if_can_serve)
     @commands.check(check_if_dm)
+    @commands.check(check_if_is_night)
+    @commands.check(check_if_player_alive)
     async def serve(self, ctx):
         pass
 
@@ -72,6 +79,8 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.command(pass_context=True, name = "learn")
     @commands.check(check_if_can_learn)
     @commands.check(check_if_dm)
+    @commands.check(check_if_is_night)
+    @commands.check(check_if_player_alive)
     async def learn(self, ctx):
         pass
 
@@ -80,15 +89,9 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.command(pass_context=True, name = "read")
     @commands.check(check_if_can_read)
     @commands.check(check_if_dm)
+    @commands.check(check_if_is_night)
+    @commands.check(check_if_player_alive)
     async def read(self, ctx):
-        pass
-
-
-    # ---------- STARPASS COMMAND (Imp) ----------------------------------------
-    @commands.command(pass_context=True, name = "starpass")
-    @commands.check(check_if_can_starpass)
-    @commands.check(check_if_dm)
-    async def starpass(self, ctx):
         pass
 
 
@@ -96,6 +99,8 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.command(pass_context=True, name = "kill")
     @commands.check(check_if_can_kill)
     @commands.check(check_if_dm)
+    @commands.check(check_if_is_night)
+    @commands.check(check_if_player_alive)
     async def kill(self, ctx):
         pass
 
@@ -104,6 +109,8 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.command(pass_context=True, name = "slay")
     @commands.check(check_if_can_slay)
     @commands.check(check_if_lobby)
+    @commands.check(check_if_is_day)
+    @commands.check(check_if_player_alive)
     async def slay(self, ctx):
         pass
 
@@ -112,6 +119,8 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.command(pass_context=True, name = "protect")
     @commands.check(check_if_can_protect)
     @commands.check(check_if_dm)
+    @commands.check(check_if_is_night)
+    @commands.check(check_if_player_alive)
     async def protect(self, ctx):
         pass
 

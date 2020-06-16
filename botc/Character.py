@@ -2,8 +2,10 @@
 
 import json
 import discord
+import botutils
 import configparser
 from .Category import Category
+import globvars
 
 Config = configparser.ConfigParser()
 
@@ -28,6 +30,7 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
     role_dm = strings["gameplay"]["role_dm"]
     your_role_is = strings["gameplay"]["your_role_is"]
+    blocked = strings["gameplay"]["blocked"]
 
 
 class Character:
@@ -66,9 +69,16 @@ class Character:
         # Other
         self.__role_class = self.__class__
     
-    def playtest_opening_dm(self):
-        """Print a simple string to simulate the opening dm"""
-        print(f"Your role is {self.ego_self.name} [{self.ego_self.category.name}]. {self.ego_self.instruction}")
+    async def send_first_night_instruction(self, recipient):
+        """Send the first night instruction, which includes first night passive information, 
+        and role instructions.
+        Override by child classes.
+        """
+        msg = self.instruction
+        try:
+            await recipient.send(msg)
+        except discord.Forbidden:
+            await botutils.send_lobby(blocked)
     
     @property
     def true_self(self):
@@ -207,7 +217,7 @@ class Character:
                            wiki_link)
         await ctx.send(embed=embed)
     
-    def create_opening_dm_embed(self):
+    async def send_opening_dm_embed(self, recipient):
         """Create the opening DM (on game start) embed object and return it"""
 
         if self.ego_self.category == Category.townsfolk:
@@ -233,4 +243,7 @@ class Character:
         embed.set_thumbnail(url = self.ego_self.art_link)
         embed.set_footer(text = copyrights_str)
 
-        return embed
+        try:
+            await recipient.send(embed = embed)
+        except discord.Forbidden:
+            await botutils.send_lobby(blocked.format(recipient.mention))

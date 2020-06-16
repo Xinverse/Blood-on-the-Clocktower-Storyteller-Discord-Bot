@@ -56,7 +56,7 @@
         "lore" : "Tis an ill and deathly wind that blows tonight. Come, my brother, take shelter in the abbey while the storm rages. By my word, or by my life, you will be safe.",
         "description" : "The Monk protects other people from the Demon.\n- Each night except the first, the Monk may choose to protect any player except themself.\n- If the Demon attacks a player who has been protected by the Monk, then that player does not die. The Demon does not get to attack another player—there is simply no death tonight.\n- The Monk does not protect against other harmful effects such as poisoning, drunkenness, or Outsider penalties. The Monk does not protect against the Demon nominating and executing someone.",
         "examples" : "- The Monk protects the Fortune Teller. The Imp attacks the Fortune Teller. No deaths occur tonight.\n- The Monk protects the Mayor, and the Imp attacks the Mayor. The Mayor's 'another player 'dies' ability does not trigger, because the Mayor is safe from the Imp. Nobody dies tonight.\n- The Monk protects the Imp. The Imp chooses to kill themself tonight, but nothing happens. The Imp stays alive and a new Imp is not created.",
-        "instruction" : "Each night*, choose a player (not yourself): they are safe from the Demon tonight."
+        "instruction" : "Each night*, choose a player (not yourself): they are safe from the Demon tonight. User `protect <player>` in DM."
     },
 
     "ravenkeeper" : {
@@ -77,7 +77,7 @@
         "lore" : "Die.",
         "description" : "The Slayer can kill the Demon by guessing who it is.\n- The Slayer can choose to use their ability at any time during the day, and must declare to everyone when they’re using it. If the Slayer chooses the Demon, the Demon dies immediately. Otherwise, nothing happens.\n- The players do not learn the identity of the dead player. After all, it may have been the Recluse!\n- When the Slayer declares that they wish to use their power, it is a good idea to give the group a minute or two to discuss who the Slayer should choose, but the Slayer makes the final decision.\n- A Slayer that uses their ability while poisoned or drunk may not use it again.\n- The Slayer will want to choose an alive player. Even if the Slayer chooses a dead Imp, nothing happens, because a dead player can’t die again.",
         "examples" : "- The Slayer chooses the Imp. The Imp dies, and good wins!\n- The Slayer chooses the Recluse. The Storyteller decides that the Recluse registers as the Imp, so the Recluse dies, but the game continues.\n- The Imp is bluffing as the Slayer. They declare that they use their Slayer ability on the Scarlet Woman. Nothing happens.",
-        "instruction" : "Once per game, during the day, publicly choose a player: if they are the Demon, they die."
+        "instruction" : "Once per game, during the day, publicly choose a player: if they are the Demon, they die. Use `slay <player>` in a public channel."
     },
 
     "soldier" : {
@@ -98,7 +98,7 @@
         "lore" : "Yes, sir... No, sir... Certainly, sir.",
         "description" : "The Butler may only vote when their Master votes.\n- Each night, the Butler chooses a player to be their master. The next day, the Butler may only have their hand raised to vote if their master is voting too.\n- If the master’s vote has not yet been tallied, but the master has their hand raised to vote, the Butler may also have their hand raised to vote. If the master has their hand down, the Butler must also have their hand down.\n- If the master’s vote has already been tallied, the Butler may have their hand raised to vote if they wish.\n- Because any player can vote for an exile, and exiles are never affected by abilities, the Butler can vote freely for an exile.\n- The Butler may choose a dead player as their master, but will only be able to vote if that player has a vote token, because dead players may only raise their hand to vote if they have a vote token.\n- The Butler is never forced to vote.",
         "examples" : "- The Butler chooses Filip to be their Master. Tomorrow, if Filip raises his hand to vote on an execution, then the Butler may too. If not, then the Butler may not raise their hand.\n- The Butler is dead. Because dead players have no ability, the Butler may vote with their vote token at any time.",
-        "instruction" : "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too."
+        "instruction" : "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too. Use `serve <player>` in DM."
     },
 
     "drunk" : {
@@ -126,7 +126,7 @@
         "lore" : "Add compound alpha to compound beta... NOT TOO MUCH!",
         "description" : "The Poisoner secretly disrupts character abilities.\n- Each night, the Poisoner chooses someone to poison for that night and the entire next day.\n- A poisoned player has no ability, but you pretend they do.\n- They do not affect the game in any real way. However, to keep up the illusion that the poisoned player is not poisoned, wake them at the appropriate time and go through the motions as if they were not poisoned. If their ability gives them information, you may give them false information.\n- If a poisoned player uses a 'once per game' ability while poisoned, they cannot use their ability again.",
         "examples" : "- During the night, the Poisoner poisons the Slayer. The next day, the Slayer tries to slay the Imp. Nothing happens. The Slayer now has no ability.\n- The poisoned Empath, who neighbors two evil players, learns a '0.' The next night, the Empath, no longer poisoned, learns the correct information: a '2.'\n- The Investigator is poisoned. They learn that one of two players is the Baron, even though neither is a Minion. (Or even the right players, but the wrong Minion type.)\n- The Undertaker is poisoned. Even though the Imp died today, they learn that the Virgin died. A few days later, a poisoned Saint dies, and the game continues.\n- The Poisoner poisons the Mayor, then becomes the Imp. The Mayor is no longer poisoned because there is no Poisoner in play.",
-        "instruction" : "Each night, choose a player: their ability malfunctions tonight and tomorrow day."
+        "instruction" : "Each night, choose a player: their ability malfunctions tonight and tomorrow day. Use `poison <player>` in DM."
     },
 
     "scarlet woman" : {

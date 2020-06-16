@@ -3,6 +3,8 @@
 import random
 import datetime
 import botutils
+import globvars
+import json
 from .Phase import Phase
 from .Player import Player
 from .errors import GameError, TooFewPlayers, TooManyPlayers
@@ -17,6 +19,12 @@ from models import GameMeta
 
 random.seed(datetime.datetime.now())
 
+with open('botc/game_text.json') as json_file: 
+    strings = json.load(json_file)
+    nightfall = strings["gameplay"]["nightfall"]
+    daybreak = strings["gameplay"]["daybreak"]
+    lobby_game_start = strings["gameplay"]["lobby_game_start"]
+
 
 class BOTCUtils:
    """Some utility functions"""
@@ -28,7 +36,32 @@ class BOTCUtils:
 
 
 class Game(GameMeta):
-   """BoTC Game class"""
+   """BoTC Game class
+   
+   Order of Action (First Night)
+   1. poisoner
+   2. washerwoman
+   3. librarian
+   4. investigator
+   5. chef
+   6. empath
+   7. fortune teller
+   8. butler
+   9. spy
+
+
+   Order of Action (All Other Nights)
+   1. poisoner
+   2. monk
+   3. scarlet woman 
+   4. imp
+   5. ravenkeeper
+   6. empath
+   7. fortune teller
+   8. butler
+   9. undertaker
+   10. spy
+   """
 
    MIN_PLAYERS = 5
    MAX_PLAYERS = 15
@@ -40,10 +73,6 @@ class Game(GameMeta):
       self._player_obj_list = []  # list object - list of player objects
       self._sitting_order = tuple()  # tuple object (for immutability)
       self._current_phase = Phase.idle
-   
-   def playtest(self, nb_players):
-      """Create a play testing session"""
-      pass
    
    @property
    def gamemode(self):
@@ -64,6 +93,30 @@ class Game(GameMeta):
    @property
    def current_phase(self):
       return self._current_phase
+   
+   def create_sitting_order_stats_string(self):
+      """Create a stats board:
+
+      Sitting Order:
+      ```css
+      Chris (232456937349834784) [DEAD]
+      John (233426113285745785) [ALIVE]
+      Anna (266015398221479937) [ALIVE]
+      Fred (3447492102843678721) [ALIVE]
+      ```
+      """
+      msg = "__*Sitting Order*__ : "
+      msg += "```css\n"
+      for player in self.sitting_order:
+         if player.is_alive():
+            line = f"{player.user.display_name} ({player.user.id}) [ALIVE]\n"
+         elif player.is_dead():
+            line = f"{player.user.display_name} ({player.user.id}) [DEAD]\n"
+         else:
+            line = f"{player.user.display_name} ({player.user.id}) [QUIT]\n"
+         msg += line
+      msg += "```"
+      return msg
 
    def register_players(self, id_list):
       """Register the players. 
@@ -81,28 +134,44 @@ class Game(GameMeta):
       """Start the game. 
       Must be implemented.
       """
-
+      # Register the players in game
+      self.register_players(globvars.master_state.pregame)
       # Generate the setup (role list)
       setup = self.generate_role_set()
       # Give each player a role
       self.distribute_roles(setup, self.member_obj_list)
+      # Send the lobby welcome message
+      await botutils.send_lobby(lobby_game_start)
+      # Lock the lobby channel
+      await botutils.lock_lobby()
+      # Freeze the sitting
+      self.generate_frozen_sitting()
       # Log the game data
-      await botutils.log(botutils.Level.info, "To-Do")
+      await botutils.log(botutils.Level.info, "Game started, to-do")
       # Send the opening dm to all players
+      for player in self._player_obj_list:
+         await player.role.ego_self.send_opening_dm_embed(player.user)
+      # Send first night info dm to all players
+      for player in self._player_obj_list:
+         await player.role.ego_self.send_first_night_instruction(player.user)
+      # Transition to night fall
+      await self.make_nightfall()
 
-   def end_game(self):
+   async def end_game(self):
       """End the game, compute winners etc. 
       Must be implemented.
       """
-      pass
+      await botutils.unlock_lobby()
 
-   def make_nightfall(self):
+   async def make_nightfall(self):
       """Transition the game into night phase"""
       self._current_phase = Phase.night
+      await botutils.send_lobby(nightfall)
 
-   def make_daybreak(self):
+   async def make_daybreak(self):
       """Transition the game into day phase"""
       self._current_phase = Phase.day
+      await botutils.send_lobby(daybreak)
 
    def generate_role_set(self):
       """Generate a list of roles according to the number of players"""
@@ -127,10 +196,10 @@ class Game(GameMeta):
          # Trouble brewing mode
          if self.gamemode == Gamemode.trouble_brewing:
                
-            tb_townsfolk_all = BOTCUtils.get_role_list(Gamemode.trouble_brewing, Townsfolk())
-            tb_outsider_all = BOTCUtils.get_role_list(Gamemode.trouble_brewing, Outsider())
-            tb_minion_all = BOTCUtils.get_role_list(Gamemode.trouble_brewing, Minion())
-            tb_demon_all = BOTCUtils.get_role_list(Gamemode.trouble_brewing, Demon())
+            tb_townsfolk_all = BOTCUtils.get_role_list(TroubleBrewing, Townsfolk)
+            tb_outsider_all = BOTCUtils.get_role_list(TroubleBrewing, Outsider)
+            tb_minion_all = BOTCUtils.get_role_list(TroubleBrewing, Minion)
+            tb_demon_all = BOTCUtils.get_role_list(TroubleBrewing, Demon)
 
             ret_townsfolk = random.sample(tb_townsfolk_all, nb_townsfolk)
             ret_outsider = random.sample(tb_outsider_all, nb_outsider)

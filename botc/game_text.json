@@ -8,8 +8,11 @@
     "gameplay" : {
 
         "role_dm" : "Welcome to Ravenswood Bluff, **{role_name_str}**! You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to learn more.",
-
-        "your_role_is" : "**Your role is {}**"
+        "your_role_is" : "**Your role is {}**",
+        "nightfall" : "It is currently **nighttime**.",
+        "daybreak" : "It is currently **daytime**.",
+        "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
+        "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!"
 
     }
 }
