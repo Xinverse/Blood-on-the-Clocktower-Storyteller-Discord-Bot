@@ -3,7 +3,7 @@
 import json 
 import botutils
 import discord
-from botc import Outsider, Character, IncorrectNumberOfArguments
+from botc import Outsider, Character
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -28,7 +28,7 @@ class Butler(Outsider, TroubleBrewing, Character):
     commands
     - serve <player>
 
-    send first night instruction? -> TRUE
+    send first night instruction? -> TRUE (serve)
     """
 
     def __init__(self):
