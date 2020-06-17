@@ -1,8 +1,10 @@
 """Contains the Monk Character class"""
 
 import json 
+import discord
 from botc import Townsfolk, Character
 from ._utils import TroubleBrewing, TBRole
+import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.monk.value.lower()]
@@ -18,9 +20,11 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     social_self = monk
 
     commands:
-    - protect
+    - protect <player>
 
     send first night instruction? -> FALSE
+    send regular night instruction -> TRUE (query for "protect" command)
+    * False means defaulting to the parent class' implementation
     """
     
     def __init__(self):
@@ -38,3 +42,15 @@ class Monk(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Monk"
 
         self._role_enum = TBRole.monk
+        self._emoji = "<:monk:722687015560151050>"
+
+    async def send_regular_night_instruction(self, recipient):
+        """Query the player for "protect" command"""
+        
+        msg = self.instruction
+        msg += "\n\n"
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        try: 
+            await recipient.send(msg)
+        except discord.Forbidden:
+            pass

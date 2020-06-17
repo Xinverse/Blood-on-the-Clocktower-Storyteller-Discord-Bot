@@ -36,3 +36,4 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Empath"
 
         self._role_enum = TBRole.empath
+        self._emoji = "<:empath:722686258563907616>"

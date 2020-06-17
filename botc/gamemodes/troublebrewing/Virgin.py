@@ -39,3 +39,4 @@ class Virgin(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Virgin"
 
         self._role_enum = TBRole.virgin
+        self._emoji = "<:virgin:722687299363667988>"

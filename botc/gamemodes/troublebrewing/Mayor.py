@@ -39,3 +39,4 @@ class Mayor(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Mayor"
 
         self._role_enum = TBRole.mayor
+        self._emoji = "<:mayor:722687261879304214>"

@@ -38,4 +38,5 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Slayer"
 
         self._role_enum = TBRole.slayer
+        self._emoji = "<:slayer:722687329050820648>"
 

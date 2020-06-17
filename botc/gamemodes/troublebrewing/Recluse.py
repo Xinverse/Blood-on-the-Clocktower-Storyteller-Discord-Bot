@@ -39,6 +39,7 @@ class Recluse(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Recluse"
 
         self._role_enum = TBRole.recluse
+        self._emoji = "<:recluse:722687457786593370>"
     
     @property
     def social_self(self):

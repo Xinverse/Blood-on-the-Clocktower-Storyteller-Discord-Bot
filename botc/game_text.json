@@ -12,7 +12,82 @@
         "nightfall" : "It is currently **nighttime**.",
         "daybreak" : "It is currently **daytime**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
-        "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!"
+        "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!",
+        "evilteammates" : "Your **Evil** teammates are shown below: "
+
+    },
+
+    "doc" : {
+
+        "serve" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[SERVE] command - BOTC",
+            "feedback" : ""
+        },
+
+        "poison" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[POISON] command - BOTC",
+            "feedback" : ""
+        },
+
+        "learn" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[LEARN] command - BOTC",
+            "feedback" : ""
+        },
+
+        "read" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[READ] command - BOTC",
+            "feedback" : ""
+        },
+
+        "kill" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[KILL] command - BOTC",
+            "feedback" : ""
+        },
+
+        "slay" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[SLAY] command - BOTC",
+            "feedback" : ""
+        },
+
+        "protect" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[PROTECT] command - BOTC",
+            "feedback" : ""
+        },
+
+        "nominate" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[NOMINATE] command - BOTC",
+            "feedback" : ""
+        },
+
+        "yes" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[YES] command - BOTC",
+            "feedback" : ""
+        },
+
+        "no" : {
+            "brief" : "",
+            "help" : "",
+            "description" : "[NO] command - BOTC",
+            "feedback" : ""
+        }
 
     }
 }

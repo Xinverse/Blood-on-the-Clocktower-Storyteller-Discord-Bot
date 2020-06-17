@@ -1,8 +1,10 @@
 """Contains the Poisoner Character class"""
 
 import json 
+import discord
 from botc import Minion, Character
 from ._utils import TroubleBrewing, TBRole
+import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.poisoner.value.lower()]
@@ -19,6 +21,9 @@ class Poisoner(Minion, TroubleBrewing, Character):
 
     commands:
     - poison <player>
+
+    send first night instruction? -> TRUE (demon identity)
+    send regular night instruction -> TRUE (query for "poison" command)
     """
 
     def __init__(self):
@@ -36,3 +41,15 @@ class Poisoner(Minion, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Poisoner"
 
         self._role_enum = TBRole.poisoner
+        self._emoji = "<:poisoner:722687671671193620>"
+    
+    async def send_regular_night_instruction(self, recipient):
+        """Query the player for "poison" command"""
+        
+        msg = self.instruction
+        msg += "\n\n"
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        try: 
+            await recipient.send(msg)
+        except discord.Forbidden:
+            pass

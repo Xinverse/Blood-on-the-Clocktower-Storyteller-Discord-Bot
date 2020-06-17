@@ -5,6 +5,7 @@ import discord
 import botutils
 import configparser
 from .Category import Category
+from .Team import Team
 import globvars
 
 Config = configparser.ConfigParser()
@@ -68,17 +69,35 @@ class Character:
 
         # Other
         self.__role_class = self.__class__
+        self._emoji = None
+        self._demon_head_emoji = "<:demonhead:722894653438820432>"
     
     async def send_first_night_instruction(self, recipient):
         """Send the first night instruction, which includes first night passive information, 
         and role instructions.
+        Default is to send the instruction string.
         Override by child classes.
         """
-        msg = self.instruction
+        msg = self.emoji + " " + self.instruction
         try:
             await recipient.send(msg)
         except discord.Forbidden:
-            await botutils.send_lobby(blocked)
+            pass
+    
+    async def send_regular_night_instruction(self, recipient):
+        """Send the recurring night instruction for all subsequent nights except for the first.
+        Default is to send nothing.
+        Override by child classes.
+        """
+        pass
+    
+    def is_good(self):
+        """Return True if the character is on the good team, False otherwise"""
+        return self.team == Team.good
+    
+    def is_evil(self):
+        """Return True if the character is on the evil team, False otherwise"""
+        return self.team == Team.evil
     
     @property
     def true_self(self):
@@ -100,6 +119,10 @@ class Character:
         3. social_self = what the other players think the player is
         """
         return self.__role_class()
+    
+    @property
+    def emoji(self):
+        return self._emoji
     
     @property
     def main_wiki_link(self):

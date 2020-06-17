@@ -40,6 +40,7 @@ class Spy(Minion, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Spy"
 
         self._role_enum = TBRole.spy
+        self._emoji = "<:spy2:722687672002543656>"
     
     @property
     def social_self(self):
@@ -49,4 +50,5 @@ class Spy(Minion, TroubleBrewing, Character):
         possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
                          if issubclass(role_class, Townsfolk) or issubclass(role_class, Outsider)]
         possibilities.append(Spy())
+        random.shuffle(possibilities)
         return random.choice(possibilities)

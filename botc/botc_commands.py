@@ -1,10 +1,17 @@
 """Contains the cog for BoTC in-game commands"""
 
 from discord.ext import commands
+from botc import BOTCUtils
+import globvars
 
 
 def check_if_can_serve(ctx):
     """Can serve: butler"""
+    pass
+
+
+def check_if_can_poison(ctx):
+    """Can poison: poisoner"""
     pass
 
 
@@ -59,7 +66,23 @@ def check_if_player_alive(ctx):
 
 
 class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
-    """BoTC in-game commands cog"""
+    """BoTC in-game commands cog
+    (privilege one unique command keyword per character ability)
+
+    Ability commands:
+    - serve: butler
+    - poison: poisoner
+    - learn: ravenkeeper
+    - read: fortune teller
+    - kill: imp
+    - slay: slayer
+    - protect: monk
+
+    Day commands:
+    - nominate
+    - yes
+    - no
+    """
     
     def __init__(self, client):
         self.client = client
@@ -72,6 +95,16 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.check(check_if_is_night)
     @commands.check(check_if_player_alive)
     async def serve(self, ctx):
+        pass
+
+
+    # ---------- POISON COMMAND (Poisoner) ----------------------------------------
+    @commands.command(pass_context=True, name = "poison")
+    @commands.check(check_if_can_poison)
+    @commands.check(check_if_dm)
+    @commands.check(check_if_is_night)
+    @commands.check(check_if_player_alive)
+    async def poison(self, ctx):
         pass
 
 
@@ -122,6 +155,30 @@ class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
     @commands.check(check_if_is_night)
     @commands.check(check_if_player_alive)
     async def protect(self, ctx):
+        pass
+    
+
+    # ---------- NOMINATE COMMAND (Voting) ----------------------------------------
+    @commands.command(pass_context=True, name = "nominate", aliases = ["nom", "nomination"])
+    @commands.check(check_if_lobby)
+    @commands.check(check_if_is_day)
+    async def nominate(self, ctx):
+        pass
+
+    
+    # ---------- YES COMMAND (Voting) ----------------------------------------
+    @commands.command(pass_context=True, name = "yes", aliases = ["y"])
+    @commands.check(check_if_lobby)
+    @commands.check(check_if_is_day)
+    async def yes(self, ctx):
+        pass
+    
+
+    # ---------- NO COMMAND (Voting) ----------------------------------------
+    @commands.command(pass_context=True, name = "no", aliases = ["n"])
+    @commands.check(check_if_lobby)
+    @commands.check(check_if_is_day)
+    async def no(self, ctx):
         pass
 
     

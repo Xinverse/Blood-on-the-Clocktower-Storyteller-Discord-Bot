@@ -36,6 +36,7 @@ class Drunk(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Drunk"
 
         self._role_enum = TBRole.drunk
+        self._emoji = "<:drunk:722687457828798515>"
 
         self.__init_ego_self()
     

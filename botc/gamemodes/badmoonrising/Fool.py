@@ -23,7 +23,7 @@ class Fool(Townsfolk, BadMoonRising, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/Fool"
+        self._art_link = "http://bloodontheclocktower.com/wiki/images/b/ba/Fool_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Fool"
 
         self._role_enum = BMRRole.fool

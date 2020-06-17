@@ -38,4 +38,5 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Ravenkeeper"
         
         self._role_enum = TBRole.ravenkeeper
+        self._emoji = "<:ravenkeeper:722686977295646731>"
         

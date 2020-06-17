@@ -37,4 +37,5 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Librarian"
 
         self._role_enum = TBRole.librarian
+        self._emoji = "<:librarian:722685072205152267>"
     

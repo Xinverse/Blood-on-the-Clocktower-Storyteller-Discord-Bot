@@ -10,10 +10,6 @@ import globvars
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.butler.value.lower()]
 
-with open('botc/game_text.json') as json_file: 
-    strings = json.load(json_file)
-    blocked = strings["gameplay"]["blocked"]
-
 
 class Butler(Outsider, TroubleBrewing, Character):
     """Butler: Each night, choose a player (not yourself): tomorrow, you may only vote if 
@@ -28,7 +24,7 @@ class Butler(Outsider, TroubleBrewing, Character):
     commands
     - serve <player>
 
-    send first night instruction? -> TRUE (serve)
+    send first night instruction? -> TRUE (query for "serve" command)
     """
 
     def __init__(self):
@@ -46,16 +42,16 @@ class Butler(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Butler"
 
         self._role_enum = TBRole.butler
+        self._emoji = "<:butler:722687426421719050>"
 
     async def send_first_night_instruction(self, recipient):
         """Query the player for "serve" command"""
+        
         msg = self.instruction
         msg += "\n\n"
         msg += globvars.master_state.game.create_sitting_order_stats_string()
         try: 
             await recipient.send(msg)
         except discord.Forbidden:
-            await botutils.send_lobby(blocked)
-    
-
+            pass
     

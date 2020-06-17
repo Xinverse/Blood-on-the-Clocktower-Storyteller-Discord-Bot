@@ -36,3 +36,4 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Investigator"
 
         self._role_enum = TBRole.investigator
+        self._emoji = "<:investigator:722685830585384971>"

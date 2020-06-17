@@ -37,3 +37,4 @@ class ScarletWoman(Minion, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Scarlet_Woman"
 
         self._role_enum = TBRole.scarletwoman
+        self._emoji = "<:scarletwoman:722687671847092225>"

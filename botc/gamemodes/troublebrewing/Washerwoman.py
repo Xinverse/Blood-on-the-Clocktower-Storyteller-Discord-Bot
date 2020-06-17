@@ -36,24 +36,5 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Washerwoman"
 
         self._role_enum = TBRole.washerwoman
+        self._emoji = "<:washerwoman:722684124820668447>"
     
-    @property
-    def true_self(self):
-        """Layers of Role Identity:
-        1. true_self = what the game uses for win-con computations
-        """
-        return Washerwoman()
-
-    @property
-    def ego_self(self):
-        """Layers of Role Identity:
-        2. ego_self = what the player thinks they are
-        """
-        return Washerwoman()
-
-    @property
-    def social_self(self):
-        """Layers of Role Identity:
-        3. social_self = what the other players think the player is
-        """
-        return Washerwoman()

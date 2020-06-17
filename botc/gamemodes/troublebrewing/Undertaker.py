@@ -38,25 +38,5 @@ class Undertaker(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Undertaker"
 
         self._role_enum = TBRole.undertaker
+        self._emoji = "<:undertaker:722687110599147541>"
     
-    @property
-    def true_self(self):
-        """Layers of Role Identity:
-        1. true_self = what the game uses for win-con computations
-        """
-        return Undertaker()
-
-    @property
-    def ego_self(self):
-        """Layers of Role Identity:
-        2. ego_self = what the player thinks they are
-        """
-        return Undertaker()
-
-    @property
-    def social_self(self):
-        """Layers of Role Identity:
-        3. social_self = what the other players think the player is
-        """
-        return Undertaker()
-

@@ -20,7 +20,7 @@ class Chef(Townsfolk, TroubleBrewing, Character):
     commands:
     - None
 
-    send first night instruction? -> TRUE (pairs)
+    send first night instruction? -> TRUE (passive info: pairs of evil)
     """
     
     def __init__(self):
@@ -38,6 +38,6 @@ class Chef(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Chef"
 
         self._role_enum = TBRole.chef
+        self._emoji = "<:chef:722686296073699388>"
     
-    def send_first_night_instruction(self, recipient):
-        """Send the """
+

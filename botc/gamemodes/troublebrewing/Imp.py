@@ -39,3 +39,4 @@ class Imp(Demon, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Imp"
 
         self._role_enum = TBRole.imp
+        self._emoji = "<:imp2:722687671377330197>"

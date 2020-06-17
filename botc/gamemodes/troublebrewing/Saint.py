@@ -38,3 +38,4 @@ class Saint(Outsider, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Saint"
 
         self._role_enum = TBRole.saint
+        self._emoji = "<:saint:722687457946107924>"

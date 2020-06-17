@@ -36,3 +36,4 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Fortune_Teller"
 
         self._role_enum = TBRole.fortuneteller
+        self._emoji = "<:fortuneteller:722687043666313218>"

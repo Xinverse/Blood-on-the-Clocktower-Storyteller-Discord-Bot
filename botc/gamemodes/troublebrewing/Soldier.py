@@ -38,3 +38,4 @@ class Soldier(Townsfolk, TroubleBrewing, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Soldier"
 
         self._role_enum = TBRole.soldier
+        self._emoji = "<:soldier:722687220841971753>"

@@ -71,9 +71,33 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
     @commands.command(pass_context=True, name = "fstart")
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     async def fstart(self, ctx):
-        """Start command"""
+        """Force start command"""
         globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]
         await globvars.master_state.game.start_game()
+    
+
+    # ---------- PLAYTEST COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "playtest")
+    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    async def playtest(self, ctx):
+        """Playtest command"""
+        playtesters = [
+            600426113285750785,
+            606332710989856778,
+            635674760247771136,
+            614109280508968980,
+            270904126974590976,
+            159985870458322944,
+            184405311681986560,
+            235088799074484224,
+            172002275412279296,
+            460105234748801024
+            ]
+        for userid in playtesters:
+            globvars.master_state.pregame.safe_add_player(userid)
+        globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]
+        await globvars.master_state.game.start_game()
+
 
     
     # ---------- ROLE COMMAND ----------------------------------------

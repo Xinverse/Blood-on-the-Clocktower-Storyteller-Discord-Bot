@@ -30,6 +30,13 @@ class Admin(commands.Cog, name="Admin Commands"):
         return botutils.check_if_admin(ctx)
     
 
+    # ---------- Test COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "test")
+    async def test(self, ctx):
+       
+        await ctx.send("<a:rabbit6d:722677068818546730>")
+
+
     # ---------- FJOIN COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "fjoin")
     async def fjoin(self, ctx, *, member: discord.Member):

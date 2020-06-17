@@ -12,8 +12,15 @@ affiliated with them in any way.
 """
 
 # TODO
-# Gamemode command
-# Chef, Drunk, Empath, Fortune Teller, Investigator, Librarian, Poisoner, Washerwoman
+# First night second dm
+# Regular night dm
+# Night action command
+# Night action registration
+# Night action interaction
+# Game object log
+# Night action log
+# Nomination
+# Voting
 
 import globvars
 import configparser

@@ -5,6 +5,8 @@ import datetime
 import botutils
 import globvars
 import json
+from .BOTCUtils import BOTCUtils
+from .Category import Category
 from .Phase import Phase
 from .Player import Player
 from .errors import GameError, TooFewPlayers, TooManyPlayers
@@ -26,13 +28,34 @@ with open('botc/game_text.json') as json_file:
     lobby_game_start = strings["gameplay"]["lobby_game_start"]
 
 
-class BOTCUtils:
-   """Some utility functions"""
+class Setup:
+   """A class to facilitate role to player access"""
 
-   @staticmethod
-   def get_role_list(edition, category):
-      """Get the entire list of an edition and a category """
-      return [role_class() for role_class in edition.__subclasses__() if issubclass(role_class, category)]
+   def __init__(self):
+
+      self.demon = []
+      self.minions = []
+      self.townsfolks = []
+      self.outsiders = []
+      self.role_dict = {}  # {"recluse" : player_obj1, "undertaker" : player_obj2}
+
+   def create(self, player_ob_list):
+
+      for player in player_ob_list:
+         self.role_dict.update({player.role.name.lower(): player})
+         if player.role.category == Category.demon:
+            self.demon.append(player)
+         elif player.role.category == Category.minion:
+            self.minions.append(player)
+         elif player.role.category == Category.townsfolk:
+            self.townsfolks.append(player)
+         elif player.role.category == Category.outsider:
+            self.outsiders.append(player)
+      assert len(self.demon) == 1, "More than 1 demon found."
+   
+   def clear(self):
+      
+      self.__init__()
 
 
 class Game(GameMeta):
@@ -73,6 +96,11 @@ class Game(GameMeta):
       self._player_obj_list = []  # list object - list of player objects
       self._sitting_order = tuple()  # tuple object (for immutability)
       self._current_phase = Phase.idle
+      self._setup = Setup()
+   
+   @property
+   def nb_players(self):
+      return len(self._player_obj_list)
    
    @property
    def gamemode(self):
@@ -93,6 +121,10 @@ class Game(GameMeta):
    @property
    def current_phase(self):
       return self._current_phase
+   
+   @property
+   def setup(self):
+      return self._setup
    
    def create_sitting_order_stats_string(self):
       """Create a stats board:
@@ -140,6 +172,9 @@ class Game(GameMeta):
       setup = self.generate_role_set()
       # Give each player a role
       self.distribute_roles(setup, self.member_obj_list)
+      # Initialize the setup object
+      self.setup.clear()
+      self.setup.create(self.player_obj_list)
       # Send the lobby welcome message
       await botutils.send_lobby(lobby_game_start)
       # Lock the lobby channel
