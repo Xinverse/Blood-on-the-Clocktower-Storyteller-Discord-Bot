@@ -28,7 +28,7 @@ class BMRRole(enum.Enum):
     professor = "Professor"
     pukka = "Pukka"
     sailor = "Sailor"
-    shabaloth = "Shaboloth"
+    shabaloth = "Shabaloth"
     tealady = "Tea Lady"
     tinker = "Tinker"
     zombuul = "Zombuul"

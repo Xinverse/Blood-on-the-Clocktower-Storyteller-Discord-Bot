@@ -4,7 +4,11 @@ from models import FormatterMeta
 from .Game import Game
 from .gamemodes.troublebrewing import Baron, Butler, Chef, Drunk, Empath, FortuneTeller, \
         Imp, Investigator, Librarian, Mayor, Monk, Poisoner, Ravenkeeper, Recluse, Saint, \
-        ScarletWoman, Slayer, Soldier, Undertaker, Virgin, Washerwoman
+        ScarletWoman, Slayer, Soldier, Spy, Undertaker, Virgin, Washerwoman
+from .gamemodes.badmoonrising import Assassin, Chambermaid, Courtier, DevilsAdvocate, \
+        Exorcist, Fool, Gambler, Godfather, Goon, Gossip, Grandmother, Innkeeper, Lunatic, \
+        Mastermind, Minstrel, Moonchild, Pacifist, Po, Professor, Pukka, Sailor, Shabaloth, \
+        TeaLady, Tinker, Zombuul
 
 
 class BOTCFormatter(FormatterMeta):
@@ -20,7 +24,8 @@ class BOTCFormatter(FormatterMeta):
             final_text += "\n"
             role_obj_list = setup["botc"]["gamemodes"][mode_title]
             temp = ", ".join([self.format_role_name(role.name) for role in role_obj_list])
-            final_text += temp           
+            final_text += temp
+            final_text += "\n\n"
         return final_text
 
 
@@ -54,9 +59,40 @@ setup = {
                             ScarletWoman(),
                             Slayer(),
                             Soldier(),
+                            Spy(),
                             Undertaker(),
                             Virgin(),
                             Washerwoman()
+
+                        ],
+            
+            "bad-moon-rising" : [
+
+                            Assassin(),
+                            Chambermaid(),
+                            Courtier(),
+                            DevilsAdvocate(),
+                            Exorcist(),
+                            Fool(),
+                            Gambler(),
+                            Godfather(),
+                            Goon(),
+                            Gossip(),
+                            Grandmother(),
+                            Innkeeper(),
+                            Lunatic(),
+                            Mastermind(),
+                            Minstrel(),
+                            Moonchild(),
+                            Pacifist(),
+                            Po(),
+                            Professor(),
+                            Pukka(),
+                            Sailor(),
+                            Shabaloth(),
+                            TeaLady(),
+                            Tinker(),
+                            Zombuul()
 
                         ]
 
