@@ -17,6 +17,12 @@
 
     },
 
+    "esthetics" : {
+
+        "loading_emoji" : "<a:loading:723373502052434000>"
+
+    },
+
     "doc" : {
 
         "dog" : {

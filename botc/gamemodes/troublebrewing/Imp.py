@@ -40,3 +40,7 @@ class Imp(Demon, TroubleBrewing, Character):
 
         self._role_enum = TBRole.imp
         self._emoji = "<:imp2:722687671377330197>"
+    
+    async def exec_kill(self, targets):
+        """Kill command"""
+        pass

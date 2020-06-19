@@ -37,3 +37,7 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
 
         self._role_enum = TBRole.fortuneteller
         self._emoji = "<:fortuneteller:722687043666313218>"
+
+    async def exec_read(self, targets):
+        """Read command"""
+        pass

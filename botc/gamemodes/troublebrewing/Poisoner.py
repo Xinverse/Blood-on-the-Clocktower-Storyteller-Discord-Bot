@@ -53,3 +53,7 @@ class Poisoner(Minion, TroubleBrewing, Character):
             await recipient.send(msg)
         except discord.Forbidden:
             pass
+    
+    async def exec_poison(self, targets):
+        """Poison command"""
+        pass

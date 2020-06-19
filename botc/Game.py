@@ -125,6 +125,12 @@ class Game(GameMeta):
    @property
    def setup(self):
       return self._setup
+
+   def is_day(self):
+      return self.current_phase == Phase.day
+
+   def is_night(self):
+      return self.current_phase == Phase.night
    
    def create_sitting_order_stats_string(self):
       """Create a stats board:
@@ -172,6 +178,8 @@ class Game(GameMeta):
       setup = self.generate_role_set()
       # Give each player a role
       self.distribute_roles(setup, self.member_obj_list)
+      # Freeze the sitting
+      self.generate_frozen_sitting()
       # Initialize the setup object
       self.setup.clear()
       self.setup.create(self.player_obj_list)
@@ -179,8 +187,6 @@ class Game(GameMeta):
       await botutils.send_lobby(lobby_game_start)
       # Lock the lobby channel
       await botutils.lock_lobby()
-      # Freeze the sitting
-      self.generate_frozen_sitting()
       # Log the game data
       await botutils.log(botutils.Level.info, "Game started, to-do")
       # Send the opening dm to all players
@@ -196,6 +202,13 @@ class Game(GameMeta):
       """End the game, compute winners etc. 
       Must be implemented.
       """
+      # Send the lobby welcome message
+      await botutils.send_lobby("Game over, todo")
+      # Log the game over data
+      await botutils.log(botutils.Level.info, "Game finished, to-do")
+      # Clear the setup object
+      self.setup.clear()
+      # Unlock the lobby channel
       await botutils.unlock_lobby()
 
    async def make_nightfall(self):

@@ -4,12 +4,25 @@ from .PlayerState import PlayerState
 
 
 class Player:
-    """Player class"""
+    """Player class
+    
+    State: the real life/death state of the player
+    Apparent state: the apparent life/death state of the player (ex. Zombuul)
+
+    (Fleaved must be a real state as it pertains to game participation.)
+    """
 
     def __init__(self, user_obj, role_obj):
         self._user_obj = user_obj  # Discord user object
         self._role_obj = role_obj  # Role object
         self._state_obj = PlayerState.alive  # Enum object
+        self._apparent_state_obj = PlayerState.alive  # Enum object
+    
+    def is_apparently_alive(self):
+        return self.apparent_state == PlayerState.alive
+    
+    def is_apparently_dead(self):
+        return self.apparent_state == PlayerState.dead
     
     def is_alive(self):
         return self.state == PlayerState.alive
@@ -35,3 +48,7 @@ class Player:
     @property
     def state(self):
         return self._state_obj
+
+    @property
+    def apparent_state(self):
+        return self._apparent_state_obj

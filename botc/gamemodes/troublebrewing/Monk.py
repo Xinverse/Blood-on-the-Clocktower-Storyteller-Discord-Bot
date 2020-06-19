@@ -54,3 +54,7 @@ class Monk(Townsfolk, TroubleBrewing, Character):
             await recipient.send(msg)
         except discord.Forbidden:
             pass
+    
+    async def exec_protect(self, targets):
+        """Protect command"""
+        pass

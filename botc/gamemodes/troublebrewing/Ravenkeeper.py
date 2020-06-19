@@ -39,4 +39,8 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
         
         self._role_enum = TBRole.ravenkeeper
         self._emoji = "<:ravenkeeper:722686977295646731>"
+    
+    async def exec_learn(self, targets):
+        """Learn command"""
+        pass
         

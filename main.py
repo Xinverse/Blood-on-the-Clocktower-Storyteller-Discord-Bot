@@ -52,6 +52,9 @@ if __name__ == "__main__":
         )
     logging.basicConfig(level=logging.WARNING)
 
+    globvars.init_client()
+    globvars.init_master_state()
+
     # Loading game packs
     print("===== LOADING GAME PACKS =====")
     botc.load_pack(globvars.master_state)

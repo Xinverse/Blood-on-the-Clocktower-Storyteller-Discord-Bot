@@ -39,4 +39,8 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
 
         self._role_enum = TBRole.slayer
         self._emoji = "<:slayer:722687329050820648>"
+    
+    async def exec_slay(self, targets):
+        """Slay command"""
+        pass
 

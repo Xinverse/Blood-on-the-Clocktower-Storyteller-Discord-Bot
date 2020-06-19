@@ -55,3 +55,7 @@ class Butler(Outsider, TroubleBrewing, Character):
         except discord.Forbidden:
             pass
     
+    async def exec_serve(self, targets):
+        """Serve command"""
+        pass
+    

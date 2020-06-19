@@ -269,4 +269,35 @@ class Character:
         try:
             await recipient.send(embed = embed)
         except discord.Forbidden:
-            await botutils.send_lobby(blocked.format(recipient.mention))
+            #await botutils.send_lobby(blocked.format(recipient.mention))
+            pass
+    
+    # -------------------- Character ABILITIES --------------------
+    
+    async def exec_serve(self, targets):
+        """Serve command. Override by child classes."""
+        raise NotImplementedError
+
+    async def exec_poison(self, targets):
+        """Poison command. Override by child classes"""
+        raise NotImplementedError
+
+    async def exec_learn(self, targets):
+        """Learn command. Override by child classes"""
+        raise NotImplementedError
+
+    async def exec_read(self, targets):
+        """Read command. Override by child classes"""
+        raise NotImplementedError
+
+    async def exec_kill(self, targets):
+        """Kill command. Override by child classes"""
+        raise NotImplementedError
+
+    async def exec_slay(self, targets):
+        """Slay command. Override by child classes"""
+        raise NotImplementedError
+
+    async def exec_protect(self, targets):
+        """Protect command. Override by child classes"""
+        raise NotImplementedError

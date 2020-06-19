@@ -74,6 +74,7 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         """Force start command"""
         globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]
         await globvars.master_state.game.start_game()
+        globvars.client.load_extension("botc.botc_commands")
     
 
     # ---------- PLAYTEST COMMAND ----------------------------------------
@@ -97,7 +98,7 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             globvars.master_state.pregame.safe_add_player(userid)
         globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]
         await globvars.master_state.game.start_game()
-
+        globvars.client.load_extension("botc.botc_commands")
 
     
     # ---------- ROLE COMMAND ----------------------------------------
@@ -284,13 +285,6 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             except Exception:
                 await ctx.send(error_str)
                 await botutils.log(botutils.Level.error, traceback.format_exc()) 
-    
-
-    # ---------- EXTRA ----------------------------------------
-    async def cog_after_invoke(self, ctx):
-        """After invoking each command of this cog, perform some state checks"""
-
-        globvars.master_state.sync_state()
 
 
 def setup(client):
