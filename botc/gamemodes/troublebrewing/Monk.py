@@ -3,6 +3,7 @@
 import json 
 import discord
 from botc import Townsfolk, Character
+from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -55,6 +56,8 @@ class Monk(Townsfolk, TroubleBrewing, Character):
         except discord.Forbidden:
             pass
     
+    @GameLogic.changes_not_allowed
+    @GameLogic.requires_one_target
     async def exec_protect(self, targets):
         """Protect command"""
         pass

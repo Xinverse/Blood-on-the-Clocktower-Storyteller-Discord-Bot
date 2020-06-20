@@ -2,6 +2,7 @@
 
 import json 
 from botc import Townsfolk, Character
+from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -40,6 +41,8 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
         self._role_enum = TBRole.ravenkeeper
         self._emoji = "<:ravenkeeper:722686977295646731>"
     
+    @GameLogic.changes_not_allowed
+    @GameLogic.requires_one_target
     async def exec_learn(self, targets):
         """Learn command"""
         pass

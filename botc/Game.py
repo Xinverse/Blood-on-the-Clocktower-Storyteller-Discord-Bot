@@ -5,6 +5,8 @@ import datetime
 import botutils
 import globvars
 import json
+import pytz
+import configparser
 from .BOTCUtils import BOTCUtils
 from .Category import Category
 from .Phase import Phase
@@ -26,10 +28,13 @@ with open('botc/game_text.json') as json_file:
     nightfall = strings["gameplay"]["nightfall"]
     daybreak = strings["gameplay"]["daybreak"]
     lobby_game_start = strings["gameplay"]["lobby_game_start"]
+    evilteammates = strings["gameplay"]["evilteammates"]
 
 
 class Setup:
    """A class to facilitate role to player access"""
+
+   DEMON_HEAD_EMOJI = "<:demonhead:722894653438820432>"
 
    def __init__(self):
 
@@ -53,9 +58,80 @@ class Setup:
             self.outsiders.append(player)
       assert len(self.demon) == 1, "More than 1 demon found."
    
+   def create_evil_team_string(self):
+      """
+      :demonhead: Your Evil team consists of:
+      ```basic
+      Oliver (460105234748801024) (demon)
+      Johnny (159985870458322944) (minion)
+      Michel (614109280508968980) (minion)
+      ```
+      """
+      msg = Setup.DEMON_HEAD_EMOJI + " " + evilteammates + "```basic\n"
+      for demon in self.demon:
+         msg += f"{demon.user.display_name} ({demon.user.id}) (demon)"
+         msg += "\n"
+      for minion in self.minions:
+         msg += f"{minion.user.display_name} ({minion.user.id}) (minion)"
+         msg += "\n"
+      msg += "```"
+      return msg
+   
    def clear(self):
       
       self.__init__()
+
+
+class GameLog:
+   """Game log class"""
+
+   def __init__(self, game_obj):
+      self.setup = game_obj.setup
+      self.sitting_order = game_obj.sitting_order
+      self.gamemode = game_obj.gamemode.value
+
+   def create_game_obj_log_str(self):
+      """Create the game log string. The string looks like this:
+
+      Game Start:
+      ```asciidoc
+      BoTC game started at 2020-06-19T19:50:04.657050-04:00, with 10 players, using the Trouble-Brewing edition.
+      --------------------
+      DEMON :: [Tester 1 (614109280508968980) is Imp]
+      MINION :: [Tester 5 (235088799074484224) is Baron, Tester 3 (159985870458322944) is Spy]
+      TOWNSFOLK :: [Tester 6 (172002275412279296) is Chef, Tester 4 (184405311681986560) is Monk, Xinverse 
+      (346426113285753875) is Slayer, Tester 7 (460105234748801024) is Librarian, Tester 2 (270904126974590976) 
+      is Investigator]
+      OUTSIDER :: [Penguin (606332710911156778) is Saint, Temporary Bot (609674334247771236) is Butler]
+      ```
+      """
+
+      Config = configparser.ConfigParser()
+      Config.read("preferences.INI")
+
+      TIMEZONE = Config["location"]["TIME_ZONE"]
+
+      d = datetime.datetime.now()
+      timezone = pytz.timezone(TIMEZONE)
+      d_aware = timezone.localize(d)
+
+      msg = "Game Start:```asciidoc\n"
+      msg += f"BoTC game started at {d_aware.isoformat()}, with {len(self.sitting_order)} players, using the {self.gamemode} edition.\n"
+      msg += "--------------------\n"
+
+      msg += f"DEMON :: {str(self.setup.demon)}\n"
+      msg += f"MINION :: {str(self.setup.minions)}\n"
+      msg += f"TOWNSFOLK :: {str(self.setup.townsfolks)}\n"
+      msg += f"OUTSIDER :: {str(self.setup.outsiders)}\n"
+
+      msg += "```"
+
+      return msg
+
+   async def send_game_obj_log_str(self):
+      """Log the game object"""
+      msg = self.create_game_obj_log_str()
+      await botutils.log(botutils.Level.info, msg)
 
 
 class Game(GameMeta):
@@ -188,7 +264,8 @@ class Game(GameMeta):
       # Lock the lobby channel
       await botutils.lock_lobby()
       # Log the game data
-      await botutils.log(botutils.Level.info, "Game started, to-do")
+      game_log = GameLog(self)
+      await game_log.send_game_obj_log_str()
       # Send the opening dm to all players
       for player in self._player_obj_list:
          await player.role.ego_self.send_opening_dm_embed(player.user)
@@ -215,6 +292,9 @@ class Game(GameMeta):
       """Transition the game into night phase"""
       self._current_phase = Phase.night
       await botutils.send_lobby(nightfall)
+   
+   async def make_dawn(self):
+      pass
 
    async def make_daybreak(self):
       """Transition the game into day phase"""

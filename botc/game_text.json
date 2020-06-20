@@ -10,6 +10,7 @@
         "role_dm" : "Welcome to Ravenswood Bluff, **{role_name_str}**! You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to learn more.",
         "your_role_is" : "**Your role is {}**",
         "nightfall" : "It is currently **nighttime**.",
+        "dawn" : "It is currently **dawn**.",
         "daybreak" : "It is currently **daytime**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
         "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!",
@@ -17,76 +18,78 @@
 
     },
 
+    "cmd_warnings" : {
+
+        "x_emoji" : "<:notallowed:723642802474450995>",
+        "dm_only" : "{} {} You may not use this command outside of DM channel.",
+        "lobby_only" : "{} {} You may not use this command outside of the public lobby channel.",
+        "alive_only" : "{} {} You may not use this command while dead.",
+        "dead_only" : "{} {} You may not use this command while alive.",
+        "day_only" : "{} {} You may not use this command during nighttime.",
+        "night_only" : "{} {} You may not use this command during daytime."
+
+    },
+
     "doc" : {
 
         "serve" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[SERVE] command - BOTC",
-            "feedback" : ""
+            "brief" : "Pick a 'serve' target.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "description" : "[SERVE] command - BOTC"
         },
 
         "poison" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[POISON] command - BOTC",
-            "feedback" : ""
+            "brief" : "Pick a 'poison' target.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "description" : "[POISON] command - BOTC"
         },
 
         "learn" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[LEARN] command - BOTC",
-            "feedback" : ""
+            "brief" : "Pick a 'learn' target.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "description" : "[LEARN] command - BOTC"
         },
 
         "read" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[READ] command - BOTC",
-            "feedback" : ""
+            "brief" : "Pick a 'read' target.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "description" : "[READ] command - BOTC"
         },
 
         "kill" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[KILL] command - BOTC",
-            "feedback" : ""
+            "brief" : "Pick a 'kill' target.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "description" : "[KILL] command - BOTC"
         },
 
         "slay" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[SLAY] command - BOTC",
-            "feedback" : ""
+            "brief" : "Pick a 'slay' target.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in the public game channel.",
+            "description" : "[SLAY] command - BOTC"
         },
 
         "protect" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[PROTECT] command - BOTC",
-            "feedback" : ""
+            "brief" : "Pick a 'protect' target.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "description" : "[PROTECT] command - BOTC"
         },
 
         "nominate" : {
             "brief" : "",
             "help" : "",
-            "description" : "[NOMINATE] command - BOTC",
-            "feedback" : ""
+            "description" : "[NOMINATE] command - BOTC"
         },
 
         "yes" : {
             "brief" : "",
             "help" : "",
-            "description" : "[YES] command - BOTC",
-            "feedback" : ""
+            "description" : "[YES] command - BOTC"
         },
 
         "no" : {
             "brief" : "",
             "help" : "",
-            "description" : "[NO] command - BOTC",
-            "feedback" : ""
+            "description" : "[NO] command - BOTC"
         }
 
     }

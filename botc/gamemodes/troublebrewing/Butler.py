@@ -3,6 +3,7 @@
 import json 
 import botutils
 import discord
+from botc.BOTCUtils import GameLogic
 from botc import Outsider, Character
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -47,7 +48,7 @@ class Butler(Outsider, TroubleBrewing, Character):
     async def send_first_night_instruction(self, recipient):
         """Query the player for "serve" command"""
         
-        msg = self.instruction
+        msg = self.emoji + " " + self.instruction
         msg += "\n\n"
         msg += globvars.master_state.game.create_sitting_order_stats_string()
         try: 
@@ -55,6 +56,8 @@ class Butler(Outsider, TroubleBrewing, Character):
         except discord.Forbidden:
             pass
     
+    @GameLogic.changes_not_allowed
+    @GameLogic.requires_one_target
     async def exec_serve(self, targets):
         """Serve command"""
         pass

@@ -52,3 +52,6 @@ class Player:
     @property
     def apparent_state(self):
         return self._apparent_state_obj
+
+    def __repr__(self):
+        return f"{str(self.user.display_name)} ({self.user.id}) is {str(self.role)}"

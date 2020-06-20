@@ -278,7 +278,15 @@ class Character:
         """Serve command. Override by child classes."""
         raise NotImplementedError
 
+    async def register_serve(self, targets):
+        """Serve command. Override by child classes"""
+        raise NotImplementedError
+
     async def exec_poison(self, targets):
+        """Poison command. Override by child classes"""
+        raise NotImplementedError
+
+    async def register_poison(self, targets):
         """Poison command. Override by child classes"""
         raise NotImplementedError
 
@@ -286,7 +294,15 @@ class Character:
         """Learn command. Override by child classes"""
         raise NotImplementedError
 
+    async def register_learn(self, targets):
+        """Learn command. Override by child classes"""
+        raise NotImplementedError
+
     async def exec_read(self, targets):
+        """Read command. Override by child classes"""
+        raise NotImplementedError
+
+    async def register_read(self, targets):
         """Read command. Override by child classes"""
         raise NotImplementedError
 
@@ -294,10 +310,22 @@ class Character:
         """Kill command. Override by child classes"""
         raise NotImplementedError
 
+    async def register_kill(self, targets):
+        """Kill command. Override by child classes"""
+        raise NotImplementedError
+
     async def exec_slay(self, targets):
         """Slay command. Override by child classes"""
         raise NotImplementedError
 
+    async def register_slay(self, targets):
+        """Slay command. Override by child classes"""
+        raise NotImplementedError
+
     async def exec_protect(self, targets):
+        """Protect command. Override by child classes"""
+        raise NotImplementedError
+
+    async def register_protect(self, targets):
         """Protect command. Override by child classes"""
         raise NotImplementedError

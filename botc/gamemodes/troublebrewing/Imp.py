@@ -2,6 +2,7 @@
 
 import json 
 from botc import Demon, Character
+from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -41,6 +42,8 @@ class Imp(Demon, TroubleBrewing, Character):
         self._role_enum = TBRole.imp
         self._emoji = "<:imp2:722687671377330197>"
     
+    @GameLogic.changes_not_allowed
+    @GameLogic.requires_two_targets
     async def exec_kill(self, targets):
         """Kill command"""
         pass

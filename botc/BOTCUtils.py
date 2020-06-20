@@ -13,8 +13,33 @@ class RoleCannotUseCommand(commands.CheckFailure):
    pass
 
 
-class ChannelNotAllowed(commands.CheckFailure):
-   """Raised when a command user used the command in a channel that is not allowed"""
+class NotDMChannel(commands.CheckFailure):
+   """Raised when a command user used the command in a channel that is not the bot dm"""
+   pass
+
+
+class NotLobbyChannel(commands.CheckFailure):
+   """Raised when a command user used the command in a channel that is not the lobby"""
+   pass
+
+
+class NotDay(commands.CheckFailure):
+   """Raised when a command user used the command during the day when not supposed to"""
+   pass
+
+
+class NotNight(commands.CheckFailure):
+   """Raised when a command user used the command during the night when not supposed to"""
+   pass
+
+
+class DeadOnlyCommand(commands.CheckFailure):
+   """Raised when a command user used a command reserved for dead players only."""
+   pass
+
+
+class AliveOnlyCommand(commands.CheckFailure):
+   """Raised when a command user used a command reserved for alive players only."""
    pass
 
 
@@ -102,3 +127,42 @@ class PlayerParser(commands.Converter):
          else:
             raise commands.BadArgument(f"Player {raw} not found.")
       return Targets(actual_targets)
+
+
+class GameLogic:
+   """Game logic decorators to be used on ability methods in character classes"""
+
+   @staticmethod
+   def unique_ability(func):
+      """Decorator for unique abilities to be used once per game"""
+      def inner(self, targets):
+         return func(self, targets)
+      return inner
+
+   @staticmethod
+   def except_first_night(func):
+      """Decorator for abilities that cannot be used on the first night"""
+      def inner(self, targets):
+         return func(self, targets)
+      return inner
+
+   @staticmethod
+   def changes_not_allowed(func):
+      """Decorator for abilities that cannot modify targets after inputting them"""
+      def inner(self, targets):
+         return func(self, targets)
+      return inner
+   
+   @staticmethod
+   def requires_one_target(func):
+      """Decorator for abilities that require one target"""
+      def inner(self, targets):
+         return func(self, targets)
+      return inner
+   
+   @staticmethod
+   def requires_two_targets(func):
+      """Decorator for abilities that require two targets"""
+      def inner(self, targets):
+         return func(self, targets)
+      return inner

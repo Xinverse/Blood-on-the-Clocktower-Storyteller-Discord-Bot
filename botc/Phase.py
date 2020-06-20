@@ -5,6 +5,9 @@ import enum
 class Phase(enum.Enum):
     """Phase class: day, night, idle"""
 
-    day = "day"
-    night = "night"
     idle = "idle"
+    night = "night"
+    wait = "wait"
+    day = "day"
+   
+    

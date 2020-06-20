@@ -2,8 +2,10 @@
 
 import json 
 import random
+import discord
 from botc import Minion, Character, Townsfolk, Outsider
 from ._utils import TroubleBrewing, TBRole
+import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.spy.value.lower()]
@@ -52,3 +54,24 @@ class Spy(Minion, TroubleBrewing, Character):
         possibilities.append(Spy())
         random.shuffle(possibilities)
         return random.choice(possibilities)
+    
+    async def send_first_night_instruction(self, recipient):
+        """Send demon and minion list if there are 7 or more players. 
+        Otherwise, send the default instruction string.
+        """
+        # Seven or more players, send the evil list
+        if globvars.master_state.game.nb_players >= 7:
+            msg1 = globvars.master_state.game.setup.create_evil_team_string()
+            msg2 = self.emoji + " " + self.instruction
+            msg = msg1 + msg2
+            try:
+                await recipient.send(msg)
+            except discord.Forbidden:
+                pass
+        # Less than seven players, teensyville rules
+        else:
+            msg = self.emoji + " " + self.instruction
+            try:
+                await recipient.send(msg)
+            except discord.Forbidden:
+                pass

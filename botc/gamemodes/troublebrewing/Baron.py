@@ -12,10 +12,6 @@ import globvars
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.baron.value.lower()]
 
-with open('botc/game_text.json') as json_file:
-    strings = json.load(json_file)
-    evilteammates = strings["gameplay"]["evilteammates"]
-
 
 class Baron(Minion, TroubleBrewing, Character):
     """Baron: There are extra Outsiders in play [+2 Outsiders]
@@ -76,14 +72,16 @@ class Baron(Minion, TroubleBrewing, Character):
         """Send demon and minion list if there are 7 or more players. 
         Otherwise, send the default instruction string.
         """
+        # Seven or more players, send the evil list
         if globvars.master_state.game.nb_players >= 7:
-            msg1 = self._demon_head_emoji + " " + evilteammates
+            msg1 = globvars.master_state.game.setup.create_evil_team_string()
             msg2 = self.emoji + " " + self.instruction
             msg = msg1 + msg2
             try:
                 await recipient.send(msg)
             except discord.Forbidden:
                 pass
+        # Less than seven players, teensyville rules
         else:
             msg = self.emoji + " " + self.instruction
             try:

@@ -2,6 +2,7 @@
 
 import json 
 from botc import Townsfolk, Character
+from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -40,6 +41,9 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
         self._role_enum = TBRole.slayer
         self._emoji = "<:slayer:722687329050820648>"
     
+    @GameLogic.changes_not_allowed
+    @GameLogic.unique_ability
+    @GameLogic.requires_one_target
     async def exec_slay(self, targets):
         """Slay command"""
         pass

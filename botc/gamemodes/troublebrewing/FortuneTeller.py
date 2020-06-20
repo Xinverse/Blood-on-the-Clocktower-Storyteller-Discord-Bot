@@ -2,10 +2,12 @@
 
 import json 
 from botc import Townsfolk, Character
+from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.fortuneteller.value.lower()]
+
 
 class FortuneTeller(Townsfolk, TroubleBrewing, Character):
     """Fortune Teller: Each night, choose 2 players: you learn if either is a Demon. 
@@ -38,6 +40,8 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
         self._role_enum = TBRole.fortuneteller
         self._emoji = "<:fortuneteller:722687043666313218>"
 
+    @GameLogic.changes_not_allowed
+    @GameLogic.requires_two_targets
     async def exec_read(self, targets):
         """Read command"""
         pass
