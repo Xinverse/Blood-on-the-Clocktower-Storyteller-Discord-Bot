@@ -21,6 +21,14 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
 
     commands:
     - read <player> and <player>
+
+    initialize setup? -> NO
+    initialize role? -> YES
+
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send query for "read" command
+    override regular night instruction -> YES  # default is to send nothing
+                                      => Send query for "read" command
     """
     
     def __init__(self):
@@ -39,6 +47,10 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
 
         self._role_enum = TBRole.fortuneteller
         self._emoji = "<:fortuneteller:722687043666313218>"
+    
+    def exec_init_role(self, setup):
+        """Assign one of the townsfolks or outsiders as a red herring"""
+        pass
 
     @GameLogic.changes_not_allowed
     @GameLogic.requires_two_targets

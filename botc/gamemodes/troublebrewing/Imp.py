@@ -22,7 +22,13 @@ class Imp(Demon, TroubleBrewing, Character):
     commands:
     - kill <player>
 
-    send first night instruction? -> FALSE
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send passive initial information
+    override regular night instruction -> YES  # default is to send nothing
+                                      => Send query for "kill" command
     """
 
     def __init__(self):

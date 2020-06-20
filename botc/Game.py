@@ -259,13 +259,15 @@ class Game(GameMeta):
       # Initialize the setup object
       self.setup.clear()
       self.setup.create(self.player_obj_list)
+      # Initialize each role to set flags as needed, etc.
+      for player in self._player_obj_list:
+         player.role.exec_init_role(self.setup)
       # Send the lobby welcome message
       await botutils.send_lobby(lobby_game_start)
       # Lock the lobby channel
       await botutils.lock_lobby()
       # Log the game data
-      game_log = GameLog(self)
-      await game_log.send_game_obj_log_str()
+      await GameLog(self).send_game_obj_log_str()
       # Send the opening dm to all players
       for player in self._player_obj_list:
          await player.role.ego_self.send_opening_dm_embed(player.user)
@@ -274,6 +276,8 @@ class Game(GameMeta):
          await player.role.ego_self.send_first_night_instruction(player.user)
       # Transition to night fall
       await self.make_nightfall()
+      # Load game related commands
+      globvars.client.load_extension("botc.botc_commands")
 
    async def end_game(self):
       """End the game, compute winners etc. 

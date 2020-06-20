@@ -28,7 +28,7 @@
         "lore" : "This evening's reservations seem odd. Never before has Mrs. Mayweather kept company with that scamp from Hudson Lane. Yet, tonight, they have a table for two. Strange.",
         "description" : "The Chef learns if evil players are sitting next to each other.\n- On the first night, the Chef learns exactly how many pairs there are in total. A pair is two players, but one player may be a part of two pairs. So, two players sitting next to each other count as one pair, three players sitting next to each other count as two pairs. Four players sitting next to each other count as three pairs. And so on.\n- The Chef detects evil Travelers just like other character types, but only if those Travelers joined the game before the Chef acts.",
         "examples" : "- No evil players are sitting next to each other. The Chef learns a '0.'\n- The Imp is sitting next to the Baron. Across the circle, the Poisoner is sitting next to the Scarlet Woman. The Chef learns a '2.'\n- An evil Scapegoat is sitting between the Imp and a Minion. Across the circle, two other Minions are sitting next to each other. The Chef learns a '3.'",
-        "instruction" : "You start knowing how many pairs of evil players there are."
+        "instruction" : "You start knowing how many pairs of evil players are sitting together, based on the sitting order."
     },
 
     "empath" : {
@@ -56,14 +56,14 @@
         "lore" : "Tis an ill and deathly wind that blows tonight. Come, my brother, take shelter in the abbey while the storm rages. By my word, or by my life, you will be safe.",
         "description" : "The Monk protects other people from the Demon.\n- Each night except the first, the Monk may choose to protect any player except themself.\n- If the Demon attacks a player who has been protected by the Monk, then that player does not die. The Demon does not get to attack another player—there is simply no death tonight.\n- The Monk does not protect against other harmful effects such as poisoning, drunkenness, or Outsider penalties. The Monk does not protect against the Demon nominating and executing someone.",
         "examples" : "- The Monk protects the Fortune Teller. The Imp attacks the Fortune Teller. No deaths occur tonight.\n- The Monk protects the Mayor, and the Imp attacks the Mayor. The Mayor's 'another player 'dies' ability does not trigger, because the Mayor is safe from the Imp. Nobody dies tonight.\n- The Monk protects the Imp. The Imp chooses to kill themself tonight, but nothing happens. The Imp stays alive and a new Imp is not created.",
-        "instruction" : "Each night*, choose a player (not yourself): they are safe from the Demon tonight. User `protect <player>` in DM."
+        "instruction" : "Each night except for the first, choose a player (not yourself): they are safe from the Demon tonight. Use `protect <player>` in DM."
     },
 
     "ravenkeeper" : {
         "lore" : "My birds will avenge me! Fly! Fly, my sweet and dutiful pets! Take your message to those in dark corners! To the manor and to the river! Let them read of the nature of my death.",
         "description" : "The Ravenkeeper learns any player's character, but only if they die at night.\n- The Ravenkeeper is woken on the night that they die, and chooses a player immediately.\n- The Ravenkeeper may choose a dead player if they wish.",
         "examples" : "- The Ravenkeeper is killed by the Imp, and then wakes to choose a player. After some deliberation, they choose Benjamin. Benjamin is the Empath, and the Ravenkeeper learns this.\n- The Imp attacks the Mayor. The Mayor doesn't die, but the Ravenkeeper dies instead, due to the Mayor's ability. The Ravenkeeper is woken and chooses Douglas, who is a dead Recluse. The Ravenkeeper learns that Douglas is the Scarlet Woman, since the Recluse registered as a Minion.",
-        "instruction" : "If you die at night, you are woken to choose a player: you learn their character."
+        "instruction" : "If you die at night, you will be prompted to choose a player: you learn their character. Use `learn <player>` in DM."
     },
 
     "virgin" : {
@@ -77,7 +77,7 @@
         "lore" : "Die.",
         "description" : "The Slayer can kill the Demon by guessing who it is.\n- The Slayer can choose to use their ability at any time during the day, and must declare to everyone when they’re using it. If the Slayer chooses the Demon, the Demon dies immediately. Otherwise, nothing happens.\n- The players do not learn the identity of the dead player. After all, it may have been the Recluse!\n- When the Slayer declares that they wish to use their power, it is a good idea to give the group a minute or two to discuss who the Slayer should choose, but the Slayer makes the final decision.\n- A Slayer that uses their ability while poisoned or drunk may not use it again.\n- The Slayer will want to choose an alive player. Even if the Slayer chooses a dead Imp, nothing happens, because a dead player can’t die again.",
         "examples" : "- The Slayer chooses the Imp. The Imp dies, and good wins!\n- The Slayer chooses the Recluse. The Storyteller decides that the Recluse registers as the Imp, so the Recluse dies, but the game continues.\n- The Imp is bluffing as the Slayer. They declare that they use their Slayer ability on the Scarlet Woman. Nothing happens.",
-        "instruction" : "Once per game, during the day, publicly choose a player: if they are the Demon, they die. Use `slay <player>` in a public channel."
+        "instruction" : "Once per game, during the day, publicly choose a player: if they are the Demon, they die. Use `slay <player>` in the public lobby channel."
     },
 
     "soldier" : {
@@ -154,6 +154,6 @@
         "lore" : "We must keep our wits sharp and our sword sharper. Evil walks amongst us and will stop at nothing to destroy us good, simple folk, bringing our fine town to ruin. Trust no one. But if you must trust someone, trust me",
         "description" : "The Imp kills at night and can make copies of itself...for a terrible price.\n- On each night except the first, the Imp chooses a player to kill. Because most characters act after the Demon, that player will probably not get to use their ability tonight.\n- The Imp, because it’s a Demon, knows which players are their Minions, and knows three not-in-play good characters that they can safely bluff as.\n- If the Imp dies, the game ends and good wins. However, if the Imp kills themself at night, they die and an alive Minion becomes an Imp. This new Imp does not act that same night, but is now the Imp in every other way—they kill each night, and lose if they die.",
         "examples" : "- It is the first night. The Imp learns that Evin and Sarah are the Minions. The Imp also learns that the Monk, Chef, and Librarian are not in play. The Imp bluffs as the Chef, then bluffs as Mayor halfway through the game. Eventually, the Imp is executed and good wins.\n- During the night, the Imp wakes and chooses a player, who dies. The next night, the Imp chooses themselves to die. The Imp dies, and the Poisoner becomes the Imp.",
-        "instruction" : "Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp."
+        "instruction" : "Each night except the first, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp. Use `kill <player>` in DM."
     }
 }

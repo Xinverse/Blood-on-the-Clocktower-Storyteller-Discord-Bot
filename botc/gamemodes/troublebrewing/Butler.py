@@ -25,7 +25,13 @@ class Butler(Outsider, TroubleBrewing, Character):
     commands
     - serve <player>
 
-    send first night instruction? -> TRUE (query for "serve" command)
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send query for "serve" command
+    override regular night instruction -> YES  # default is to send nothing
+                                      => Send query for "serve" command
     """
 
     def __init__(self):
@@ -46,6 +52,17 @@ class Butler(Outsider, TroubleBrewing, Character):
         self._emoji = "<:butler:722687426421719050>"
 
     async def send_first_night_instruction(self, recipient):
+        """Query the player for "serve" command"""
+        
+        msg = self.emoji + " " + self.instruction
+        msg += "\n\n"
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        try: 
+            await recipient.send(msg)
+        except discord.Forbidden:
+            pass
+    
+    async def send_regular_night_instruction(self, recipient):
         """Query the player for "serve" command"""
         
         msg = self.emoji + " " + self.instruction

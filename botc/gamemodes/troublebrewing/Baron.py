@@ -25,6 +25,9 @@ class Baron(Minion, TroubleBrewing, Character):
     commands
     - None
 
+    initialize setup? -> YES
+    initialize role? -> NO
+
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send demon and minion identities to this minion if 7 players or more
     override regular night instruction -> NO  # default is to send nothing

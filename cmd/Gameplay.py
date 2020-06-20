@@ -98,7 +98,6 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             globvars.master_state.pregame.safe_add_player(userid)
         globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]
         await globvars.master_state.game.start_game()
-        globvars.client.load_extension("botc.botc_commands")
 
     
     # ---------- ROLE COMMAND ----------------------------------------

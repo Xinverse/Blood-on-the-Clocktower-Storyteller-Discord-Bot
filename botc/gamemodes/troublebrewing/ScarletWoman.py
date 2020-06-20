@@ -21,7 +21,11 @@ class ScarletWoman(Minion, TroubleBrewing, Character):
     commands:
     - None
 
-    send first night instruction? -> FALSE
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> NO  # default is to send instruction string only
+    override regular night instruction -> NO  # default is to send nothing
     """
 
     def __init__(self):

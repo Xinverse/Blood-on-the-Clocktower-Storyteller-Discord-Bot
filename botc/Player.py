@@ -55,3 +55,6 @@ class Player:
 
     def __repr__(self):
         return f"{str(self.user.display_name)} ({self.user.id}) is {str(self.role)}"
+    
+    def __str__(self):
+        return self.__repr__()

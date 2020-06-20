@@ -17,8 +17,14 @@ class Drunk(Outsider, TroubleBrewing, Character):
     ego_self = [townsfolk] *persistent
     social_self = drunk
 
-    commands:
+    commands
     - None
+
+    initialize setup? -> NO
+    initialize role? -> YES
+
+    override first night instruction? -> NO  # default is to send instruction string only
+    override regular night instruction -> NO  # default is to send nothing
     """
 
     def __init__(self):
@@ -37,20 +43,13 @@ class Drunk(Outsider, TroubleBrewing, Character):
 
         self._role_enum = TBRole.drunk
         self._emoji = "<:drunk:722687457828798515>"
-
-        self.__init_ego_self()
     
-    def __init_ego_self(self):
-        """Randomly choose a townsfolk. (persistent)
-        """
+    def exec_init_role(self, setup):
+        """Randomly choose a townsfolk that is not in play. (persistent throughout the game)"""
         possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() if issubclass(role_class, Townsfolk)]
-        self._ego_role = random.choice(possibilities)
-    
-    @property
-    def ego_self(self):
-        """Ego self: what the player thinks they are.
-        The Drunk thinks they are a townsfolk.
-        """
-        return self._ego_role
-
+        taken = [player.role.name for player in setup.townsfolks]
+        random.shuffle(possibilities)
+        for p in possibilities:
+            if p.name not in taken:
+                self._ego_role = p
         

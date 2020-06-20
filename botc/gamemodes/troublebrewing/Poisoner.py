@@ -23,8 +23,13 @@ class Poisoner(Minion, TroubleBrewing, Character):
     commands:
     - poison <player>
 
-    send first night instruction? -> TRUE (demon identity)
-    send regular night instruction -> TRUE (query for "poison" command)
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send query for "poison" command
+    override regular night instruction -> YES  # default is to send nothing
+                                       => Send query for "poison" command
     """
 
     def __init__(self):

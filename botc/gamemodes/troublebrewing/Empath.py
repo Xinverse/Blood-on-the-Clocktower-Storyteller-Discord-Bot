@@ -19,6 +19,14 @@ class Empath(Townsfolk, TroubleBrewing, Character):
 
     commands:
     - None
+
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send nightly passive information
+    override regular night instruction -> YES  # default is to send nothing
+                                      => Send nightly passive information
     """
     
     def __init__(self):

@@ -23,9 +23,12 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     commands:
     - protect <player>
 
-    send first night instruction? -> FALSE
-    send regular night instruction -> TRUE (query for "protect" command)
-    * False means defaulting to the parent class' implementation
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> NO  # default is to send instruction string only
+    override regular night instruction -> YES  # default is to send nothing
+                                       => Send query for "protect" command
     """
     
     def __init__(self):

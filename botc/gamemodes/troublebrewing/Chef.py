@@ -20,7 +20,12 @@ class Chef(Townsfolk, TroubleBrewing, Character):
     commands:
     - None
 
-    send first night instruction? -> TRUE (passive info: pairs of evil)
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send passive initial information
+    override regular night instruction -> NO  # default is to send nothing
     """
     
     def __init__(self):
@@ -39,5 +44,9 @@ class Chef(Townsfolk, TroubleBrewing, Character):
 
         self._role_enum = TBRole.chef
         self._emoji = "<:chef:722686296073699388>"
+    
+    async def send_first_night_instruction(self, recipient):
+        import globvars
+        pass
     
 

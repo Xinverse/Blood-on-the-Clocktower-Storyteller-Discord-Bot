@@ -20,6 +20,13 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
 
     commands:
     - None
+
+    initialize setup? -> NO
+    initialize role? -> NO
+
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send passive initial information
+    override regular night instruction -> NO  # default is to send nothing
     """
     
     def __init__(self):

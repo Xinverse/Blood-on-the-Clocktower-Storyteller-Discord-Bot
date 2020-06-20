@@ -191,6 +191,13 @@ class Character:
         Overridden by child classes that do need to modify the setup.
         """
         return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list] 
+    
+    def exec_init_role(self, setup):
+        """Allow for roles that need to initialize certain status or flags to do so after the setup 
+        is generated.
+        Overridden by child classes that do need to set flags and initializations.
+        """
+        return
 
     async def send_role_card_embed(self, ctx):
         """Create the role card embed object and return it"""
