@@ -106,3 +106,5 @@ setup = {
 def load_pack(master_state):
     """Load the game pack into the main bot state"""
     master_state.add_pack(setup)
+    import globvars
+    globvars.client.load_extension("botc.botc_general_cog")

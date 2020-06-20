@@ -26,6 +26,7 @@ class Undertaker(Townsfolk, TroubleBrewing, Character):
     override first night instruction? -> NO  # default is to send instruction string only
     override regular night instruction -> YES  # default is to send nothing
                                        => Send passive nightly information
+                                       
     """
 
     def __init__(self):

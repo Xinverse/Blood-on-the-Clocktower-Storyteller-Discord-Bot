@@ -12,15 +12,7 @@ affiliated with them in any way.
 """
 
 # TODO
-# First night second dm
-# Regular night dm
-# Night action command
-# Night action registration
-# Night action interaction
-# Game object log
-# Night action log
-# Nomination
-# Voting
+# Fortune teller init_role
 
 import globvars
 import configparser
@@ -38,13 +30,16 @@ if __name__ == "__main__":
     OWNER_ID = Config["user"]["OWNER_ID"]
     PREFIX = Config["settings"]["PREFIX"]
 
+    globvars.init_client()
+    globvars.init_master_state()
+
     def command_prefix(bot, message):
         if message.guild is None:
             return (PREFIX, "")
         else:
             return PREFIX
 
-    client = commands.Bot(
+    globvars.client = commands.Bot(
         command_prefix=command_prefix, 
         owner_id=OWNER_ID, 
         case_insensitive=True, 
@@ -52,15 +47,10 @@ if __name__ == "__main__":
         )
     logging.basicConfig(level=logging.WARNING)
 
-    globvars.init_client()
-    globvars.init_master_state()
-
     # Loading game packs
     print("===== LOADING GAME PACKS =====")
     botc.load_pack(globvars.master_state)
     print(globvars.master_state.game_packs)
-
-    globvars.client = client
 
     extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners"]
 

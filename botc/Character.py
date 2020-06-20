@@ -202,7 +202,8 @@ class Character:
     async def send_role_card_embed(self, ctx):
         """Create the role card embed object and return it"""
 
-        def make_embed(role_name, 
+        def make_embed(emote,
+                       role_name, 
                        role_category, 
                        card_color, 
                        gm, 
@@ -212,13 +213,13 @@ class Character:
                        pic_link, 
                        wiki_link):
 
-            embed = discord.Embed(title = "{} [{}]".format(role_name, role_category), 
+            embed = discord.Embed(title = "{} [{}] {}".format(role_name, role_category, emote), 
                                   description = "*{}*".format(self.lore), 
                                   color = card_color)
             embed.set_author(name = "Blood on the Clocktower - {}".format(gm), icon_url = gm_art_link)
             embed.set_thumbnail(url = pic_link)
-            embed.add_field(name = "Description", value = desc_str, inline = False)
-            embed.add_field(name = "Examples", value = ex_str + "\n" + wiki_link, inline = False)
+            embed.add_field(name = ":small_orange_diamond: Description", value = desc_str, inline = False)
+            embed.add_field(name = ":small_orange_diamond: Examples", value = ex_str + "\n" + wiki_link, inline = False)
             embed.set_footer(text = copyrights_str)
 
             return embed
@@ -234,9 +235,10 @@ class Character:
 
         gm_art_link = self.gm_art_link if self.gm_art_link else self.botc_logo_link
         pic_link = self.art_link if self.art_link else self.botc_demon_link
-        wiki_link = self.wiki_link if self.wiki_link else self.main_wiki_link
+        wiki_link = ":paperclip: " + self.wiki_link if self.wiki_link else ":paperclip: " + self.main_wiki_link
 
-        embed = make_embed(self.__str__(), 
+        embed = make_embed(self.emoji,
+                           self.__str__(), 
                            self.category.value, 
                            color, 
                            self.gm_of_appearance.value, 

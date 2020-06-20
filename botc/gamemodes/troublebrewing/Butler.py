@@ -32,6 +32,7 @@ class Butler(Outsider, TroubleBrewing, Character):
                                       => Send query for "serve" command
     override regular night instruction -> YES  # default is to send nothing
                                       => Send query for "serve" command
+                                      
     """
 
     def __init__(self):

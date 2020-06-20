@@ -27,8 +27,10 @@ class Spy(Minion, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
-    override first night instruction? -> NO  # default is to send instruction string only
+    override first night instruction? -> YES  # default is to send instruction string only
+                                      => Send demon and minion identities to this minion if 7 players or more
     override regular night instruction -> NO  # default is to send nothing
+    
     """
 
     def __init__(self):

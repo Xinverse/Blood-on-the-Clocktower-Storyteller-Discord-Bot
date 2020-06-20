@@ -28,6 +28,7 @@ class Poisoner(Minion, TroubleBrewing, Character):
 
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send query for "poison" command
+                                      => Send demon and minion identities to this minion if 7 players or more
     override regular night instruction -> YES  # default is to send nothing
                                        => Send query for "poison" command
     """

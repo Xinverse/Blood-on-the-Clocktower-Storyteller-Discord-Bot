@@ -31,6 +31,7 @@ class Baron(Minion, TroubleBrewing, Character):
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send demon and minion identities to this minion if 7 players or more
     override regular night instruction -> NO  # default is to send nothing
+    
     """
 
     def __init__(self):

@@ -1,7 +1,14 @@
 {
     "misc" : {
 
-        "copyrights" : "Copyrights of BoTC belong to the Pandemonium Institute."
+        "copyrights" : "Copyrights of BoTC belong to the Pandemonium Institute.",
+        "res_title" : "Blood on the Clocktower (BoTC) - Resources",
+        "res_desc" : "In the quiet village of Ravenswood Bluff, ‌a demon walks amongst you...",
+        "thumnail" : "https://bloodontheclocktower.com/img/website/logo.png?rel=1591572107883",
+        "wiki" : "http://bloodontheclocktower.com/wiki/Main_Page",
+        "rulebooks" : "https://rebrand.ly/BOTCrulebook\nhttps://rebrand.ly/TBalmanac\nhttps://rebrand.ly/BMRalmanac\nhttps://rebrand.ly/SValmanac\nhttps://rebrand.ly/TravellersFabledAlmanac",
+        "scripts" : "https://rebrand.ly/TBscript\nhttps://rebrand.ly/SVscript\nhttps://rebrand.ly/BMRscript",
+        "social_medias" : "https://www.kickstarter.com/projects/pandemoniuminstitute/blood-on-the-clocktower/description\nhttps://www.facebook.com/BloodOnTheClocktower/\nhttps://www.youtube.com/channel/UCVmPTpM355K0dXW4MbF_R6Q\nhttps://www.reddit.com/r/BloodOnTheClocktower/"
 
     },
 
@@ -14,7 +21,8 @@
         "daybreak" : "It is currently **daytime**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
         "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!",
-        "evilteammates" : "Your **Evil** teammates are shown below: "
+        "demonbluffs" : "To help you survive in this game, here are three not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",
+        "evilteammates" : "Your Evil teammates are shown below: "
 
     },
 

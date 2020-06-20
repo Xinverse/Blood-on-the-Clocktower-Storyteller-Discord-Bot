@@ -29,6 +29,7 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     override first night instruction? -> NO  # default is to send instruction string only
     override regular night instruction -> YES  # default is to send nothing
                                        => Send query for "protect" command
+                                       
     """
     
     def __init__(self):

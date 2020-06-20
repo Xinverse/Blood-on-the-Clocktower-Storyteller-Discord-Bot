@@ -26,6 +26,7 @@ class Virgin(Townsfolk, TroubleBrewing, Character):
 
     override first night instruction? -> NO  # default is to send instruction string only
     override regular night instruction -> NO  # default is to send nothing
+    
     """
 
     def __init__(self):
