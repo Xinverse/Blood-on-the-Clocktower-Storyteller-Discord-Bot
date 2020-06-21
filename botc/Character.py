@@ -55,9 +55,9 @@ class Character:
         self._art_link = None
         self._wiki_link = None
         self._role_enum = None
-        self._true_role = None
-        self._ego_role = None
-        self._social_role = None
+        self._true_role = self
+        self._ego_role = self
+        self._social_role = self
 
         # Override by gamemode class
         self._gm_of_appearance = None
@@ -68,7 +68,6 @@ class Character:
         self._team = None
 
         # Other
-        self.__role_class = self.__class__
         self._emoji = None
         self._demon_head_emoji = "<:demonhead:722894653438820432>"
     
@@ -104,21 +103,21 @@ class Character:
         """Layers of Role Identity:
         1. true_self = what the game uses for win-con computations
         """
-        return self.__role_class()
+        return self._true_role
 
     @property
     def ego_self(self):
         """Layers of Role Identity:
         2. ego_self = what the player thinks they are
         """
-        return self.__role_class()
+        return self._ego_role
 
     @property
     def social_self(self):
         """Layers of Role Identity:
         3. social_self = what the other players think the player is
         """
-        return self.__role_class()
+        return self._social_role
     
     @property
     def emoji(self):

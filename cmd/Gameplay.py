@@ -91,7 +91,6 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             159985870458322944,
             184405311681986560,
             235088799074484224,
-            172002275412279296,
             460105234748801024
             ]
         for userid in playtesters:

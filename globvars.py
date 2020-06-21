@@ -1,6 +1,13 @@
 """Global variables, for access by all modules"""
 
+import logging
 from botutils import MasterState
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    datefmt='%a, %d %b %Y %H:%M:%S'
+)
 
 
 def init_master_state():

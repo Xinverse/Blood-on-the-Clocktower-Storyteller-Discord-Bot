@@ -33,11 +33,19 @@ class BOTCGeneralCommands(commands.Cog, name="BoTC Commands"):
         if ctx.invoked_subcommand is None:
             await self.resource(ctx)
     
-    @botc.command(pass_context = True, name = "guide", aliases = ["chart", "playerchart", "playerguide"])
+    @botc.command(
+        pass_context = True, 
+        name = "guide", 
+        aliases = ["chart", "playerchart", "playerguide"]
+    )
     async def guide(self, ctx):
         await ctx.send("https://imgur.com/jD50A9Q")
     
-    @botc.command(pass_context = True, name = "resource", aliases = ["resources", "res"])
+    @botc.command(
+        pass_context = True, 
+        name = "resource", 
+        aliases = ["resources", "res"]
+    )
     async def resource(self, ctx):
         embed=discord.Embed(title = res_title, description = res_desc, color = CARD_NORMAL)
         embed.set_thumbnail(url = thumnail)
@@ -48,15 +56,27 @@ class BOTCGeneralCommands(commands.Cog, name="BoTC Commands"):
         embed.set_footer(text = copyrights_str)
         await ctx.send(embed = embed)
     
-    @botc.command(pass_context = True, name = "trouble-brewing", aliases = ["tb", "trouble_brewing", "troublebrewing"])
+    @botc.command(
+        pass_context = True, 
+        name = "trouble-brewing", 
+        aliases = ["tb", "trouble_brewing", "troublebrewing"]
+    )
     async def trouble_brewing(self, ctx):
         await ctx.send("https://imgur.com/QJeTKDR")
 
-    @botc.command(pass_context = True, name = "bad-moon-rising", aliases = ["bmr", "bad_moon_rising", "badmoonrising"])
+    @botc.command(
+        pass_context = True, 
+        name = "bad-moon-rising", 
+        aliases = ["bmr", "bad_moon_rising", "badmoonrising"]
+    )
     async def bad_moon_rising(self, ctx):
         await ctx.send("https://imgur.com/Jy3ifCZ")
     
-    @botc.command(pass_context = True, name = "sects-and-violets", aliases = ["sv", "sects_and_violets", "sectsandviolets"])
+    @botc.command(
+        pass_context = True, 
+        name = "sects-and-violets", 
+        aliases = ["sv", "sects_and_violets", "sectsandviolets"]
+    )
     async def sects_and_violets(self, ctx):
         await ctx.send("https://imgur.com/ZcryOcA")
 

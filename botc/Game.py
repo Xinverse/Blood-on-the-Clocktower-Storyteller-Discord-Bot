@@ -296,9 +296,6 @@ class Game(GameMeta):
       """Transition the game into night phase"""
       self._current_phase = Phase.night
       await botutils.send_lobby(nightfall)
-   
-   async def make_dawn(self):
-      pass
 
    async def make_daybreak(self):
       """Transition the game into day phase"""

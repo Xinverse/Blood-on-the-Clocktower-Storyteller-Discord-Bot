@@ -4,6 +4,7 @@ import json
 import random
 from botc import Outsider, Character, Minion, Demon
 from ._utils import TroubleBrewing, TBRole
+import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.recluse.value.lower()]
@@ -54,5 +55,7 @@ class Recluse(Outsider, TroubleBrewing, Character):
         possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
                          if issubclass(role_class, Demon) or issubclass(role_class, Minion)]
         possibilities.append(Recluse())
-        return random.choice(possibilities)
+        chosen = random.choice(possibilities)
+        globvars.logging.info(f">>> Recluse [social_self] Registered as {chosen}.")
+        return chosen
         

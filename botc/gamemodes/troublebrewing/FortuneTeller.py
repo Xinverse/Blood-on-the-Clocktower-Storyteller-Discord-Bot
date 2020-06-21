@@ -1,9 +1,11 @@
 """Contains the Fortune Teller Character class"""
 
-import json 
+import json
+import discord 
 from botc import Townsfolk, Character
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
+import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.fortuneteller.value.lower()]
@@ -47,6 +49,28 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
 
         self._role_enum = TBRole.fortuneteller
         self._emoji = "<:fortuneteller:722687043666313218>"
+
+    async def send_first_night_instruction(self, recipient):
+        """Send query for "read" command."""
+
+        msg = self.emoji + " " + self.instruction
+        msg += "\n\n"
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        try: 
+            await recipient.send(msg)
+        except discord.Forbidden:
+            pass
+    
+    async def send_regular_night_instruction(self, recipient):
+        """Send query for "read" command."""
+
+        msg = self.emoji + " " + self.instruction
+        msg += "\n\n"
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        try: 
+            await recipient.send(msg)
+        except discord.Forbidden:
+            pass
     
     def exec_init_role(self, setup):
         """Assign one of the townsfolks or outsiders as a red herring"""

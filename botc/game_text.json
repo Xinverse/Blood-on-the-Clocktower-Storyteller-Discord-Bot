@@ -8,7 +8,7 @@
         "wiki" : "http://bloodontheclocktower.com/wiki/Main_Page",
         "rulebooks" : "https://rebrand.ly/BOTCrulebook\nhttps://rebrand.ly/TBalmanac\nhttps://rebrand.ly/BMRalmanac\nhttps://rebrand.ly/SValmanac\nhttps://rebrand.ly/TravellersFabledAlmanac",
         "scripts" : "https://rebrand.ly/TBscript\nhttps://rebrand.ly/SVscript\nhttps://rebrand.ly/BMRscript",
-        "social_medias" : "https://www.kickstarter.com/projects/pandemoniuminstitute/blood-on-the-clocktower/description\nhttps://www.facebook.com/BloodOnTheClocktower/\nhttps://www.youtube.com/channel/UCVmPTpM355K0dXW4MbF_R6Q\nhttps://www.reddit.com/r/BloodOnTheClocktower/"
+        "social_medias" : "<:facebook:724126325501329509> Facebook: https://www.facebook.com/BloodOnTheClocktower/\n<:youtube:724126365443555348> YouTube: https://www.youtube.com/channel/UCVmPTpM355K0dXW4MbF_R6Q\n<:twitter:724126365443424277> Twitter: https://twitter.com/bloodclocktower?lang=en\n<:reddit:724126365481435187> Reddit: https://www.reddit.com/r/BloodOnTheClocktower/"
 
     },
 
@@ -22,7 +22,10 @@
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
         "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!",
         "demonbluffs" : "To help you survive in this game, here are three not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",
-        "evilteammates" : "Your Evil teammates are shown below: "
+        "evilteammates" : "Your Evil teammates are shown below: ",
+        "chef_init" : "Tonight, you learned a `{}`.",
+        "empath_nightly" : "Tonight, you learned a `{}`.",
+        "investigator_init" : "You learn that one of the following two players is the ``{}``: "
 
     },
 

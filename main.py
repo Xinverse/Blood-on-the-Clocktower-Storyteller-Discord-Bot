@@ -12,11 +12,15 @@ affiliated with them in any way.
 """
 
 # TODO
-# Fortune teller init_role
+# Fortune teller init_role (red herring?)
+# Drunk effect
+# Effect class?
+# Investigate the recluse social_self trigerring multiple times issue
+# Ask in botc server: would effect disperse upon source player's death?
+# Investigator bug
 
 import globvars
 import configparser
-import logging
 import botc
 from discord.ext import commands
 
@@ -45,7 +49,6 @@ if __name__ == "__main__":
         case_insensitive=True, 
         description="Storyteller Bot"
         )
-    logging.basicConfig(level=logging.WARNING)
 
     # Loading game packs
     print("===== LOADING GAME PACKS =====")

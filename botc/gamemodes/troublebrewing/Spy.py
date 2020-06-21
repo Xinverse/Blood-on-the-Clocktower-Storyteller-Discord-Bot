@@ -59,7 +59,9 @@ class Spy(Minion, TroubleBrewing, Character):
                          if issubclass(role_class, Townsfolk) or issubclass(role_class, Outsider)]
         possibilities.append(Spy())
         random.shuffle(possibilities)
-        return random.choice(possibilities)
+        chosen = random.choice(possibilities)
+        globvars.logging.info(f">>> Spy [social_self] Registered as {chosen}.")
+        return chosen
     
     async def send_first_night_instruction(self, recipient):
         """Send demon and minion list if there are 7 or more players. 

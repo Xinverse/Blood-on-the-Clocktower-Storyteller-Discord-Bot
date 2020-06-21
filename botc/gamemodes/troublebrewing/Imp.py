@@ -37,6 +37,7 @@ class Imp(Demon, TroubleBrewing, Character):
                                       => Send demon and minion identities to this minion if 7 players or more
     override regular night instruction -> YES  # default is to send nothing
                                       => Send query for "kill" command
+                                      
     """
 
     def __init__(self):
@@ -77,9 +78,23 @@ class Imp(Demon, TroubleBrewing, Character):
             random.shuffle(possible_townsfolk_bluffs)
             random.shuffle(possible_outsider_bluffs)
 
+            # For the first two bluffs, we want a townsfolk, definitely
             bluff_1 = possible_townsfolk_bluffs.pop()
             bluff_2 = possible_townsfolk_bluffs.pop()
-            bluff_3 = possible_outsider_bluffs.pop()
+
+            # For the third bluff, if the outsider list is not empty, we will take an outsider. Otherwise
+            # it's 40% chance outsider, 60% chance townsfolk
+            if possible_outsider_bluffs:
+                town_or_out = random.choices(
+                    ["t", "o"],
+                    weights=[0.6, 0.4]
+                )
+                if town_or_out[0] == "t":
+                    bluff_3 = possible_townsfolk_bluffs.pop()
+                else:
+                    bluff_3 = possible_outsider_bluffs.pop()
+            else:
+                bluff_3 = possible_townsfolk_bluffs.pop()
 
             msg1 = demon_bluff_str.format(bluff_1.name, bluff_2.name, bluff_3.name) + "\n"
             msg2 = globvars.master_state.game.setup.create_evil_team_string()
@@ -90,6 +105,8 @@ class Imp(Demon, TroubleBrewing, Character):
                 await recipient.send(msg)
             except discord.Forbidden:
                 pass
+            
+            globvars.logging.info(f">>> Imp [send_first_night_instruction] Received three demon bluffs {bluff_1}, {bluff_2} and {bluff_3}.")
 
         # Less than seven players, teensyville rules
         else:

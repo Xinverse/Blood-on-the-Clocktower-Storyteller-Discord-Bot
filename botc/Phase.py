@@ -7,7 +7,6 @@ class Phase(enum.Enum):
 
     idle = "idle"
     night = "night"
-    wait = "wait"
     day = "day"
    
     

@@ -4,6 +4,7 @@ import json
 import random
 from botc import Outsider, Character, Townsfolk
 from ._utils import TroubleBrewing, TBRole
+import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.drunk.value.lower()]
@@ -25,6 +26,7 @@ class Drunk(Outsider, TroubleBrewing, Character):
 
     override first night instruction? -> NO  # default is to send instruction string only
     override regular night instruction -> NO  # default is to send nothing
+    
     """
 
     def __init__(self):
@@ -52,4 +54,6 @@ class Drunk(Outsider, TroubleBrewing, Character):
         for p in possibilities:
             if p.name not in taken:
                 self._ego_role = p
+                break
+        globvars.logging.info(f">>> Drunk [exec_init_role] Initialized ego_self as {self._ego_role}.")
         
