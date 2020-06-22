@@ -1,15 +1,6 @@
 """Contains some BoTC game related utility functions"""
 
-import enum
 from discord.ext import commands
-
-
-class StatusList(enum.Enum):
-   """List of status effects in game"""
-   safe_from_demon = "safe_from_demon"
-   drunk = "drunk"
-   poisoned = "poisoned"
-   red_herring = "red_herring"
 
 
 class NotAPlayer(commands.CheckFailure):

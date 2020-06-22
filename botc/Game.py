@@ -385,6 +385,7 @@ class Game(GameMeta):
 
         random.shuffle(self.player_obj_list)
         self._sitting_order = tuple(self._player_obj_list)
+        globvars.logging.info(f"Sitting Order {str(self._sitting_order)}")
     
    def __repr__(self):
       return "BOTC Game Object"

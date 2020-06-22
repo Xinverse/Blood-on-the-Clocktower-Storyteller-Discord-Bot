@@ -17,6 +17,10 @@ class Player:
         self._role_obj = role_obj  # Role object
         self._state_obj = PlayerState.alive  # Enum object
         self._apparent_state_obj = PlayerState.alive  # Enum object
+        self._status_effects = []  # List object
+    
+    def add_status_effect(self, new_status_effect):
+        self._status_effects.append(new_status_effect)
     
     def is_apparently_alive(self):
         return self.apparent_state == PlayerState.alive
@@ -52,6 +56,10 @@ class Player:
     @property
     def apparent_state(self):
         return self._apparent_state_obj
+    
+    @property
+    def status_effects(self):
+        return self.status_effects
 
     def __repr__(self):
         return f"{str(self.user.display_name)} ({self.user.id}) is {str(self.role)}"

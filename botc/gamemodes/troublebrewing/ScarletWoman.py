@@ -24,10 +24,15 @@ class ScarletWoman(Minion, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> YES  # default is to send instruction string only
-                                      => Send demon and minion identities to this minion if 7 players or more
+                                      => Send demon and minion identities to this minion 
+                                         if 7 players or more
+
+    ----- Regular night
+    START:
     override regular night instruction -> NO  # default is to send nothing
-    
     """
 
     def __init__(self):

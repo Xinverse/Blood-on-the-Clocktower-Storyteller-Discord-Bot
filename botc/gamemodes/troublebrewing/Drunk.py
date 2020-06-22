@@ -24,9 +24,13 @@ class Drunk(Outsider, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> YES
 
+    ----- First night
+    START:
     override first night instruction? -> NO  # default is to send instruction string only
-    override regular night instruction -> NO  # default is to send nothing
-    
+
+    ----- Regular night
+    START:
+    override regular night instruction? -> NO  # default is to send nothing
     """
 
     def __init__(self):

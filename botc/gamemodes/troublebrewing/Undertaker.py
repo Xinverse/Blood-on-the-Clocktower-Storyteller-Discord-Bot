@@ -23,10 +23,14 @@ class Undertaker(Townsfolk, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> NO  # default is to send instruction string only
+
+    ----- Regular night
+    START:
     override regular night instruction -> YES  # default is to send nothing
                                        => Send passive nightly information
-                                       
     """
 
     def __init__(self):

@@ -16,7 +16,6 @@ affiliated with them in any way.
 # Drunk effect
 # Effect class?
 # Investigate the recluse social_self trigerring multiple times issue
-# Ask in botc server: would effect disperse upon source player's death?
 # Investigator bug
 
 import globvars

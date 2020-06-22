@@ -119,6 +119,15 @@ class Character:
         """
         return self._social_role
     
+    def set_new_true_self(self):
+        return
+    
+    def set_new_ego_self(self):
+        return
+    
+    def set_new_social_self(self):
+        return
+    
     @property
     def emoji(self):
         return self._emoji

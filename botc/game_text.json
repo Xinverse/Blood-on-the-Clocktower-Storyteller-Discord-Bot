@@ -23,9 +23,12 @@
         "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!",
         "demonbluffs" : "To help you survive in this game, here are three not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",
         "evilteammates" : "Your Evil teammates are shown below: ",
-        "chef_init" : "Tonight, you learned a `{}`.",
-        "empath_nightly" : "Tonight, you learned a `{}`.",
-        "investigator_init" : "You learn that one of the following two players is the ``{}``: "
+        "chef_init" : "Tonight, you learn a `{}`.",
+        "empath_nightly" : "Tonight, you learn a `{}`.",
+        "investigator_init" : "You learn that one of the following two players is the ``{}``: ",
+        "librarian_init" : "You learn that one of the following two players is the ``{}``: ", 
+        "librarian_init_zero" : "You learn that there is no Outsider in play.",
+        "washerwoman_init" : "You learn that one of the following two players is the ``{}``: "
 
     },
 

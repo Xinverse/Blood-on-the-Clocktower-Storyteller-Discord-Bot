@@ -1,8 +1,9 @@
 """Contains the Fortune Teller Character class"""
 
 import json
+import random
 import discord 
-from botc import Townsfolk, Character
+from botc import Townsfolk, Character, Storyteller, RedHerring
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -27,10 +28,15 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> YES
 
+    ----- First night
+    START:
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send query for "read" command
-    override regular night instruction -> YES  # default is to send nothing
-                                      => Send query for "read" command
+
+    ----- Regular night
+    START:
+    override regular night instruction? -> YES  # default is to send nothing
+                                        => Send query for "read" command
     """
     
     def __init__(self):
@@ -74,7 +80,10 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
     
     def exec_init_role(self, setup):
         """Assign one of the townsfolks or outsiders as a red herring"""
-        pass
+        possibilities = setup.townsfolks + setup.outsiders
+        chosen = random.choice(possibilities)
+        chosen.add_status_effect(RedHerring(Storyteller(), chosen))
+        globvars.logging.info(f">>> Fortune Teller [exec_init_role] Set red herring to {str(chosen)}")
 
     @GameLogic.changes_not_allowed
     @GameLogic.requires_two_targets

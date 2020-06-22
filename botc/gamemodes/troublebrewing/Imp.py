@@ -32,12 +32,16 @@ class Imp(Demon, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send 3 demon bluffs
                                       => Send demon and minion identities to this minion if 7 players or more
-    override regular night instruction -> YES  # default is to send nothing
-                                      => Send query for "kill" command
-                                      
+
+    ----- Regular night
+    START:
+    override regular night instruction? -> YES  # default is to send nothing
+                                        => Send query for "kill" command
     """
 
     def __init__(self):

@@ -30,9 +30,14 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send passive initial information
-    override regular night instruction -> NO  # default is to send nothing
+
+    ----- Regular night
+    START:
+    override regular night instruction? -> NO  # default is to send nothing
     """
 
     def __init__(self):
@@ -54,6 +59,10 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
     
     async def send_first_night_instruction(self, recipient):
         """Send two possible minions"""
+
+        # First set the social self
+        for player in globvars.master_state.game.sitting_order:
+            player.role.set_new_social_self()
 
         # Choose the player that registers as minion
         minions = []

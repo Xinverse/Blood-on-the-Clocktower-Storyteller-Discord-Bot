@@ -27,10 +27,14 @@ class Spy(Minion, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send demon and minion identities to this minion if 7 players or more
-    override regular night instruction -> NO  # default is to send nothing
     
+    ----- Regular night
+    START:
+    override regular night instruction -> NO  # default is to send nothing
     """
 
     def __init__(self):
@@ -50,8 +54,7 @@ class Spy(Minion, TroubleBrewing, Character):
         self._role_enum = TBRole.spy
         self._emoji = "<:spy2:722687672002543656>"
     
-    @property
-    def social_self(self):
+    def set_new_social_self(self):
         """Social self: what the other players think he is.
         The spy may register as a townsfolk, an outsider, or as spy.
         """
@@ -61,7 +64,7 @@ class Spy(Minion, TroubleBrewing, Character):
         random.shuffle(possibilities)
         chosen = random.choice(possibilities)
         globvars.logging.info(f">>> Spy [social_self] Registered as {chosen}.")
-        return chosen
+        self._social_role = chosen
     
     async def send_first_night_instruction(self, recipient):
         """Send demon and minion list if there are 7 or more players. 

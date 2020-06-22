@@ -29,10 +29,14 @@ class Chef(Townsfolk, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> YES  # default is to send instruction string only
                                       => Send passive initial information
-    override regular night instruction -> NO  # default is to send nothing
 
+    ----- Regular night
+    START:
+    override regular night instruction? -> NO  # default is to send nothing
     """
     
     def __init__(self):
@@ -55,15 +59,21 @@ class Chef(Townsfolk, TroubleBrewing, Character):
     async def send_first_night_instruction(self, recipient):
         """Send the number of pairs of evils sitting together."""
         import globvars
+        # We initialize what their social self is going to be for this round of inspection
+        for player in globvars.master_state.game.sitting_order:
+            player.role.set_new_social_self()
+        # Make a list of all pairs in the sitting order
         total = len(globvars.master_state.game.sitting_order)
         all_pairs = [
             (globvars.master_state.game.sitting_order[i], globvars.master_state.game.sitting_order[(i+1)%total]) 
             for i in range(total)
         ]
+        # Count the evil pairs
         evil_pair_count = 0
         for pair in all_pairs:
             if pair[0].role.social_self.is_evil() and pair[1].role.social_self.is_evil():
                 evil_pair_count += 1
+        # Send the info
         msg = self.emoji + " " + self.instruction
         msg += "\n"
         msg += chef_init.format(evil_pair_count)
@@ -71,5 +81,5 @@ class Chef(Townsfolk, TroubleBrewing, Character):
             await recipient.send(msg)
         except discord.Forbidden:
             pass
-        log_msg = f">>> Chef [send_first_night_instruction] {evil_pair_count} pairs of evils, sitting order is {str(globvars.master_state.game.sitting_order)}"
+        log_msg = f">>> Chef [send_first_night_instruction] {evil_pair_count} pairs of evils"
         globvars.logging.info(log_msg)

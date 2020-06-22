@@ -24,9 +24,13 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> NO  # default is to send instruction string only
+
+    ----- Regular night
+    START:
     override regular night instruction -> NO  # default is to send nothing
-    
     """
 
     def __init__(self):

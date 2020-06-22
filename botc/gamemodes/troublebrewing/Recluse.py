@@ -25,9 +25,13 @@ class Recluse(Outsider, TroubleBrewing, Character):
     initialize setup? -> NO
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> NO  # default is to send instruction string only
-    override regular night instruction -> NO  # default is to send nothing
-    
+
+    ----- Regular night
+    START:
+    override regular night instruction? -> NO  # default is to send nothing
     """
 
     def __init__(self):
@@ -47,8 +51,7 @@ class Recluse(Outsider, TroubleBrewing, Character):
         self._role_enum = TBRole.recluse
         self._emoji = "<:recluse:722687457786593370>"
     
-    @property
-    def social_self(self):
+    def set_new_social_self(self):
         """Social self: what the other players think he is.
         The recluse may register as a demon, a minion, or as recluse.
         """
@@ -57,5 +60,5 @@ class Recluse(Outsider, TroubleBrewing, Character):
         possibilities.append(Recluse())
         chosen = random.choice(possibilities)
         globvars.logging.info(f">>> Recluse [social_self] Registered as {chosen}.")
-        return chosen
+        self._social_role = chosen
         

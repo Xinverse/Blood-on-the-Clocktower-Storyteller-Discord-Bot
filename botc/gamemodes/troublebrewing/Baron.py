@@ -28,10 +28,15 @@ class Baron(Minion, TroubleBrewing, Character):
     initialize setup? -> YES
     initialize role? -> NO
 
+    ----- First night
+    START:
     override first night instruction? -> YES  # default is to send instruction string only
-                                      => Send demon and minion identities to this minion if 7 players or more
-    override regular night instruction -> NO  # default is to send nothing
-    
+                                      => Send demon and minion identities to this minion if 
+                                         7 players or more
+
+    ----- Regular night
+    START:
+    override regular night instruction? -> NO  # default is to send nothing
     """
 
     def __init__(self):
