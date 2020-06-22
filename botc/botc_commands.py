@@ -169,7 +169,17 @@ def check_if_player_really_dead(ctx):
         raise DeadOnlyCommand("Command reserved for Dead Players (BoTC)")
 
 
-class BoTCCommands(commands.Cog, name="BoTC in-game commands"):
+class BoTCDebugCommands(commands.Cog, name = "BoTC debug commands"):
+    """BoTC in-game debug commands cog"""
+
+    def __init__(self, client):
+        self.client = client
+    
+    def cog_check(self, ctx):
+        pass
+
+
+class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
     """BoTC in-game commands cog
     (privilege one unique command keyword per character ability)
 

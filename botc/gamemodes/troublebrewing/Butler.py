@@ -80,7 +80,7 @@ class Butler(Outsider, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
-    async def exec_serve(self, targets):
+    async def register_serve(self, cmd_user, targets):
         """Serve command"""
         pass
     

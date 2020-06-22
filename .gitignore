@@ -137,3 +137,6 @@ botc_bot.code-workspace
 # local
 config.INI
 preferences.INI
+stasis.csv
+notify.csv
+ignore.csv
