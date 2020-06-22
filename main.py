@@ -12,11 +12,7 @@ affiliated with them in any way.
 """
 
 # TODO
-# Fortune teller init_role (red herring?)
-# Drunk effect
-# Effect class?
-# Investigate the recluse social_self trigerring multiple times issue
-# Investigator bug
+# Drunk effect when sending info
 
 import globvars
 import configparser
