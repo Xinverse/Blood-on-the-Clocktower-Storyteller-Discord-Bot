@@ -90,6 +90,6 @@ class Poisoner(Minion, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
-    async def exec_poison(self, targets):
+    async def register_poison(self, player, targets):
         """Poison command"""
         pass

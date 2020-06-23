@@ -25,6 +25,44 @@
 
     "doc" : {
 
+        "join" : {
+            "brief" : "join a game",
+            "help" : "Leave city, leave reality! Enter lobby, enter fantasy!",
+            "description" : "[JOIN] command",
+            "outputs" : [
+                "**{}** is rereading the role list before claiming their role.  I'm sure they're innocent. The lobby now holds **{}** player(s).",
+                "**{}**, your role is **Server Owner**. Your role does nothing and you die immediately upon receiving it. The lobby now holds **{}** player(s).",
+                "Time is an illusion, my dear **{}**, and lunchtime doubly so. The lobby now holds **{}** player(s).",
+                "For a moment, nothing happened. Then, after a second or so, nothing continued to happen. Then, after another second, **{}** joined the game.",
+                "**{}**... you're turning into a penguin. Stop it. The lobby now holds **{}** player(s).",
+                "**{}** was of the opinion that we'd all made a big mistake in coming down from the trees in the first place. The lobby now holds **{}** player(s).",
+                "'The answer is **{}**,' said Deep Thought, with infinite majesty and calm. The lobby now holds **{}** player(s).",
+                "Since **{}** decided a few weeks ago to adopt the leaf as legal tender, we have, of course, all become immensely rich. The lobby now holds **{}** player(s).",
+                "Nothing travels faster than the speed of light with the possible exception of bad news of **{}**'s arrival, which obeys its own special laws. The lobby now holds **{}** player(s).",
+                "In the beginning the Universe was created. This has made **{}** very angry and been widely regarded as a bad move. The lobby now holds **{}** player(s).",
+                "**{}**'s doctor says that they have a malformed public-duty gland and a natural deficiency in moral fibre, and that they are therefore excused from saving Universes. The lobby now holds **{}** player(s).",
+                "So long, **{}**, and thanks for all the fish. The lobby now holds **{}** player(s).",
+                "Listen, **{}**, don’t you try to outweird me, I get stranger things than you free with my breakfast cereal. The lobby now holds **{}** player(s).",
+                "**{}** discovered only a small asteroid inhabited by a solitary old man who claimed repeatedly that nothing was true, though he was later discovered to be lying. The lobby now holds **{}** player(s).",
+                "**{}** was staring at the instruments with the air of one who is trying to convert Fahrenheit to centigrade in his head while his house is burning down. The lobby now holds **{}** player(s)."
+            ],
+            "weights" : [
+
+            ]
+        },
+
+        "quit" : {
+            "brief" : "quit a game",
+            "help" : "",
+            "description" : "[QUIT] command",
+            "outputs" : [
+               ""
+            ],
+            "weights" : [
+
+            ]
+        },
+
         "dog" : {
             "brief" : "flip a dog",
             "help" : "We know by now that the cat always lands on its feet... but what about dogs? Will we ever find out?...",

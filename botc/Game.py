@@ -7,6 +7,7 @@ import globvars
 import json
 import pytz
 import configparser
+from .chrono import GameChrono
 from .BOTCUtils import BOTCUtils
 from .Category import Category
 from .Phase import Phase
@@ -171,7 +172,7 @@ class Game(GameMeta):
       self._member_obj_list = []  # list object - list of discord member objects 
       self._player_obj_list = []  # list object - list of player objects
       self._sitting_order = tuple()  # tuple object (for immutability)
-      self._current_phase = Phase.idle
+      self._chrono = GameChrono()
       self._setup = Setup()
    
    @property
@@ -196,14 +197,24 @@ class Game(GameMeta):
    
    @property
    def current_phase(self):
-      return self._current_phase
+      return self._chrono.phase
+   
+   @property
+   def current_cycle(self):
+      return self._chrono.cycle
    
    @property
    def setup(self):
       return self._setup
 
+   def is_idle(self):
+      return self.current_phase == Phase.idle
+
    def is_day(self):
       return self.current_phase == Phase.day
+   
+   def is_dawn(self):
+      return self.current_phase == Phase.dawn
 
    def is_night(self):
       return self.current_phase == Phase.night
@@ -294,12 +305,16 @@ class Game(GameMeta):
 
    async def make_nightfall(self):
       """Transition the game into night phase"""
-      self._current_phase = Phase.night
+      self._chrono.next()
       await botutils.send_lobby(nightfall)
+   
+   async def make_dawn(self):
+      """Transition the game into dawn/interlude phase"""
+      self._chrono.next()
 
    async def make_daybreak(self):
       """Transition the game into day phase"""
-      self._current_phase = Phase.day
+      self._chrono.next()
       await botutils.send_lobby(daybreak)
 
    def generate_role_set(self):

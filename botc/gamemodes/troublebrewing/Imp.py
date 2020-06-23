@@ -134,6 +134,6 @@ class Imp(Demon, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_two_targets
-    async def exec_kill(self, targets):
+    async def register_kill(self, player, targets):
         """Kill command"""
         pass

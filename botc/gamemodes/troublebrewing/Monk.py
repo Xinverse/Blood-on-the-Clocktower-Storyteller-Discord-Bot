@@ -66,6 +66,8 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
-    async def exec_protect(self, targets):
+    @GameLogic.except_first_night
+    @GameLogic.no_self_targetting
+    async def register_protect(self, player, targets):
         """Protect command"""
         pass

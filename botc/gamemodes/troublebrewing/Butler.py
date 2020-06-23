@@ -11,6 +11,11 @@ import globvars
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.butler.value.lower()]
 
+with open('botc/game_text.json') as json_file: 
+    strings = json.load(json_file)
+    target_nb = strings["cmd_warnings"]["target_nb"]
+    x_emoji = strings["cmd_warnings"]["x_emoji"]
+
 
 class Butler(Outsider, TroubleBrewing, Character):
     """Butler: Each night, choose a player (not yourself): tomorrow, you may only vote if 
@@ -80,7 +85,6 @@ class Butler(Outsider, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
-    async def register_serve(self, cmd_user, targets):
-        """Serve command"""
+    async def register_serve(self, player, targets):
+        """Serve command registration"""
         pass
-    

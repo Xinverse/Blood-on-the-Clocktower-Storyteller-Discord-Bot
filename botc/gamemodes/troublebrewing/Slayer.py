@@ -53,7 +53,7 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
     @GameLogic.changes_not_allowed
     @GameLogic.unique_ability
     @GameLogic.requires_one_target
-    async def exec_slay(self, targets):
+    async def register_slay(self, player, targets):
         """Slay command"""
         pass
 

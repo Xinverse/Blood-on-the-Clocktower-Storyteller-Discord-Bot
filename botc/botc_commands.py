@@ -169,16 +169,6 @@ def check_if_player_really_dead(ctx):
         raise DeadOnlyCommand("Command reserved for Dead Players (BoTC)")
 
 
-class BoTCDebugCommands(commands.Cog, name = "BoTC debug commands"):
-    """BoTC in-game debug commands cog"""
-
-    def __init__(self, client):
-        self.client = client
-    
-    def cog_check(self, ctx):
-        pass
-
-
 class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
     """BoTC in-game commands cog
     (privilege one unique command keyword per character ability)
@@ -227,7 +217,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         characters: butler
         """
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await player.role.ego_self.exec_serve(master)
+        await player.role.ego_self.register_serve(player, master)
 
     @serve.error
     async def serve_error(self, ctx, error):
@@ -274,7 +264,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         characters: poisoner
         """
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await player.role.ego_self.exec_poison(poisoned)
+        await player.role.ego_self.register_poison(player, poisoned)
 
     @poison.error
     async def poison_error(self, ctx, error):
@@ -321,7 +311,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         characters: ravenkeeper
         """
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await player.role.ego_self.exec_learn(learned)
+        await player.role.ego_self.register_learn(player, learned)
 
     @learn.error
     async def learn_error(self, ctx, error):
@@ -368,7 +358,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         characters: fortune teller
         """
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await player.role.ego_self.exec_read(read)
+        await player.role.ego_self.register_read(player, read)
 
     @read.error
     async def read_error(self, ctx, error):
@@ -414,7 +404,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         characters: imp
         """
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await player.role.ego_self.exec_kill(killed)
+        await player.role.ego_self.register_kill(player, killed)
 
     @kill.error
     async def kill_error(self, ctx, error):
@@ -461,7 +451,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         characters: slayer
         """
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await player.role.ego_self.exec_slay(slain)
+        await player.role.ego_self.register_slay(player, slain)
 
     @slay.error
     async def slay_error(self, ctx, error):
@@ -508,7 +498,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         characters: monk
         """
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await player.role.ego_self.exec_protect(protected)
+        await player.role.ego_self.register_protect(player, protected)
 
     @protect.error
     async def protect_error(self, ctx, error):

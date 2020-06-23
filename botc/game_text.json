@@ -40,7 +40,8 @@
         "alive_only" : "{} {} You may not use this command while dead.",
         "dead_only" : "{} {} You may not use this command while alive.",
         "day_only" : "{} {} You may not use this command during nighttime.",
-        "night_only" : "{} {} You may not use this command during daytime."
+        "night_only" : "{} {} You may not use this command during daytime.",
+        "target_nb" : "{} {} You must choose exactly **{}** target{} for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets."
 
     },
 
@@ -49,7 +50,8 @@
         "serve" : {
             "brief" : "Pick a 'serve' target.",
             "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
-            "description" : "[SERVE] command - BOTC"
+            "description" : "[SERVE] command - BOTC",
+            "feedback" : "You have decided to serve **{}** as your master."
         },
 
         "poison" : {

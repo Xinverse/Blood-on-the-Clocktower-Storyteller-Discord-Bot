@@ -291,58 +291,58 @@ class Character:
     
     # -------------------- Character ABILITIES --------------------
     
-    async def exec_serve(self, targets):
+    async def exec_serve(self, player, targets):
         """Serve command. Override by child classes."""
         raise NotImplementedError
 
-    async def register_serve(self, targets):
+    async def register_serve(self, player, targets):
         """Serve command. Override by child classes"""
         raise NotImplementedError
 
-    async def exec_poison(self, targets):
+    async def exec_poison(self, player, targets):
         """Poison command. Override by child classes"""
         raise NotImplementedError
 
-    async def register_poison(self, targets):
+    async def register_poison(self, player, targets):
         """Poison command. Override by child classes"""
         raise NotImplementedError
 
-    async def exec_learn(self, targets):
+    async def exec_learn(self, player, targets):
         """Learn command. Override by child classes"""
         raise NotImplementedError
 
-    async def register_learn(self, targets):
+    async def register_learn(self, player, targets):
         """Learn command. Override by child classes"""
         raise NotImplementedError
 
-    async def exec_read(self, targets):
+    async def exec_read(self, player, targets):
         """Read command. Override by child classes"""
         raise NotImplementedError
 
-    async def register_read(self, targets):
+    async def register_read(self, player, targets):
         """Read command. Override by child classes"""
         raise NotImplementedError
 
-    async def exec_kill(self, targets):
+    async def exec_kill(self, player, targets):
         """Kill command. Override by child classes"""
         raise NotImplementedError
 
-    async def register_kill(self, targets):
+    async def register_kill(self, player, targets):
         """Kill command. Override by child classes"""
         raise NotImplementedError
 
-    async def exec_slay(self, targets):
+    async def exec_slay(self, player, targets):
         """Slay command. Override by child classes"""
         raise NotImplementedError
 
-    async def register_slay(self, targets):
+    async def register_slay(self, player, targets):
         """Slay command. Override by child classes"""
         raise NotImplementedError
 
-    async def exec_protect(self, targets):
+    async def exec_protect(self, player, targets):
         """Protect command. Override by child classes"""
         raise NotImplementedError
 
-    async def register_protect(self, targets):
+    async def register_protect(self, player, targets):
         """Protect command. Override by child classes"""
         raise NotImplementedError

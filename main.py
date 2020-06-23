@@ -12,7 +12,9 @@ affiliated with them in any way.
 """
 
 # TODO
-# Drunk effect when sending info
+# Drunk/poison effect when sending info
+# Separate begin/end night actions
+# Night action commands system
 
 import globvars
 import configparser

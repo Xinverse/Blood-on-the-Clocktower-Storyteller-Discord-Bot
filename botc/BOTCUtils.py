@@ -129,40 +129,75 @@ class PlayerParser(commands.Converter):
       return Targets(actual_targets)
 
 
+class UniqueAbilityError(Exception):
+   """Attempt to use unique ability twice"""
+   pass
+
+
+class FirstNightNotAllowed(Exception):
+   """Attempt to use action on first night when not allowed"""
+   pass
+
+
+class ChangesNotAllowed(Exception):
+   """Attempt to resubmit an action after it's been used"""
+   pass
+
+
+class MustBeOneTarget(Exception):
+   """Must be exactly one target"""
+   pass
+
+
+class MustBeTwoTargets(Exception):
+   """Must be exactly two targets"""
+   pass
+
+
 class GameLogic:
    """Game logic decorators to be used on ability methods in character classes"""
 
    @staticmethod
+   def no_self_targetting(func):
+      """Decorator for abilities that disallow the player to target themself"""
+      def inner(self, player, targets):
+         return func(self, player, targets)
+      return inner 
+
+   @staticmethod
    def unique_ability(func):
       """Decorator for unique abilities to be used once per game"""
-      def inner(self, targets):
-         return func(self, targets)
+      def inner(self, player, targets):
+         return func(self, player, targets)
       return inner
 
    @staticmethod
    def except_first_night(func):
       """Decorator for abilities that cannot be used on the first night"""
-      def inner(self, targets):
-         return func(self, targets)
+      def inner(self, player, targets):
+         import globvars
+         if globvars.master_state.game.is_night() and globvars.master_state.game.cycle == 1:
+            raise FirstNightNotAllowed("You may not use this command during the first night.")
+         return func(self, player, targets)
       return inner
 
    @staticmethod
    def changes_not_allowed(func):
       """Decorator for abilities that cannot modify targets after inputting them"""
-      def inner(self, targets):
-         return func(self, targets)
+      def inner(self, player, targets):
+         return func(self, player, targets)
       return inner
    
    @staticmethod
    def requires_one_target(func):
       """Decorator for abilities that require one target"""
-      def inner(self, targets):
-         return func(self, targets)
+      def inner(self, player, targets):
+         return func(self, player, targets)
       return inner
    
    @staticmethod
    def requires_two_targets(func):
       """Decorator for abilities that require two targets"""
-      def inner(self, targets):
-         return func(self, targets)
+      def inner(self, player, targets):
+         return func(self, player, targets)
       return inner

@@ -87,6 +87,6 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
 
     @GameLogic.changes_not_allowed
     @GameLogic.requires_two_targets
-    async def exec_read(self, targets):
+    async def register_read(self, player, targets):
         """Read command"""
         pass
