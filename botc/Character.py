@@ -30,7 +30,7 @@ with open('botc/game_text.json') as json_file:
     strings = json.load(json_file)
     copyrights_str = strings["misc"]["copyrights"]
     role_dm = strings["gameplay"]["role_dm"]
-    your_role_is = strings["gameplay"]["your_role_is"]
+    welcome_dm = strings["gameplay"]["welcome_dm"]
     blocked = strings["gameplay"]["blocked"]
 
 
@@ -52,6 +52,7 @@ class Character:
         self._examp_string = None
         self._instr_string = None
         self._lore_string = None
+        self._brief_string = None
         self._art_link = None
         self._wiki_link = None
         self._role_enum = None
@@ -159,6 +160,10 @@ class Character:
     @property
     def lore(self):
         return self._lore_string
+    
+    @property
+    def brief(self):
+        return self._brief_string
     
     @property
     def art_link(self):
@@ -275,13 +280,21 @@ class Character:
             team_str = self.ego_self.team.value,
             prefix = PREFIX)
 
-        embed = discord.Embed(title = your_role_is.format(self.ego_self.name.upper()),
+        embed = discord.Embed(title = welcome_dm.format(self.ego_self.name.upper()),
                               url = self.ego_self.wiki_link,
                               description=opening_dm, color=color)
+        instructions = f"{self.emoji} {self.instruction}"
+        embed.add_field(name = "**Instruction**", value = instructions, inline = True)
         embed.set_author(name = "{} Edition - Blood on the Clocktower (BoTC)".format(self.ego_self.gm_of_appearance.value),
                          icon_url = self.ego_self.gm_art_link)
         embed.set_thumbnail(url = self.ego_self.art_link)
         embed.set_footer(text = copyrights_str)
+
+        # If we have an evil team member, send evil list (if 7p or more)
+        if globvars.master_state.game.nb_players >= 7:
+            if self.is_evil():
+                msg = globvars.master_state.game.setup.create_evil_team_string()
+                embed.add_field(name = "**Evil Team**", value = msg, inline = True)
 
         try:
             await recipient.send(embed = embed)

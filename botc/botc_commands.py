@@ -412,6 +412,8 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        elif isinstance(error, commands.BadArgument):
+            return
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return

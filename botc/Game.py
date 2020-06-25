@@ -149,6 +149,10 @@ class Game(GameMeta):
    8. butler
    9. spy
 
+   Our equivalent:
+   night start: poisoner, fortune teller, butler
+   night end: washerwoman, librarian, investigator, chef, empath, spy
+
 
    Order of Action (All Other Nights)
    1. poisoner
@@ -161,6 +165,10 @@ class Game(GameMeta):
    8. butler
    9. undertaker
    10. spy
+
+   Our equivalent:
+   night start: poisoner, monk, imp, fortune teller, butler
+   night end: empath, spy, ravenkeeper, undertaker
    """
 
    MIN_PLAYERS = 5
@@ -282,9 +290,6 @@ class Game(GameMeta):
       # Send the opening dm to all players
       for player in self._player_obj_list:
          await player.role.ego_self.send_opening_dm_embed(player.user)
-      # Send first night info dm to all players
-      for player in self._player_obj_list:
-         await player.role.ego_self.send_first_night_instruction(player.user)
       # Transition to night fall
       await self.make_nightfall()
       # Load game related commands

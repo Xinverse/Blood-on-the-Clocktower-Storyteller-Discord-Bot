@@ -49,6 +49,8 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         self._examp_string = character_text["examples"]
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
+        self._brief_string = character_text["brief"]
+        self._brief_string = character_text["brief"]
 
         self._art_link = "http://bloodontheclocktower.com/wiki/images/6/61/Empath_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Empath"

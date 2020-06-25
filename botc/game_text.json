@@ -14,8 +14,8 @@
 
     "gameplay" : {
 
-        "role_dm" : "Welcome to Ravenswood Bluff, **{role_name_str}**! You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to learn more.",
-        "your_role_is" : "**Your role is {}**",
+        "role_dm" : "Your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
+        "welcome_dm" : "**WELCOME TO BLOOD ON THE CLOCKTOWER**",
         "nightfall" : "It is currently **nighttime**.",
         "dawn" : "It is currently **dawn**.",
         "daybreak" : "It is currently **daytime**.",
@@ -41,6 +41,7 @@
         "dead_only" : "{} {} You may not use this command while alive.",
         "day_only" : "{} {} You may not use this command during nighttime.",
         "night_only" : "{} {} You may not use this command during daytime.",
+        "player_not_found" : "{} {} Player **{}** is not found.",
         "target_nb" : "{} {} You must choose exactly **{}** target{} for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets."
 
     },

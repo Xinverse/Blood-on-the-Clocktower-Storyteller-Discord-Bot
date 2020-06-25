@@ -1,6 +1,12 @@
 """Contains some BoTC game related utility functions"""
 
+import json
 from discord.ext import commands
+
+with open('botc/game_text.json') as json_file: 
+    documentation = json.load(json_file)
+    x_emoji = documentation["cmd_warnings"]["x_emoji"]
+    player_not_found = documentation["cmd_warnings"]["player_not_found"]
 
 
 class NotAPlayer(commands.CheckFailure):
@@ -111,6 +117,12 @@ class Targets:
    def __init__(self, target_list):
       self.target_list = target_list
       self.target_nb = len(self.target_list)
+   
+   def __len__(self):
+      return len(self.target_list)
+   
+   def __iter__(self):
+      yield from self.target_list
 
 
 class PlayerParser(commands.Converter):
@@ -125,6 +137,8 @@ class PlayerParser(commands.Converter):
          if player:
             actual_targets.append(player)
          else:
+            msg = player_not_found.format(x_emoji, ctx.author.mention, raw if len(raw) <= 1000 else raw[:1000])
+            await ctx.author.send(msg)
             raise commands.BadArgument(f"Player {raw} not found.")
       return Targets(actual_targets)
 
@@ -154,6 +168,11 @@ class MustBeTwoTargets(Exception):
    pass
 
 
+class NoSelfTargetting(Exception):
+   """Does not allow self targetting in command input"""
+   pass
+
+
 class GameLogic:
    """Game logic decorators to be used on ability methods in character classes"""
 
@@ -161,6 +180,9 @@ class GameLogic:
    def no_self_targetting(func):
       """Decorator for abilities that disallow the player to target themself"""
       def inner(self, player, targets):
+         for target in targets:
+            if target.user.id == player.user.id:
+               raise NoSelfTargetting("You may not target yourself")
          return func(self, player, targets)
       return inner 
 
@@ -192,6 +214,8 @@ class GameLogic:
    def requires_one_target(func):
       """Decorator for abilities that require one target"""
       def inner(self, player, targets):
+         if len(targets) != 1:
+            raise MustBeOneTarget("Command must take exactly one input")
          return func(self, player, targets)
       return inner
    
@@ -199,5 +223,7 @@ class GameLogic:
    def requires_two_targets(func):
       """Decorator for abilities that require two targets"""
       def inner(self, player, targets):
+         if len(targets) != 2:
+            raise MustBeTwoTargets("Command must take exactly two inputs")
          return func(self, player, targets)
       return inner
