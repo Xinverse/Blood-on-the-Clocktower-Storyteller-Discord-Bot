@@ -11,6 +11,10 @@ import globvars
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.fortuneteller.value.lower()]
 
+with open('botutils/bot_text.json') as json_file:
+    bot_text = json.load(json_file)
+    butterfly = bot_text["esthetics"]["butterfly"]
+
 
 class FortuneTeller(Townsfolk, TroubleBrewing, Character):
     """Fortune Teller: Each night, choose 2 players: you learn if either is a Demon. 
@@ -50,6 +54,7 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
         self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/3/3a/Fortune_Teller_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Fortune_Teller"
@@ -72,6 +77,14 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
+    
+    def add_action_field_n1(self, embed_obj):
+        """Send the stats list n1"""
+
+        msg = self.action
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        embed_obj.add_field(name = butterfly + " **「 Your Action 」**", value = msg, inline = False)
+        return embed_obj
 
     async def send_first_night_instruction(self, recipient):
         """Send query for "read" command."""

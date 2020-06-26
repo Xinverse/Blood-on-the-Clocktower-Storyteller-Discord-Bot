@@ -6,6 +6,7 @@
         "examples" : "- Evin is the Chef, and Amy is the Ravenkeeper. The Washerwoman learns that either Evin or Amy is the Chef.\n- Julian is the Imp, and Alex is the Virgin. The Washerwoman learns that either Julian or Alex is the Virgin.\n- Marianna is the Spy, and Sarah is the Scarlet Woman. The Washerwoman learns that one of them is the Ravenkeeper. (This happens because the Spy is registering as a Townsfolk— in this case, the Ravenkeeper.)",
         "instruction" : "You start knowing 1 of 2 players is a particular Townsfolk.",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
+        "action" : "",
         "brief" : "The Washerwoman learns that a particular Townsfolk character is in play, but not exactly which player it is."
 
     },
@@ -17,6 +18,7 @@
         "examples" : "- Benjamin is the Saint, and Filip is the Baron. The Librarian learns that either Benjamin or Filip is the Saint.\n- The Storyteller decides that the Recluse registers as a Minion, not an Outsider. There are no other Outsiders in play. The Librarian learns a “0.”\n - Abdallah is the Drunk, who thinks they are the Monk, and Douglas is the Undertaker. The Librarian learns that either Abdallah or Douglas is the Drunk. (The Drunk is Abdallah’s actual character, even though he thinks he is the Monk.)",
         "instruction" : "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play)",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
+        "action" : "",
         "brief" : "The Librarian learns that a particular Outsider character is in play, but not exactly which player it is."
 
     },
@@ -27,6 +29,7 @@
         "examples" : "- Amy is the Baron, and Julian is the Mayor. The Investigator learns that either Amy or Julian is the Baron.\n- Angelus is the Spy, and Lewis is the Poisoner. The Investigator learns that either Angelus or Lewis is the Spy.\n- Brianna is the Recluse, and Marianna is the Imp. The Investigator learns that either Brianna or Marianna is the Poisoner. (This happens because the Recluse is registering as a Minion—in this case, the Poisoner.)",
         "instruction" : "You start knowing 1 of 2 players is a particular Minion.",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
+        "action" : "",
         "brief" : "The Investigator learns that a particular Minion character is in play, but not exactly which player it is."
     },
 
@@ -36,6 +39,7 @@
         "examples" : "- No evil players are sitting next to each other. The Chef learns a '0.'\n- The Imp is sitting next to the Baron. Across the circle, the Poisoner is sitting next to the Scarlet Woman. The Chef learns a '2.'\n- An evil Scapegoat is sitting between the Imp and a Minion. Across the circle, two other Minions are sitting next to each other. The Chef learns a '3.'",
         "instruction" : "You start knowing how many pairs of evil players are sitting together, based on the sitting order.",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
+        "action" : "",
         "brief" : "The Chef knows if evil players are sitting next to each other."
     },
 
@@ -45,6 +49,7 @@
         "examples" : "- The Empath neighbors two good players—a Soldier and a Monk. The Empath learns a '0.'\n- The next day, the Soldier is executed. That night, the Monk is killed by the Imp. The Empath now detects the players sitting next to the Soldier and the Monk, which are a Librarian and an evil Gunslinger. The Empath now learns a '1.'\n- There are only three players left alive: the Empath, the Imp, and the Baron. No matter who is seated where, the Empath learns a '2.'",
         "instruction" : "Each night, you learn how many of your 2 alive neighbors are evil.",
         "n1_addendum" : "You will receive this information at the end of the night. No further action is required from you for now.",
+        "action" : "",
         "brief" : "The Empath keeps learning if their living neighbors are good or evil."
     },
 
@@ -52,8 +57,9 @@
         "lore" : "I sense great evil in your soul! But...that could just be your perfume. I am allergic to elderberry.",
         "description" : "The Fortune Teller can detect who the Demon is, but sometimes thinks good players are Demons.\n- Each night, the Fortune Teller chooses two players and learns if at least one of them is a Demon. They do not learn which of them is a Demon, just that one of them is. If neither is the Demon, they learn this instead.\n- Unfortunately, one player, called the Red Herring, will register as a Demon to the Fortune Teller if chosen. The Red Herring is the same player throughout the entire game. This player may be any good player, even the Fortune Teller, and the Fortune Teller does not know which player it is.\n- The Fortune Teller may choose any two players—alive or dead, or even themself. If they choose a dead Demon, then the Fortune Teller still receives a nod.",
         "examples" : "- The Fortune Teller chooses the Mayor and the Undertaker, and learns a 'no.'\n- The Fortune Teller chooses the Imp and the Empath, and learns a 'yes.'\n- The Fortune Teller chooses an alive Imp and a dead Imp, and learns a 'yes.'\n- The Fortune Teller chooses themself and a Saint, who is the Red Herring. The Fortune Teller learns a 'yes.'",
-        "instruction" : "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you. Use `read <player1> and <player2>` in DM.",
+        "instruction" : "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you.",
         "n1_addendum" : "",
+        "action" : "Use `read <player1> and <player2>` in DM. They must be different players.",
         "brief" : "The Fortune Teller detects who the Demon is, but sometimes thinks good players are Demons."
     },
 
@@ -63,6 +69,7 @@
         "examples" : "- The Mayor is executed today. That night, the Undertaker is shown the Mayor token.\n- The Drunk, who thinks they are the Virgin, is executed today. The Undertaker is shown the Drunk token, because the Undertaker learns the actual character of the player, not the character the player thinks they are.\n- The Spy is executed. Two Travelers are exiled. That night, the Undertaker is shown the Butler token, because the Spy is registering as the Butler, and because the exiles are not executions. Nobody was executed today. That night, the Undertaker does not wake.",
         "instruction" : "Each night, you learn which character died by execution today.",
         "n1_addendum" : "No one has died by execution so far; you learn nothing.",
+        "action" : "",
         "brief" : "The Undertaker learns which character was executed today."
     },
 
@@ -70,8 +77,9 @@
         "lore" : "Tis an ill and deathly wind that blows tonight. Come, my brother, take shelter in the abbey while the storm rages. By my word, or by my life, you will be safe.",
         "description" : "The Monk protects other people from the Demon.\n- Each night except the first, the Monk may choose to protect any player except themself.\n- If the Demon attacks a player who has been protected by the Monk, then that player does not die. The Demon does not get to attack another player—there is simply no death tonight.\n- The Monk does not protect against other harmful effects such as poisoning, drunkenness, or Outsider penalties. The Monk does not protect against the Demon nominating and executing someone.",
         "examples" : "- The Monk protects the Fortune Teller. The Imp attacks the Fortune Teller. No deaths occur tonight.\n- The Monk protects the Mayor, and the Imp attacks the Mayor. The Mayor's 'another player 'dies' ability does not trigger, because the Mayor is safe from the Imp. Nobody dies tonight.\n- The Monk protects the Imp. The Imp chooses to kill themself tonight, but nothing happens. The Imp stays alive and a new Imp is not created.",
-        "instruction" : "Each night except for the first, choose a player (not yourself): they are safe from the Demon tonight. Use `protect <player>` in DM.",
+        "instruction" : "Each night except for the first, choose a player (not yourself): they are safe from the Demon tonight.",
         "n1_addendum" : "You cannot protect on the first night.",
+        "action" : "Use `protect <player>` in DM. You cannot protect yourself.",
         "brief" : "The Monk protects other players from the Demon."
     },
 
@@ -79,8 +87,9 @@
         "lore" : "My birds will avenge me! Fly! Fly, my sweet and dutiful pets! Take your message to those in dark corners! To the manor and to the river! Let them read of the nature of my death.",
         "description" : "The Ravenkeeper learns any player's character, but only if they die at night.\n- The Ravenkeeper is woken on the night that they die, and chooses a player immediately.\n- The Ravenkeeper may choose a dead player if they wish.",
         "examples" : "- The Ravenkeeper is killed by the Imp, and then wakes to choose a player. After some deliberation, they choose Benjamin. Benjamin is the Empath, and the Ravenkeeper learns this.\n- The Imp attacks the Mayor. The Mayor doesn't die, but the Ravenkeeper dies instead, due to the Mayor's ability. The Ravenkeeper is woken and chooses Douglas, who is a dead Recluse. The Ravenkeeper learns that Douglas is the Scarlet Woman, since the Recluse registered as a Minion.",
-        "instruction" : "If you die at night, you will be prompted to choose a player: you learn their character. Use `learn <player>` in DM.",
+        "instruction" : "If you die at night, you will be prompted to choose a player: you learn their character.",
         "n1_addendum" : "Your ability is not activated yet, since you are still alive.",
+        "action" : "Use `learn <player>` in DM.",
         "brief" : "If the Ravenkeeper dies at night, they get to learn one player's character."
     },
 
@@ -90,6 +99,7 @@
         "examples" : "- The Washerwoman nominates the Virgin. The Washerwoman dies, and voting ends.\n- The Drunk, who thinks they are the Chef, nominates the Virgin. The Drunk remains alive, and the Virgin loses their ability. Players may now vote on whether or not to execute the Virgin. (This happens because the Drunk is not a Townsfolk.)\n- A dead player nominates the Virgin. The dead, however, cannot nominate. The Storyteller declares that the nomination does not count. The Virgin does not lose their ability.",
         "instruction" : "The 1st time you are nominated, if the nominator is a Townsfolk, they are executed immediately.",
         "n1_addendum" : "",
+        "action" : "",
         "brief" : "The Virgin may inadvertently execute their accuser, confirming which players are Townsfolk in the process."
     },
 
@@ -97,8 +107,9 @@
         "lore" : "Die.",
         "description" : "The Slayer can kill the Demon by guessing who it is.\n- The Slayer can choose to use their ability at any time during the day, and must declare to everyone when they’re using it. If the Slayer chooses the Demon, the Demon dies immediately. Otherwise, nothing happens.\n- The players do not learn the identity of the dead player. After all, it may have been the Recluse!\n- When the Slayer declares that they wish to use their power, it is a good idea to give the group a minute or two to discuss who the Slayer should choose, but the Slayer makes the final decision.\n- A Slayer that uses their ability while poisoned or drunk may not use it again.\n- The Slayer will want to choose an alive player. Even if the Slayer chooses a dead Imp, nothing happens, because a dead player can’t die again.",
         "examples" : "- The Slayer chooses the Imp. The Imp dies, and good wins!\n- The Slayer chooses the Recluse. The Storyteller decides that the Recluse registers as the Imp, so the Recluse dies, but the game continues.\n- The Imp is bluffing as the Slayer. They declare that they use their Slayer ability on the Scarlet Woman. Nothing happens.",
-        "instruction" : "Once per game, during the day, publicly choose a player: if they are the Demon, they die. Use `slay <player>` in the public game text channel.",
+        "instruction" : "Once per game, during the day, publicly choose a player: if they are the Demon, they die.",
         "n1_addendum" : "",
+        "action" : "Use `slay <player>` in the public game text channel.",
         "brief" : "The Slayer can kill the Demon by guessing who they are."
     },
 
@@ -108,6 +119,7 @@
         "examples" : "- The Imp attacks the Soldier. The Soldier does not die, so nobody dies that night.\n- The Poisoner poisons the Soldier, then the Imp attacks the Soldier. The Soldier dies, since they have no ability.\n- The Imp attacks the Mayor. The Storyteller chooses that the Soldier dies instead. However, because the Soldier cannot be killed by the Demon, nobody dies that night.",
         "instruction" : "You are safe from the Demon.",
         "n1_addendum" : "",
+        "action" : "",
         "brief" : "The Soldier can not be killed by the Demon."
     },
 
@@ -117,6 +129,7 @@
         "examples" : "- The Imp attacks the Mayor. The Storyteller chooses that the Ravenkeeper dies instead.\n- There are three players alive. There are no nominations for execution today. Good wins.\n- There are five players alive, including two Travelers. Both Travelers are exiled, and the vote is tied between the remaining players. Because a tied vote means neither player is executed, good wins.",
         "instruction" : "If only 3 players live & no execution occurs, your team wins. If you die at night, another player might die instead.",
         "n1_addendum" : "",
+        "action" : "",
         "brief" : "The Mayor can win by peaceful means on the final day."
     },
 
@@ -124,8 +137,9 @@
         "lore" : "Yes, sir... No, sir... Certainly, sir.",
         "description" : "The Butler may only vote when their Master votes.\n- Each night, the Butler chooses a player to be their master. The next day, the Butler may only have their hand raised to vote if their master is voting too.\n- If the master’s vote has not yet been tallied, but the master has their hand raised to vote, the Butler may also have their hand raised to vote. If the master has their hand down, the Butler must also have their hand down.\n- If the master’s vote has already been tallied, the Butler may have their hand raised to vote if they wish.\n- Because any player can vote for an exile, and exiles are never affected by abilities, the Butler can vote freely for an exile.\n- The Butler may choose a dead player as their master, but will only be able to vote if that player has a vote token, because dead players may only raise their hand to vote if they have a vote token.\n- The Butler is never forced to vote.",
         "examples" : "- The Butler chooses Filip to be their Master. Tomorrow, if Filip raises his hand to vote on an execution, then the Butler may too. If not, then the Butler may not raise their hand.\n- The Butler is dead. Because dead players have no ability, the Butler may vote with their vote token at any time.",
-        "instruction" : "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too. Use `serve <player>` in DM.",
+        "instruction" : "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.",
         "n1_addendum" : "",
+        "action" : "Use `serve <player>` in DM. You may not server yourself.",
         "brief" : "The Butler may only vote when their Master (another player) votes."
     },
 
@@ -135,6 +149,7 @@
         "examples" : "- The Drunk, who thinks they are the Soldier, is attacked by the Imp. The Drunk dies.\n- The Drunk, who thinks they are the Empath, wakes and learns a '0,' even though they are sitting next to one evil player. The next night, they learn a '1.'\n- The Drunk, who thinks they are the Ravenkeeper, is killed at night. They choose the Saint, but learn that this player is the Poisoner.\n- The Fortune Teller is executed. That night, the Drunk Undertaker learns that the Drunk died today.",
         "instruction" : "You do not know you are the Drunk. You think you are a Townsfolk, but your ability malfunctions.",
         "n1_addendum" : "",
+        "action" : "",
         "brief" : "The Drunk player thinks that they are a Townsfolk, and has no idea that they are actually the Drunk."
     },
 
@@ -144,6 +159,7 @@
         "examples" : "- The Slayer uses their ability on the Recluse. The Storyteller decides that the Recluse registers as the Imp, so the Recluse dies. The Slayer believes that they just killed the Imp.\n- The Empath, who neighbors the Recluse and the Monk, learns she is neighboring one evil player. The next night, the Empath learns they are neighboring no evil players.\n- The Investigator learns that either the Recluse or the Saint is the Scarlet Woman.\n- The Recluse is executed. The Undertaker learns that the Imp was executed.\n- The Recluse neighbors the Imp and an Evil Traveler. Because showing a '2' to the Chef might be too revealing, the Chef learns true information, a '0,' instead.",
         "instruction" : "You might register as evil & as a Minion or Demon, even if dead.",
         "n1_addendum" : "",
+        "action" : "",
         "brief" : "The Recluse might appear to be an evil character, but is actually good."
     },
 
@@ -153,6 +169,7 @@
         "examples" : "- There are seven players alive and nominations are in progress. The Saint gets four votes and is about to die. Then, the Baron is nominated but only gets three votes. No more nominations occur today. The Saint is executed, and evil wins.\n- The Imp is nominated, and the players vote. The Gunslinger kills the Saint. The Saint dies, and the game continues.\n- The Saint is executed. However, the Scapegoat's ability is triggered, so the Scapegoat dies instead. The game continues, because the Saint did not die.",
         "instruction" : "If you die by execution, your team loses.",
         "n1_addendum" : "",
+        "action" : "",
         "brief" : "The Saint ends the game if they are executed."
     },
 
@@ -170,7 +187,8 @@
         "description" : "The Scarlet Woman becomes the Demon when the Demon dies.\n- If there are five or more players just before the Demon dies—that is, four or more players left alive after the Demon dies—then the Scarlet Woman immediately becomes the Demon, and the game continues as if nothing happened.\n- Travelers do not count as players to see if the Scarlet Woman’s ability triggers.\n- If less than five players were alive when the Demon is executed, then the game ends and good wins.\n- If there are five or more players alive when the Demon dies at night, the Scarlet Woman must be the new Imp.\n- If the Scarlet Woman becomes the Demon, they are that Demon in every way. Good wins if they are executed. They kill each night. They register as the Demon.",
         "examples" : "- There are seven players alive: the Imp, the Scarlet Woman, two Townsfolk, and three Travelers. The Imp is executed, so the game ends and good wins.\n- There are five players alive: the Imp, the Scarlet Woman, the Baron, and two Townsfolk. The Imp is executed. The Scarlet Woman becomes the Imp, and the game continues.\n- Brianna is the Scarlet Woman. The Fortune Teller chooses Brianna and Alex, and learns a 'no.' Later, the Imp dies, so Brianna becomes the Imp. The Fortune Teller chooses Brianna and Alex again, and learns a 'yes.'",
         "instruction" : "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travelers don't count)",
-        "n1_addendum" : "If you are promoted to Demonhood, you will be notified at the end of the night.",
+        "n1_addendum" : "If you are promoted to Demonhood, you will be notified.",
+        "action" : "",
         "brief" : "The Scarlet Woman becomes the Demon when the Demon dies."
     },
 
@@ -180,6 +198,7 @@
         "examples" : "- The game is being set up for seven players, with five Townsfolk, one Minion, and one Demon. Because the Minion is the Baron, the Storyteller removes two Townsfolk tokens and adds a Saint and a Butler token. In total, three Townsfolk, two Outsider, one Minion, and one Demon tokens go in the bag for the players to draw from.\n- The game is being set up for 15 players, with nine Townsfolk, two Outsiders, three Minions, and one Demon. Because the Baron is in play, the Storyteller must add a Drunk and a Recluse. So, they remove the Monk token and add a Recluse token. Then, instead of adding the Drunk character token, they add the Drunk's 'Is the Drunk' reminder token... because this game, one player isn't a Townsfolk—they are an Outsider: the Drunk. All these character tokens then go into the bag for the players to draw from.",
         "instruction" : "There are extra Outsiders in play. [+2 Outsiders]",
         "n1_addendum" : "",
+        "action" : "",
         "brief" : "The Baron changes the number of Outsiders present in the game."
     }, 
 
@@ -189,6 +208,7 @@
         "examples" : "- The Washerwoman learns that either Abdallah or Douglas is the Ravenkeeper. Abdallah is the Monk, and Douglas is the Spy registering as the Ravenkeeper.\n- The Spy neighbors the Imp and the Empath. The Chef learns a '1' because the Spy is registering as evil. Later that night, the Empath learns a '0' because the Spy is now registering as good.\n- The Spy nominates the Virgin and is executed by the Virgin’s ability, because the Storyteller chooses that the Spy registers as a Townsfolk. That night, the Undertaker learns that the Drunk died today, because the Spy is now registering as the Drunk.",
         "instruction" : "Each night, you see the Grimoire. You might register as good & as a Townsfolk or Outsider, even if dead.",
         "n1_addendum" : "You will receive this information at the end of the night. No further action is required from you for now.",
+        "action" : "",
         "brief" : "The Spy might appear to be a good character, but is actually evil. They also see the Grimoire, so they know the characters (and status) of all players."
     },
 
@@ -196,8 +216,9 @@
         "lore" : "We must keep our wits sharp and our sword sharper. Evil walks amongst us and will stop at nothing to destroy us good, simple folk, bringing our fine town to ruin. Trust no one. But if you must trust someone, trust me",
         "description" : "The Imp kills at night and can make copies of itself...for a terrible price.\n- On each night except the first, the Imp chooses a player to kill. Because most characters act after the Demon, that player will probably not get to use their ability tonight.\n- The Imp, because it’s a Demon, knows which players are their Minions, and knows three not-in-play good characters that they can safely bluff as.\n- If the Imp dies, the game ends and good wins. However, if the Imp kills themself at night, they die and an alive Minion becomes an Imp. This new Imp does not act that same night, but is now the Imp in every other way—they kill each night, and lose if they die.",
         "examples" : "- It is the first night. The Imp learns that Evin and Sarah are the Minions. The Imp also learns that the Monk, Chef, and Librarian are not in play. The Imp bluffs as the Chef, then bluffs as Mayor halfway through the game. Eventually, the Imp is executed and good wins.\n- During the night, the Imp wakes and chooses a player, who dies. The next night, the Imp chooses themselves to die. The Imp dies, and the Poisoner becomes the Imp.",
-        "instruction" : "Each night except the first, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp. Use `kill <player>` in DM.",
+        "instruction" : "Each night except the first, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.",
         "n1_addendum" : "You cannot kill on the first night.",
+        "action" : "Use `kill <player>` in DM.",
         "brief" : "The Imp kills a player each night, and can make copies of itself... for a terrible price."
     }
 }

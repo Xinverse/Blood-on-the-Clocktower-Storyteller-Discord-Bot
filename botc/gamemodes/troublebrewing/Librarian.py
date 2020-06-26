@@ -53,6 +53,7 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
         self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/8/86/Librarian_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Librarian"

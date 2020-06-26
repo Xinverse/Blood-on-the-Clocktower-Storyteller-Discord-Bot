@@ -16,6 +16,10 @@ with open('botc/game_text.json') as json_file:
     target_nb = strings["cmd_warnings"]["target_nb"]
     x_emoji = strings["cmd_warnings"]["x_emoji"]
 
+with open('botutils/bot_text.json') as json_file:
+    bot_text = json.load(json_file)
+    butterfly = bot_text["esthetics"]["butterfly"]
+
 
 class Butler(Outsider, TroubleBrewing, Character):
     """Butler: Each night, choose a player (not yourself): tomorrow, you may only vote if 
@@ -55,6 +59,7 @@ class Butler(Outsider, TroubleBrewing, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
         self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/1/1a/Butler_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Butler"
@@ -77,6 +82,14 @@ class Butler(Outsider, TroubleBrewing, Character):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
+    
+    def add_action_field_n1(self, embed_obj):
+        """Send the stats list n1"""
+
+        msg = self.action
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        embed_obj.add_field(name = butterfly + " **「 Your Action 」**", value = msg, inline = False)
+        return embed_obj
 
     async def send_first_night_instruction(self, recipient):
         """Query the player for "serve" command"""

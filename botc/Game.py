@@ -238,15 +238,14 @@ class Game(GameMeta):
       Fred (3447492102843678721) [ALIVE]
       ```
       """
-      msg = "__*Sitting Order*__ : "
-      msg += "```css\n"
+      msg = "```css\n"
       for player in self.sitting_order:
          if player.is_alive():
-            line = f"{player.user.display_name} ({player.user.id}) [ALIVE]\n"
+            line = f"{player.user.display_name} ({player.user.id}) [alive]\n"
          elif player.is_dead():
-            line = f"{player.user.display_name} ({player.user.id}) [DEAD]\n"
+            line = f"{player.user.display_name} ({player.user.id}) [dead]\n"
          else:
-            line = f"{player.user.display_name} ({player.user.id}) [QUIT]\n"
+            line = f"{player.user.display_name} ({player.user.id}) [quit]\n"
          msg += line
       msg += "```"
       return msg

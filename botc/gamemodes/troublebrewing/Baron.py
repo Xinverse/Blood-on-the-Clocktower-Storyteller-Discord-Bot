@@ -50,6 +50,7 @@ class Baron(Minion, TroubleBrewing, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
         self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/b/ba/Baron_Token.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Baron"
@@ -93,24 +94,3 @@ class Baron(Minion, TroubleBrewing, Character):
                     count += 1
 
         return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list]
-    
-    async def send_first_night_instruction(self, recipient):
-        """Send demon and minion list if there are 7 or more players. 
-        Otherwise, send the default instruction string.
-        """
-        # Seven or more players, send the evil list
-        if globvars.master_state.game.nb_players >= 7:
-            msg1 = globvars.master_state.game.setup.create_evil_team_string()
-            msg2 = self.emoji + " " + self.instruction
-            msg = msg1 + msg2
-            try:
-                await recipient.send(msg)
-            except discord.Forbidden:
-                pass
-        # Less than seven players, teensyville rules
-        else:
-            msg = self.emoji + " " + self.instruction
-            try:
-                await recipient.send(msg)
-            except discord.Forbidden:
-                pass

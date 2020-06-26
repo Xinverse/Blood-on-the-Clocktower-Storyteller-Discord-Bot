@@ -3,6 +3,7 @@
 import json
 import discord
 import botutils
+import datetime
 import configparser
 from .Category import Category
 from .Team import Team
@@ -53,6 +54,7 @@ class Character:
         self._instr_string = None
         self._lore_string = None
         self._brief_string = None
+        self._action = None
         self._art_link = None
         self._wiki_link = None
         self._role_enum = None
@@ -170,6 +172,10 @@ class Character:
         return self._brief_string
     
     @property
+    def action(self):
+        return self._action
+    
+    @property
     def art_link(self):
         return self._art_link
     
@@ -269,6 +275,12 @@ class Character:
                            wiki_link)
         await ctx.send(embed=embed)
     
+    def add_action_field_n1(self, embed_obj):
+        """Process the opening dm to add a field at the end to query for night actions.
+        To be overriden by child classes. The default is to add nothing.
+        """
+        return embed_obj
+    
     async def send_opening_dm_embed(self, recipient):
         """Create the opening DM (on game start) embed object and return it"""
 
@@ -290,7 +302,8 @@ class Character:
         embed = discord.Embed(title = welcome_dm.format(self.ego_self.name.upper()),
                               url = self.ego_self.wiki_link,
                               description=opening_dm, color=color)
-        embed.add_field(name = "**Instruction**", value = self.create_n1_instr_str(), inline = True)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.add_field(name = "**「 Instruction 」**", value = self.create_n1_instr_str(), inline = True)
         embed.set_author(name = "{} Edition - Blood on the Clocktower (BoTC)".format(self.ego_self.gm_of_appearance.value),
                          icon_url = self.ego_self.gm_art_link)
         embed.set_thumbnail(url = self.ego_self.art_link)
@@ -300,7 +313,10 @@ class Character:
         if globvars.master_state.game.nb_players >= 7:
             if self.is_evil():
                 msg = globvars.master_state.game.setup.create_evil_team_string()
-                embed.add_field(name = "**Evil Team**", value = msg, inline = True)
+                embed.add_field(name = "**「 Evil Team 」**", value = msg, inline = True)
+        
+        # Send the stats list if necessary
+        embed = self.add_action_field_n1(embed)
 
         try:
             await recipient.send(embed = embed)
