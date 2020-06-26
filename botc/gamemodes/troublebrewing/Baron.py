@@ -57,6 +57,22 @@ class Baron(Minion, TroubleBrewing, Character):
         self._role_enum = TBRole.baron
         self._emoji = "<:baron:722687671499227167>"
     
+    def create_n1_instr_str(self):
+        """Create the instruction field on the opening dm card"""
+
+        # First line is the character instruction string
+        msg = f"{self.emoji} {self.instruction}"
+        addendum = character_text["n1_addendum"]
+        
+        # Some characters have a line of addendum
+        if addendum:
+            with open("botutils/bot_text.json") as json_file:
+                bot_text = json.load(json_file)
+                scroll_emoji = bot_text["esthetics"]["scroll"]
+            msg += f"\n{scroll_emoji} {addendum}"
+            
+        return msg
+    
     def exec_init_setup(self, townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list):
         """Add two outsiders to the setup, remove two townsfolks from the setup"""
 

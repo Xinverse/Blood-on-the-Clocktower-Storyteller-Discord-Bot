@@ -134,6 +134,10 @@ class Character:
         return self._emoji
     
     @property
+    def demon_head_emoji(self):
+        return self._demon_head_emoji
+    
+    @property
     def main_wiki_link(self):
         return self._main_wiki_link
     
@@ -198,6 +202,9 @@ class Character:
     
     def __repr__(self):
         return self.name + " Obj"
+    
+    def create_n1_instr_str(self):
+        raise NotImplementedError
 
     def exec_init_setup(self, townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list):
         """Allow for roles that change the setup to modify the role list
@@ -283,8 +290,7 @@ class Character:
         embed = discord.Embed(title = welcome_dm.format(self.ego_self.name.upper()),
                               url = self.ego_self.wiki_link,
                               description=opening_dm, color=color)
-        instructions = f"{self.emoji} {self.instruction}"
-        embed.add_field(name = "**Instruction**", value = instructions, inline = True)
+        embed.add_field(name = "**Instruction**", value = self.create_n1_instr_str(), inline = True)
         embed.set_author(name = "{} Edition - Blood on the Clocktower (BoTC)".format(self.ego_self.gm_of_appearance.value),
                          icon_url = self.ego_self.gm_art_link)
         embed.set_thumbnail(url = self.ego_self.art_link)

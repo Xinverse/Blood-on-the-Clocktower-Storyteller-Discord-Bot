@@ -19,7 +19,8 @@
 
     "esthetics" : {
 
-        "loading_emoji" : "<a:loading:723373502052434000>"
+        "loading_emoji" : "<a:loading:723373502052434000>",
+        "scroll" : "<:magicscroll:725879129945407530>"
 
     },
 
