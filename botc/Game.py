@@ -7,6 +7,8 @@ import globvars
 import json
 import pytz
 import configparser
+import discord
+import asyncio
 from .chrono import GameChrono
 from .BOTCUtils import BOTCUtils
 from .Category import Category
@@ -17,10 +19,17 @@ from .Townsfolk import Townsfolk
 from .Outsider import Outsider
 from .Minion import Minion
 from .Demon import Demon
+from botc.gamemodes.troublebrewing.Saint import Saint
 from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
 from models import GameMeta
+
+Config = configparser.ConfigParser()
+Config.read("preferences.INI")
+
+IN_GAME_NORMAL = Config["colors"]["IN_GAME_NORMAL"]
+IN_GAME_NORMAL = int(IN_GAME_NORMAL, 16)
 
 random.seed(datetime.datetime.now())
 
@@ -28,8 +37,11 @@ with open('botc/game_text.json') as json_file:
     strings = json.load(json_file)
     nightfall = strings["gameplay"]["nightfall"]
     daybreak = strings["gameplay"]["daybreak"]
+    dawn = strings["gameplay"]["dawn"]
     lobby_game_start = strings["gameplay"]["lobby_game_start"]
     evilteammates = strings["gameplay"]["evilteammates"]
+    copyrights_str = strings["misc"]["copyrights"]
+    tb_lore = strings["gameplay"]["tb_lore"]
 
 
 class Setup:
@@ -238,6 +250,7 @@ class Game(GameMeta):
       Fred (3447492102843678721) [ALIVE]
       ```
       """
+
       msg = "```css\n"
       for player in self.sitting_order:
          if player.is_alive():
@@ -261,11 +274,41 @@ class Game(GameMeta):
             self._member_obj_list.append(member_obj)
          else:
             raise GameError("Member not found, invalid user ID")
+   
+   async def send_lobby_welcome_message(self):
+      """Send the welcome message in lobby"""
+
+      # Trouble Brewing Edition
+      if self.gamemode == Gamemode.trouble_brewing:
+         embed = discord.Embed(
+            title = "WELCOME TO RAVENSWOOD BLUFF", 
+            url = TroubleBrewing()._gm_main_page, 
+            description = tb_lore,
+            color = IN_GAME_NORMAL
+            )
+         # Using the Saint() object to access some URL's
+         embed.set_thumbnail(url = Saint()._botc_logo_link)
+         embed.set_author(name = "Trouble Brewing Edition - Blood on the Clocktower (BoTC)",
+                          icon_url = Saint()._botc_demon_link)
+         embed.set_image(url = TroubleBrewing()._gm_art_link)
+
+      # Bad Moon Rising Edition
+      elif self.gamemode == Gamemode.bad_moon_rising:
+         pass
+
+      embed.timestamp = datetime.datetime.utcnow()
+      embed.set_footer(text = copyrights_str)
+      
+      pings = " ".join([player.user.mention for player in self.sitting_order])
+      msg = lobby_game_start.format(pings)
+
+      await botutils.send_lobby(msg, embed=embed)
 
    async def start_game(self):
       """Start the game. 
       Must be implemented.
       """
+
       # Register the players in game
       self.register_players(globvars.master_state.pregame)
       # Generate the setup (role list)
@@ -281,7 +324,7 @@ class Game(GameMeta):
       for player in self._player_obj_list:
          player.role.exec_init_role(self.setup)
       # Send the lobby welcome message
-      await botutils.send_lobby(lobby_game_start)
+      await self.send_lobby_welcome_message()
       # Lock the lobby channel
       await botutils.lock_lobby()
       # Log the game data
@@ -293,6 +336,54 @@ class Game(GameMeta):
       await self.make_nightfall()
       # Load game related commands
       globvars.client.load_extension("botc.botc_commands")
+      # Start the game loop
+      await self.master_game_loop()
+   
+   async def master_game_loop(self):
+      """Master game loop
+
+      Cycling works like this:
+      Night start
+      Night end
+      Dawn start
+      Dawn end
+      Day start
+      Day end
+      etc.
+
+      ----- Night : 
+         30 seconds min
+         90 seconds max
+         Or at intervals of 15 seconds when all actions are submitted (45, 60, 75)
+      ----- Dawn : 
+         15 seconds min
+         30 seconds max
+         At intervals of 15 seconds (15, 30)
+      ----- Day: 
+         2 * sqrt(total_players) minutes until nomination
+         Time until each nomination: 30, 20, 15, and 10 for all subsequent nominations.
+      ----- Nomination:
+         30 seconds for accusations & defence
+         7 seconds for each vote (fastforwording)
+      """
+      # Base night length
+      await asyncio.sleep(30)
+      # Increment (night)
+      await asyncio.sleep(15)
+      await asyncio.sleep(15)
+      await asyncio.sleep(15)
+      await asyncio.sleep(15)
+      # Start dawn
+      await self.make_dawn()
+      # Base dawn length
+      await asyncio.sleep(15)
+      # Increment (dawn)
+      await asyncio.sleep(15)
+      # Start day
+      await self.make_daybreak()
+      # Base day length
+      await asyncio.sleep(240)
+      await self.end_game()
 
    async def end_game(self):
       """End the game, compute winners etc. 
@@ -310,16 +401,17 @@ class Game(GameMeta):
    async def make_nightfall(self):
       """Transition the game into night phase"""
       self._chrono.next()
-      await botutils.send_lobby(nightfall)
+      await botutils.send_lobby(nightfall + " https://imgur.com/QPLPKKw")
    
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""
       self._chrono.next()
+      await botutils.send_lobby(dawn + " https://imgur.com/vkd747Q")
 
    async def make_daybreak(self):
       """Transition the game into day phase"""
       self._chrono.next()
-      await botutils.send_lobby(daybreak)
+      await botutils.send_lobby(daybreak + " https://imgur.com/ic6402z")
 
    def generate_role_set(self):
       """Generate a list of roles according to the number of players"""

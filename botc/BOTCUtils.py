@@ -30,12 +30,23 @@ class NotLobbyChannel(commands.CheckFailure):
 
 
 class NotDay(commands.CheckFailure):
-   """Raised when a command user used the command during the day when not supposed to"""
+   """Raised when a command user used the command during another phase than
+   day when not supposed to
+   """
+   pass
+
+
+class NotDawn(commands.CheckFailure):
+   """Raised when a command user used the command during another phase than 
+   dawn when not supposed to
+   """
    pass
 
 
 class NotNight(commands.CheckFailure):
-   """Raised when a command user used the command during the night when not supposed to"""
+   """Raised when a command user used the command during another phase than
+   night when not supposed to
+   """
    pass
 
 
@@ -137,7 +148,7 @@ class PlayerParser(commands.Converter):
          if player:
             actual_targets.append(player)
          else:
-            msg = player_not_found.format(x_emoji, ctx.author.mention, raw if len(raw) <= 1000 else raw[:1000])
+            msg = player_not_found.format(ctx.author.mention, x_emoji, raw if len(raw) <= 1000 else raw[:1000])
             await ctx.author.send(msg)
             raise commands.BadArgument(f"Player {raw} not found.")
       return Targets(actual_targets)
@@ -198,7 +209,7 @@ class GameLogic:
       """Decorator for abilities that cannot be used on the first night"""
       def inner(self, player, targets):
          import globvars
-         if globvars.master_state.game.is_night() and globvars.master_state.game.cycle == 1:
+         if globvars.master_state.game.is_night() and globvars.master_state.game.current_cycle == 1:
             raise FirstNightNotAllowed("You may not use this command during the first night.")
          return func(self, player, targets)
       return inner

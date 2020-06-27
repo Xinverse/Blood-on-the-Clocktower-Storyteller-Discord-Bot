@@ -177,8 +177,9 @@
         "lore" : "Add compound alpha to compound beta... NOT TOO MUCH!",
         "description" : "The Poisoner secretly disrupts character abilities.\n- Each night, the Poisoner chooses someone to poison for that night and the entire next day.\n- A poisoned player has no ability, but you pretend they do.\n- They do not affect the game in any real way. However, to keep up the illusion that the poisoned player is not poisoned, wake them at the appropriate time and go through the motions as if they were not poisoned. If their ability gives them information, you may give them false information.\n- If a poisoned player uses a 'once per game' ability while poisoned, they cannot use their ability again.",
         "examples" : "- During the night, the Poisoner poisons the Slayer. The next day, the Slayer tries to slay the Imp. Nothing happens. The Slayer now has no ability.\n- The poisoned Empath, who neighbors two evil players, learns a '0.' The next night, the Empath, no longer poisoned, learns the correct information: a '2.'\n- The Investigator is poisoned. They learn that one of two players is the Baron, even though neither is a Minion. (Or even the right players, but the wrong Minion type.)\n- The Undertaker is poisoned. Even though the Imp died today, they learn that the Virgin died. A few days later, a poisoned Saint dies, and the game continues.\n- The Poisoner poisons the Mayor, then becomes the Imp. The Mayor is no longer poisoned because there is no Poisoner in play.",
-        "instruction" : "Each night, choose a player: their ability malfunctions tonight and tomorrow day. Use `poison <player>` in DM.",
+        "instruction" : "Each night, choose a player: their ability malfunctions tonight and tomorrow day.",
         "n1_addendum" : "",
+        "action" : "Use `poison <player>` in DM.",
         "brief" : "The Poisoner secretly disrupts character abilities."
     },
 

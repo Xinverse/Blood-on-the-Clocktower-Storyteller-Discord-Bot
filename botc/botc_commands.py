@@ -7,7 +7,7 @@ import json
 import globvars
 from discord.ext import commands
 from botc import BOTCUtils, NotAPlayer, PlayerParser, RoleCannotUseCommand, NotDMChannel, \
-    NotLobbyChannel, NotDay, NotNight, DeadOnlyCommand, AliveOnlyCommand
+    NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand
 from botc.gamemodes.troublebrewing._utils import TBRole
 
 Config = configparser.ConfigParser()
@@ -106,6 +106,15 @@ def check_if_is_night(ctx):
         return True
     else:
         raise NotNight("Command is allowed during night phase only (BoTC)")
+
+
+def check_if_is_dawn(ctx):
+    """Check if the game is in dawn phase"""
+    import globvars
+    if globvars.master_state.game.is_dawn():
+        return True
+    else:
+        raise NotDawn("Command is allowed during dawn phase only (BoTC")
 
 
 def check_if_is_day(ctx):
@@ -231,6 +240,9 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotDMChannel):
             return
+        # Incorrect argument -> commands.BadArgument
+        elif isinstance(error, commands.BadArgument):
+            return
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             await ctx.author.send(documentation["cmd_warnings"]["night_only"].format(ctx.author.mention, emoji))
@@ -277,6 +289,9 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
             return
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotDMChannel):
+            return
+        # Incorrect argument -> commands.BadArgument
+        elif isinstance(error, commands.BadArgument):
             return
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
@@ -325,6 +340,9 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotDMChannel):
             return
+        # Incorrect argument -> commands.BadArgument
+        elif isinstance(error, commands.BadArgument):
+            return
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             await ctx.author.send(documentation["cmd_warnings"]["night_only"].format(ctx.author.mention, emoji))
@@ -371,6 +389,9 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
             return
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotDMChannel):
+            return
+        # Incorrect argument -> commands.BadArgument
+        elif isinstance(error, commands.BadArgument):
             return
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
@@ -420,6 +441,9 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotDMChannel):
             return
+        # Incorrect argument -> commands.BadArgument
+        elif isinstance(error, commands.BadArgument):
+            return
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             await ctx.author.send(documentation["cmd_warnings"]["night_only"].format(ctx.author.mention, emoji))
@@ -463,6 +487,9 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
             return
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
+            return
+        # Incorrect argument -> commands.BadArgument
+        elif isinstance(error, commands.BadArgument):
             return
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotLobbyChannel):
@@ -513,6 +540,9 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
             return
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotDMChannel):
+            return
+        # Incorrect argument -> commands.BadArgument
+        elif isinstance(error, commands.BadArgument):
             return
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):

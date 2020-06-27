@@ -294,6 +294,7 @@ class Character:
             color = DEMON_COLOR
 
         opening_dm = role_dm.format(
+            user = recipient.name + recipient.discriminator,
             role_name_str = self.ego_self.name,
             category_str = self.ego_self.category.value,
             team_str = self.ego_self.team.value,

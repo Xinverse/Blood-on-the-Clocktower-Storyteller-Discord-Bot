@@ -14,13 +14,13 @@
 
     "gameplay" : {
 
-        "role_dm" : "Your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
+        "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
         "welcome_dm" : "**WELCOME TO BLOOD ON THE CLOCKTOWER**",
         "nightfall" : "It is currently **nighttime**.",
         "dawn" : "It is currently **dawn**.",
         "daybreak" : "It is currently **daytime**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
-        "lobby_game_start" : "Game started! Welcome to Ravenswood Bluff!",
+        "lobby_game_start" : "> {} \n> \n> *In the quiet village of Ravenswood Bluff, ‌on the stroke of midnight, there echoes a bone-chilling scream. The townsfolk rush to investigate and find the town storyteller murdered, their body impaled on the hands of the clocktower.*\n> \n> *Will the good townsfolk put the puzzle together in time to execute the true demon? Or will evil overrun this once peaceful village?*\n> \n> ```asciidoc\n> * 1. DMing is forbidden at all times. Use the whisper function of the bot.\n> * 2. Talking about night actions outside of the Day Phase is forbidden.\n> ```_ _",
         "demonbluffs" : "To help you survive, here are 3 not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",
         "evilteammates" : "Your Evil teammates are shown below: ",
         "chef_init" : "Tonight, you learn a `{}`.",
@@ -28,7 +28,8 @@
         "investigator_init" : "You learn that one of the following two players is the ``{}``: ",
         "librarian_init" : "You learn that one of the following two players is the ``{}``: ", 
         "librarian_init_zero" : "You learn that there is no Outsider in play.",
-        "washerwoman_init" : "You learn that one of the following two players is the ``{}``: "
+        "washerwoman_init" : "You learn that one of the following two players is the ``{}``: ",
+        "tb_lore" : "*Clouds roll in over Ravenswood Bluff, engulfing this sleepy town and its superstitious inhabitants in foreboding shadow. Anxious mothers call their children home from play, as thunder begins to clap on the horizon. Those who can read the signs know there is...* ***Trouble Brewing***."
 
     },
 
@@ -41,7 +42,7 @@
         "dead_only" : "{} {} You may not use this command while alive.",
         "day_only" : "{} {} You may not use this command during nighttime.",
         "night_only" : "{} {} You may not use this command during daytime.",
-        "player_not_found" : "{} {} Player **{}** is not found.",
+        "player_not_found" : "{} {} Player is not found.",
         "target_nb" : "{} {} You must choose exactly **{}** target{} for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets."
 
     },
@@ -81,7 +82,7 @@
 
         "slay" : {
             "brief" : "Pick a 'slay' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in the public game channel.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in the public game text channel.",
             "description" : "[SLAY] command - BOTC"
         },
 
