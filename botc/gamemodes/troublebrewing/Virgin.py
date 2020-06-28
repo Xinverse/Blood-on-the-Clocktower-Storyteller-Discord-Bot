@@ -47,6 +47,7 @@ class Virgin(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/5/5e/Virgin_Token.png"
+        self._art_link_cropped = "https://imgur.com/1RiN6lr.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Virgin"
 
         self._role_enum = TBRole.virgin

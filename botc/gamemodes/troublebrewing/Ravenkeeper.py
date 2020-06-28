@@ -47,6 +47,7 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/45/Ravenkeeper_Token.png"
+        self._art_link_cropped = "https://imgur.com/5sReG9x.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Ravenkeeper"
         
         self._role_enum = TBRole.ravenkeeper

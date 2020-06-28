@@ -300,7 +300,7 @@ class Character:
         # Send the stats list if necessary
         embed = self.add_action_field_n1(embed)
 
-        embed.set_image(url = "https://imgur.com/vrXhgTx.png")
+        embed.set_image(url = "https://imgur.com/0zsllVk.png")
 
         try:
             await recipient.send(embed = embed)

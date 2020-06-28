@@ -53,6 +53,7 @@ class Chef(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4c/Chef_Token.png"
+        self._art_link_cropped = "https://imgur.com/m2Wjejh.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Chef"
 
         self._role_enum = TBRole.chef

@@ -54,6 +54,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4d/Washerwoman_Token.png"
+        self._art_link_cropped = "https://imgur.com/nxfAxGm.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Washerwoman"
 
         self._role_enum = TBRole.washerwoman

@@ -57,6 +57,7 @@ class Poisoner(Minion, TroubleBrewing, Character):
         self._action = character_text["action"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/a/af/Poisoner_Token.png"
+        self._art_link_cropped = "https://imgur.com/JaLRhNO.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Poisoner"
 
         self._role_enum = TBRole.poisoner

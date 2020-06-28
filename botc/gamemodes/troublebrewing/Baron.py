@@ -53,6 +53,7 @@ class Baron(Minion, TroubleBrewing, Character):
         self._action = character_text["action"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/b/ba/Baron_Token.png"
+        self._art_link_cropped = "https://imgur.com/vtd72Og.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Baron"
 
         self._role_enum = TBRole.baron

@@ -54,6 +54,7 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/e/ec/Investigator_Token.png"
+        self._art_link_cropped = "https://imgur.com/9B2WNCc.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Investigator"
 
         self._role_enum = TBRole.investigator

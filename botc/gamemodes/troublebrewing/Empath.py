@@ -54,6 +54,7 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
 
         self._art_link = "http://bloodontheclocktower.com/wiki/images/6/61/Empath_Token.png"
+        self._art_link_cropped = "https://imgur.com/ZMC23sQ.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Empath"
 
         self._role_enum = TBRole.empath

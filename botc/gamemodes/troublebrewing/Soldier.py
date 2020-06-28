@@ -46,6 +46,7 @@ class Soldier(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/9/9e/Soldier_Token.png"
+        self._art_link_cropped = "https://imgur.com/IkJqfHH.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Soldier"
 
         self._role_enum = TBRole.soldier

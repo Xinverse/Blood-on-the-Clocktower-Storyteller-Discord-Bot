@@ -62,6 +62,7 @@ class Butler(Outsider, TroubleBrewing, Character):
         self._action = character_text["action"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/1/1a/Butler_Token.png"
+        self._art_link_cropped = "https://imgur.com/UrELsAS.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Butler"
 
         self._role_enum = TBRole.butler

@@ -46,6 +46,7 @@ class Saint(Outsider, TroubleBrewing, Character):
         self._action = character_text["action"]
         
         self._art_link = "http://bloodontheclocktower.com/wiki/images/7/77/Saint_Token.png"
+        self._art_link_cropped = "https://imgur.com/CKuDBku.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Saint"
 
         self._role_enum = TBRole.saint

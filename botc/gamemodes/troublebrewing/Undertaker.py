@@ -47,6 +47,7 @@ class Undertaker(Townsfolk, TroubleBrewing, Character):
         self._action = character_text["action"]
                             
         self._art_link = "http://bloodontheclocktower.com/wiki/images/f/fe/Undertaker_Token.png"
+        self._art_link_cropped = "https://imgur.com/3CpqHsL.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Undertaker"
 
         self._role_enum = TBRole.undertaker
