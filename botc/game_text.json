@@ -12,6 +12,89 @@
 
     },
 
+    "numbers" : {
+
+        "0" : [
+            "https://imgur.com/fPXjobp.png",
+            "https://imgur.com/ZWZIJYr.png",
+            "https://imgur.com/NR1IfQE.png",
+            "https://imgur.com/ty8n9qk.png",
+            "https://imgur.com/sjl4ueo.png"
+        ],
+
+        "1" : [
+            "https://imgur.com/dfDKqlZ.png",
+            "https://imgur.com/EQtQ3aF.png",
+            "https://imgur.com/CRKuFbc.png",
+            "https://imgur.com/9lKi8VG.png",
+            "https://imgur.com/wRxWQJb.png"
+        ],
+
+        "2" : [
+            "https://imgur.com/FysahPn.png",
+            "https://imgur.com/KxOCOOX.png",
+            "https://imgur.com/V2cLWAw.png",
+            "https://imgur.com/CKxnF1J.png",
+            "https://imgur.com/ZXjgSuS.png"
+        ],
+
+        "3" : [
+            "https://imgur.com/0rYvsEJ.png",
+            "https://imgur.com/chkj0de.png",
+            "https://imgur.com/4LTcntm.png",
+            "https://imgur.com/w17tE7H.png",
+            "https://imgur.com/T1NwrEQ.png"
+        ],
+
+        "4" : [
+            "https://imgur.com/WVBaA5P.png",
+            "https://imgur.com/24sCUcQ.png",
+            "https://imgur.com/9fS8u57.png",
+            "https://imgur.com/Ocf34vt.png",
+            "https://imgur.com/hc3ZkgG.png"
+        ],
+
+        "5" : [
+            "https://imgur.com/2PRmlbf.png",
+            "https://imgur.com/A10w3LR.png",
+            "https://imgur.com/A1IaL3j.png",
+            "https://imgur.com/3JRC83z.png"
+        ],
+
+        "6" : [
+            "https://imgur.com/yM6oTQb.png",
+            "https://imgur.com/lTafGmZ.png",
+            "https://imgur.com/tJDwH0I.png",
+            "https://imgur.com/j6Zgwhg.png",
+            "https://imgur.com/6y2XrAZ.png"
+        ],
+
+        "7" : [
+            "https://imgur.com/BdhAKg6.png",
+            "https://imgur.com/9kTpP8y.png",
+            "https://imgur.com/oHH8Zsz.png",
+            "https://imgur.com/XxJrj7h.png",
+            "https://imgur.com/uQMgX6F.png"
+        ],
+
+        "8" : [
+            "https://imgur.com/85xIMi6.png",
+            "https://imgur.com/Z4cBp6M.png",
+            "https://imgur.com/960mKyJ.png",
+            "https://imgur.com/SrKCjlb.png",
+            "https://imgur.com/GF13uRn.png"
+        ],
+        
+        "9" : [
+            "https://imgur.com/CXXrYHn.png",
+            "https://imgur.com/llzF1vU.png",
+            "https://imgur.com/07SaCb2.png",
+            "https://imgur.com/wKhl4tk.png",
+            "https://imgur.com/91RiKu3.png"
+        ]
+
+    },
+
     "gameplay" : {
 
         "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
@@ -20,10 +103,10 @@
         "dawn" : "It is currently **dawn**.",
         "daybreak" : "It is currently **daytime**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
-        "lobby_game_start" : "> {} \n> \n> *In the quiet village of Ravenswood Bluff, ‌on the stroke of midnight, there echoes a bone-chilling scream. The townsfolk rush to investigate and find the town storyteller murdered, their body impaled on the hands of the clocktower.*\n> \n> *Will the good townsfolk put the puzzle together in time to execute the true demon? Or will evil overrun this once peaceful village?*\n> \n> ```asciidoc\n> * 1. DMing is forbidden at all times. Use the whisper function of the bot.\n> * 2. Talking about night actions outside of the Day Phase is forbidden.\n> ```_ _",
+        "lobby_game_start" : "{} Welcome to **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, played using the **{}** Edition with **{}** players.\n\n*𝐈𝐧 𝐭𝐡𝐞 𝐪𝐮𝐢𝐞𝐭 𝐯𝐢𝐥𝐥𝐚𝐠𝐞 𝐨𝐟 𝐑𝐚𝐯𝐞𝐧𝐬𝐰𝐨𝐨𝐝 𝐁𝐥𝐮𝐟𝐟, ‌𝐨𝐧 𝐭𝐡𝐞 𝐬𝐭𝐫𝐨𝐤𝐞 𝐨𝐟 𝐦𝐢𝐝𝐧𝐢𝐠𝐡𝐭, 𝐭𝐡𝐞𝐫𝐞 𝐞𝐜𝐡𝐨𝐞𝐬 𝐚 𝐛𝐨𝐧𝐞-𝐜𝐡𝐢𝐥𝐥𝐢𝐧𝐠 𝐬𝐜𝐫𝐞𝐚𝐦. 𝐓𝐡𝐞 𝐭𝐨𝐰𝐧𝐬𝐟𝐨𝐥𝐤 𝐫𝐮𝐬𝐡 𝐭𝐨 𝐢𝐧𝐯𝐞𝐬𝐭𝐢𝐠𝐚𝐭𝐞 𝐚𝐧𝐝 𝐟𝐢𝐧𝐝 𝐭𝐡𝐞 𝐭𝐨𝐰𝐧 𝐬𝐭𝐨𝐫𝐲𝐭𝐞𝐥𝐥𝐞𝐫 𝐦𝐮𝐫𝐝𝐞𝐫𝐞𝐝, 𝐭𝐡𝐞𝐢𝐫 𝐛𝐨𝐝𝐲 𝐢𝐦𝐩𝐚𝐥𝐞𝐝 𝐨𝐧 𝐭𝐡𝐞 𝐡𝐚𝐧𝐝𝐬 𝐨𝐟 𝐭𝐡𝐞 𝐜𝐥𝐨𝐜𝐤𝐭𝐨𝐰𝐞𝐫.*\n\n*𝐖𝐢𝐥𝐥 𝐭𝐡𝐞 𝐠𝐨𝐨𝐝 𝐭𝐨𝐰𝐧𝐬𝐟𝐨𝐥𝐤 𝐩𝐮𝐭 𝐭𝐡𝐞 𝐩𝐮𝐳𝐳𝐥𝐞 𝐭𝐨𝐠𝐞𝐭𝐡𝐞𝐫 𝐢𝐧 𝐭𝐢𝐦𝐞 𝐭𝐨 𝐞𝐱𝐞𝐜𝐮𝐭𝐞 𝐭𝐡𝐞 𝐭𝐫𝐮𝐞 𝐝𝐞𝐦𝐨𝐧? 𝐎𝐫 𝐰𝐢𝐥𝐥 𝐞𝐯𝐢𝐥 𝐨𝐯𝐞𝐫𝐫𝐮𝐧 𝐭𝐡𝐢𝐬 𝐨𝐧𝐜𝐞 𝐩𝐞𝐚𝐜𝐞𝐟𝐮𝐥 𝐯𝐢𝐥𝐥𝐚𝐠𝐞?*\n\nPlease review the rules of the game before you start. All players should now have received a DM from me for private instructions.\n_ _",
         "demonbluffs" : "To help you survive, here are 3 not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",
         "evilteammates" : "Your Evil teammates are shown below: ",
-        "chef_init" : "Tonight, you learn a `{}`.",
+        "chef_init" : "You learn a `{}`.",
         "empath_nightly" : "Tonight, you learn a `{}`.",
         "investigator_init" : "You learn that one of the following two players is the ``{}``: ",
         "librarian_init" : "You learn that one of the following two players is the ``{}``: ", 

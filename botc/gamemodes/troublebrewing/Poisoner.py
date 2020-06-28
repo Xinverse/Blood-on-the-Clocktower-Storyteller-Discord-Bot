@@ -10,6 +10,10 @@ import globvars
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.poisoner.value.lower()]
 
+with open('botutils/bot_text.json') as json_file:
+    bot_text = json.load(json_file)
+    butterfly = bot_text["esthetics"]["butterfly"]
+
 
 class Poisoner(Minion, TroubleBrewing, Character):
     """Poisoner: Each night, choose a player, their ability malfunctions tonight and tomorrow day.
@@ -73,6 +77,14 @@ class Poisoner(Minion, TroubleBrewing, Character):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
+    
+    def add_action_field_n1(self, embed_obj):
+        """Send the stats list n1"""
+
+        msg = self.action
+        msg += globvars.master_state.game.create_sitting_order_stats_string()
+        embed_obj.add_field(name = butterfly + " **「 Your Action 」**", value = msg, inline = False)
+        return embed_obj
     
     async def send_first_night_instruction(self, recipient):
         """Send demon and minion list if there are 7 or more players. 

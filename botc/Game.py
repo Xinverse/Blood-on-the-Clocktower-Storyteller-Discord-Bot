@@ -9,6 +9,7 @@ import pytz
 import configparser
 import discord
 import asyncio
+import math
 from .chrono import GameChrono
 from .BOTCUtils import BOTCUtils
 from .Category import Category
@@ -30,6 +31,10 @@ Config.read("preferences.INI")
 
 IN_GAME_NORMAL = Config["colors"]["IN_GAME_NORMAL"]
 IN_GAME_NORMAL = int(IN_GAME_NORMAL, 16)
+
+BASE_NIGHT = 30
+BASE_DAWN = 15
+INCREMENT = 15
 
 random.seed(datetime.datetime.now())
 
@@ -291,18 +296,17 @@ class Game(GameMeta):
          embed.set_author(name = "Trouble Brewing Edition - Blood on the Clocktower (BoTC)",
                           icon_url = Saint()._botc_demon_link)
          embed.set_image(url = TroubleBrewing()._gm_art_link)
+         embed.timestamp = datetime.datetime.utcnow()
+         embed.set_footer(text = copyrights_str)
+         
+         pings = " ".join([player.user.mention for player in self.sitting_order])
+         msg = lobby_game_start.format(pings, "𝕿𝖗𝖔𝖚𝖇𝖑𝖊 𝕭𝖗𝖊𝖜𝖎𝖓𝖌", self.nb_players)
+
+         await botutils.send_lobby(msg, embed=embed)
 
       # Bad Moon Rising Edition
       elif self.gamemode == Gamemode.bad_moon_rising:
          pass
-
-      embed.timestamp = datetime.datetime.utcnow()
-      embed.set_footer(text = copyrights_str)
-      
-      pings = " ".join([player.user.mention for player in self.sitting_order])
-      msg = lobby_game_start.format(pings)
-
-      await botutils.send_lobby(msg, embed=embed)
 
    async def start_game(self):
       """Start the game. 
@@ -366,24 +370,61 @@ class Game(GameMeta):
          30 seconds for accusations & defence
          7 seconds for each vote (fastforwording)
       """
+
+      # ----- First Night -----
       # Base night length
-      await asyncio.sleep(30)
+      await asyncio.sleep(BASE_NIGHT-25)
+
       # Increment (night)
-      await asyncio.sleep(15)
-      await asyncio.sleep(15)
-      await asyncio.sleep(15)
-      await asyncio.sleep(15)
+      for _ in range(0):
+         if self.has_received_all_expected_night_actions():
+            break
+         await asyncio.sleep(INCREMENT)
+      
+      # End night
+      for player in self.sitting_order:
+         await player.role.ego_self.send_n1_end_message(player.user)
+
+      # ----- First Dawn -----
       # Start dawn
       await self.make_dawn()
+
       # Base dawn length
-      await asyncio.sleep(15)
+      await asyncio.sleep(INCREMENT)
+
       # Increment (dawn)
-      await asyncio.sleep(15)
+      for _ in range(1):
+         if self.has_received_all_expected_dawn_actions():
+            break
+         await asyncio.sleep(INCREMENT)
+
+      # ----- First Day -----
       # Start day
       await self.make_daybreak()
+
       # Base day length
-      await asyncio.sleep(240)
+      base_day_length = math.sqrt(self.nb_players)
+      base_day_length = math.ceil(base_day_length)
+      base_day_length = base_day_length * 60
+      await asyncio.sleep(base_day_length)
+
+      # Nominations start
+      for nomination_countdown in [30, 20, 15, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]:
+         await botutils.send_lobby("You have **{}** seconds to nominate.".format(nomination_countdown))
+      
+      # ----- All other cycles -----
+
       await self.end_game()
+   
+   def has_received_all_expected_dawn_actions(self):
+      return False
+   
+   def has_received_all_expected_night_actions(self):
+      return False
+   
+   def has_reached_wincon(self):
+      """Check if the game has reached win con. Return True if yes, else no."""
+      return False
 
    async def end_game(self):
       """End the game, compute winners etc. 

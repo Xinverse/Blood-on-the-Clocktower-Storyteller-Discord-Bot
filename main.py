@@ -13,10 +13,9 @@ affiliated with them in any way.
 
 # TODO
 # Drunk/poison effect when sending info
-# Separate begin/end night actions
-# Single dm at night start
 # Better log with embed
 # Night action commands system
+# https://lingojam.com/FancyTextGenerator
 
 import globvars
 import configparser

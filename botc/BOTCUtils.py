@@ -1,12 +1,22 @@
 """Contains some BoTC game related utility functions"""
 
 import json
+import random
 from discord.ext import commands
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
     x_emoji = documentation["cmd_warnings"]["x_emoji"]
     player_not_found = documentation["cmd_warnings"]["player_not_found"]
+   
+
+def get_number_image(nb):
+   """Get a random bloodied number image corresponding to the input integer"""
+   assert nb in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], "Number received is not a digit"
+   numbers = documentation["numbers"]
+   possibilities = numbers[str(nb)]
+   chosen = random.choice(possibilities)
+   return chosen
 
 
 class NotAPlayer(commands.CheckFailure):

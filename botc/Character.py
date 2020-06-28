@@ -74,25 +74,6 @@ class Character:
         self._emoji = None
         self._demon_head_emoji = "<:demonhead:722894653438820432>"
     
-    async def send_first_night_instruction(self, recipient):
-        """Send the first night instruction, which includes first night passive information, 
-        and role instructions.
-        Default is to send the instruction string.
-        Override by child classes.
-        """
-        msg = self.emoji + " " + self.instruction
-        try:
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
-    
-    async def send_regular_night_instruction(self, recipient):
-        """Send the recurring night instruction for all subsequent nights except for the first.
-        Default is to send nothing.
-        Override by child classes.
-        """
-        pass
-    
     def is_good(self):
         """Return True if the character is on the good team, False otherwise"""
         return self.team == Team.good
@@ -319,10 +300,42 @@ class Character:
         # Send the stats list if necessary
         embed = self.add_action_field_n1(embed)
 
+        embed.set_image(url = self.art_link)
+
         try:
             await recipient.send(embed = embed)
         except discord.Forbidden:
             #await botutils.send_lobby(blocked.format(recipient.mention))
+            pass
+    
+
+    
+    # async def send_n1_end_message(self, recipient):
+    #     """Send n1 end message to a player.
+    #     Override by child classes. The default is to send nothing.
+    #     """
+    #     pass
+
+
+    async def send_n1_end_message(self, recipient):
+        """Send the number of pairs of evils sitting together."""
+        from .BOTCUtils import get_number_image
+
+        evil_pair_count = 2
+        link = get_number_image(evil_pair_count)
+
+        msg = self.emoji + " " + self.instruction
+        msg += "\n"
+        msg += "You learn a `2`."
+
+        embed = discord.Embed(description = msg)
+        embed.set_thumbnail(url = link)
+        embed.set_footer(text = copyrights_str)
+        embed.set_image(url = link)
+        embed.timestamp = datetime.datetime.utcnow()
+        try:
+            await recipient.send(embed = embed)
+        except discord.Forbidden:
             pass
     
     # -------------------- Character ABILITIES --------------------

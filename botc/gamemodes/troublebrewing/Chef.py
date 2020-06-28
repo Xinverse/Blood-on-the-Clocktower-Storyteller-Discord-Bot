@@ -74,24 +74,11 @@ class Chef(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
-    async def send_first_night_instruction(self, recipient):
+    async def send_n1_end_message(self, recipient):
         """Send the number of pairs of evils sitting together."""
-        import globvars
-        # We initialize what their social self is going to be for this round of inspection
-        for player in globvars.master_state.game.sitting_order:
-            player.role.set_new_social_self()
-        # Make a list of all pairs in the sitting order
-        total = len(globvars.master_state.game.sitting_order)
-        all_pairs = [
-            (globvars.master_state.game.sitting_order[i], globvars.master_state.game.sitting_order[(i+1)%total]) 
-            for i in range(total)
-        ]
-        # Count the evil pairs
-        evil_pair_count = 0
-        for pair in all_pairs:
-            if pair[0].role.social_self.is_evil() and pair[1].role.social_self.is_evil():
-                evil_pair_count += 1
-        # Send the info
+
+        evil_pair_count = self.get_nb_pairs_of_evils()
+
         msg = self.emoji + " " + self.instruction
         msg += "\n"
         msg += chef_init.format(evil_pair_count)
@@ -99,5 +86,33 @@ class Chef(Townsfolk, TroubleBrewing, Character):
             await recipient.send(msg)
         except discord.Forbidden:
             pass
-        log_msg = f">>> Chef [send_first_night_instruction] {evil_pair_count} pairs of evils"
+    
+    def get_nb_pairs_of_evils(self):
+        """Get the number of pairs of evils sitting together."""
+
+        import globvars
+
+        # We initialize what their social self is going to be for this round of inspection
+        for player in globvars.master_state.game.sitting_order:
+            player.role.set_new_social_self()
+
+        # Make a list of all pairs in the sitting order
+        total = len(globvars.master_state.game.sitting_order)
+        all_pairs = [
+            (
+                globvars.master_state.game.sitting_order[i], 
+                globvars.master_state.game.sitting_order[(i+1)%total]
+            ) 
+            for i in range(total)
+        ]
+
+        # Count the evil pairs
+        evil_pair_count = 0
+        for pair in all_pairs:
+            if pair[0].role.social_self.is_evil() and pair[1].role.social_self.is_evil():
+                evil_pair_count += 1
+        
+        log_msg = f">>> Chef: {evil_pair_count} pairs of evils"
         globvars.logging.info(log_msg)
+
+        return evil_pair_count

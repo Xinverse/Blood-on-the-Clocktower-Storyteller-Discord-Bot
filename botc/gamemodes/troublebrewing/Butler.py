@@ -90,28 +90,6 @@ class Butler(Outsider, TroubleBrewing, Character):
         msg += globvars.master_state.game.create_sitting_order_stats_string()
         embed_obj.add_field(name = butterfly + " **「 Your Action 」**", value = msg, inline = False)
         return embed_obj
-
-    async def send_first_night_instruction(self, recipient):
-        """Query the player for "serve" command"""
-        
-        msg = self.emoji + " " + self.instruction
-        msg += "\n\n"
-        msg += globvars.master_state.game.create_sitting_order_stats_string()
-        try: 
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
-    
-    async def send_regular_night_instruction(self, recipient):
-        """Query the player for "serve" command"""
-        
-        msg = self.emoji + " " + self.instruction
-        msg += "\n\n"
-        msg += globvars.master_state.game.create_sitting_order_stats_string()
-        try: 
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target

@@ -3,7 +3,8 @@
 from .abilities import ActionTypes, Action
 from .Ballot import Ballot
 from .BOTCUtils import BOTCUtils, PlayerParser, NotAPlayer, RoleCannotUseCommand, NotDMChannel, \
-    NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand, GameLogic
+    NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand, GameLogic, \
+    get_number_image
 from .Category import Category
 from .Character import Character
 from .chrono import GameChrono
