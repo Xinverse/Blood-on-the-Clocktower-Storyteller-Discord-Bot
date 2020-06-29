@@ -2,6 +2,7 @@
 
 import json 
 import random
+import datetime
 import discord
 from botc import Townsfolk, Character, Category
 from ._utils import TroubleBrewing, TBRole
@@ -13,6 +14,7 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
 with open('botc/game_text.json') as json_file: 
     strings = json.load(json_file)
     investigator_init = strings["gameplay"]["investigator_init"]
+    copyrights_str = strings["misc"]["copyrights"]
 
 
 class Investigator(Townsfolk, TroubleBrewing, Character):
@@ -76,7 +78,40 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
-    async def send_first_night_instruction(self, recipient):
+    async def send_n1_end_message(self, recipient):
+        """Send the number of pairs of evils sitting together."""
+
+        # We have a list of two players
+        two_player_list = self.get_two_possible_minions()
+        registered_minion_type = two_player_list[2]
+        link = registered_minion_type.art_link
+        assert registered_minion_type.category == Category.minion, "Investigator did not receive a minion character"
+
+        # Get rid of the last element (the minion type)
+        two_player_list.pop()
+
+        # Construct the message to send
+        msg = f"***{recipient.name}{recipient.discriminator}***, the **{self.name}**:"
+        msg += "\n"
+        msg += self.emoji + " " + self.instruction
+        msg += "\n"
+        msg += investigator_init.format(registered_minion_type.name)
+        msg += "```basic\n"
+        msg += f"{two_player_list[0].user.display_name} ({two_player_list[0].user.id})\n"
+        msg += f"{two_player_list[1].user.display_name} ({two_player_list[1].user.id})\n"
+        msg += "```"
+
+        embed = discord.Embed(description = msg)
+        embed.set_thumbnail(url = link)
+        embed.set_footer(text = copyrights_str)
+        embed.timestamp = datetime.datetime.utcnow()
+
+        try:
+            await recipient.send(embed = embed)
+        except discord.Forbidden:
+            pass
+    
+    def get_two_possible_minions(self):
         """Send two possible minions"""
 
         # First set the social self
@@ -85,15 +120,22 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
 
         # Choose the player that registers as minion
         minions = []
+        registered_minion_type = None
         for player in globvars.master_state.game.sitting_order:
             if player.role.social_self.category == Category.minion:
                 minions.append(player)
+
+        # If we found a minion
         if minions:
             random.shuffle(minions)
             minion = minions.pop()
+            registered_minion_type = minion.role.social_self
+
+        # No minion found through social self: meaning that some registered as townsfolks.
         else:
             minions = globvars.master_state.game.setup.minions
             minion = minions.pop()
+            registered_minion_type = minion.role.true_self
 
         # Choose the other player
         other_possibilities = [player for player in globvars.master_state.game.sitting_order 
@@ -103,17 +145,8 @@ class Investigator(Townsfolk, TroubleBrewing, Character):
         # Construct the message
         two_player_list = [minion, other]
         random.shuffle(two_player_list)
-        msg = self.emoji + " " + self.instruction
-        msg += "\n"
-        msg += investigator_init.format(minion.role.social_self.name)
-        msg += "```basic\n"
-        msg += f"{two_player_list[0].user.display_name} ({two_player_list[0].user.id})\n"
-        msg += f"{two_player_list[1].user.display_name} ({two_player_list[1].user.id})\n"
-        msg += "```"
+        two_player_list.append(registered_minion_type)
 
-        try:
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
+        globvars.logging.info(f">>> Investigator: Sent {minion} and {other} as {registered_minion_type}")
 
-        globvars.logging.info(f">>> Investigator [send_first_night_instruction] Sent {minion} and {other}")
+        return two_player_list

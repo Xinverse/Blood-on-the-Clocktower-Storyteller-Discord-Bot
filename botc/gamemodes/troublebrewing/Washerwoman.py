@@ -3,6 +3,7 @@
 import json 
 import discord
 import random
+import datetime
 from botc import Townsfolk, Character, Category
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -13,6 +14,7 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
 with open('botc/game_text.json') as json_file: 
     strings = json.load(json_file)
     washerwoman_init = strings["gameplay"]["washerwoman_init"]
+    copyrights_str = strings["misc"]["copyrights"]
 
 
 class Washerwoman(Townsfolk, TroubleBrewing, Character):
@@ -76,7 +78,40 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
-    async def send_first_night_instruction(self, recipient):
+    async def send_n1_end_message(self, recipient):
+        """Send the number of pairs of evils sitting together."""
+
+        # We have a list of two players
+        two_player_list = self.get_two_possible_townsfolks()
+        registered_townsfolk_type = two_player_list[2]
+        link = registered_townsfolk_type.art_link
+        assert registered_townsfolk_type.category == Category.townsfolk, "Washerwoman did not receive a townsfolk character"
+
+        # Get rid of the last element
+        two_player_list.pop()
+
+        # Construct the message to send
+        msg = f"***{recipient.name}{recipient.discriminator}***, the **{self.name}**:"
+        msg += "\n"
+        msg += self.emoji + " " + self.instruction
+        msg += "\n"
+        msg += washerwoman_init.format(registered_townsfolk_type.name)
+        msg += "```basic\n"
+        msg += f"{two_player_list[0].user.display_name} ({two_player_list[0].user.id})\n"
+        msg += f"{two_player_list[1].user.display_name} ({two_player_list[1].user.id})\n"
+        msg += "```"
+
+        embed = discord.Embed(description = msg)
+        embed.set_thumbnail(url = link)
+        embed.set_footer(text = copyrights_str)
+        embed.timestamp = datetime.datetime.utcnow()
+
+        try:
+            await recipient.send(embed = embed)
+        except discord.Forbidden:
+            pass
+    
+    def get_two_possible_townsfolks(self):
         """Send two possible townsfolks"""
 
         # First set the social self
@@ -90,26 +125,17 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
                 townsfolks.append(player)
         random.shuffle(townsfolks)
         townsfolk = townsfolks.pop()
+        registered_townsfolk_type = townsfolk.role.social_self
 
         # Choose the other player
         other_possibilities = [player for player in globvars.master_state.game.sitting_order 
                                if player.user.id != townsfolk.user.id]
         other = random.choice(other_possibilities)
         
-        # Construct the message
         two_player_list = [townsfolk, other]
         random.shuffle(two_player_list)
-        msg = self.emoji + " " + self.instruction
-        msg += "\n"
-        msg += washerwoman_init.format(townsfolk.role.social_self.name)
-        msg += "```basic\n"
-        msg += f"{two_player_list[0].user.display_name} ({two_player_list[0].user.id})\n"
-        msg += f"{two_player_list[1].user.display_name} ({two_player_list[1].user.id})\n"
-        msg += "```"
+        two_player_list.append(registered_townsfolk_type)
 
-        try:
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
+        globvars.logging.info(f">>> Washerwoman: Sent {townsfolk} and {other} as {registered_townsfolk_type}")
 
-        globvars.logging.info(f">>> Washerwoman [send_first_night_instruction] Sent {townsfolk} and {other}")
+        return two_player_list

@@ -133,7 +133,7 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         if next_neighbour.role.social_self.is_evil():
             nb_evils += 1
         
-        log_msg = f">>> Empath [send_first_night_instruction] {nb_evils} alive evil neighbours"
+        log_msg = f">>> Empath: {nb_evils} alive evil neighbours"
         globvars.logging.info(log_msg)
         
         return nb_evils
