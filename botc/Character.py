@@ -56,6 +56,7 @@ class Character:
         self._brief_string = None
         self._action = None
         self._art_link = None
+        self._art_link_cropped = None
         self._wiki_link = None
         self._role_enum = None
         self._true_role = self
@@ -288,7 +289,7 @@ class Character:
         embed.add_field(name = "**「 Instruction 」**", value = self.create_n1_instr_str(), inline = True)
         embed.set_author(name = "{} Edition - Blood on the Clocktower (BoTC)".format(self.ego_self.gm_of_appearance.value),
                          icon_url = self.ego_self.gm_art_link)
-        embed.set_thumbnail(url = self.ego_self.art_link)
+        embed.set_thumbnail(url = self.ego_self.botc_logo_link)
         embed.set_footer(text = copyrights_str)
 
         # If we have an evil team member, send evil list (if 7p or more)
@@ -300,7 +301,7 @@ class Character:
         # Send the stats list if necessary
         embed = self.add_action_field_n1(embed)
 
-        embed.set_image(url = "https://imgur.com/0zsllVk.png")
+        embed.set_image(url = self.ego_self._art_link_cropped)
 
         try:
             await recipient.send(embed = embed)
@@ -308,35 +309,11 @@ class Character:
             #await botutils.send_lobby(blocked.format(recipient.mention))
             pass
     
-
-    
-    # async def send_n1_end_message(self, recipient):
-    #     """Send n1 end message to a player.
-    #     Override by child classes. The default is to send nothing.
-    #     """
-    #     pass
-
-
     async def send_n1_end_message(self, recipient):
-        """Send the number of pairs of evils sitting together."""
-        from .BOTCUtils import get_number_image
-
-        evil_pair_count = 2
-        link = get_number_image(evil_pair_count)
-
-        msg = self.emoji + " " + self.instruction
-        msg += "\n"
-        msg += "You learn a `2`."
-
-        embed = discord.Embed(description = msg)
-        embed.set_thumbnail(url = link)
-        embed.set_footer(text = copyrights_str)
-        embed.set_image(url = link)
-        embed.timestamp = datetime.datetime.utcnow()
-        try:
-            await recipient.send(embed = embed)
-        except discord.Forbidden:
-            pass
+        """Send n1 end message to a player.
+        Override by child classes. The default is to send nothing.
+        """
+        pass
     
     # -------------------- Character ABILITIES --------------------
     

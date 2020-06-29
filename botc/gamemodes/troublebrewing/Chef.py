@@ -2,6 +2,7 @@
 
 import json 
 import discord
+import datetime
 from botc import Townsfolk, Character
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -12,6 +13,7 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
 with open('botc/game_text.json') as json_file: 
     strings = json.load(json_file)
     chef_init = strings["gameplay"]["chef_init"]
+    copyrights_str = strings["misc"]["copyrights"]
 
 
 class Chef(Townsfolk, TroubleBrewing, Character):
@@ -78,13 +80,24 @@ class Chef(Townsfolk, TroubleBrewing, Character):
     async def send_n1_end_message(self, recipient):
         """Send the number of pairs of evils sitting together."""
 
-        evil_pair_count = self.get_nb_pairs_of_evils()
+        from botc.BOTCUtils import get_number_image
 
-        msg = self.emoji + " " + self.instruction
+        evil_pair_count = self.get_nb_pairs_of_evils()
+        link = get_number_image(evil_pair_count)
+
+        msg = f"***{recipient.name}{recipient.discriminator}***, the **{self.name}**:"
+        msg += "\n"
+        msg += self.emoji + " " + self.instruction
         msg += "\n"
         msg += chef_init.format(evil_pair_count)
+
+        embed = discord.Embed(description = msg)
+        embed.set_thumbnail(url = link)
+        embed.set_footer(text = copyrights_str)
+        embed.timestamp = datetime.datetime.utcnow()
+
         try:
-            await recipient.send(msg)
+            await recipient.send(embed = embed)
         except discord.Forbidden:
             pass
     

@@ -1,0 +1,16 @@
+[colors]
+
+CARD_NORMAL = 0xffffff
+IN_GAME_NORMAL = 0xff8647
+TOWNSFOLK_COLOR = 0x00f8fb
+OUTSIDER_COLOR = 0x00f8fb
+MINION_COLOR = 0xe10600
+DEMON_COLOR = 0xe10600
+
+[duration]
+
+LOBBY_TIMEOUT = 3000
+
+[location]
+
+TIME_ZONE = Canada/Eastern

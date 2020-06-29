@@ -2,6 +2,7 @@
 
 import json 
 import discord
+import datetime
 from botc import Townsfolk, Character
 from ._utils import TroubleBrewing, TBRole
 
@@ -11,6 +12,7 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
 with open('botc/game_text.json') as json_file: 
     strings = json.load(json_file)
     empath_nightly = strings["gameplay"]["empath_nightly"]
+    copyrights_str = strings["misc"]["copyrights"]
 
 
 class Empath(Townsfolk, TroubleBrewing, Character):
@@ -76,7 +78,31 @@ class Empath(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
-    async def send_first_night_instruction(self, recipient):
+    async def send_n1_end_message(self, recipient):
+        """Send the number of pairs of evils sitting together."""
+
+        from botc.BOTCUtils import get_number_image
+
+        evil_pair_count = self.get_nb_evil_neighbours(recipient)
+        link = get_number_image(evil_pair_count)
+
+        msg = f"***{recipient.name}{recipient.discriminator}***, the **{self.name}**:"
+        msg += "\n"
+        msg += self.emoji + " " + self.instruction
+        msg += "\n"
+        msg += empath_nightly.format(evil_pair_count)
+
+        embed = discord.Embed(description = msg)
+        embed.set_thumbnail(url = link)
+        embed.set_footer(text = copyrights_str)
+        embed.timestamp = datetime.datetime.utcnow()
+
+        try:
+            await recipient.send(embed = embed)
+        except discord.Forbidden:
+            pass
+    
+    def get_nb_evil_neighbours(self, recipient):
         """Send the number of alive evil neighbours"""
 
         import globvars
@@ -107,15 +133,10 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         if next_neighbour.role.social_self.is_evil():
             nb_evils += 1
         
-        # Send the message
-        msg = empath_nightly.format(nb_evils)
-        try:
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
-
         log_msg = f">>> Empath [send_first_night_instruction] {nb_evils} alive evil neighbours"
         globvars.logging.info(log_msg)
+        
+        return nb_evils
 
     async def send_regular_night_instruction(self, recipient):
         """Send the number of alive evil neighbours. Same as send_first_night_instruction."""
@@ -155,5 +176,5 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         except discord.Forbidden:
             pass
 
-        log_msg = f">>> Empath [send_regular_night_instruction] {nb_evils} alive evil neighbours"
+        log_msg = f">>> Empath: {nb_evils} alive evil neighbours"
         globvars.logging.info(log_msg)
