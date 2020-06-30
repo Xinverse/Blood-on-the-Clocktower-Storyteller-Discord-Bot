@@ -85,23 +85,5 @@ class Spy(Minion, TroubleBrewing, Character):
         globvars.logging.info(f">>> Spy [social_self] Registered as {chosen}.")
         self._social_role = chosen
     
-    async def send_first_night_instruction(self, recipient):
-        """Send demon and minion list if there are 7 or more players. 
-        Otherwise, send the default instruction string.
-        """
-        # Seven or more players, send the evil list
-        if globvars.master_state.game.nb_players >= 7:
-            msg1 = globvars.master_state.game.setup.create_evil_team_string()
-            msg2 = self.emoji + " " + self.instruction
-            msg = msg1 + msg2
-            try:
-                await recipient.send(msg)
-            except discord.Forbidden:
-                pass
-        # Less than seven players, teensyville rules
-        else:
-            msg = self.emoji + " " + self.instruction
-            try:
-                await recipient.send(msg)
-            except discord.Forbidden:
-                pass
+    def create_grimoire(self):
+        pass

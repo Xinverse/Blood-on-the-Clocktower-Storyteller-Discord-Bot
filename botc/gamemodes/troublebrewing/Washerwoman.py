@@ -79,7 +79,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
         return msg
     
     async def send_n1_end_message(self, recipient):
-        """Send the number of pairs of evils sitting together."""
+        """Send two possible players for a particular townsfolk character."""
 
         # We have a list of two players
         two_player_list = self.get_two_possible_townsfolks()
@@ -91,7 +91,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
         two_player_list.pop()
 
         # Construct the message to send
-        msg = f"***{recipient.name}{recipient.discriminator}***, the **{self.name}**:"
+        msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"
         msg += "\n"
         msg += self.emoji + " " + self.instruction
         msg += "\n"

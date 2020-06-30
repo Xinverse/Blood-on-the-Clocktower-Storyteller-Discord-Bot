@@ -12,6 +12,12 @@
 
     },
 
+    "images" : {
+
+        "blank_token" : "https://imgur.com/Y5tPO28.png"
+        
+    },
+
     "numbers" : {
 
         "0" : [

@@ -86,7 +86,7 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         evil_pair_count = self.get_nb_evil_neighbours(recipient)
         link = get_number_image(evil_pair_count)
 
-        msg = f"***{recipient.name}{recipient.discriminator}***, the **{self.name}**:"
+        msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"
         msg += "\n"
         msg += self.emoji + " " + self.instruction
         msg += "\n"

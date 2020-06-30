@@ -91,7 +91,8 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
             159985870458322944,
             184405311681986560,
             235088799074484224,
-            460105234748801024
+            460105234748801024,
+            438057969251254293
             ]
         for userid in playtesters:
             globvars.master_state.pregame.safe_add_player(userid)

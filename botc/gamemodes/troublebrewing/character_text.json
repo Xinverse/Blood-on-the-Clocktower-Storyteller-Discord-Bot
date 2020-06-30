@@ -139,7 +139,7 @@
         "examples" : "- The Butler chooses Filip to be their Master. Tomorrow, if Filip raises his hand to vote on an execution, then the Butler may too. If not, then the Butler may not raise their hand.\n- The Butler is dead. Because dead players have no ability, the Butler may vote with their vote token at any time.",
         "instruction" : "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.",
         "n1_addendum" : "",
-        "action" : "Use `serve <player>` in DM. You may not server yourself.",
+        "action" : "Use `serve <player>` in DM. You may not serve yourself.",
         "brief" : "The Butler may only vote when their Master (another player) votes."
     },
 

@@ -3,6 +3,7 @@
 import json
 import discord
 import random
+import datetime
 from botc import Townsfolk, Character, Category
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -14,6 +15,8 @@ with open('botc/game_text.json') as json_file:
     strings = json.load(json_file)
     librarian_init = strings["gameplay"]["librarian_init"]
     librarian_init_zero = strings["gameplay"]["librarian_init_zero"]
+    copyrights_str = strings["misc"]["copyrights"]
+    blank_token = strings["images"]["blank_token"]
 
 
 class Librarian(Townsfolk, TroubleBrewing, Character):
@@ -78,51 +81,89 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
-    async def send_first_night_instruction(self, recipient):
+    async def send_n1_end_message(self, recipient):
+        """Send two possible players for a particular outsider character."""
+
+        two_player_list = self.get_two_possible_outsiders()
+
+        # If there are outsiders found:
+        if two_player_list:
+
+            registered_outsider_type = two_player_list[2]
+            link = registered_outsider_type.art_link
+            assert registered_outsider_type.category == Category.outsider, "Librarian did not receive an outsider character"
+
+            # Get rid of the last element
+            two_player_list.pop()
+
+            # Construct the message to send
+            msg = f"***{recipient.name}{recipient.discriminator}***, the **{self.name}**:"
+            msg += "\n"
+            msg += self.emoji + " " + self.instruction
+            msg += "\n"
+            msg += librarian_init.format(registered_outsider_type.name)
+            msg += "```basic\n"
+            msg += f"{two_player_list[0].user.display_name} ({two_player_list[0].user.id})\n"
+            msg += f"{two_player_list[1].user.display_name} ({two_player_list[1].user.id})\n"
+            msg += "```"
+
+            embed = discord.Embed(description = msg)
+            embed.set_thumbnail(url = link)
+            embed.set_footer(text = copyrights_str)
+            embed.timestamp = datetime.datetime.utcnow()
+        
+        # No outsiders found
+        else:
+
+            # Construct the message to send
+            msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"
+            msg += "\n"
+            msg += self.emoji + " " + self.instruction
+            msg += "\n"
+            msg += librarian_init_zero
+
+            embed = discord.Embed(description = msg)
+            embed.set_thumbnail(url = blank_token)
+            embed.set_footer(text = copyrights_str)
+            embed.timestamp = datetime.datetime.utcnow()
+
+        try:
+            await recipient.send(embed = embed)
+        except discord.Forbidden:
+            pass
+    
+    def get_two_possible_outsiders(self):
         """Send two possible outsiders"""
 
         # First set the social self
         for player in globvars.master_state.game.sitting_order:
             player.role.set_new_social_self()
 
-        # Choose the player that registers as outsider
+        # Find all outsider players
         outsiders = []
         for player in globvars.master_state.game.sitting_order:
             if player.role.social_self.category == Category.outsider:
                 outsiders.append(player)
+
+        # We found at least one outsider, choose one randomly
         if outsiders:
             random.shuffle(outsiders)
             outsider = outsiders.pop()
-        else:
-            msg = self.emoji + " " + self.instruction
-            msg += "\n"
-            msg += librarian_init_zero
+            registered_outsider_type = outsider.role.social_self
 
-            try:
-                await recipient.send(msg)
-            except discord.Forbidden:
-                pass
-            globvars.logging.info(f">>> Librarian [send_first_night_instruction] Sent 0 outsider")
+            # Choose the other player
+            other_possibilities = [player for player in globvars.master_state.game.sitting_order 
+                                if player.user.id != outsider.user.id]
+            other = random.choice(other_possibilities)
+            
+            two_player_list = [outsider, other]
+            random.shuffle(two_player_list)
+            two_player_list.append(registered_outsider_type)
 
-        # Choose the other player
-        other_possibilities = [player for player in globvars.master_state.game.sitting_order 
-                               if player.user.id != outsider.user.id]
-        other = random.choice(other_possibilities)
+            globvars.logging.info(f">>> Librarian: Sent {outsider} and {other} as {registered_outsider_type}")
+            return two_player_list
         
-        # Construct the message
-        two_player_list = [outsider, other]
-        random.shuffle(two_player_list)
-        msg = self.emoji + " " + self.instruction
-        msg += "\n"
-        msg += librarian_init.format(outsider.role.social_self.name)
-        msg += "```basic\n"
-        msg += f"{two_player_list[0].user.display_name} ({two_player_list[0].user.id})\n"
-        msg += f"{two_player_list[1].user.display_name} ({two_player_list[1].user.id})\n"
-        msg += "```"
-
-        try:
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
-
-        globvars.logging.info(f">>> Librarian [send_first_night_instruction] Sent {outsider} and {other}")
+        # We did not find any outsider
+        else:
+            globvars.logging.info(f">>> Librarian: Sent 0 outsider")
+            return None
