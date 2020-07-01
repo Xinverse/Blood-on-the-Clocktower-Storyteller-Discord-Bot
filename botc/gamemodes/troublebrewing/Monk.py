@@ -2,6 +2,7 @@
 
 import json 
 import discord
+from botc import Action, ActionTypes
 from botc import Townsfolk, Character
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
@@ -85,8 +86,11 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
-    @GameLogic.except_first_night
     @GameLogic.no_self_targetting
     async def register_protect(self, player, targets):
         """Protect command"""
-        pass
+        # Must be 1 target
+        assert len(targets) == 1, "Received a number of targets different than 1 for monk 'protect'"
+        action = Action(player, targets, ActionTypes.protect, globvars.master_state.game._chrono.phase_id)
+        player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
+        await player.user.send("You decided to protect **{}**.".format(targets[0].user.display_name))

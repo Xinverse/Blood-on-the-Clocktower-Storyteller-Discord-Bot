@@ -8,6 +8,11 @@ with open('botc/game_text.json') as json_file:
     documentation = json.load(json_file)
     x_emoji = documentation["cmd_warnings"]["x_emoji"]
     player_not_found = documentation["cmd_warnings"]["player_not_found"]
+    no_self_targetting_str = documentation["cmd_warnings"]["no_self_targetting_str"]
+    except_first_night_str = documentation["cmd_warnings"]["except_first_night_str"]
+    requires_one_target_str = documentation["cmd_warnings"]["requires_one_target_str"]
+    requires_two_targets_str = documentation["cmd_warnings"]["requires_two_targets_str"]
+    requires_different_targets_str = documentation["cmd_warnings"]["requires_different_targets_str"]
    
 
 def get_number_image(nb):
@@ -132,7 +137,7 @@ class BOTCUtils:
       return None
 
 
-class Targets:
+class Targets(list):
    """Targets class for storing BoTC characters' targets"""
 
    def __init__(self, target_list):
@@ -144,6 +149,9 @@ class Targets:
    
    def __iter__(self):
       yield from self.target_list
+   
+   def __getitem__(self, index):
+      return list.__getitem__(self.target_list, index)
 
 
 class PlayerParser(commands.Converter):
@@ -213,7 +221,7 @@ class GameLogic:
       def inner(self, player, targets):
          for target in targets:
             if target.user.id == player.user.id:
-               raise NoSelfTargetting("You may not choose yourself as one of the targets.")
+               raise NoSelfTargetting(no_self_targetting_str.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner 
 
@@ -230,7 +238,7 @@ class GameLogic:
       def inner(self, player, targets):
          import globvars
          if globvars.master_state.game.is_night() and globvars.master_state.game.current_cycle == 1:
-            raise FirstNightNotAllowed("You may not use this ability on the first night.")
+            raise FirstNightNotAllowed(except_first_night_str.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner
 
@@ -246,7 +254,7 @@ class GameLogic:
       """Decorator for abilities that require one target"""
       def inner(self, player, targets):
          if len(targets) != 1:
-            raise MustBeOneTarget("You must pick exactly one target for your ability.")
+            raise MustBeOneTarget(requires_one_target_str.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner
    
@@ -255,7 +263,7 @@ class GameLogic:
       """Decorator for abilities that require two targets"""
       def inner(self, player, targets):
          if len(targets) != 2:
-            raise MustBeTwoTargets("You must pick exactly two targets for your ability.")
+            raise MustBeTwoTargets(requires_two_targets_str.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner
    
@@ -265,6 +273,6 @@ class GameLogic:
       def inner(self, player, targets):
          id_list = [target.user.id for target in targets]
          if len(id_list) != len(set(id_list)):
-            raise NoRepeatTargets("You must pick different targets for your ability.")
+            raise NoRepeatTargets(requires_different_targets_str.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner

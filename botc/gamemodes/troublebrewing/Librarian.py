@@ -84,7 +84,7 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
     async def send_n1_end_message(self, recipient):
         """Send two possible players for a particular outsider character."""
 
-        two_player_list = self.get_two_possible_outsiders()
+        two_player_list = self.get_two_possible_outsiders(recipient)
 
         # If there are outsiders found:
         if two_player_list:
@@ -132,7 +132,7 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
         except discord.Forbidden:
             pass
     
-    def get_two_possible_outsiders(self):
+    def get_two_possible_outsiders(self, recipient):
         """Send two possible outsiders"""
 
         # First set the social self
@@ -153,7 +153,7 @@ class Librarian(Townsfolk, TroubleBrewing, Character):
 
             # Choose the other player
             other_possibilities = [player for player in globvars.master_state.game.sitting_order 
-                                if player.user.id != outsider.user.id]
+                                if player.user.id != outsider.user.id and player.user.id != recipient.id]
             other = random.choice(other_possibilities)
             
             two_player_list = [outsider, other]

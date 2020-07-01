@@ -132,7 +132,11 @@
         "day_only" : "{} {} You may not use this command during the nighttime.",
         "night_only" : "{} {} You may not use this command during the daytime.",
         "player_not_found" : "{} {} One or more of specified target players is not found. The bot accepts input in the form of usernames, nicknames, mentions, and user ID's, typed out in full or partially.",
-        "target_nb" : "{} {} You must choose exactly **{}** target{} for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets."
+        "no_self_targetting_str" : "{} {} You may not choose yourself as one of the targets.",
+        "except_first_night_str" : "{} {} You may not use this ability on the first night.",
+        "requires_one_target_str" : "{} {} You must pick exactly one target for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets.",
+        "requires_two_targets_str" : "{} {} You must pick exactly two targets for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets.",
+        "requires_different_targets_str" : "{} {} You must pick different targets for your ability."
 
     },
 

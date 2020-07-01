@@ -82,7 +82,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
         """Send two possible players for a particular townsfolk character."""
 
         # We have a list of two players
-        two_player_list = self.get_two_possible_townsfolks()
+        two_player_list = self.get_two_possible_townsfolks(recipient)
         registered_townsfolk_type = two_player_list[2]
         link = registered_townsfolk_type.art_link
         assert registered_townsfolk_type.category == Category.townsfolk, "Washerwoman did not receive a townsfolk character"
@@ -111,7 +111,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
         except discord.Forbidden:
             pass
     
-    def get_two_possible_townsfolks(self):
+    def get_two_possible_townsfolks(self, recipient):
         """Send two possible townsfolks"""
 
         # First set the social self
@@ -129,7 +129,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
 
         # Choose the other player
         other_possibilities = [player for player in globvars.master_state.game.sitting_order 
-                               if player.user.id != townsfolk.user.id]
+                               if player.user.id != townsfolk.user.id and player.user.id != recipient.id]
         other = random.choice(other_possibilities)
         
         two_player_list = [townsfolk, other]

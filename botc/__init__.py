@@ -1,6 +1,6 @@
 """Blood on the Clocktower (BoTC) game specific mechanics"""
 
-from .abilities import ActionTypes, Action
+from .abilities import ActionTypes, Action, ActionGrid
 from .Ballot import Ballot
 from .BOTCUtils import BOTCUtils, PlayerParser, NotAPlayer, RoleCannotUseCommand, NotDMChannel, \
     NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand, GameLogic, \

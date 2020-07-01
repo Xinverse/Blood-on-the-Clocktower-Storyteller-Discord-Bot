@@ -1,6 +1,7 @@
 """Contains the Player class"""
 
 from .PlayerState import PlayerState
+from .abilities import ActionGrid
 
 
 class Player:
@@ -17,6 +18,7 @@ class Player:
         self._role_obj = role_obj  # Role object
         self._state_obj = PlayerState.alive  # Enum object
         self._apparent_state_obj = PlayerState.alive  # Enum object
+        self.action_grid = ActionGrid()  # ActionGrib object
         self._status_effects = []  # List object
     
     def add_status_effect(self, new_status_effect):

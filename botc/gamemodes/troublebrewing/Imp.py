@@ -3,6 +3,7 @@
 import json
 import discord
 import random
+from botc import Action, ActionTypes
 from botc import Demon, Townsfolk, Outsider, Character
 from botc.BOTCUtils import GameLogic, BOTCUtils
 from ._utils import TroubleBrewing, TBRole
@@ -136,7 +137,10 @@ class Imp(Demon, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
-    @GameLogic.except_first_night
     async def register_kill(self, player, targets):
         """Kill command"""
-        pass
+        # Must be 1 target
+        assert len(targets) == 1, "Received a number of targets different than 1 for imp 'kill'"
+        action = Action(player, targets, ActionTypes.kill, globvars.master_state.game._chrono.phase_id)
+        player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
+        await player.user.send("You decided to kill **{}**.".format(targets[0].user.display_name))

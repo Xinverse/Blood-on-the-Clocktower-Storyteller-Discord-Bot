@@ -21,6 +21,10 @@ class GameChrono:
     
     def next(self):
         self.current += 1
+    
+    @property
+    def phase_id(self):
+        return self.current
 
     @property
     def cycle(self):

@@ -3,6 +3,7 @@
 import json
 import random
 import discord 
+from botc import Action, ActionTypes
 from botc import Townsfolk, Character, Storyteller, RedHerring
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
@@ -121,4 +122,10 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
     @GameLogic.requires_different_targets
     async def register_read(self, player, targets):
         """Read command"""
-        pass
+        print("Code went into register_read")
+        # Must be 2 targets
+        assert len(targets) == 2, "Received a number of targets different than 2 for fortune teller 'read'"
+        action = Action(player, targets, ActionTypes.read, globvars.master_state.game._chrono.phase_id)
+        player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
+        await player.user.send("You decided to read the fortune of **{}** " \
+            "and **{}**.".format(targets[0].user.display_name, targets[1].user.display_name))

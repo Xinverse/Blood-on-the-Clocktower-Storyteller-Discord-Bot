@@ -5,16 +5,12 @@ import botutils
 import discord
 from botc.BOTCUtils import GameLogic
 from botc import Outsider, Character
+from botc import Action, ActionTypes
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.butler.value.lower()]
-
-with open('botc/game_text.json') as json_file: 
-    strings = json.load(json_file)
-    target_nb = strings["cmd_warnings"]["target_nb"]
-    x_emoji = strings["cmd_warnings"]["x_emoji"]
 
 with open('botutils/bot_text.json') as json_file:
     bot_text = json.load(json_file)
@@ -94,6 +90,11 @@ class Butler(Outsider, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
+    @GameLogic.no_self_targetting
     async def register_serve(self, player, targets):
         """Serve command registration"""
-        pass
+        # Must be 1 target
+        assert len(targets) == 1, "Received a number of targets different than 1 for butler 'serve'"
+        action = Action(player, targets, ActionTypes.serve, globvars.master_state.game._chrono.phase_id)
+        player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
+        await player.user.send("You decided to serve **{}** as your master tomorrow.".format(targets[0].user.display_name))

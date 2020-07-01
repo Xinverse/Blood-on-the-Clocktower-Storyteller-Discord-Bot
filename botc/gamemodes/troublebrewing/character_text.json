@@ -7,6 +7,7 @@
         "instruction" : "You start knowing 1 of 2 players is a particular Townsfolk.",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Washerwoman learns that a particular Townsfolk character is in play, but not exactly which player it is."
 
     },
@@ -19,6 +20,7 @@
         "instruction" : "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play)",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Librarian learns that a particular Outsider character is in play, but not exactly which player it is."
 
     },
@@ -30,6 +32,7 @@
         "instruction" : "You start knowing 1 of 2 players is a particular Minion.",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Investigator learns that a particular Minion character is in play, but not exactly which player it is."
     },
 
@@ -40,6 +43,7 @@
         "instruction" : "You start knowing how many pairs of evil players are sitting together, based on the sitting order.",
         "n1_addendum" : "You will receive this information at the end of the first night. No further action is required from you for now.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Chef knows if evil players are sitting next to each other."
     },
 
@@ -50,26 +54,29 @@
         "instruction" : "Each night, you learn how many of your 2 alive neighbors are evil.",
         "n1_addendum" : "You will receive this information at the end of the night. No further action is required from you for now.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Empath keeps learning if their living neighbors are good or evil."
     },
 
     "fortune teller" : {
-        "lore" : "I sense great evil in your soul! But...that could just be your perfume. I am allergic to elderberry.",
+        "lore" : "I sense great evil in your soul! But... that could just be your perfume. I am allergic to elderberry.",
         "description" : "The Fortune Teller can detect who the Demon is, but sometimes thinks good players are Demons.\n- Each night, the Fortune Teller chooses two players and learns if at least one of them is a Demon. They do not learn which of them is a Demon, just that one of them is. If neither is the Demon, they learn this instead.\n- Unfortunately, one player, called the Red Herring, will register as a Demon to the Fortune Teller if chosen. The Red Herring is the same player throughout the entire game. This player may be any good player, even the Fortune Teller, and the Fortune Teller does not know which player it is.\n- The Fortune Teller may choose any two players—alive or dead, or even themself. If they choose a dead Demon, then the Fortune Teller still receives a nod.",
         "examples" : "- The Fortune Teller chooses the Mayor and the Undertaker, and learns a 'no.'\n- The Fortune Teller chooses the Imp and the Empath, and learns a 'yes.'\n- The Fortune Teller chooses an alive Imp and a dead Imp, and learns a 'yes.'\n- The Fortune Teller chooses themself and a Saint, who is the Red Herring. The Fortune Teller learns a 'yes.'",
         "instruction" : "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you.",
         "n1_addendum" : "",
         "action" : "Use `read <player1> and <player2>` in DM. They must be different players.",
+        "feedback" : "You have chosen to read the fortune of **{}** and **{}**. The result will be revealed to you at dawn.",
         "brief" : "The Fortune Teller detects who the Demon is, but sometimes thinks good players are Demons."
     },
 
     "undertaker" : {
-        "lore" : "Hmmm....what have we here? The left boot is worn down to the heel, with flint shavings under the tongue. This is the garb of a military man.",
+        "lore" : "Hmmm.... what have we here? The left boot is worn down to the heel, with flint shavings under the tongue. This is the garb of a military man.",
         "description" : "The Undertaker learns which character was executed today.\n- The player must have died from execution for the Undertaker to learn who they are. Deaths during the day for other reasons, such as the Gunslinger choosing a player to kill, or the exile of a Traveler, do not count. Execution without death—rare as it is—does not count.\n- The Undertaker wakes each night except the first, as there have been no executions yet.\n- If nobody died by execution today, the Undertaker learns nothing. The Storyteller either does not wake the Undertaker at night, or wakes them but does not show a token.\n- If the Drunk is executed, the Undertaker is shown the the Drunk character token, not the Townsfolk that the player thought they were.",
         "examples" : "- The Mayor is executed today. That night, the Undertaker is shown the Mayor token.\n- The Drunk, who thinks they are the Virgin, is executed today. The Undertaker is shown the Drunk token, because the Undertaker learns the actual character of the player, not the character the player thinks they are.\n- The Spy is executed. Two Travelers are exiled. That night, the Undertaker is shown the Butler token, because the Spy is registering as the Butler, and because the exiles are not executions. Nobody was executed today. That night, the Undertaker does not wake.",
         "instruction" : "Each night, you learn which character died by execution today.",
         "n1_addendum" : "No one has died by execution so far; you learn nothing.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Undertaker learns which character was executed today."
     },
 
@@ -80,6 +87,7 @@
         "instruction" : "Each night except for the first, choose a player (not yourself): they are safe from the Demon tonight.",
         "n1_addendum" : "You cannot protect on the first night.",
         "action" : "Use `protect <player>` in DM. You cannot protect yourself.",
+        "feedback" : "",
         "brief" : "The Monk protects other players from the Demon."
     },
 
@@ -90,6 +98,7 @@
         "instruction" : "If you die at night, you will be prompted to choose a player: you learn their character.",
         "n1_addendum" : "Your ability is not activated yet, since you are still alive.",
         "action" : "Use `learn <player>` in DM.",
+        "feedback" : "",
         "brief" : "If the Ravenkeeper dies at night, they get to learn one player's character."
     },
 
@@ -100,6 +109,7 @@
         "instruction" : "The 1st time you are nominated, if the nominator is a Townsfolk, they are executed immediately.",
         "n1_addendum" : "",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Virgin may inadvertently execute their accuser, confirming which players are Townsfolk in the process."
     },
 
@@ -110,6 +120,7 @@
         "instruction" : "Once per game, during the day, publicly choose a player: if they are the Demon, they die.",
         "n1_addendum" : "",
         "action" : "Use `slay <player>` in the public game text channel.",
+        "feedback" : "",
         "brief" : "The Slayer can kill the Demon by guessing who they are."
     },
 
@@ -120,6 +131,7 @@
         "instruction" : "You are safe from the Demon.",
         "n1_addendum" : "",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Soldier can not be killed by the Demon."
     },
 
@@ -130,6 +142,7 @@
         "instruction" : "If only 3 players live & no execution occurs, your team wins. If you die at night, another player might die instead.",
         "n1_addendum" : "",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Mayor can win by peaceful means on the final day."
     },
 
@@ -140,6 +153,7 @@
         "instruction" : "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.",
         "n1_addendum" : "",
         "action" : "Use `serve <player>` in DM. You may not serve yourself.",
+        "feedback" : "",
         "brief" : "The Butler may only vote when their Master (another player) votes."
     },
 
@@ -150,6 +164,7 @@
         "instruction" : "You do not know you are the Drunk. You think you are a Townsfolk, but your ability malfunctions.",
         "n1_addendum" : "",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Drunk player thinks that they are a Townsfolk, and has no idea that they are actually the Drunk."
     },
 
@@ -160,6 +175,7 @@
         "instruction" : "You might register as evil & as a Minion or Demon, even if dead.",
         "n1_addendum" : "",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Recluse might appear to be an evil character, but is actually good."
     },
 
@@ -170,6 +186,7 @@
         "instruction" : "If you die by execution, your team loses.",
         "n1_addendum" : "",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Saint ends the game if they are executed."
     },
 
@@ -180,6 +197,7 @@
         "instruction" : "Each night, choose a player: their ability malfunctions tonight and tomorrow day.",
         "n1_addendum" : "",
         "action" : "Use `poison <player>` in DM.",
+        "feedback" : "",
         "brief" : "The Poisoner secretly disrupts character abilities."
     },
 
@@ -190,6 +208,7 @@
         "instruction" : "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travelers don't count)",
         "n1_addendum" : "If you are promoted to Demonhood, you will be notified.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Scarlet Woman becomes the Demon when the Demon dies."
     },
 
@@ -200,6 +219,7 @@
         "instruction" : "There are extra Outsiders in play. [+2 Outsiders]",
         "n1_addendum" : "",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Baron changes the number of Outsiders present in the game."
     }, 
 
@@ -210,6 +230,7 @@
         "instruction" : "Each night, you see the Grimoire. You might register as good & as a Townsfolk or Outsider, even if dead.",
         "n1_addendum" : "You will receive this information at the end of the night. No further action is required from you for now.",
         "action" : "",
+        "feedback" : "",
         "brief" : "The Spy might appear to be a good character, but is actually evil. They also see the Grimoire, so they know the characters (and status) of all players."
     },
 
@@ -220,6 +241,7 @@
         "instruction" : "Each night except the first, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.",
         "n1_addendum" : "You cannot kill on the first night.",
         "action" : "Use `kill <player>` in DM.",
+        "feedback" : "",
         "brief" : "The Imp kills a player each night, and can make copies of itself... for a terrible price."
     }
 }
