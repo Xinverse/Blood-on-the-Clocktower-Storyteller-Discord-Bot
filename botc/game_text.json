@@ -104,7 +104,7 @@
     "gameplay" : {
 
         "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
-        "welcome_dm" : "**WELCOME TO BLOOD ON THE CLOCKTOWER**",
+        "welcome_dm" : "**𝖂𝖊𝖑𝖈𝖔𝖒𝖊 𝖙𝖔 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗**",
         "nightfall" : "It is currently **nighttime**.",
         "dawn" : "It is currently **dawn**.",
         "daybreak" : "It is currently **daytime**.",
@@ -126,12 +126,12 @@
 
         "x_emoji" : "<:notallowed:723642802474450995>",
         "dm_only" : "{} {} You may not use this command outside of DM channel.",
-        "lobby_only" : "{} {} You may not use this command outside of the public lobby channel.",
+        "lobby_only" : "{} {} You may not use this command outside of the public game text channel.",
         "alive_only" : "{} {} You may not use this command while dead.",
         "dead_only" : "{} {} You may not use this command while alive.",
-        "day_only" : "{} {} You may not use this command during nighttime.",
-        "night_only" : "{} {} You may not use this command during daytime.",
-        "player_not_found" : "{} {} Player is not found.",
+        "day_only" : "{} {} You may not use this command during the nighttime.",
+        "night_only" : "{} {} You may not use this command during the daytime.",
+        "player_not_found" : "{} {} One or more of specified target players is not found. The bot accepts input in the form of usernames, nicknames, mentions, and user ID's, typed out in full or partially.",
         "target_nb" : "{} {} You must choose exactly **{}** target{} for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets."
 
     },

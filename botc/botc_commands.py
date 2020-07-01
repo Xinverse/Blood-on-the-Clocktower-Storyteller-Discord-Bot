@@ -7,7 +7,7 @@ import json
 import globvars
 from discord.ext import commands
 from botc import BOTCUtils, NotAPlayer, PlayerParser, RoleCannotUseCommand, NotDMChannel, \
-    NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand
+    NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand, AbilityForbidden
 from botc.gamemodes.troublebrewing._utils import TBRole
 
 Config = configparser.ConfigParser()
@@ -36,64 +36,148 @@ def check_if_is_player(ctx):
         raise NotAPlayer("Command not allowed: user is not a player (BoTC).")
 
 
-def check_if_can_serve(ctx):
-    """Can serve: butler"""
-    player = BOTCUtils.get_player_from_id(ctx.author.id)
+def can_use_serve(user_id):
+    """Return true if the user can use the command "serve"
+    Characters that can serve: 
+    - Butler
+    """
+    player = BOTCUtils.get_player_from_id(user_id)
     if player.role.ego_self.name in [TBRole.butler.value]:
+        return True
+    return False
+
+
+def check_if_can_serve(ctx):
+    """Return true if the command user can use the command "serve"
+    Command check function
+    """
+    if can_use_serve(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use serve command (BoTC)")
 
 
-def check_if_can_poison(ctx):
-    """Can poison: poisoner"""
-    player = BOTCUtils.get_player_from_id(ctx.author.id)
+def can_use_poison(user_id):
+    """Return true if the user can use the command "poison"
+    Characters that can poison:
+    - Poisoner
+    """
+    player = BOTCUtils.get_player_from_id(user_id)
     if player.role.ego_self.name in [TBRole.poisoner.value]:
+        return True
+    return False
+
+
+def check_if_can_poison(ctx):
+    """Return true if the command user can use the command "poison"
+    Command check function
+    """
+    if can_use_poison(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use poison command (BoTC)")
 
 
-def check_if_can_learn(ctx):
-    """Can learn: ravenkeeper"""
-    player = BOTCUtils.get_player_from_id(ctx.author.id)
+def can_use_learn(user_id):
+    """Return true if the user can use the command "poison"
+    Characters that can poison:
+    - Ravenkeeper
+    """
+    player = BOTCUtils.get_player_from_id(user_id)
     if player.role.ego_self.name in [TBRole.ravenkeeper.value]:
+        return True
+    return False
+
+
+def check_if_can_learn(ctx):
+    """Return true if the command user can use the command "learn"
+    Command check function
+    """
+    if can_use_learn(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use learn command (BoTC)")
 
 
-def check_if_can_read(ctx):
-    """Can read: fortune teller"""
-    player = BOTCUtils.get_player_from_id(ctx.author.id)
+def can_use_read(user_id):
+    """Return true if the user can use the command "read"
+    Characters that can poison:
+    - Fortune teller
+    """
+    player = BOTCUtils.get_player_from_id(user_id)
     if player.role.ego_self.name in [TBRole.fortuneteller.value]:
+        return True
+    return False
+
+
+def check_if_can_read(ctx):
+    """Return true if the command user can use the command "read"
+    Command check function
+    """
+    if can_use_learn(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use read command (BoTC)")
 
 
-def check_if_can_kill(ctx):
-    """Can kill: imp"""
-    player = BOTCUtils.get_player_from_id(ctx.author.id)
+def can_use_kill(user_id):
+    """Return true if the user can use the command "kill"
+    Characters that can poison:
+    - Imp
+    """
+    player = BOTCUtils.get_player_from_id(user_id)
     if player.role.ego_self.name in [TBRole.imp.value]:
+        return True
+    return False
+
+
+def check_if_can_kill(ctx):
+    """Return true if the command user can use the command "kill"
+    Command check function
+    """
+    if can_use_kill(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use kill command (BoTC)")
 
 
-def check_if_can_slay(ctx):
-    """Can slay: slayer"""
-    player = BOTCUtils.get_player_from_id(ctx.author.id)
+def can_use_slay(user_id):
+    """Return true if the user can use the command "slay"
+    Characters that can poison:
+    - Slayer
+    """
+    player = BOTCUtils.get_player_from_id(user_id)
     if player.role.ego_self.name in [TBRole.slayer.value]:
+        return True
+    return False
+
+
+def check_if_can_slay(ctx):
+    """Return true if the command user can use the command "slay"
+    Command check function
+    """
+    if can_use_slay(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use slay command (BoTC)")
 
 
-def check_if_can_protect(ctx):
-    """Can protect: monk"""
-    player = BOTCUtils.get_player_from_id(ctx.author.id)
+def can_use_protect(user_id):
+    """Return true if the user can use the command "protect"
+    Characters that can poison:
+    - Monk
+    """
+    player = BOTCUtils.get_player_from_id(user_id)
     if player.role.ego_self.name in [TBRole.monk.value]:
+        return True
+    return False
+
+
+def check_if_can_protect(ctx):
+    """Return true if the command user can use the command "protect"
+    Command check function
+    """
+    if can_use_protect(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use protect command (BoTC)")
@@ -234,6 +318,10 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        # If it passed all the checks but raised an error in the character class
+        elif isinstance(error, AbilityForbidden):
+            error = getattr(error, 'original', error)
+            await ctx.send(error)
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return
@@ -284,6 +372,10 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        # If it passed all the checks but raised an error in the character class
+        elif isinstance(error, AbilityForbidden):
+            error = getattr(error, 'original', error)
+            await ctx.send(error)
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return
@@ -334,6 +426,10 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        # If it passed all the checks but raised an error in the character class
+        elif isinstance(error, AbilityForbidden):
+            error = getattr(error, 'original', error)
+            await ctx.send(error)
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return
@@ -384,6 +480,10 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        # If it passed all the checks but raised an error in the character class
+        elif isinstance(error, AbilityForbidden):
+            error = getattr(error, 'original', error)
+            await ctx.send(error)
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return
@@ -433,6 +533,10 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        # If it passed all the checks but raised an error in the character class
+        elif isinstance(error, AbilityForbidden):
+            error = getattr(error, 'original', error)
+            await ctx.send(error)
         elif isinstance(error, commands.BadArgument):
             return
         # Non-registered or quit player -> NotAPlayer
@@ -485,6 +589,10 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        # If it passed all the checks but raised an error in the character class
+        elif isinstance(error, AbilityForbidden):
+            error = getattr(error, 'original', error)
+            await ctx.send(error)
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return
@@ -535,6 +643,10 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect character -> RoleCannotUseCommand
         if isinstance(error, RoleCannotUseCommand):
             return
+        # If it passed all the checks but raised an error in the character class
+        elif isinstance(error, AbilityForbidden):
+            error = getattr(error, 'original', error)
+            await ctx.send(error)
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return

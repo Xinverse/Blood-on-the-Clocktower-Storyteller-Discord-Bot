@@ -373,10 +373,10 @@ class Game(GameMeta):
 
       # ----- First Night -----
       # Base night length
-      await asyncio.sleep(BASE_NIGHT-25)
+      await asyncio.sleep(BASE_NIGHT)
 
       # Increment (night)
-      for _ in range(0):
+      for _ in range(4):
          if self.has_received_all_expected_night_actions():
             break
          await asyncio.sleep(INCREMENT)
@@ -393,7 +393,7 @@ class Game(GameMeta):
       await asyncio.sleep(INCREMENT)
 
       # Increment (dawn)
-      for _ in range(1):
+      for _ in range(2):
          if self.has_received_all_expected_dawn_actions():
             break
          await asyncio.sleep(INCREMENT)

@@ -164,33 +164,43 @@ class PlayerParser(commands.Converter):
       return Targets(actual_targets)
 
 
-class UniqueAbilityError(Exception):
-   """Attempt to use unique ability twice"""
+class AbilityForbidden(commands.errors.CommandInvokeError):
+   """Custom parent classes for all the following exceptions"""
    pass
 
 
-class FirstNightNotAllowed(Exception):
+class UniqueAbilityError(AbilityForbidden):
+   """Attempt to use unique ability twice in game"""
+   pass
+
+
+class FirstNightNotAllowed(AbilityForbidden):
    """Attempt to use action on first night when not allowed"""
    pass
 
 
-class ChangesNotAllowed(Exception):
-   """Attempt to resubmit an action after it's been used"""
+class ChangesNotAllowed(AbilityForbidden):
+   """Attempt to resubmit an action after it's been submitted once during the night"""
    pass
 
 
-class MustBeOneTarget(Exception):
+class MustBeOneTarget(AbilityForbidden):
    """Must be exactly one target"""
    pass
 
 
-class MustBeTwoTargets(Exception):
+class MustBeTwoTargets(AbilityForbidden):
    """Must be exactly two targets"""
    pass
 
 
-class NoSelfTargetting(Exception):
+class NoSelfTargetting(AbilityForbidden):
    """Does not allow self targetting in command input"""
+   pass
+
+
+class NoRepeatTargets(AbilityForbidden):
+   """Does not allow repeat targets. Ex. kill player1 and player1"""
    pass
 
 
@@ -203,7 +213,7 @@ class GameLogic:
       def inner(self, player, targets):
          for target in targets:
             if target.user.id == player.user.id:
-               raise NoSelfTargetting("You may not target yourself")
+               raise NoSelfTargetting("You may not choose yourself as one of the targets.")
          return func(self, player, targets)
       return inner 
 
@@ -220,7 +230,7 @@ class GameLogic:
       def inner(self, player, targets):
          import globvars
          if globvars.master_state.game.is_night() and globvars.master_state.game.current_cycle == 1:
-            raise FirstNightNotAllowed("You may not use this command during the first night.")
+            raise FirstNightNotAllowed("You may not use this ability on the first night.")
          return func(self, player, targets)
       return inner
 
@@ -236,7 +246,7 @@ class GameLogic:
       """Decorator for abilities that require one target"""
       def inner(self, player, targets):
          if len(targets) != 1:
-            raise MustBeOneTarget("Command must take exactly one input")
+            raise MustBeOneTarget("You must pick exactly one target for your ability.")
          return func(self, player, targets)
       return inner
    
@@ -245,6 +255,16 @@ class GameLogic:
       """Decorator for abilities that require two targets"""
       def inner(self, player, targets):
          if len(targets) != 2:
-            raise MustBeTwoTargets("Command must take exactly two inputs")
+            raise MustBeTwoTargets("You must pick exactly two targets for your ability.")
+         return func(self, player, targets)
+      return inner
+   
+   @staticmethod
+   def requires_different_targets(func):
+      """Decorator for abilities that do not allow repeat players in the targets"""
+      def inner(self, player, targets):
+         id_list = [target.user.id for target in targets]
+         if len(id_list) != len(set(id_list)):
+            raise NoRepeatTargets("You must pick different targets for your ability.")
          return func(self, player, targets)
       return inner
