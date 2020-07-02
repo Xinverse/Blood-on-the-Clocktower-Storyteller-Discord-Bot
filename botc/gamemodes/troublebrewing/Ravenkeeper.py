@@ -10,6 +10,10 @@ import globvars
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.ravenkeeper.value.lower()]
 
+with open('botutils/bot_text.json') as json_file:
+    bot_text = json.load(json_file)
+    butterfly = bot_text["esthetics"]["butterfly"]
+
 
 class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
     """Ravenkeeper: If you die at night, you are woken to choose a player: you learn their character.
@@ -75,9 +79,11 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
     @GameLogic.requires_one_target
     async def register_learn(self, player, targets):
         """Learn command"""
+        
         # Must be 1 target
         assert len(targets) == 1, "Received a number of targets different than 1 for ravenkeeper 'learn'"
         action = Action(player, targets, ActionTypes.learn, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
-        await player.user.send("You decided to learn **{}**'s character.".format(targets[0].user.display_name))
+        msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
+        await player.user.send(msg)
         

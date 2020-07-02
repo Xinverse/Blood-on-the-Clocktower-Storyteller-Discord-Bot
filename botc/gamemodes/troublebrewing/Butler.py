@@ -93,8 +93,10 @@ class Butler(Outsider, TroubleBrewing, Character):
     @GameLogic.no_self_targetting
     async def register_serve(self, player, targets):
         """Serve command registration"""
+
         # Must be 1 target
         assert len(targets) == 1, "Received a number of targets different than 1 for butler 'serve'"
         action = Action(player, targets, ActionTypes.serve, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
-        await player.user.send("You decided to serve **{}** as your master tomorrow.".format(targets[0].user.display_name))
+        msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
+        await player.user.send(msg)

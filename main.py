@@ -9,7 +9,7 @@ unless otherwise specified. This project is an independent adaptation
 of commercial board games into Discord bot format; the Developer is not 
 affiliated with them in any way. 
 
-- Assets
+- Assets and resources
 
 Imgur album for bloodied numbers:
 https://imgur.com/a/ljj7XWp 
@@ -17,13 +17,19 @@ https://imgur.com/a/ljj7XWp
 Imgur album for cropped Trouble Brewing Tokens:
 https://imgur.com/a/yEKt46k
 
+Fancy text:
+https://lingojam.com/FancyTextGenerator
+
 """
 
 # TODO
+# Night interactions
+# Lobby game start message: make it look better
+# Spy grimoire lookup
+# End night information/feedback
 # Drunk/poison effect when sending info
 # Better log with embed
-# Night action commands system
-# https://lingojam.com/FancyTextGenerator
+
 
 import globvars
 import configparser

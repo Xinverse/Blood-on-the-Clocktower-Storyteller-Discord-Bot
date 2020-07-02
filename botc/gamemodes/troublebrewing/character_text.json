@@ -65,7 +65,7 @@
         "instruction" : "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you.",
         "n1_addendum" : "",
         "action" : "Use `read <player1> and <player2>` in DM. They must be different players.",
-        "feedback" : "You have chosen to read the fortune of **{}** and **{}**. The result will be revealed to you at dawn.",
+        "feedback" : "You have chosen to read the fortune of {} and {} tonight. The result will be revealed to you at dawn.",
         "brief" : "The Fortune Teller detects who the Demon is, but sometimes thinks good players are Demons."
     },
 
@@ -87,7 +87,7 @@
         "instruction" : "Each night except for the first, choose a player (not yourself): they are safe from the Demon tonight.",
         "n1_addendum" : "You cannot protect on the first night.",
         "action" : "Use `protect <player>` in DM. You cannot protect yourself.",
-        "feedback" : "",
+        "feedback" : "You have chosen to protect {} tonight.",
         "brief" : "The Monk protects other players from the Demon."
     },
 
@@ -98,7 +98,7 @@
         "instruction" : "If you die at night, you will be prompted to choose a player: you learn their character.",
         "n1_addendum" : "Your ability is not activated yet, since you are still alive.",
         "action" : "Use `learn <player>` in DM.",
-        "feedback" : "",
+        "feedback" : "You have chosen to learn the character of {}. The result will be revealed to you at daybreak.",
         "brief" : "If the Ravenkeeper dies at night, they get to learn one player's character."
     },
 
@@ -153,7 +153,7 @@
         "instruction" : "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.",
         "n1_addendum" : "",
         "action" : "Use `serve <player>` in DM. You may not serve yourself.",
-        "feedback" : "",
+        "feedback" : "You have chosen to serve {} as your master tomorrow. Tomorrow, you may only vote if they are voting too.",
         "brief" : "The Butler may only vote when their Master (another player) votes."
     },
 
@@ -197,7 +197,7 @@
         "instruction" : "Each night, choose a player: their ability malfunctions tonight and tomorrow day.",
         "n1_addendum" : "",
         "action" : "Use `poison <player>` in DM.",
-        "feedback" : "",
+        "feedback" : "You have chosen to poison {} tonight.",
         "brief" : "The Poisoner secretly disrupts character abilities."
     },
 
@@ -241,7 +241,10 @@
         "instruction" : "Each night except the first, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.",
         "n1_addendum" : "You cannot kill on the first night.",
         "action" : "Use `kill <player>` in DM.",
-        "feedback" : "",
+        "feedback" : [
+            "You have chosen to kill {} tonight.", 
+            "You have decided to **starpass** tonight."
+        ],
         "brief" : "The Imp kills a player each night, and can make copies of itself... for a terrible price."
     }
 }

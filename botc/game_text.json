@@ -124,14 +124,14 @@
 
     "cmd_warnings" : {
 
-        "x_emoji" : "<:notallowed:723642802474450995>",
-        "dm_only" : "{} {} You may not use this command outside of DM channel.",
+        "x_emoji" : "<a:animated_cross:728029756372680785>",
+        "dm_only" : "{} {} You may not use this command outside of a private DM channel.",
         "lobby_only" : "{} {} You may not use this command outside of the public game text channel.",
         "alive_only" : "{} {} You may not use this command while dead.",
         "dead_only" : "{} {} You may not use this command while alive.",
         "day_only" : "{} {} You may not use this command during the nighttime.",
         "night_only" : "{} {} You may not use this command during the daytime.",
-        "player_not_found" : "{} {} One or more of specified target players is not found. The bot accepts input in the form of usernames, nicknames, mentions, and user ID's, typed out in full or partially.",
+        "player_not_found" : "{} {} Player(s) not found. Only usernames, nicknames, mentions, and user IDs, in full or partially, are accepted.",
         "no_self_targetting_str" : "{} {} You may not choose yourself as one of the targets.",
         "except_first_night_str" : "{} {} You may not use this ability on the first night.",
         "requires_one_target_str" : "{} {} You must pick exactly one target for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets.",
@@ -142,46 +142,57 @@
 
     "doc" : {
 
+        "frole" : {
+            "brief" : "force set a player's role to a specified one.",
+            "help" : "This debugging command changes a player's role to one that you specify. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. The role name can also be typed in full or partially.",
+            "description" : "[FROLE] command - BOTC (debug)"
+        },
+
+        "modkill" : {
+            "brief" : "modkill a player.",
+            "help" : "This debugging command modkills a specified player. The player will remain in the game, but as a dead player. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially.",
+            "description" : "[MODKILL] command - BOTC (debug)"
+        },
+
         "serve" : {
             "brief" : "Pick a 'serve' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
-            "description" : "[SERVE] command - BOTC",
-            "feedback" : "You have decided to serve **{}** as your master."
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "description" : "[SERVE] command - BOTC"
         },
 
         "poison" : {
             "brief" : "Pick a 'poison' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[POISON] command - BOTC"
         },
 
         "learn" : {
             "brief" : "Pick a 'learn' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[LEARN] command - BOTC"
         },
 
         "read" : {
             "brief" : "Pick a 'read' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[READ] command - BOTC"
         },
 
         "kill" : {
             "brief" : "Pick a 'kill' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[KILL] command - BOTC"
         },
 
         "slay" : {
             "brief" : "Pick a 'slay' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in the public game text channel.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in the public game text channel.",
             "description" : "[SLAY] command - BOTC"
         },
 
         "protect" : {
             "brief" : "Pick a 'protect' target.",
-            "help" : "The bot recognizes usernames, nicknames, user ID's and discriminators. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[PROTECT] command - BOTC"
         },
 

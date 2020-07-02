@@ -128,4 +128,10 @@ class Poisoner(Minion, TroubleBrewing, Character):
         assert len(targets) == 1, "Received a number of targets different than 1 for poisoner 'poison'"
         action = Action(player, targets, ActionTypes.poison, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
-        await player.user.send("You decided to poison **{}**.".format(targets[0].user.display_name))
+        msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
+        await player.user.send(msg)
+
+    async def exec_poison(self, poisoner_player):
+        """Execute the poison command (night interaction)"""
+        pass
+    

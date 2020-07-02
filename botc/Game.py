@@ -340,6 +340,7 @@ class Game(GameMeta):
       await self.make_nightfall()
       # Load game related commands
       globvars.client.load_extension("botc.botc_commands")
+      globvars.client.load_extension("botc.botc_debug_commands")
       # Start the game loop
       await self.master_game_loop()
    

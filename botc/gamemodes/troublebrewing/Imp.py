@@ -16,6 +16,10 @@ with open('botc/game_text.json') as json_file:
     strings = json.load(json_file)
     demon_bluff_str = strings["gameplay"]["demonbluffs"]
 
+with open('botutils/bot_text.json') as json_file:
+    bot_text = json.load(json_file)
+    butterfly = bot_text["esthetics"]["butterfly"]
+
 
 class Imp(Demon, TroubleBrewing, Character):
     """Imp: Each night*, choose a player: they die. If you kill yourself this way, 
@@ -137,10 +141,18 @@ class Imp(Demon, TroubleBrewing, Character):
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
+    @GameLogic.except_first_night
     async def register_kill(self, player, targets):
         """Kill command"""
         # Must be 1 target
         assert len(targets) == 1, "Received a number of targets different than 1 for imp 'kill'"
         action = Action(player, targets, ActionTypes.kill, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
-        await player.user.send("You decided to kill **{}**.".format(targets[0].user.display_name))
+        # Normal kill
+        if player.user.id != targets[0].user.id:
+            msg = butterfly + " " + character_text["feedback"][0].format(targets[0].game_nametag)
+            await player.user.send(msg)
+        # Starpass
+        else:
+            msg = butterfly + " " + character_text["feedback"][1].format(targets[0].game_nametag)
+            await player.user.send(msg)

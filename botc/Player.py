@@ -1,7 +1,14 @@
 """Contains the Player class"""
 
+import botutils
+from discord.ext import commands
 from .PlayerState import PlayerState
 from .abilities import ActionGrid
+
+
+class AlreadyDead(commands.CommandInvokeError):
+    """Error for when an already dead player is killed again"""
+    pass
 
 
 class Player:
@@ -21,7 +28,21 @@ class Player:
         self.action_grid = ActionGrid()  # ActionGrib object
         self._status_effects = []  # List object
     
+    def exec_change_role(self, new_role):
+        """Change the player's old role to a new role"""
+        self._role_obj = new_role
+    
+    async def exec_real_death(self):
+        """Turn the player's real state into the death state"""
+        if self.is_dead():
+            raise AlreadyDead("Player is already dead, you are trying to kill them again.")
+        self._state_obj = PlayerState.dead
+        self._apparent_state_obj = PlayerState.dead
+        await botutils.add_dead_role(self.user)
+        await botutils.remove_alive_role(self.user)
+    
     def add_status_effect(self, new_status_effect):
+        """Add a status effect"""
         self._status_effects.append(new_status_effect)
     
     def is_apparently_alive(self):
@@ -38,6 +59,11 @@ class Player:
 
     def is_fleaved(self):
         return self.state == PlayerState.fleaved
+    
+    @property
+    def game_nametag(self):
+        """Return a nicely formatted name for the player."""
+        return f"**{self.user.display_name}** `({self.user.id})`"
 
     @property
     def user(self):

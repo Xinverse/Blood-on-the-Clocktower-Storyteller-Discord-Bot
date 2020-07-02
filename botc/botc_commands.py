@@ -115,7 +115,7 @@ def check_if_can_read(ctx):
     """Return true if the command user can use the command "read"
     Command check function
     """
-    if can_use_learn(ctx.author.id):
+    if can_use_read(ctx.author.id):
         return True
     else:
         raise RoleCannotUseCommand("Cannot use read command (BoTC)")
@@ -310,7 +310,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         usage: serve <player> and <player> and...
         characters: butler
         """
-        print("serve command detected")
         player = BOTCUtils.get_player_from_id(ctx.author.id)
         await player.role.ego_self.register_serve(player, master)
 
@@ -333,13 +332,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             return
-        # Missing argument -> commands.MissingRequiredArgument
-        elif isinstance(error, commands.MissingRequiredArgument):
-            player = BOTCUtils.get_player_from_id(ctx.author.id)
-            try:
-                await ctx.author.send(player.role.ego_self.emoji + " " + player.role.ego_self.instruction)
-            except discord.Forbidden:
-                pass
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             try:
@@ -350,6 +342,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         elif isinstance(error, AliveOnlyCommand):
             try:
                 await ctx.author.send(documentation["cmd_warnings"]["alive_only"].format(ctx.author.mention, emoji))
+            except discord.Forbidden:
+                pass
+        # Missing argument -> commands.MissingRequiredArgument
+        elif isinstance(error, commands.MissingRequiredArgument):
+            player = BOTCUtils.get_player_from_id(ctx.author.id)
+            msg = player.role.ego_self.emoji + " " + player.role.ego_self.instruction + " " + player.role.ego_self.action
+            try:
+                await ctx.author.send(msg)
             except discord.Forbidden:
                 pass
         else:
@@ -378,7 +378,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         usage: poison <player> and <player> and...
         characters: poisoner
         """
-        print("poison command detected")
         player = BOTCUtils.get_player_from_id(ctx.author.id)
         await player.role.ego_self.register_poison(player, poisoned)
 
@@ -401,13 +400,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             return
-        # Missing argument -> commands.MissingRequiredArgument
-        elif isinstance(error, commands.MissingRequiredArgument):
-            player = BOTCUtils.get_player_from_id(ctx.author.id)
-            try:
-                await ctx.author.send(player.role.ego_self.emoji + " " + player.role.ego_self.instruction)
-            except discord.Forbidden:
-                pass
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             try:
@@ -418,6 +410,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         elif isinstance(error, AliveOnlyCommand):
             try:
                 await ctx.author.send(documentation["cmd_warnings"]["alive_only"].format(ctx.author.mention, emoji))
+            except discord.Forbidden:
+                pass
+        # Missing argument -> commands.MissingRequiredArgument
+        elif isinstance(error, commands.MissingRequiredArgument):
+            player = BOTCUtils.get_player_from_id(ctx.author.id)
+            msg = player.role.ego_self.emoji + " " + player.role.ego_self.instruction + " " + player.role.ego_self.action
+            try:
+                await ctx.author.send(msg)
             except discord.Forbidden:
                 pass
         else:
@@ -468,13 +468,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             return
-        # Missing argument -> commands.MissingRequiredArgument
-        elif isinstance(error, commands.MissingRequiredArgument):
-            player = BOTCUtils.get_player_from_id(ctx.author.id)
-            try:
-                await ctx.author.send(player.role.ego_self.emoji + " " + player.role.ego_self.instruction)
-            except discord.Forbidden:
-                pass
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             try:
@@ -485,6 +478,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         elif isinstance(error, DeadOnlyCommand):
             try:
                 await ctx.author.send(documentation["cmd_warnings"]["dead_only"].format(ctx.author.mention, emoji))
+            except discord.Forbidden:
+                pass
+        # Missing argument -> commands.MissingRequiredArgument
+        elif isinstance(error, commands.MissingRequiredArgument):
+            player = BOTCUtils.get_player_from_id(ctx.author.id)
+            msg = player.role.ego_self.emoji + " " + player.role.ego_self.instruction + " " + player.role.ego_self.action
+            try:
+                await ctx.author.send(msg)
             except discord.Forbidden:
                 pass
         else:
@@ -513,7 +514,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         usage: read <player> and <player> and...
         characters: fortune teller
         """
-        print("read command detected")
         player = BOTCUtils.get_player_from_id(ctx.author.id)
         await player.role.ego_self.register_read(player, read)
 
@@ -536,13 +536,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             return
-        # Missing argument -> commands.MissingRequiredArgument
-        elif isinstance(error, commands.MissingRequiredArgument):
-            player = BOTCUtils.get_player_from_id(ctx.author.id)
-            try:
-                await ctx.author.send(player.role.ego_self.emoji + " " + player.role.ego_self.instruction)
-            except discord.Forbidden:
-                pass
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             try:
@@ -553,6 +546,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         elif isinstance(error, AliveOnlyCommand):
             try:
                 await ctx.author.send(documentation["cmd_warnings"]["alive_only"].format(ctx.author.mention, emoji))
+            except discord.Forbidden:
+                pass
+        # Missing argument -> commands.MissingRequiredArgument
+        elif isinstance(error, commands.MissingRequiredArgument):
+            player = BOTCUtils.get_player_from_id(ctx.author.id)
+            msg = player.role.ego_self.emoji + " " + player.role.ego_self.instruction + " " + player.role.ego_self.action
+            try:
+                await ctx.author.send(msg)
             except discord.Forbidden:
                 pass
         else:
@@ -605,13 +606,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             return
-        # Missing argument -> commands.MissingRequiredArgument
-        elif isinstance(error, commands.MissingRequiredArgument):
-            player = BOTCUtils.get_player_from_id(ctx.author.id)
-            try:
-                await ctx.author.send(player.role.ego_self.emoji + " " + player.role.ego_self.instruction)
-            except discord.Forbidden:
-                pass
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             try:
@@ -622,6 +616,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         elif isinstance(error, AliveOnlyCommand):
             try:
                 await ctx.author.send(documentation["cmd_warnings"]["alive_only"].format(ctx.author.mention, emoji))
+            except discord.Forbidden:
+                pass
+        # Missing argument -> commands.MissingRequiredArgument
+        elif isinstance(error, commands.MissingRequiredArgument):
+            player = BOTCUtils.get_player_from_id(ctx.author.id)
+            msg = player.role.ego_self.emoji + " " + player.role.ego_self.instruction + " " + player.role.ego_self.action
+            try:
+                await ctx.author.send(msg)
             except discord.Forbidden:
                 pass
         else:
@@ -669,13 +671,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             return
-        # Missing argument -> commands.MissingRequiredArgument
-        elif isinstance(error, commands.MissingRequiredArgument):
-            player = BOTCUtils.get_player_from_id(ctx.author.id)
-            try:
-                await ctx.author.send(player.role.ego_self.emoji + " " + player.role.ego_self.instruction)
-            except discord.Forbidden:
-                pass
         # Incorrect channel -> NotDMChannel
         elif isinstance(error, NotLobbyChannel):
             try:
@@ -692,6 +687,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         elif isinstance(error, AliveOnlyCommand):
             try:
                 await ctx.author.send(documentation["cmd_warnings"]["alive_only"].format(ctx.author.mention, emoji))
+            except discord.Forbidden:
+                pass
+        # Missing argument -> commands.MissingRequiredArgument
+        elif isinstance(error, commands.MissingRequiredArgument):
+            player = BOTCUtils.get_player_from_id(ctx.author.id)
+            msg = player.role.ego_self.emoji + " " + player.role.ego_self.instruction + " " + player.role.ego_self.action
+            try:
+                await ctx.author.send(msg)
             except discord.Forbidden:
                 pass
         else:
@@ -742,13 +745,6 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             return
-        # Missing argument -> commands.MissingRequiredArgument
-        elif isinstance(error, commands.MissingRequiredArgument):
-            player = BOTCUtils.get_player_from_id(ctx.author.id)
-            try:
-                await ctx.author.send(player.role.ego_self.emoji + " " + player.role.ego_self.instruction)
-            except discord.Forbidden:
-                pass
         # Incorrect phase -> NotNight
         elif isinstance(error, NotNight):
             try:
@@ -759,6 +755,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         elif isinstance(error, AliveOnlyCommand):
             try:
                 await ctx.author.send(documentation["cmd_warnings"]["alive_only"].format(ctx.author.mention, emoji))
+            except discord.Forbidden:
+                pass
+        # Missing argument -> commands.MissingRequiredArgument
+        elif isinstance(error, commands.MissingRequiredArgument):
+            player = BOTCUtils.get_player_from_id(ctx.author.id)
+            msg = player.role.ego_self.emoji + " " + player.role.ego_self.instruction + " " + player.role.ego_self.action
+            try:
+                await ctx.author.send(msg)
             except discord.Forbidden:
                 pass
         else:

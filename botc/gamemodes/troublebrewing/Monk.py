@@ -11,6 +11,10 @@ import globvars
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.monk.value.lower()]
 
+with open('botutils/bot_text.json') as json_file:
+    bot_text = json.load(json_file)
+    butterfly = bot_text["esthetics"]["butterfly"]
+
 
 class Monk(Townsfolk, TroubleBrewing, Character):
     """Monk: Each night*, choose a player (not yourself): they are safe from the Demon tonight.
@@ -87,10 +91,12 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
     @GameLogic.no_self_targetting
+    @GameLogic.except_first_night
     async def register_protect(self, player, targets):
         """Protect command"""
         # Must be 1 target
         assert len(targets) == 1, "Received a number of targets different than 1 for monk 'protect'"
         action = Action(player, targets, ActionTypes.protect, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
-        await player.user.send("You decided to protect **{}**.".format(targets[0].user.display_name))
+        msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
+        await player.user.send(msg)

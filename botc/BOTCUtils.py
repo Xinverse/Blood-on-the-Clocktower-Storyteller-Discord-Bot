@@ -13,7 +13,27 @@ with open('botc/game_text.json') as json_file:
     requires_one_target_str = documentation["cmd_warnings"]["requires_one_target_str"]
     requires_two_targets_str = documentation["cmd_warnings"]["requires_two_targets_str"]
     requires_different_targets_str = documentation["cmd_warnings"]["requires_different_targets_str"]
+
+
+# ========== TARGETS ===============================================================
+# ----------------------------------------------------------------------------------
+
+class Targets(list):
+   """Targets class for storing BoTC characters' targets"""
+
+   def __init__(self, target_list):
+      self.target_list = target_list
+      self.target_nb = len(self.target_list)
    
+   def __len__(self):
+      return len(self.target_list)
+   
+   def __iter__(self):
+      yield from self.target_list
+   
+   def __getitem__(self, index):
+      return list.__getitem__(self.target_list, index)
+
 
 def get_number_image(nb):
    """Get a random bloodied number image corresponding to the input integer"""
@@ -22,57 +42,6 @@ def get_number_image(nb):
    possibilities = numbers[str(nb)]
    chosen = random.choice(possibilities)
    return chosen
-
-
-class NotAPlayer(commands.CheckFailure):
-    """Raised when a command user is not a registered player"""
-    pass
-
-
-class RoleCannotUseCommand(commands.CheckFailure):
-   """Raised when a command user doesn't have a character that allows for a command to be used """
-   pass
-
-
-class NotDMChannel(commands.CheckFailure):
-   """Raised when a command user used the command in a channel that is not the bot dm"""
-   pass
-
-
-class NotLobbyChannel(commands.CheckFailure):
-   """Raised when a command user used the command in a channel that is not the lobby"""
-   pass
-
-
-class NotDay(commands.CheckFailure):
-   """Raised when a command user used the command during another phase than
-   day when not supposed to
-   """
-   pass
-
-
-class NotDawn(commands.CheckFailure):
-   """Raised when a command user used the command during another phase than 
-   dawn when not supposed to
-   """
-   pass
-
-
-class NotNight(commands.CheckFailure):
-   """Raised when a command user used the command during another phase than
-   night when not supposed to
-   """
-   pass
-
-
-class DeadOnlyCommand(commands.CheckFailure):
-   """Raised when a command user used a command reserved for dead players only."""
-   pass
-
-
-class AliveOnlyCommand(commands.CheckFailure):
-   """Raised when a command user used a command reserved for alive players only."""
-   pass
 
 
 class BOTCUtils:
@@ -137,40 +106,62 @@ class BOTCUtils:
       return None
 
 
-class Targets(list):
-   """Targets class for storing BoTC characters' targets"""
+# ========== CHECK ERRORS ==========================================================
+# ----------------------------------------------------------------------------------
 
-   def __init__(self, target_list):
-      self.target_list = target_list
-      self.target_nb = len(self.target_list)
-   
-   def __len__(self):
-      return len(self.target_list)
-   
-   def __iter__(self):
-      yield from self.target_list
-   
-   def __getitem__(self, index):
-      return list.__getitem__(self.target_list, index)
+class NotAPlayer(commands.CheckFailure):
+    """Raised when a command user is not a registered player"""
+    pass
 
 
-class PlayerParser(commands.Converter):
-   """Parse the player name input arguments from game commands"""
+class RoleCannotUseCommand(commands.CheckFailure):
+   """Raised when a command user doesn't have a character that allows for a command to be used """
+   pass
 
-   async def convert(self, ctx, argument):
-      """Convert to player objects, and split at "and" keyword"""
-      raw_targets = argument.split(" and ")
-      actual_targets = []
-      for raw in raw_targets:
-         player = BOTCUtils.get_player_from_string(raw)
-         if player:
-            actual_targets.append(player)
-         else:
-            msg = player_not_found.format(ctx.author.mention, x_emoji, raw if len(raw) <= 1000 else raw[:1000])
-            await ctx.author.send(msg)
-            raise commands.BadArgument(f"Player {raw} not found.")
-      return Targets(actual_targets)
 
+class NotDMChannel(commands.CheckFailure):
+   """Raised when a command user used the command in a channel that is not the bot dm"""
+   pass
+
+
+class NotLobbyChannel(commands.CheckFailure):
+   """Raised when a command user used the command in a channel that is not the lobby"""
+   pass
+
+
+class NotDay(commands.CheckFailure):
+   """Raised when a command user used the command during another phase than
+   day when not supposed to
+   """
+   pass
+
+
+class NotDawn(commands.CheckFailure):
+   """Raised when a command user used the command during another phase than 
+   dawn when not supposed to
+   """
+   pass
+
+
+class NotNight(commands.CheckFailure):
+   """Raised when a command user used the command during another phase than
+   night when not supposed to
+   """
+   pass
+
+
+class DeadOnlyCommand(commands.CheckFailure):
+   """Raised when a command user used a command reserved for dead players only."""
+   pass
+
+
+class AliveOnlyCommand(commands.CheckFailure):
+   """Raised when a command user used a command reserved for alive players only."""
+   pass
+
+
+# ========== GAME LOGIC ============================================================
+# ----------------------------------------------------------------------------------
 
 class AbilityForbidden(commands.errors.CommandInvokeError):
    """Custom parent classes for all the following exceptions"""
@@ -276,3 +267,71 @@ class GameLogic:
             raise NoRepeatTargets(requires_different_targets_str.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner
+
+
+# ========== CONVERTERS ============================================================
+# ----------------------------------------------------------------------------------
+
+class PlayerNotFound(commands.BadArgument):
+   """Error for when a player argument passed is not found"""
+   pass
+
+
+class RoleNotFound(commands.BadArgument):
+   """Error for when a role argument passed is not found"""
+   pass
+
+
+class PlayerConverter(commands.Converter):
+   """Parse the player name input arguments from commands"""
+
+   async def convert(self, ctx, argument):
+      """Convert to player objects"""
+      player = BOTCUtils.get_player_from_string(argument)
+      if player:
+         return player
+      raise PlayerNotFound(f"Player {argument} not found.")
+
+
+class RoleConverter(commands.Converter):
+    """Convert a role name to a botc character class"""
+
+    async def convert(self, ctx, argument):
+        """
+        Find a role name amongst the botc pack. 
+        Return the role class if it is found, else return None
+
+        The game_packs variable is coded in the following way:
+
+        {'botc': {'game_obj': <botc.Game.Game object at 0x1187bffd0>, 'gamemodes': {'trouble-brewing': 
+        [Baron Obj, Butler Obj, Chef Obj, Drunk Obj, Empath Obj, Fortune Teller Obj, Imp Obj, 
+        Investigator Obj, Librarian Obj, Mayor Obj, Monk Obj, Poisoner Obj, Ravenkeeper Obj, 
+        Recluse Obj, Saint Obj, Scarlet Woman Obj, Slayer Obj, Soldier Obj, Undertaker Obj, 
+        Virgin Obj, Washerwoman Obj]}}}
+        """
+        import globvars
+        editions = globvars.master_state.game_packs["botc"]["gamemodes"]
+        for edition in editions:
+            role_pool = editions[edition]
+            for role in role_pool:
+                if argument.lower() in role.name.lower():
+                    return role
+        raise RoleNotFound(f"Role {argument} not found.")
+
+
+class PlayerParser(commands.Converter):
+   """Parse the player name input arguments from game commands"""
+
+   async def convert(self, ctx, argument):
+      """Convert to player objects, and split at "and" keyword"""
+      raw_targets = argument.split(" and ")
+      actual_targets = []
+      for raw in raw_targets:
+         player = BOTCUtils.get_player_from_string(raw)
+         if player:
+            actual_targets.append(player)
+         else:
+            msg = player_not_found.format(ctx.author.mention, x_emoji)
+            await ctx.author.send(msg)
+            raise commands.BadArgument(f"Player {raw} not found.")
+      return Targets(actual_targets)

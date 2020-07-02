@@ -127,5 +127,5 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
         assert len(targets) == 2, "Received a number of targets different than 2 for fortune teller 'read'"
         action = Action(player, targets, ActionTypes.read, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
-        await player.user.send("You decided to read the fortune of **{}** " \
-            "and **{}**.".format(targets[0].user.display_name, targets[1].user.display_name))
+        msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag, targets[1].game_nametag)
+        await player.user.send(msg)
