@@ -15,9 +15,9 @@ def crop(image_path, saved_location):
 
 
 if __name__ == '__main__':
-    for filename in os.listdir("/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/tb_tokens"):
+    for filename in os.listdir("/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/bmr_tokens"):
         if filename.endswith(".png"):
             print(filename)
-            path = "/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/tb_tokens/" + filename
-            new_path = "/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/tb_tokens_cropped/" + filename
+            path = "/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/bmr_tokens/" + filename
+            new_path = "/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/bmr_tokens_cropped/" + filename
             crop(path, new_path)
