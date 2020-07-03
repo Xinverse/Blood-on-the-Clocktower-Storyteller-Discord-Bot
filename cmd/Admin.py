@@ -30,10 +30,19 @@ class Admin(commands.Cog, name="Admin Commands"):
         return botutils.check_if_admin(ctx)
     
 
-    # ---------- Test COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "test")
-    async def test(self, ctx):
-       
+    # ---------- OP COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "op")
+    async def op(self, ctx):
+        """Give the admin role to the user"""
+        await botutils.add_admin_role(ctx.author)
+        await ctx.send("     <a:rabbit6d:722677068818546730>")
+    
+
+    # ---------- DEOP COMMAND ----------------------------------------
+    @commands.command(pass_context=True, name = "deop")
+    async def deop(self, ctx):
+        """Remove the admin role from the user"""
+        await botutils.remove_admin_role(ctx.author)
         await ctx.send("<a:rabbit6d:722677068818546730>")
 
 

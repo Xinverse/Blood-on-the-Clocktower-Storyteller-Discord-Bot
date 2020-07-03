@@ -1,5 +1,8 @@
 """Contains the custum game error classes"""
 
+from discord.ext import commands
+
+
 class GameError(Exception):
     """Game Error class, for general errors"""
     pass
@@ -17,4 +20,9 @@ class TooFewPlayers(Exception):
 
 class IncorrectNumberOfArguments(Exception):
     """Incorrect number of arguments passed"""
+    pass
+
+
+class AlreadyDead(commands.CommandInvokeError):
+    """Error for when an already dead player is killed again"""
     pass

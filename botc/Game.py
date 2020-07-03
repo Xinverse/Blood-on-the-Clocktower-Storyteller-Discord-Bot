@@ -48,6 +48,11 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
     tb_lore = strings["gameplay"]["tb_lore"]
 
+with open('botutils/bot_text.json') as json_file: 
+    language = json.load(json_file)
+    skull_unicode = language["esthetics"]["skull"]
+    fquit_unicode = language["esthetics"]["fquit"]
+
 
 class Setup:
    """A class to facilitate role to player access"""
@@ -261,9 +266,9 @@ class Game(GameMeta):
          if player.is_alive():
             line = f"{player.user.display_name} ({player.user.id}) [alive]\n"
          elif player.is_dead():
-            line = f"{player.user.display_name} ({player.user.id}) [dead]\n"
+            line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode}\n"
          else:
-            line = f"{player.user.display_name} ({player.user.id}) [quit]\n"
+            line = f"{player.user.display_name} ({player.user.id}) [quit] {fquit_unicode}\n"
          msg += line
       msg += "```"
       return msg
@@ -377,7 +382,7 @@ class Game(GameMeta):
       await asyncio.sleep(BASE_NIGHT)
 
       # Increment (night)
-      for _ in range(4):
+      for _ in range(0):
          if self.has_received_all_expected_night_actions():
             break
          await asyncio.sleep(INCREMENT)

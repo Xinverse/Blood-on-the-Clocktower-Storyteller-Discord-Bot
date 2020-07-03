@@ -132,6 +132,9 @@
         "day_only" : "{} {} You may not use this command during the nighttime.",
         "night_only" : "{} {} You may not use this command during the daytime.",
         "player_not_found" : "{} {} Player(s) not found. Only usernames, nicknames, mentions, and user IDs, in full or partially, are accepted.",
+        "role_not_found" : "{} {} Role not found.",
+        "already_dead" : "{} {} That player is already dead.",
+        "missing_arguments" : "{} {} You are missing arguments.",
         "no_self_targetting_str" : "{} {} You may not choose yourself as one of the targets.",
         "except_first_night_str" : "{} {} You may not use this ability on the first night.",
         "requires_one_target_str" : "{} {} You must pick exactly one target for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets.",
@@ -145,13 +148,15 @@
         "frole" : {
             "brief" : "force set a player's role to a specified one.",
             "help" : "This debugging command changes a player's role to one that you specify. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. The role name can also be typed in full or partially.",
-            "description" : "[FROLE] command - BOTC (debug)"
+            "description" : "[FROLE] command - BOTC (debug)",
+            "feedback" : "{} Successfully changed {}'s character from `{}` to {} `{}`."
         },
 
         "modkill" : {
             "brief" : "modkill a player.",
             "help" : "This debugging command modkills a specified player. The player will remain in the game, but as a dead player. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially.",
-            "description" : "[MODKILL] command - BOTC (debug)"
+            "description" : "[MODKILL] command - BOTC (debug)",
+            "feedback" : "{} Successfully modkilled {} with the character of {} `{}`."
         },
 
         "serve" : {

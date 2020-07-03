@@ -3,7 +3,8 @@
 import json 
 import discord
 import datetime
-from botc import Townsfolk, Character
+import random
+from botc import Townsfolk, Character, BOTCUtils
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -77,12 +78,26 @@ class Chef(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
+    def __create_droisoned_info(self):
+        """Create drunk/poisoned information for the n1 chef info"""
+
+        import globvars
+        total_nb_evils = len(globvars.master_state.game.setup.minions) + \
+            len(globvars.master_state.game.setup.demon)
+        possibilities = range(total_nb_evils)
+        ret = random.choice(possibilities)
+        return ret
+    
     async def send_n1_end_message(self, recipient):
         """Send the number of pairs of evils sitting together."""
 
         from botc.BOTCUtils import get_number_image
 
-        evil_pair_count = self.get_nb_pairs_of_evils()
+        player = BOTCUtils.get_player_from_id(recipient.id)
+        if player.is_droisoned():
+            evil_pair_count = self.__create_droisoned_info()
+        else:
+            evil_pair_count = self.get_nb_pairs_of_evils()
         link = get_number_image(evil_pair_count)
 
         msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"

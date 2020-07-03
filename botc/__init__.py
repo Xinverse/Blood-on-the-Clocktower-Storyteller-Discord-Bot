@@ -9,7 +9,8 @@ from .Category import Category
 from .Character import Character
 from .chrono import GameChrono
 from .Demon import Demon
-from .errors import GameError, IncorrectNumberOfArguments, TooFewPlayers, TooManyPlayers
+from .errors import GameError, IncorrectNumberOfArguments, TooFewPlayers, TooManyPlayers, \
+    AlreadyDead
 from .Minion import Minion
 from .Nomination import Nomination
 from .Outsider import Outsider

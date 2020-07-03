@@ -10,10 +10,25 @@ LOBBY_CHANNEL_ID = Config["user"]["LOBBY_CHANNEL_ID"]
 SERVER_ID = Config["user"]["SERVER_ID"]
 ALIVE_ROLE_ID = Config["user"]["ALIVE_ROLE_ID"]
 DEAD_ROLE_ID = Config["user"]["DEAD_ROLE_ID"]
+ADMINS_ROLE_ID = Config["user"]["ADMINS_ROLE_ID"]
+
+
+async def add_admin_role(user):
+    """Grant the admin role to a member"""
+    role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ADMINS_ROLE_ID))
+    member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(user.id)
+    await member_obj.add_roles(role)
+
+
+async def remove_admin_role(user):
+    """Remove the admin role to a member"""
+    role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ADMINS_ROLE_ID))
+    member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(user.id)
+    await member_obj.remove_roles(role)
 
 
 async def add_alive_role(member_obj):
-    """Grand the alive role to a player"""
+    """Grant the alive role to a player"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
     await member_obj.add_roles(role)
 

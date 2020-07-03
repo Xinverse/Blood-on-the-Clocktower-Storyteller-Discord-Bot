@@ -2,8 +2,7 @@
 
 import json 
 import discord
-from botc import Action, ActionTypes
-from botc import Townsfolk, Character
+from botc import Action, ActionTypes, Townsfolk, Character, SafetyFromDemon
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -100,3 +99,8 @@ class Monk(Townsfolk, TroubleBrewing, Character):
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
         msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
         await player.user.send(msg)
+    
+    async def exec_protect(self, monk_player, protected_player):
+        """Execute the protection action (night ability interaction)"""
+        if not monk_player.is_droisoned():
+            protected_player.add_status_effect(SafetyFromDemon(monk_player, protected_player))

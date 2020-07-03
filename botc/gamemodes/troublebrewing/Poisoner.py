@@ -2,8 +2,7 @@
 
 import json 
 import discord
-from botc import Action, ActionTypes
-from botc import Minion, Character
+from botc import Action, ActionTypes, Minion, Character, Poison
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -131,7 +130,8 @@ class Poisoner(Minion, TroubleBrewing, Character):
         msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
         await player.user.send(msg)
 
-    async def exec_poison(self, poisoner_player):
-        """Execute the poison command (night interaction)"""
-        pass
+    async def exec_poison(self, poisoner_player, poisoned_player):
+        """Execute the poison actions (night interaction)"""
+        if not poisoner_player.is_droisoned():
+            poisoner_player.add_status_effect(Poison(poisoner_player, poisoned_player))
     

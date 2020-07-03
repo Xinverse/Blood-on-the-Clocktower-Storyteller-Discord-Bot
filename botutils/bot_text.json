@@ -22,7 +22,9 @@
         "loading_emoji" : "<a:loading:723373502052434000>",
         "scroll" : "<:magicscroll:725879129945407530>",
         "butterfly" : "<a:butterfly_effect:726137547301978152>",
-        "check_emoji" : "<a:animated_check:728031109094309970>"
+        "check_emoji" : "<a:animated_check:728031109094309970>",
+        "skull" : "💀",
+        "fquit" : "❌"
 
     },
 

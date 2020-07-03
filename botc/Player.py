@@ -1,14 +1,9 @@
 """Contains the Player class"""
 
 import botutils
-from discord.ext import commands
 from .PlayerState import PlayerState
 from .abilities import ActionGrid
-
-
-class AlreadyDead(commands.CommandInvokeError):
-    """Error for when an already dead player is killed again"""
-    pass
+from .errors import AlreadyDead
 
 
 class Player:
@@ -40,6 +35,25 @@ class Player:
         self._apparent_state_obj = PlayerState.dead
         await botutils.add_dead_role(self.user)
         await botutils.remove_alive_role(self.user)
+    
+    def is_droisoned(self):
+        """Return true if the player is currently drunk or poisoned (droison) when the 
+        check is performed, false otherwise.
+        """
+        from botc.gamemodes.troublebrewing import Drunk
+        from botc import StatusList
+        # The player's true role is Drunk
+        if self.role.true_self.name == Drunk().name:
+            return True
+        # The player is affected by an active poison effect
+        elif StatusList.poison in \
+            [status.effect for status in self.status_effects if status.is_active()]:
+            return True
+        # The player is affected by an active drunkenness effect
+        elif StatusList.drunkenness in \
+            [status.effect for status in self.status_effects if status.is_active()]:
+            return True
+        return False
     
     def add_status_effect(self, new_status_effect):
         """Add a status effect"""
@@ -87,7 +101,7 @@ class Player:
     
     @property
     def status_effects(self):
-        return self.status_effects
+        return self._status_effects
 
     def __repr__(self):
         return f"{str(self.user.display_name)} ({self.user.id}) is {str(self.role)}"
