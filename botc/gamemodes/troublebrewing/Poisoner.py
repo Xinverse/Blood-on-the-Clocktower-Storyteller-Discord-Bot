@@ -87,37 +87,14 @@ class Poisoner(Minion, TroubleBrewing, Character):
         embed_obj.add_field(name = butterfly + " **「 Your Action 」**", value = msg, inline = False)
         return embed_obj
     
-    async def send_first_night_instruction(self, recipient):
-        """Send demon and minion list if there are 7 or more players. 
-        Otherwise, send the default instruction string.
-        """
-        # Seven or more players, send the evil list
-        if globvars.master_state.game.nb_players >= 7:
-            msg1 = globvars.master_state.game.setup.create_evil_team_string()
-            msg2 = self.emoji + " " + self.instruction
-            msg = msg1 + msg2
-            try:
-                await recipient.send(msg)
-            except discord.Forbidden:
-                pass
-        # Less than seven players, teensyville rules
-        else:
-            msg = self.emoji + " " + self.instruction
-            try:
-                await recipient.send(msg)
-            except discord.Forbidden:
-                pass
-    
-    async def send_regular_night_instruction(self, recipient):
-        """Query the player for "poison" command"""
-        
-        msg = self.emoji + " " + self.instruction
-        msg += "\n\n"
-        msg += globvars.master_state.game.create_sitting_order_stats_string()
-        try: 
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
+    def has_finished_night_action(self, player):
+        """Return True if poisoner has submitted the protect action"""
+
+        if player.is_alive():
+            current_phase_id = globvars.master_state.game._chrono.phase_id
+            received_action = player.action_grid.retrieve_an_action(current_phase_id)
+            return received_action is not None and received_action.action_type == ActionTypes.poison
+        return True
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target

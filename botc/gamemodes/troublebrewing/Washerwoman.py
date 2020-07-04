@@ -116,7 +116,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character):
 
         # First set the social self
         for player in globvars.master_state.game.sitting_order:
-            player.role.set_new_social_self()
+            player.role.set_new_social_self(player)
 
         # Choose the player that registers as minion
         townsfolks = []

@@ -3,8 +3,7 @@
 import json
 import random
 import discord 
-from botc import Action, ActionTypes
-from botc import Townsfolk, Character, Storyteller, RedHerring
+from botc import Action, ActionTypes, Townsfolk, Character, Storyteller, RedHerring
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -87,42 +86,30 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character):
         msg += globvars.master_state.game.create_sitting_order_stats_string()
         embed_obj.add_field(name = butterfly + " **「 Your Action 」**", value = msg, inline = False)
         return embed_obj
-
-    async def send_first_night_instruction(self, recipient):
-        """Send query for "read" command."""
-
-        msg = self.emoji + " " + self.instruction
-        msg += "\n\n"
-        msg += globvars.master_state.game.create_sitting_order_stats_string()
-        try: 
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
-    
-    async def send_regular_night_instruction(self, recipient):
-        """Send query for "read" command."""
-
-        msg = self.emoji + " " + self.instruction
-        msg += "\n\n"
-        msg += globvars.master_state.game.create_sitting_order_stats_string()
-        try: 
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
     
     def exec_init_role(self, setup):
         """Assign one of the townsfolks or outsiders as a red herring"""
+        
         possibilities = setup.townsfolks + setup.outsiders
         chosen = random.choice(possibilities)
         chosen.add_status_effect(RedHerring(Storyteller(), chosen))
         globvars.logging.info(f">>> Fortune Teller [exec_init_role] Set red herring to {str(chosen)}")
+    
+    def has_finished_night_action(self, player):
+        """Return True if fortune teller has submitted the read action"""
+
+        if player.is_alive():
+            current_phase_id = globvars.master_state.game._chrono.phase_id
+            received_action = player.action_grid.retrieve_an_action(current_phase_id)
+            return received_action is not None and received_action.action_type == ActionTypes.read
+        return True
 
     @GameLogic.changes_not_allowed
     @GameLogic.requires_two_targets
     @GameLogic.requires_different_targets
     async def register_read(self, player, targets):
         """Read command"""
-        print("Code went into register_read")
+
         # Must be 2 targets
         assert len(targets) == 2, "Received a number of targets different than 2 for fortune teller 'read'"
         action = Action(player, targets, ActionTypes.read, globvars.master_state.game._chrono.phase_id)

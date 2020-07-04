@@ -123,7 +123,7 @@ class Chef(Townsfolk, TroubleBrewing, Character):
 
         # We initialize what their social self is going to be for this round of inspection
         for player in globvars.master_state.game.sitting_order:
-            player.role.set_new_social_self()
+            player.role.set_new_social_self(player)
 
         # Make a list of all pairs in the sitting order
         total = len(globvars.master_state.game.sitting_order)

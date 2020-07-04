@@ -35,7 +35,7 @@ class Admin(commands.Cog, name="Admin Commands"):
     async def op(self, ctx):
         """Give the admin role to the user"""
         await botutils.add_admin_role(ctx.author)
-        await ctx.send("     <a:rabbit6d:722677068818546730>")
+        await ctx.send(f"{ctx.author.mention} {botutils.BotEmoji.success}")
     
 
     # ---------- DEOP COMMAND ----------------------------------------
@@ -43,7 +43,7 @@ class Admin(commands.Cog, name="Admin Commands"):
     async def deop(self, ctx):
         """Remove the admin role from the user"""
         await botutils.remove_admin_role(ctx.author)
-        await ctx.send("<a:rabbit6d:722677068818546730>")
+        await ctx.send(f"{ctx.author.mention} {botutils.BotEmoji.success}")
 
 
     # ---------- FJOIN COMMAND ----------------------------------------

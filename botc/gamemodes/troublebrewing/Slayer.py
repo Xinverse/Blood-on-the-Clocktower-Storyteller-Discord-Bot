@@ -1,8 +1,7 @@
 """Contains the Slayer Character class"""
 
 import json
-from botc import Action, ActionTypes
-from botc import Townsfolk, Character
+from botc import Action, ActionTypes, Inventory, Flags, Townsfolk, Character
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -55,6 +54,10 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
         self._role_enum = TBRole.slayer
         self._emoji = "<:slayer:722687329050820648>"
 
+        self.inventory = Inventory(
+            Flags.slayer_unique_attempt
+        )
+
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
 
@@ -71,14 +74,22 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
-    @GameLogic.changes_not_allowed
     @GameLogic.unique_ability
     @GameLogic.requires_one_target
     async def register_slay(self, player, targets):
         """Slay command"""
+
         # Must be 1 target
         assert len(targets) == 1, "Received a number of targets different than 1 for slayer 'slay'"
         action = Action(player, targets, ActionTypes.slay, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
         await player.user.send("You decided to slay **{}**.".format(targets[0].user.display_name))
-
+    
+    async def exec_slay(self, slayer_player, slain_player):
+        """Execute the slay action (immediate effect)"""
+        
+        slayer_player.role.ego_self.inventory.remove_item_from_inventory(Flags.slayer_unique_attempt)
+        if not slayer_player.is_droisoned():
+            pass
+        else:
+            pass

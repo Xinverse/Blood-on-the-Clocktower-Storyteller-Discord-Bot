@@ -4,8 +4,7 @@ import json
 import botutils
 import discord
 from botc.BOTCUtils import GameLogic
-from botc import Outsider, Character
-from botc import Action, ActionTypes
+from botc import Outsider, Character, Action, ActionTypes
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -87,6 +86,15 @@ class Butler(Outsider, TroubleBrewing, Character):
         msg += globvars.master_state.game.create_sitting_order_stats_string()
         embed_obj.add_field(name = butterfly + " **「 Your Action 」**", value = msg, inline = False)
         return embed_obj
+    
+    def has_finished_night_action(self, player):
+        """Return True if butler has submitted the serve action"""
+        
+        if player.is_alive():
+            current_phase_id = globvars.master_state.game._chrono.phase_id
+            received_action = player.action_grid.retrieve_an_action(current_phase_id)
+            return received_action is not None and received_action.action_type == ActionTypes.serve
+        return True
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target

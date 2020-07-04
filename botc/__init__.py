@@ -11,6 +11,7 @@ from .chrono import GameChrono
 from .Demon import Demon
 from .errors import GameError, IncorrectNumberOfArguments, TooFewPlayers, TooManyPlayers, \
     AlreadyDead
+from .flag_inventory import Flags, Inventory
 from .Minion import Minion
 from .Nomination import Nomination
 from .Outsider import Outsider

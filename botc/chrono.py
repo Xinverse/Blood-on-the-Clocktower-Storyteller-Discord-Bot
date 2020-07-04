@@ -22,6 +22,9 @@ class GameChrono:
     def next(self):
         self.current += 1
     
+    def is_night_1(self):
+        return self.current == 1
+    
     @property
     def phase_id(self):
         return self.current

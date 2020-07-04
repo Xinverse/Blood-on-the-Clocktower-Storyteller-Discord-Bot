@@ -13,6 +13,8 @@ with open('botc/game_text.json') as json_file:
     requires_one_target_str = documentation["cmd_warnings"]["requires_one_target_str"]
     requires_two_targets_str = documentation["cmd_warnings"]["requires_two_targets_str"]
     requires_different_targets_str = documentation["cmd_warnings"]["requires_different_targets_str"]
+    changes_not_allowed = documentation["cmd_warnings"]["changes_not_allowed"]
+    unique_ability_used = documentation["cmd_warnings"]["unique_ability_used"]
 
 
 # ========== TARGETS ===============================================================
@@ -220,6 +222,16 @@ class GameLogic:
    def unique_ability(func):
       """Decorator for unique abilities to be used once per game"""
       def inner(self, player, targets):
+         from botc.gamemodes.troublebrewing import Slayer
+         from botc import Flags
+         # Slayer's unique "slay" ability
+         if player.role.ego_self.name == Slayer().name:
+            if not player.role.ego_self.inventory.has_item_in_inventory(Flags.slayer_unique_attempt):
+               raise UniqueAbilityError(unique_ability_used.format(player.user.mention, x_emoji))
+         # Future roles that have a unique ability must go into elif blocks, or else the uncaught 
+         # ones will automatically trigger an assertion error.
+         else:
+            assert 0, "Unique ability check went wrong."
          return func(self, player, targets)
       return inner
 
@@ -237,6 +249,9 @@ class GameLogic:
    def changes_not_allowed(func):
       """Decorator for abilities that cannot modify targets after inputting them"""
       def inner(self, player, targets):
+         import globvars
+         if player.role.ego_self.has_finished_night_action(player):
+            raise ChangesNotAllowed(changes_not_allowed.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner
    

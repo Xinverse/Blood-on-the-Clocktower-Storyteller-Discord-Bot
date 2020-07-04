@@ -3,8 +3,7 @@
 import json
 import discord
 import random
-from botc import Action, ActionTypes
-from botc import Demon, Townsfolk, Outsider, Character
+from botc import Action, ActionTypes, Demon, Townsfolk, Outsider, Character
 from botc.BOTCUtils import GameLogic, BOTCUtils
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -128,22 +127,23 @@ class Imp(Demon, TroubleBrewing, Character):
         globvars.logging.info(f">>> Imp: Received three demon bluffs {bluff_1}, {bluff_2} and {bluff_3}.")
         return (bluff_1, bluff_2, bluff_3)
     
-    async def send_regular_night_instruction(self, recipient):
-        """Query the player for "kill" command"""
-        
-        msg = self.emoji + " " + self.instruction
-        msg += "\n\n"
-        msg += globvars.master_state.game.create_sitting_order_stats_string()
-        try: 
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
+    def has_finished_night_action(self, player):
+        """Return True if imp has submitted the kill action"""
+
+        if player.is_alive():
+            if globvars.master_state.game._chrono.is_night_1():
+                return True
+            current_phase_id = globvars.master_state.game._chrono.phase_id
+            received_action = player.action_grid.retrieve_an_action(current_phase_id)
+            return received_action is not None and received_action.action_type == ActionTypes.kill
+        return True
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
     @GameLogic.except_first_night
     async def register_kill(self, player, targets):
         """Kill command"""
+        
         # Must be 1 target
         assert len(targets) == 1, "Received a number of targets different than 1 for imp 'kill'"
         action = Action(player, targets, ActionTypes.kill, globvars.master_state.game._chrono.phase_id)

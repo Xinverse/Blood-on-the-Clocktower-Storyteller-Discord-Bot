@@ -75,17 +75,18 @@ class Monk(Townsfolk, TroubleBrewing, Character):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
-
-    async def send_regular_night_instruction(self, recipient):
-        """Query the player for "protect" command"""
+    
+    def has_finished_night_action(self, player):
+        """Return True if monk has submitted the protect action"""
         
-        msg = self.instruction
-        msg += "\n\n"
-        msg += globvars.master_state.game.create_sitting_order_stats_string()
-        try: 
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
+        if player.is_alive():
+            # First night, monk ability does not act
+            if globvars.master_state.game._chrono.is_night_1():
+                return True
+            current_phase_id = globvars.master_state.game._chrono.phase_id
+            received_action = player.action_grid.retrieve_an_action(current_phase_id)
+            return received_action is not None and received_action.action_type == ActionTypes.protect
+        return True
     
     @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
@@ -93,6 +94,7 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     @GameLogic.except_first_night
     async def register_protect(self, player, targets):
         """Protect command"""
+
         # Must be 1 target
         assert len(targets) == 1, "Received a number of targets different than 1 for monk 'protect'"
         action = Action(player, targets, ActionTypes.protect, globvars.master_state.game._chrono.phase_id)
@@ -102,5 +104,6 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     
     async def exec_protect(self, monk_player, protected_player):
         """Execute the protection action (night ability interaction)"""
+
         if not monk_player.is_droisoned():
-            protected_player.add_status_effect(SafetyFromDemon(monk_player, protected_player))
+            protected_player.add_status_effect(SafetyFromDemon(monk_player, protected_player, 2))

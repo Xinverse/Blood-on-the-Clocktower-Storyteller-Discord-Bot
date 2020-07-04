@@ -8,6 +8,7 @@ from .checks import check_if_in_pregame, check_if_not_in_game, check_if_not_in_e
     check_if_lobby_or_dm_or_admin, check_if_lobby_or_spec_or_dm_or_admin, check_if_dm, \
     check_if_admin, check_if_lobby, check_if_not_ignored, return_false, return_true, \
     check_if_is_pregame_player
+from .emoji import BotEmoji
 from .helpers import make_ping, make_role_ping, strip_ping, get_member_obj, get_user_obj, \
     make_code_block, make_time_string, update_state_machine, find_role_in_all
 from .MasterState import MasterState, StateMachine

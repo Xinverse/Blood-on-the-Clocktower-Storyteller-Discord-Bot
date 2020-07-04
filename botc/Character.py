@@ -7,6 +7,7 @@ import datetime
 import configparser
 from .Category import Category
 from .Team import Team
+from .flag_inventory import Inventory
 import globvars
 
 Config = configparser.ConfigParser()
@@ -62,6 +63,7 @@ class Character:
         self._true_role = self
         self._ego_role = self
         self._social_role = self
+        self.inventory = Inventory()
 
         # Override by gamemode class
         self._gm_of_appearance = None
@@ -110,7 +112,7 @@ class Character:
     def set_new_ego_self(self):
         return
     
-    def set_new_social_self(self):
+    def set_new_social_self(self, player):
         return
     
     @property
@@ -314,6 +316,31 @@ class Character:
         Override by child classes. The default is to send nothing.
         """
         pass
+
+    async def send_regular_night_start_dm(self, recipient):
+        """Send regular night start DM message to a player, for all nights except for the 
+        first.
+        Override by child classes. The default is to send nothing.
+        """
+        pass
+
+    def has_finished_night_action(self, player):
+        """Has the player finished their night action? (For phase fastforwarding)
+        To be overriden in child classes
+        """
+        return True
+    
+    def has_finished_dawn_action(self, player):
+        """Has the player finished their dawn action? (For phase fastforwarding)
+        To be overriden in child classes
+        """
+        return True
+    
+    async def run_upon_night_death(self, player):
+        """Function that runs when the player dies at night.
+        Override by child classes.
+        """
+        return
     
     # -------------------- Character ABILITIES --------------------
     

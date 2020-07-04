@@ -135,8 +135,8 @@ class Empath(Townsfolk, TroubleBrewing, Character):
 
         # Find the number of alive evils
         nb_evils = 0
-        prev_neighbour.role.set_new_social_self()
-        next_neighbour.role.set_new_social_self()
+        prev_neighbour.role.set_new_social_self(prev_neighbour)
+        next_neighbour.role.set_new_social_self(next_neighbour)
         if prev_neighbour.role.social_self.is_evil():
             nb_evils += 1
         if next_neighbour.role.social_self.is_evil():
@@ -146,44 +146,3 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         globvars.logging.info(log_msg)
         
         return nb_evils
-
-    async def send_regular_night_instruction(self, recipient):
-        """Send the number of alive evil neighbours. Same as send_first_night_instruction."""
-
-        import globvars
-
-        # Find all alive players
-        alive_players = [player for player in globvars.master_state.game.sitting_order 
-                         if player.is_apparently_alive()]
-        
-        # Find where the empath is seated
-        seat_idx = -1
-        for i, player in enumerate(alive_players):
-            if player.user.id == recipient.id:
-                seat_idx = i
-                break
-        assert seat_idx >= 0, "Something went wrong in Empath [send_first_night_instruction]"
-
-        # Find the empath's neighbours
-        nb_alives = len(alive_players)
-        prev_neighbour = alive_players[(seat_idx - 1) % nb_alives]
-        next_neighbour = alive_players[(seat_idx + 1) % nb_alives]
-
-        # Find the number of alive evils
-        nb_evils = 0
-        prev_neighbour.role.set_new_social_self()
-        next_neighbour.role.set_new_social_self()
-        if prev_neighbour.role.social_self.is_evil():
-            nb_evils += 1
-        if next_neighbour.role.social_self.is_evil():
-            nb_evils += 1
-        
-        # Send the message
-        msg = empath_nightly.format(nb_evils)
-        try:
-            await recipient.send(msg)
-        except discord.Forbidden:
-            pass
-
-        log_msg = f">>> Empath: {nb_evils} alive evil neighbours"
-        globvars.logging.info(log_msg)

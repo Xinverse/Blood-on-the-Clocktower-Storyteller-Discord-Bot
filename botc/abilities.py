@@ -77,6 +77,6 @@ class ActionGrid:
         """Save an action within the grid based on a phase ID"""
         self.grid[phase_id] = action
     
-    def retrieve_an_action(self, action, phase_id):
+    def retrieve_an_action(self, phase_id):
         """Retrieve an action within the grid based on a phase ID"""
         return self.grid[phase_id]

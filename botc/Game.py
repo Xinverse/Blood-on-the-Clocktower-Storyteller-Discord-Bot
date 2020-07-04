@@ -382,7 +382,7 @@ class Game(GameMeta):
       await asyncio.sleep(BASE_NIGHT)
 
       # Increment (night)
-      for _ in range(0):
+      for _ in range(2):
          if self.has_received_all_expected_night_actions():
             break
          await asyncio.sleep(INCREMENT)
@@ -423,10 +423,16 @@ class Game(GameMeta):
       await self.end_game()
    
    def has_received_all_expected_dawn_actions(self):
-      return False
+      for player in self.sitting_order:
+         if not player.role.true_self.has_finished_dawn_action(player):
+            return False
+      return True
    
    def has_received_all_expected_night_actions(self):
-      return False
+      for player in self.sitting_order:
+         if not player.role.true_self.has_finished_night_action(player):
+            return False
+      return True
    
    def has_reached_wincon(self):
       """Check if the game has reached win con. Return True if yes, else no."""
@@ -440,8 +446,8 @@ class Game(GameMeta):
       await botutils.send_lobby("Game over, todo")
       # Log the game over data
       await botutils.log(botutils.Level.info, "Game finished, to-do")
-      # Clear the setup object
-      self.setup.clear()
+      # Clear the game object
+      self.__init__()
       # Unlock the lobby channel
       await botutils.unlock_lobby()
 

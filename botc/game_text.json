@@ -139,7 +139,9 @@
         "except_first_night_str" : "{} {} You may not use this ability on the first night.",
         "requires_one_target_str" : "{} {} You must pick exactly one target for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets.",
         "requires_two_targets_str" : "{} {} You must pick exactly two targets for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets.",
-        "requires_different_targets_str" : "{} {} You must pick different targets for your ability."
+        "requires_different_targets_str" : "{} {} You must pick different targets for your ability.",
+        "changes_not_allowed" : "{} {} You may not change your action once it is submitted.",
+        "unique_ability_used" : "{} {} Your ability is single-use, and you have used it up already."
 
     },
 

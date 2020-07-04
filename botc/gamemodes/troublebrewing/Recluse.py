@@ -70,14 +70,20 @@ class Recluse(Outsider, TroubleBrewing, Character):
             
         return msg
     
-    def set_new_social_self(self):
+    def set_new_social_self(self, player):
         """Social self: what the other players think he is.
         The recluse may register as a demon, a minion, or as recluse.
         """
-        possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
-                         if issubclass(role_class, Demon) or issubclass(role_class, Minion)]
-        possibilities.append(Recluse())
-        chosen = random.choice(possibilities)
-        globvars.logging.info(f">>> Recluse [social_self] Registered as {chosen}.")
-        self._social_role = chosen
+        # Use the real player life/death here. If the player is alive, the recluse may register
+        # as evil, or as recluse.
+        if player.is_alive():
+            possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
+                            if issubclass(role_class, Demon) or issubclass(role_class, Minion)]
+            possibilities.append(Recluse())
+            chosen = random.choice(possibilities)
+            self._social_role = chosen
+            globvars.logging.info(f">>> Recluse [social_self] Registered as {chosen}.")
+        else:
+            self._social_role = Recluse()
+            globvars.logging.info(f">>> Recluse [social_self] Registered as {Recluse()}.")
         

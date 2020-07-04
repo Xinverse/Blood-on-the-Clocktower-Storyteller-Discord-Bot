@@ -73,17 +73,23 @@ class Spy(Minion, TroubleBrewing, Character):
             
         return msg
     
-    def set_new_social_self(self):
+    def set_new_social_self(self, player):
         """Social self: what the other players think he is.
-        The spy may register as a townsfolk, an outsider, or as spy.
+        The spy may register as a townsfolk, an outsider, or as spy. If dead, the spy will 
+        register as spy.
         """
-        possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
-                         if issubclass(role_class, Townsfolk) or issubclass(role_class, Outsider)]
-        possibilities.append(Spy())
-        random.shuffle(possibilities)
-        chosen = random.choice(possibilities)
-        globvars.logging.info(f">>> Spy [social_self] Registered as {chosen}.")
-        self._social_role = chosen
-    
-    def create_grimoire(self):
-        pass
+
+        # Use the real player life/death here. If the player is alive, the spy may register
+        # as good, or as spy.
+        if player.is_alive():
+            possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
+                            if issubclass(role_class, Townsfolk) or issubclass(role_class, Outsider)]
+            possibilities.append(Spy())
+            random.shuffle(possibilities)
+            chosen = random.choice(possibilities)
+            self._social_role = chosen
+            globvars.logging.info(f">>> Spy [social_self] Registered as {chosen}.")
+        # If the player is dead, the spy will register as spy.
+        else:
+            self._social_role = Spy()
+            globvars.logging.info(f">>> Spy [social_self] Registered as {Spy()}.")
