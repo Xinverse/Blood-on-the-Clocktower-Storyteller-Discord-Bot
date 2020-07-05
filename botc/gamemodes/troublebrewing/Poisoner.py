@@ -109,6 +109,6 @@ class Poisoner(Minion, TroubleBrewing, Character):
 
     async def exec_poison(self, poisoner_player, poisoned_player):
         """Execute the poison actions (night interaction)"""
-        if not poisoner_player.is_droisoned():
+        if not poisoner_player.is_droisoned() and poisoner_player.is_alive():
             poisoner_player.add_status_effect(Poison(poisoner_player, poisoned_player))
     

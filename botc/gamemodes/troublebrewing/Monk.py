@@ -105,5 +105,5 @@ class Monk(Townsfolk, TroubleBrewing, Character):
     async def exec_protect(self, monk_player, protected_player):
         """Execute the protection action (night ability interaction)"""
 
-        if not monk_player.is_droisoned():
+        if not monk_player.is_droisoned() and monk_player.is_alive():
             protected_player.add_status_effect(SafetyFromDemon(monk_player, protected_player, 2))

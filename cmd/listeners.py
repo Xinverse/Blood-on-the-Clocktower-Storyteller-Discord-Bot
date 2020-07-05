@@ -10,6 +10,7 @@ from discord.ext import commands
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
 
+error_str = language["system"]["error"]
 restart_msg = language["system"]["restart"]
 
 
@@ -31,12 +32,13 @@ class Listeners(commands.Cog):
         await botutils.log(botutils.Level.info, restart_msg)
     
     @commands.Cog.listener()
-    async def on_error(self, event):
+    async def on_error(self, event, *args, **kwargs):
         """On_error event"""
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print("%%%%%%%%%% ERROR %%%%%%%%%%")
         try:
             raise event
         except Exception as e:
+            await botutils.send_lobby(error_str)
             await botutils.log(botutils.Level.error, e)
     
     @commands.Cog.listener()

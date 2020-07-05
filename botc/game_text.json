@@ -118,7 +118,8 @@
         "librarian_init" : "You learn that one of the following two players is the ``{}``: ", 
         "librarian_init_zero" : "You learn that there is no Outsider in play.",
         "washerwoman_init" : "You learn that one of the following two players is the ``{}``: ",
-        "tb_lore" : "*Clouds roll in over Ravenswood Bluff, engulfing this sleepy town and its superstitious inhabitants in foreboding shadow. Anxious mothers call their children home from play, as thunder begins to clap on the horizon. Those who can read the signs know there is...* ***Trouble Brewing***."
+        "tb_lore" : "*Clouds roll in over Ravenswood Bluff, engulfing this sleepy town and its superstitious inhabitants in foreboding shadow. Anxious mothers call their children home from play, as thunder begins to clap on the horizon. Those who can read the signs know there is...* ***Trouble Brewing***.",
+        "spy_nightly" : "The Grimoire is shown below."
 
     },
 
@@ -141,14 +142,15 @@
         "requires_two_targets_str" : "{} {} You must pick exactly two targets for your ability. Note that the separator `and` is a special keyword and allows you to input multiple targets.",
         "requires_different_targets_str" : "{} {} You must pick different targets for your ability.",
         "changes_not_allowed" : "{} {} You may not change your action once it is submitted.",
-        "unique_ability_used" : "{} {} Your ability is single-use, and you have used it up already."
+        "unique_ability_used" : "{} {} Your ability is single-use, and you have used it up already.",
+        "no_game_running" : "{} {} No game is currently running."
 
     },
 
     "doc" : {
 
         "frole" : {
-            "brief" : "force set a player's role to a specified one.",
+            "brief" : "Set a player's role to a specified one.",
             "help" : "This debugging command changes a player's role to one that you specify. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. The role name can also be typed in full or partially.",
             "description" : "[FROLE] command - BOTC (debug)",
             "feedback" : "{} Successfully changed {}'s character from `{}` to {} `{}`."
@@ -159,6 +161,13 @@
             "help" : "This debugging command modkills a specified player. The player will remain in the game, but as a dead player. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially.",
             "description" : "[MODKILL] command - BOTC (debug)",
             "feedback" : "{} Successfully modkilled {} with the character of {} `{}`."
+        },
+
+        "fstop" : {
+            "brief" : "Stop a game that is currently running.",
+            "help" : "This debugging command forcefully stops a game that is currently running.",
+            "description" : "[FSTOP] command - BOTC (debug)",
+            "feedback" : "{} Successfully stopped the game."
         },
 
         "serve" : {

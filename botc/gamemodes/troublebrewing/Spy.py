@@ -3,12 +3,18 @@
 import json 
 import random
 import discord
+import datetime
 from botc import Minion, Character, Townsfolk, Outsider
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.spy.value.lower()]
+
+with open('botc/game_text.json') as json_file: 
+    strings = json.load(json_file)
+    copyrights_str = strings["misc"]["copyrights"]
+    spy_nightly = strings["gameplay"]["spy_nightly"]
 
 
 class Spy(Minion, TroubleBrewing, Character):
@@ -93,3 +99,25 @@ class Spy(Minion, TroubleBrewing, Character):
         else:
             self._social_role = Spy()
             globvars.logging.info(f">>> Spy [social_self] Registered as {Spy()}.")
+        
+    async def send_n1_end_message(self, recipient):
+        """Send the spy grimoire"""
+
+        from botc import Grimoire
+        Grimoire().create(globvars.master_state.game)
+
+        msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"
+        msg += "\n"
+        msg += self.emoji + " " + self.instruction
+        msg += "\n"
+        msg += spy_nightly
+
+        embed = discord.Embed(description = msg)
+        file = discord.File("botc/assets/grimoire.png", filename="grimoire.png")
+        embed.set_image(url="attachment://grimoire.png")
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text = copyrights_str)
+        try:
+            await recipient.send(file = file, embed = embed)
+        except discord.Forbidden:
+            pass

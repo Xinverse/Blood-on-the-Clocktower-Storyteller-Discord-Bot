@@ -77,6 +77,8 @@ class Character:
         self._emoji = None
         self._demon_head_emoji = "<:demonhead:722894653438820432>"
     
+    # -------------------- Character Properties --------------------
+    
     def is_good(self):
         """Return True if the character is on the good team, False otherwise"""
         return self.team == Team.good
@@ -193,21 +195,7 @@ class Character:
     def __repr__(self):
         return self.name + " Obj"
     
-    def create_n1_instr_str(self):
-        raise NotImplementedError
-
-    def exec_init_setup(self, townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list):
-        """Allow for roles that change the setup to modify the role list
-        Overridden by child classes that do need to modify the setup.
-        """
-        return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list] 
-    
-    def exec_init_role(self, setup):
-        """Allow for roles that need to initialize certain status or flags to do so after the setup 
-        is generated.
-        Overridden by child classes that do need to set flags and initializations.
-        """
-        return
+    # -------------------- Character Mechanics --------------------
 
     async def send_role_card_embed(self, ctx):
         """Create the role card embed object and return it"""
@@ -258,12 +246,33 @@ class Character:
                            pic_link, 
                            wiki_link)
         await ctx.send(embed=embed)
-    
-    def add_action_field_n1(self, embed_obj):
-        """Process the opening dm to add a field at the end to query for night actions.
-        To be overriden by child classes. The default is to add nothing.
+
+    def exec_init_setup(self, townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list):
+        """Allow for roles that change the setup to modify the role list
+        Overridden by child classes that do need to modify the setup.
         """
-        return embed_obj
+        return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list] 
+    
+    def exec_init_role(self, setup):
+        """Allow for roles that need to initialize certain status or flags to do so after the setup 
+        is generated.
+        Overridden by child classes that do need to set flags and initializations.
+        """
+        return
+
+    def has_finished_night_action(self, player):
+        """Has the player finished their night action? (For phase fastforwarding)
+        To be overriden in child classes
+        """
+        return True
+    
+    def has_finished_dawn_action(self, player):
+        """Has the player finished their dawn action? (For phase fastforwarding)
+        To be overriden in child classes
+        """
+        return True
+
+    # -------------------- Character DM's --------------------
     
     async def send_opening_dm_embed(self, recipient):
         """Create the opening DM (on game start) embed object and return it"""
@@ -310,6 +319,18 @@ class Character:
         except discord.Forbidden:
             #await botutils.send_lobby(blocked.format(recipient.mention))
             pass
+
+    def add_action_field_n1(self, embed_obj):
+        """Process the opening dm to add a field at the end to query for night actions.
+        To be overriden by child classes. The default is to add nothing.
+        """
+        return embed_obj
+    
+    def create_n1_instr_str(self):
+        """Create the instruction field on the n1 D. 
+        Must be implemented by all child classes.
+        """
+        raise NotImplementedError
     
     async def send_n1_end_message(self, recipient):
         """Send n1 end message to a player.
@@ -324,23 +345,38 @@ class Character:
         """
         pass
 
-    def has_finished_night_action(self, player):
-        """Has the player finished their night action? (For phase fastforwarding)
-        To be overriden in child classes
+    async def send_regular_night_end_dm(self, recipient):
+        """Send regular night end DM message to a player, for all nights except for the 
+        first.
+        Override by child classes. The default is to send nothing.
         """
-        return True
+        pass
     
-    def has_finished_dawn_action(self, player):
-        """Has the player finished their dawn action? (For phase fastforwarding)
-        To be overriden in child classes
+    # -------------------- Event "Listeners" --------------------
+
+    async def on_demon_attack(self, demon_player, attacked_player):
+        """Function that runs after the player gets attacked by the demon at night.
+        Override by child classes and/or other classes inherited by child classes.
         """
-        return True
-    
-    async def run_upon_night_death(self, player):
-        """Function that runs when the player dies at night.
-        Override by child classes.
+        pass
+
+    async def on_nomination(self, nominator_player, nominated_player):
+        """Function that runs after the player is nominated.
+        Override by child classes and/or other classes inherited by child classes.
         """
-        return
+        pass
+
+    async def on_night_death(self, dead_player):
+        """Function that runs after the player dies at night, for any reason.
+        Override by child classes and/or other classes inherited by child classes.
+        """
+        pass
+
+    async def on_day_lynching(self, lynched_player):
+        """Function that runs after the player dies by lynching at day.
+        Override by child classes and/or other classes inherited by child classes.
+        """
+        pass
     
     # -------------------- Character ABILITIES --------------------
     

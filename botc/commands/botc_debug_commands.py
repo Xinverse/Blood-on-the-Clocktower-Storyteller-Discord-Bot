@@ -60,6 +60,8 @@ class BoTCDebugCommands(commands.Cog, name = "BoTC debug commands"):
         elif isinstance(error, RoleNotFound):
             msg = documentation["cmd_warnings"]["role_not_found"]
             await ctx.send(msg.format(ctx.author.mention, x_emoji))
+        elif isinstance(error, commands.CheckFailure):
+            return
         else:
             try:
                 raise error
@@ -95,6 +97,40 @@ class BoTCDebugCommands(commands.Cog, name = "BoTC debug commands"):
         elif isinstance(error, AlreadyDead):
             msg = documentation["cmd_warnings"]["already_dead"]
             await ctx.send(msg.format(ctx.author.mention, x_emoji))
+        elif isinstance(error, commands.CheckFailure):
+            return
+        else:
+            try:
+                raise error
+            except:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc())
+    
+    # ---------- FSTOP command ----------------------------------------
+    @commands.command(
+        pass_context = True, 
+        name = "fstop",
+        hidden = False,
+        brief = documentation["doc"]["fstop"]["brief"],
+        help = documentation["doc"]["fstop"]["help"],
+        description = documentation["doc"]["fstop"]["description"]
+    )
+    async def fstop(self, ctx):
+        """Fstop command"""
+        import globvars
+        if globvars.master_state.game.gameloop.is_running():
+            globvars.master_state.game.gameloop.cancel()
+            feedback = documentation["doc"]["fstop"]["feedback"]
+            await ctx.send(feedback.format(botutils.BotEmoji.check))
+        else:
+            feedback = documentation["doc"]["fstop"]["feedback"]
+            await ctx.send(feedback.format(ctx.author.mention, botutils.BotEmoji.check))
+
+    @fstop.error
+    async def fstop_error(self, ctx, error):
+        """Fstop command error handling"""
+        if isinstance(error, commands.CheckFailure):
+            return
         else:
             try:
                 raise error

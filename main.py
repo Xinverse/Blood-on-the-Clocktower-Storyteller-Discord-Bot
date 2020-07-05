@@ -13,7 +13,6 @@ affiliated with them in any way.
 
 # TODO
 # Night interactions
-# Spy and recluse should not be registering falsely when dead
 # Lobby game start message: make it look better
 # Spy grimoire lookup
 # End night information/feedback

@@ -20,10 +20,11 @@ from .Townsfolk import Townsfolk
 from .Outsider import Outsider
 from .Minion import Minion
 from .Demon import Demon
-from botc.gamemodes.troublebrewing.Saint import Saint
+from .gamemodes.troublebrewing.Saint import Saint
 from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
+from .gameloops import master_game_loop
 from models import GameMeta
 
 Config = configparser.ConfigParser()
@@ -31,10 +32,6 @@ Config.read("preferences.INI")
 
 IN_GAME_NORMAL = Config["colors"]["IN_GAME_NORMAL"]
 IN_GAME_NORMAL = int(IN_GAME_NORMAL, 16)
-
-BASE_NIGHT = 30
-BASE_DAWN = 15
-INCREMENT = 15
 
 random.seed(datetime.datetime.now())
 
@@ -204,6 +201,7 @@ class Game(GameMeta):
       self._sitting_order = tuple()  # tuple object (for immutability)
       self._chrono = GameChrono()
       self._setup = Setup()
+      self.gameloop = master_game_loop
    
    @property
    def nb_players(self):
@@ -336,99 +334,26 @@ class Game(GameMeta):
       await self.send_lobby_welcome_message()
       # Lock the lobby channel
       await botutils.lock_lobby()
-      # Log the game data
-      await GameLog(self).send_game_obj_log_str()
       # Send the opening dm to all players
       for player in self._player_obj_list:
          await player.role.ego_self.send_opening_dm_embed(player.user)
-      # Transition to night fall
-      await self.make_nightfall()
+      # Log the game data
+      await GameLog(self).send_game_obj_log_str()
       # Load game related commands
-      globvars.client.load_extension("botc.botc_commands")
-      globvars.client.load_extension("botc.botc_debug_commands")
+      globvars.client.load_extension("botc.commands.botc_commands")
+      globvars.client.load_extension("botc.commands.botc_debug_commands")
       # Start the game loop
-      await self.master_game_loop()
-   
-   async def master_game_loop(self):
-      """Master game loop
-
-      Cycling works like this:
-      Night start
-      Night end
-      Dawn start
-      Dawn end
-      Day start
-      Day end
-      etc.
-
-      ----- Night : 
-         30 seconds min
-         90 seconds max
-         Or at intervals of 15 seconds when all actions are submitted (45, 60, 75)
-      ----- Dawn : 
-         15 seconds min
-         30 seconds max
-         At intervals of 15 seconds (15, 30)
-      ----- Day: 
-         2 * sqrt(total_players) minutes until nomination
-         Time until each nomination: 30, 20, 15, and 10 for all subsequent nominations.
-      ----- Nomination:
-         30 seconds for accusations & defence
-         7 seconds for each vote (fastforwording)
-      """
-
-      # ----- First Night -----
-      # Base night length
-      await asyncio.sleep(BASE_NIGHT)
-
-      # Increment (night)
-      for _ in range(2):
-         if self.has_received_all_expected_night_actions():
-            break
-         await asyncio.sleep(INCREMENT)
-      
-      # End night
-      for player in self.sitting_order:
-         await player.role.ego_self.send_n1_end_message(player.user)
-
-      # ----- First Dawn -----
-      # Start dawn
-      await self.make_dawn()
-
-      # Base dawn length
-      await asyncio.sleep(INCREMENT)
-
-      # Increment (dawn)
-      for _ in range(2):
-         if self.has_received_all_expected_dawn_actions():
-            break
-         await asyncio.sleep(INCREMENT)
-
-      # ----- First Day -----
-      # Start day
-      await self.make_daybreak()
-
-      # Base day length
-      base_day_length = math.sqrt(self.nb_players)
-      base_day_length = math.ceil(base_day_length)
-      base_day_length = base_day_length * 60
-      await asyncio.sleep(base_day_length)
-
-      # Nominations start
-      for nomination_countdown in [30, 20, 15, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]:
-         await botutils.send_lobby("You have **{}** seconds to nominate.".format(nomination_countdown))
-      
-      # ----- All other cycles -----
-
-      await self.end_game()
+      self.gameloop.start(self)
    
    def has_received_all_expected_dawn_actions(self):
+      """Check if all players with expected dawn actions have submitted them"""
       for player in self.sitting_order:
          if not player.role.true_self.has_finished_dawn_action(player):
             return False
       return True
    
    def has_received_all_expected_night_actions(self):
+      """Check if all players with expected night actions have submitted them"""
       for player in self.sitting_order:
          if not player.role.true_self.has_finished_night_action(player):
             return False
@@ -442,6 +367,9 @@ class Game(GameMeta):
       """End the game, compute winners etc. 
       Must be implemented.
       """
+      # Unload game related commands
+      globvars.client.unload_extension("botc.commands.botc_commands")
+      globvars.client.unload_extension("botc.commands.botc_debug_commands")
       # Send the lobby welcome message
       await botutils.send_lobby("Game over, todo")
       # Log the game over data
@@ -454,17 +382,17 @@ class Game(GameMeta):
    async def make_nightfall(self):
       """Transition the game into night phase"""
       self._chrono.next()
-      await botutils.send_lobby(nightfall + " https://imgur.com/QPLPKKw")
+      await botutils.send_lobby(nightfall)
    
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""
       self._chrono.next()
-      await botutils.send_lobby(dawn + " https://imgur.com/vkd747Q")
+      await botutils.send_lobby(dawn)
 
    async def make_daybreak(self):
       """Transition the game into day phase"""
       self._chrono.next()
-      await botutils.send_lobby(daybreak + " https://imgur.com/ic6402z")
+      await botutils.send_lobby(daybreak)
 
    def generate_role_set(self):
       """Generate a list of roles according to the number of players"""

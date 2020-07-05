@@ -89,6 +89,11 @@ class Empath(Townsfolk, TroubleBrewing, Character):
         from botc.BOTCUtils import get_number_image
 
         player = BOTCUtils.get_player_from_id(recipient.id)
+
+        # Dead players do not receive anything
+        if not player.is_alive():
+            return 
+
         if player.is_droisoned():
             evil_pair_count = self.__create_droisoned_info()
         else:
