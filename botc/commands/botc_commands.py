@@ -144,13 +144,10 @@ def check_if_can_kill(ctx):
 
 def can_use_slay(user_id):
     """Return true if the user can use the command "slay"
-    Characters that can poison:
-    - Slayer
+    Characters that can slay:
+    - All characters (to allow for fake claiming)
     """
-    player = BOTCUtils.get_player_from_id(user_id)
-    if player.role.ego_self.name in [TBRole.slayer.value]:
-        return True
-    return False
+    return True
 
 
 def check_if_can_slay(ctx):
@@ -664,7 +661,7 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         # If it passed all the checks but raised an error in the character class
         elif isinstance(error, AbilityForbidden):
             error = getattr(error, 'original', error)
-            await ctx.send(error)
+            await ctx.author.send(error)
         # Non-registered or quit player -> NotAPlayer
         elif isinstance(error, NotAPlayer):
             return

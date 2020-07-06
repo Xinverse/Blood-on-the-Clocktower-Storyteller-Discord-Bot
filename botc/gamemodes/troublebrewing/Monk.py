@@ -2,7 +2,7 @@
 
 import json 
 import discord
-from botc import Action, ActionTypes, Townsfolk, Character, SafetyFromDemon
+from botc import Action, ActionTypes, Townsfolk, Character, SafetyFromDemon, RecurringAction
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -15,7 +15,7 @@ with open('botutils/bot_text.json') as json_file:
     butterfly = bot_text["esthetics"]["butterfly"]
 
 
-class Monk(Townsfolk, TroubleBrewing, Character):
+class Monk(Townsfolk, TroubleBrewing, Character, RecurringAction):
     """Monk: Each night*, choose a player (not yourself): they are safe from the Demon tonight.
 
     ===== MONK ===== 

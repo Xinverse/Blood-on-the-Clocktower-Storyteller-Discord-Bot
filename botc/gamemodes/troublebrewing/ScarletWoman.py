@@ -2,14 +2,14 @@
 
 import json 
 import discord
-from botc import Minion, Character
+from botc import Minion, Character, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.scarletwoman.value.lower()]
 
-class ScarletWoman(Minion, TroubleBrewing, Character):
+class ScarletWoman(Minion, TroubleBrewing, Character, NonRecurringAction):
     """Scarlet Woman: If there are 5 or more players alive & the Demon dies, you become the Demon.
 
     ===== SCARLET WASHERWOMAN ===== 

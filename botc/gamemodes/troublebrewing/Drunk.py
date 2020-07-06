@@ -2,14 +2,14 @@
 
 import json 
 import random
-from botc import Outsider, Character, Townsfolk
+from botc import Outsider, Character, Townsfolk, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.drunk.value.lower()]
 
-class Drunk(Outsider, TroubleBrewing, Character):
+class Drunk(Outsider, TroubleBrewing, Character, NonRecurringAction):
     """Drunk: You think you are a Townsfolk, but your ability malfunctions.
 
     ===== DRUNK ===== 

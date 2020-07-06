@@ -4,7 +4,7 @@ import json
 import discord
 import random
 import datetime
-from botc import Townsfolk, Character, Category
+from botc import Townsfolk, Character, Category, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -19,7 +19,7 @@ with open('botc/game_text.json') as json_file:
     blank_token = strings["images"]["blank_token"]
 
 
-class Librarian(Townsfolk, TroubleBrewing, Character):
+class Librarian(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Librarian: You start knowing that 1 of 2 players is a particular Outsider.
     (Or that zero are in play)
 

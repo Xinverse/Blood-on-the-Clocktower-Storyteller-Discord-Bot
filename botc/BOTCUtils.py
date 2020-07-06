@@ -219,21 +219,22 @@ class GameLogic:
       return inner 
 
    @staticmethod
-   def unique_ability(func):
-      """Decorator for unique abilities to be used once per game"""
-      def inner(self, player, targets):
-         from botc.gamemodes.troublebrewing import Slayer
-         from botc import Flags
-         # Slayer's unique "slay" ability
-         if player.role.ego_self.name == Slayer().name:
-            if not player.role.ego_self.inventory.has_item_in_inventory(Flags.slayer_unique_attempt):
-               raise UniqueAbilityError(unique_ability_used.format(player.user.mention, x_emoji))
-         # Future roles that have a unique ability must go into elif blocks, or else the uncaught 
-         # ones will automatically trigger an assertion error.
-         else:
-            assert 0, "Unique ability check went wrong."
-         return func(self, player, targets)
-      return inner
+   def unique_ability(ability_type):
+      def decorator(func):
+         """Decorator for unique abilities to be used once per game"""
+         def inner(self, player, targets):
+            from botc import Flags, ActionTypes
+            # Slayer's unique "slay" ability
+            if ability_type == ActionTypes.slay:
+               if not player.role.ego_self.inventory.has_item_in_inventory(Flags.slayer_unique_attempt):
+                  raise UniqueAbilityError(unique_ability_used.format(player.user.mention, x_emoji))
+            # Future roles that have a unique ability must go into elif blocks, or else the uncaught 
+            # ones will automatically trigger an assertion error.
+            else:
+               assert 0, "Unique ability check went wrong."
+            return func(self, player, targets)
+         return inner
+      return decorator
 
    @staticmethod
    def except_first_night(func):

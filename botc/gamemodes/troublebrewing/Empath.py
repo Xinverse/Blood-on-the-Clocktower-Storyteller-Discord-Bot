@@ -4,7 +4,7 @@ import json
 import discord
 import datetime
 import random
-from botc import Townsfolk, Character, BOTCUtils
+from botc import Townsfolk, Character, BOTCUtils, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -16,7 +16,7 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
 
 
-class Empath(Townsfolk, TroubleBrewing, Character):
+class Empath(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Empath: Each night, you learn how many of your 2 alive neighbors are evil.
     
     ===== EMPATH ===== 

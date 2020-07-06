@@ -18,6 +18,7 @@ affiliated with them in any way.
 # End night information/feedback
 # Drunk/poison effect when sending info
 # Better log with embed
+# Voting and nomination
 
 
 import globvars

@@ -1,14 +1,14 @@
 """Contains the Mayor Character class"""
 
 import json 
-from botc import Townsfolk, Character
+from botc import Townsfolk, Character, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.mayor.value.lower()]
 
 
-class Mayor(Townsfolk, TroubleBrewing, Character):
+class Mayor(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Mayor: If only 3 players live and no execution occurs, your team wins. If you die at night, 
     another player might die instead.
 

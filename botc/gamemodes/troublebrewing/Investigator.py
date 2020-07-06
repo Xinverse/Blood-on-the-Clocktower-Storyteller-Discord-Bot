@@ -4,7 +4,7 @@ import json
 import random
 import datetime
 import discord
-from botc import Townsfolk, Character, Category
+from botc import Townsfolk, Character, Category, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -17,7 +17,7 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
 
 
-class Investigator(Townsfolk, TroubleBrewing, Character):
+class Investigator(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Investigator: You start knowing 1 of 2 players is a particular Minion.
 
     ===== INVESTIGATOR ===== 

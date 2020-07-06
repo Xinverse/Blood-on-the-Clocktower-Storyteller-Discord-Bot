@@ -3,7 +3,7 @@
 import json
 import discord
 import random
-from botc import Action, ActionTypes, Demon, Townsfolk, Outsider, Character
+from botc import Action, ActionTypes, Demon, Townsfolk, Outsider, Character, RecurringAction
 from botc.BOTCUtils import GameLogic, BOTCUtils
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -20,7 +20,7 @@ with open('botutils/bot_text.json') as json_file:
     butterfly = bot_text["esthetics"]["butterfly"]
 
 
-class Imp(Demon, TroubleBrewing, Character):
+class Imp(Demon, TroubleBrewing, Character, RecurringAction):
     """Imp: Each night*, choose a player: they die. If you kill yourself this way, 
     a Minion becomes the Imp.
 

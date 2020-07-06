@@ -1,14 +1,14 @@
 """Contains the Undertaker Character class"""
 
 import json 
-from botc import Townsfolk, Character
+from botc import Townsfolk, Character, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.undertaker.value.lower()]
 
 
-class Undertaker(Townsfolk, TroubleBrewing, Character):
+class Undertaker(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Undertaker: Each night, you learn which character died by execution today.
 
     ===== UNDERTAKER ===== 

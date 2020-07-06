@@ -3,8 +3,7 @@
 import json
 import random
 import discord
-from botc import BOTCUtils
-from botc import Minion, Character
+from botc import BOTCUtils, Minion, Character, NonRecurringAction
 from botc.Outsider import Outsider
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -13,7 +12,7 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
     character_text = json.load(json_file)[TBRole.baron.value.lower()]
 
 
-class Baron(Minion, TroubleBrewing, Character):
+class Baron(Minion, TroubleBrewing, Character, NonRecurringAction):
     """Baron: There are extra Outsiders in play [+2 Outsiders]
 
     ===== BARON ===== 

@@ -2,7 +2,7 @@
 
 import json 
 import discord
-from botc import Action, ActionTypes, Minion, Character, Poison
+from botc import Action, ActionTypes, Minion, Character, Poison, RecurringAction
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -15,7 +15,7 @@ with open('botutils/bot_text.json') as json_file:
     butterfly = bot_text["esthetics"]["butterfly"]
 
 
-class Poisoner(Minion, TroubleBrewing, Character):
+class Poisoner(Minion, TroubleBrewing, Character, RecurringAction):
     """Poisoner: Each night, choose a player, their ability malfunctions tonight and tomorrow day.
 
     ===== POISONER ===== 

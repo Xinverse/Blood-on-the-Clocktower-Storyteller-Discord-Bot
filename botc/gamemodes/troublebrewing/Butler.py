@@ -4,7 +4,7 @@ import json
 import botutils
 import discord
 from botc.BOTCUtils import GameLogic
-from botc import Outsider, Character, Action, ActionTypes
+from botc import Outsider, Character, Action, ActionTypes, BOTCUtils, RecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -16,7 +16,7 @@ with open('botutils/bot_text.json') as json_file:
     butterfly = bot_text["esthetics"]["butterfly"]
 
 
-class Butler(Outsider, TroubleBrewing, Character):
+class Butler(Outsider, TroubleBrewing, Character, RecurringAction):
     """Butler: Each night, choose a player (not yourself): tomorrow, you may only vote if 
     they are voting too.
 
@@ -72,9 +72,7 @@ class Butler(Outsider, TroubleBrewing, Character):
         
         # Some characters have a line of addendum
         if addendum:
-            with open("botutils/bot_text.json") as json_file:
-                bot_text = json.load(json_file)
-                scroll_emoji = bot_text["esthetics"]["scroll"]
+            scroll_emoji = botutils.BotEmoji.scroll
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
@@ -108,3 +106,7 @@ class Butler(Outsider, TroubleBrewing, Character):
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
         msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
         await player.user.send(msg)
+    
+    async def exec_serve(self, player, targets):
+        """Execute the serve action (night ability interaction)"""
+        pass

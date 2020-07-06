@@ -12,6 +12,7 @@ class StatusList(enum.Enum):
    drunkenness = "drunkenness"
    poison = "poisoned"
    red_herring = "red_herring"
+   under_service = "under_service"
 
 
 class Storyteller:
@@ -37,6 +38,9 @@ class StatusEffect:
         self.duration = duration
         self.__is_active = None
         self.__effect = None
+    
+    def __repr__(self):
+        return f"Status {self.__effect} on {self.affected_player}"
     
     def wear_off(self):
         """Wear off the effect duration by 1 phase"""
@@ -64,6 +68,7 @@ class StatusEffect:
         if self.__effect:
             return self.__effect
         else:
+            print(self.__repr__())
             raise NotImplementedError
 
 

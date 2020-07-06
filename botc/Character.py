@@ -7,7 +7,9 @@ import datetime
 import configparser
 from .Category import Category
 from .Team import Team
-from .flag_inventory import Inventory
+from .flag_inventory import Inventory, Flags
+from .abilities import ActionTypes, Action
+from .BOTCUtils import GameLogic
 import globvars
 
 Config = configparser.ConfigParser()
@@ -63,7 +65,9 @@ class Character:
         self._true_role = self
         self._ego_role = self
         self._social_role = self
-        self.inventory = Inventory()
+        self.inventory = Inventory(
+            Flags.slayer_unique_attempt
+        )
 
         # Override by gamemode class
         self._gm_of_appearance = None
@@ -337,13 +341,14 @@ class Character:
         Override by child classes. The default is to send nothing.
         """
         pass
-
-    async def send_regular_night_start_dm(self, recipient):
-        """Send regular night start DM message to a player, for all nights except for the 
-        first.
-        Override by child classes. The default is to send nothing.
-        """
-        pass
+    
+    ## Commented out for inheritence resolution order (RecurringAction class)
+    # async def send_regular_night_start_dm(self, recipient):
+    #     """Send regular night start DM message to a player, for all nights except for the 
+    #     first.
+    #     Override by child classes. The default is to send nothing.
+    #     """
+    #     pass
 
     async def send_regular_night_end_dm(self, recipient):
         """Send regular night end DM message to a player, for all nights except for the 
@@ -420,13 +425,26 @@ class Character:
         """Kill command. Override by child classes"""
         raise NotImplementedError
 
-    async def exec_slay(self, player, targets):
-        """Slay command. Override by child classes"""
-        raise NotImplementedError
+    async def exec_slay(self, slayer_player, slain_player):
+        """Execute the slay action (immediate effect)
 
+        The Slayer character will override this to have actual effect.
+        All non-slayers characters will be able to use the slay command just like the slayer, 
+        but without any consequences for the game.
+        """
+        slayer_player.role.ego_self.inventory.remove_item_from_inventory(Flags.slayer_unique_attempt)
+
+    @GameLogic.unique_ability(ActionTypes.slay)
+    @GameLogic.requires_one_target
     async def register_slay(self, player, targets):
-        """Slay command. Override by child classes"""
-        raise NotImplementedError
+        """Slay command"""
+
+        # Must be 1 target
+        assert len(targets) == 1, "Received a number of targets different than 1 for slayer 'slay'"
+        action = Action(player, targets, ActionTypes.slay, globvars.master_state.game._chrono.phase_id)
+        player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
+        await player.user.send("You decided to slay **{}**.".format(targets[0].user.display_name))
+        await self.exec_slay(player, targets[0])
 
     async def exec_protect(self, player, targets):
         """Protect command. Override by child classes"""

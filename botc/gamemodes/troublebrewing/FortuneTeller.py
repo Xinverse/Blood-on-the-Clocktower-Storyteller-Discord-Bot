@@ -3,7 +3,8 @@
 import json
 import random
 import discord 
-from botc import Action, ActionTypes, Townsfolk, Character, Storyteller, RedHerring
+from botc import Action, ActionTypes, Townsfolk, Character, Storyteller, RedHerring, \
+    RecurringAction
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -16,7 +17,7 @@ with open('botutils/bot_text.json') as json_file:
     butterfly = bot_text["esthetics"]["butterfly"]
 
 
-class FortuneTeller(Townsfolk, TroubleBrewing, Character):
+class FortuneTeller(Townsfolk, TroubleBrewing, Character, RecurringAction):
     """Fortune Teller: Each night, choose 2 players: you learn if either is a Demon. 
     There is 1 good player that registers falsely to you.
 

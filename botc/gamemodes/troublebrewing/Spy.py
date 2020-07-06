@@ -3,8 +3,9 @@
 import json 
 import random
 import discord
+import asyncio
 import datetime
-from botc import Minion, Character, Townsfolk, Outsider
+from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -16,8 +17,10 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
     spy_nightly = strings["gameplay"]["spy_nightly"]
 
+GRIMOIRE_SHOW_TIME = 30
 
-class Spy(Minion, TroubleBrewing, Character):
+
+class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
     """Spy: The Spy might appear to be a good character, but is actually evil. 
     They also see the Grimoire, so they know the characters (and status) of all players.
 
@@ -100,7 +103,7 @@ class Spy(Minion, TroubleBrewing, Character):
             self._social_role = Spy()
             globvars.logging.info(f">>> Spy [social_self] Registered as {Spy()}.")
         
-    async def send_n1_end_message(self, recipient):
+    async def __send_grimoire(self, recipient):
         """Send the spy grimoire"""
 
         from botc import Grimoire
@@ -121,6 +124,17 @@ class Spy(Minion, TroubleBrewing, Character):
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text = copyrights_str)
         try:
-            await recipient.send(file = file, embed = embed)
+            grimoire = await recipient.send(file = file, embed = embed)
         except discord.Forbidden:
             pass
+        else:
+            await asyncio.sleep(GRIMOIRE_SHOW_TIME)
+            await grimoire.delete()
+    
+    async def send_n1_end_message(self, recipient):
+        """Send the spy grimoire"""
+        await self.__send_grimoire(recipient)
+    
+    async def send_regular_night_end_dm(self, recipient):
+        """Send the spy grimoire"""
+        await self.__send_grimoire(recipient)

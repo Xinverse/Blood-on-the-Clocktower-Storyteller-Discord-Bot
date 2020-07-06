@@ -1,8 +1,7 @@
 """Contains the Ravenkeeper Character class"""
 
 import json
-from botc import Action, ActionTypes
-from botc import Townsfolk, Character
+from botc import Action, ActionTypes, Townsfolk, Character, NonRecurringAction
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -15,7 +14,7 @@ with open('botutils/bot_text.json') as json_file:
     butterfly = bot_text["esthetics"]["butterfly"]
 
 
-class Ravenkeeper(Townsfolk, TroubleBrewing, Character):
+class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Ravenkeeper: If you die at night, you are woken to choose a player: you learn their character.
 
     ===== RAVENKEEPER ===== 

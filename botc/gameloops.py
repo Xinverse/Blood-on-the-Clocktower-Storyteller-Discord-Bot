@@ -9,9 +9,9 @@ BASE_NIGHT = 10
 NIGHT_MULTIPLER = 1
 
 BASE_DAWN = 15
-DAWN_MULTIPLIER = 1
+DAWN_MULTIPLIER = 0
 
-INCREMENT = 5
+INCREMENT = 1
 
 global botc_game_obj
 
@@ -25,6 +25,10 @@ async def night_loop(game):
     """
     # Transition to night fall
     await game.make_nightfall()
+    # Start night
+    if not game._chrono.is_night_1():
+        # Night 1 is alraedy handled by the opening dm
+        await before_night(game)
     # Base night length
     await asyncio.sleep(BASE_NIGHT)
     # Increment night by small blocks of time if not all players have finished actions
@@ -63,10 +67,17 @@ async def day_loop(game):
     # Start day
     await game.make_daybreak()
     # Base day length
-    base_day_length = math.sqrt(game.nb_players)
-    base_day_length = math.ceil(base_day_length)
-    base_day_length = base_day_length * 60
+    # base_day_length = math.sqrt(game.nb_players)
+    # base_day_length = math.ceil(base_day_length)
+    # base_day_length = base_day_length * 60
+    base_day_length = 5
     await asyncio.sleep(base_day_length)
+
+
+async def before_night(game):
+    """Run before a regular (not the first) night starts. Distribute regular night dm."""
+    for player in game.sitting_order:
+        await player.role.ego_self.send_regular_night_start_dm(player.user)
 
 
 async def after_night_1(game):

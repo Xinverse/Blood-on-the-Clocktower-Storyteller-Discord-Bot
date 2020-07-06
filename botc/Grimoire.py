@@ -53,18 +53,30 @@ class Grimoire:
             x = self.get_x_from_angle(n*self.get_rad_angle(nb_players))
             y = self.get_y_from_angle(n*self.get_rad_angle(nb_players))
 
+            new_x, new_y = self.translate(x, y)
+            token_center_x = int(new_x + self.token_width / 2)
+            token_center_y = int(new_y + self.token_width / 2)
+
             try:
-                background.paste(token, self.translate(x, y), token.convert("RGBA"))
+                background.paste(token, (new_x, new_y), token.convert("RGBA"))
             except Exception:
                 pass
             
             # Add the shroud reminder
             if player_obj.is_apparently_dead():
+
                 shroud = Image.open(self.SHROUD)
                 shroud_size_x = shroud.size[0]
                 shroud_size_y = shroud.size[1]
-                shroud_x = int(x - shroud_size_x / 2)
-                shroud_y = int(y - shroud_size_y / 2)
+
+                ratio = shroud_size_y / (self.token_width / 2)
+                ratio = 1 / ratio
+                thumbnail_x = int(shroud_size_x * ratio)
+                thumbnail_y = int(shroud_size_y * ratio)
+                shroud.thumbnail((thumbnail_x, thumbnail_y), Image.ANTIALIAS)
+                
+                shroud_x = int(token_center_x - thumbnail_x / 2)
+                shroud_y = int(token_center_y - self.token_width / 2)
                 background.paste(shroud, (shroud_x, shroud_y), shroud.convert("RGBA"))
 
         background.save(self.GRIMOIRE_PATH)

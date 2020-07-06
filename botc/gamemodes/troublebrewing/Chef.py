@@ -4,7 +4,7 @@ import json
 import discord
 import datetime
 import random
-from botc import Townsfolk, Character, BOTCUtils
+from botc import Townsfolk, Character, BOTCUtils, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -17,7 +17,7 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
 
 
-class Chef(Townsfolk, TroubleBrewing, Character):
+class Chef(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Chef: You start knowing how many pairs of evil players there are.
 
     ===== CHEF ===== 

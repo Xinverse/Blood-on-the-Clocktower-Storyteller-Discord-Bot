@@ -2,7 +2,7 @@
 
 import json 
 import random
-from botc import Outsider, Character, Minion, Demon
+from botc import Outsider, Character, Minion, Demon, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -10,7 +10,7 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
     character_text = json.load(json_file)[TBRole.recluse.value.lower()]
 
 
-class Recluse(Outsider, TroubleBrewing, Character):
+class Recluse(Outsider, TroubleBrewing, Character, NonRecurringAction):
     """Recluse: You might register as evil & as a Minion or Demon, even if dead.
 
     ===== RECLUSE ===== 

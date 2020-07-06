@@ -1,14 +1,14 @@
 """Contains the Virgin Character class"""
 
 import json 
-from botc import Townsfolk, Character
+from botc import Townsfolk, Character, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.virgin.value.lower()]
 
 
-class Virgin(Townsfolk, TroubleBrewing, Character):
+class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Virgin: The 1st time you are nominated, if the nominator is a Townsfolk, 
     they are executed immediately.
 

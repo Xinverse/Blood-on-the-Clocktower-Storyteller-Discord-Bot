@@ -1,7 +1,7 @@
 """Contains the Slayer Character class"""
 
 import json
-from botc import Action, ActionTypes, Inventory, Flags, Townsfolk, Character
+from botc import Action, ActionTypes, Inventory, Flags, Townsfolk, Character, NonRecurringAction
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -10,7 +10,7 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
     character_text = json.load(json_file)[TBRole.slayer.value.lower()]   
 
 
-class Slayer(Townsfolk, TroubleBrewing, Character):
+class Slayer(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     """Slayer: Once per game, during the day, publicly choose a player: if they are the Demon, they die.
 
     ===== SLAYER ===== 
@@ -74,7 +74,7 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
             
         return msg
     
-    @GameLogic.unique_ability
+    @GameLogic.unique_ability(ActionTypes.slay)
     @GameLogic.requires_one_target
     async def register_slay(self, player, targets):
         """Slay command"""
@@ -84,6 +84,7 @@ class Slayer(Townsfolk, TroubleBrewing, Character):
         action = Action(player, targets, ActionTypes.slay, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
         await player.user.send("You decided to slay **{}**.".format(targets[0].user.display_name))
+        await self.exec_slay(player, targets[0])
     
     async def exec_slay(self, slayer_player, slain_player):
         """Execute the slay action (immediate effect)"""
