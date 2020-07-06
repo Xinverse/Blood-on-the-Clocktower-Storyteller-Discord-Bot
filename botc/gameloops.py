@@ -5,13 +5,13 @@ import asyncio
 import math
 from discord.ext import tasks
 
-BASE_NIGHT = 30
-NIGHT_MULTIPLER = 4
+BASE_NIGHT = 10
+NIGHT_MULTIPLER = 1
 
 BASE_DAWN = 15
 DAWN_MULTIPLIER = 1
 
-INCREMENT = 15
+INCREMENT = 5
 
 global botc_game_obj
 

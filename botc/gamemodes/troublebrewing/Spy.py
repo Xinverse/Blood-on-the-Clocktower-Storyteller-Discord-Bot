@@ -104,7 +104,10 @@ class Spy(Minion, TroubleBrewing, Character):
         """Send the spy grimoire"""
 
         from botc import Grimoire
-        Grimoire().create(globvars.master_state.game)
+        try: 
+            Grimoire().create(globvars.master_state.game)
+        except Exception as e:
+            print("Grimoire image was not able to be generated: " + str(e))
 
         msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"
         msg += "\n"
@@ -113,7 +116,7 @@ class Spy(Minion, TroubleBrewing, Character):
         msg += spy_nightly
 
         embed = discord.Embed(description = msg)
-        file = discord.File("botc/assets/grimoire.png", filename="grimoire.png")
+        file = discord.File("botc/assets/grimoire/grimoire.png", filename="grimoire.png")
         embed.set_image(url="attachment://grimoire.png")
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text = copyrights_str)

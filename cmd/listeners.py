@@ -32,16 +32,6 @@ class Listeners(commands.Cog):
         await botutils.log(botutils.Level.info, restart_msg)
     
     @commands.Cog.listener()
-    async def on_error(self, event, *args, **kwargs):
-        """On_error event"""
-        print("%%%%%%%%%% ERROR %%%%%%%%%%")
-        try:
-            raise event
-        except Exception as e:
-            await botutils.send_lobby(error_str)
-            await botutils.log(botutils.Level.error, e)
-    
-    @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         """The event triggered when an error is raised while invoking a command.
 

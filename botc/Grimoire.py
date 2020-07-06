@@ -8,29 +8,39 @@ from botc.gamemodes import Gamemode
 class Grimoire:
     """Grimoire object to show the grimoire representation to the Spy Character"""
 
+    BACKGROUND_PATH = "botc/assets/grimoire/background.png"
+    GRIMOIRE_PATH = "botc/assets/grimoire/grimoire.png"
+    TB_ICON = "botc/assets/editions/TB_Logo.png"
+    BMR_ICON = "botc/assets/editions/BMR_Logo.png"
+    SV_ICON = "botc/assets/editions/SV_Logo.png"
+    SHROUD = "botc/assets/grimoire/shroud.png"
+    FONT = "botc/assets/grimoire/Bitstream_Cyberbit.ttf"
+
     def __init__(self):
 
-        background = Image.open("botc/assets/background.png").convert("RGBA")
+        background = Image.open(self.BACKGROUND_PATH)
+        background.convert("RGBA")
 
         self.PIC_SQUARE_SIDE = min(background.size)
-        self.BUFFER = 50
+        self.PIC_LENGTH = max(background.size)
 
-        background.save("botc/assets/grimoire.png", format="PNG")
+        background.save(self.GRIMOIRE_PATH, format="PNG")
     
     @property
     def token_width(self):
         "Find the width of each token based on the background size"
-        return math.ceil(self.PIC_SQUARE_SIDE/6)
+        return math.ceil(self.PIC_SQUARE_SIDE/5.5)
     
     @property
     def sitting_circle_radius(self):
         """Find the radius of the big sitting circle based on the background size"""
-        return math.ceil(self.PIC_SQUARE_SIDE * 0.9 * 0.5)
+        return math.ceil(self.PIC_SQUARE_SIDE * 0.75 * 0.5)
     
     def create(self, game_obj):
 
         nb_players = len(game_obj.sitting_order)
-        background = Image.open("botc/assets/grimoire.jpg")
+        background = Image.open(self.GRIMOIRE_PATH)
+        self.paste_gamemode_icon(game_obj, background)
 
         for n in range(nb_players):
 
@@ -38,18 +48,70 @@ class Grimoire:
             true_role = player_obj.role.true_self
             token_file_path = TokenPathGrabber().getpath(true_role)
             token = Image.open(token_file_path)
-            token.convert("RGBA")
             token.thumbnail((self.token_width, self.token_width), Image.ANTIALIAS)
-            print(token_file_path)
 
             x = self.get_x_from_angle(n*self.get_rad_angle(nb_players))
             y = self.get_y_from_angle(n*self.get_rad_angle(nb_players))
-            background.paste(token, (int(x), int(y)), token)
-        
-        background.save("botc/assets/grimoire.jpg")
+
+            try:
+                background.paste(token, self.translate(x, y), token.convert("RGBA"))
+            except Exception:
+                pass
+            
+            # Add the shroud reminder
+            if player_obj.is_apparently_dead():
+                shroud = Image.open(self.SHROUD)
+                shroud_size_x = shroud.size[0]
+                shroud_size_y = shroud.size[1]
+                shroud_x = int(x - shroud_size_x / 2)
+                shroud_y = int(y - shroud_size_y / 2)
+                background.paste(shroud, (shroud_x, shroud_y), shroud.convert("RGBA"))
+
+        background.save(self.GRIMOIRE_PATH)
+
+    def paste_gamemode_icon(self, game_obj, background):
+
+        x = self.PIC_LENGTH / 2
+        y = self.PIC_SQUARE_SIDE / 2
+
+        if game_obj.gamemode == Gamemode.trouble_brewing:
+
+            edition_logo = Image.open(self.TB_ICON)
+
+            logo_size_x = edition_logo.size[0]
+            logo_size_y = edition_logo.size[1]
+            ratio = logo_size_y / (self.PIC_SQUARE_SIDE / 4)
+            ratio = 1 / ratio
+            thumbnail_x = int(logo_size_x * ratio)
+            thumbnail_y = int(logo_size_y * ratio)
+
+            edition_logo.thumbnail((thumbnail_x, thumbnail_y), Image.ANTIALIAS)
+
+            x -= thumbnail_x / 2
+            y -= thumbnail_y / 2
+
+            try:
+                background.paste(edition_logo, (int(x), int(y)), edition_logo.convert("RGBA"))
+            except Exception:
+                pass
+
+        elif game_obj.gamemode == Gamemode.bad_moon_rising:
+            pass
+
+        elif game_obj.gamemode == Gamemode.sects_and_violets:
+            pass
+    
+    def translate(self, x, y):
+        image_center_x = self.PIC_LENGTH / 2
+        image_center_y = self.PIC_SQUARE_SIDE / 2
+
+        image_center_x -= self.token_width / 2
+        image_center_y -= self.token_width / 2
+
+        return(int(x + image_center_x), int(y + image_center_y))
     
     def get_image(self):
-        return 'botc/assets/grimoire.jpg'
+        return self.GRIMOIRE_PATH
     
     def get_rad_angle(self, nb_player):
         return 2 * math.pi / nb_player
@@ -73,7 +135,7 @@ class TokenPathGrabber:
             words = character_name.split(" ")
             words.append("Token.png")
             file_name = "_".join(words)
-            return "botc/assets/tb_tokens/" + file_name
+            return "botc/assets/tb_tokens_rgba/" + file_name
         # Bad moon rising gamemode
         elif character_obj.gm_of_appearance == Gamemode.bad_moon_rising:
             pass

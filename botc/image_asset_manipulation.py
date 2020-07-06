@@ -49,6 +49,16 @@ def transform_png_to_rgba(image_path, saved_location):
     background.save(saved_location, 'JPEG', quality=80)
 
 
+def transform_png_to_rgba2(image_path, saved_location):
+    """
+    @param image_path: The path to the image to edit
+    @param saved_location: Path to save the cropped image
+    """
+    png = Image.open(image_path)
+    png.convert("RGBA")
+    png.save(saved_location, "PNG")
+
+
 if __name__ == '__main__':
     p = "/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/tb_tokens"
     for filename in os.listdir(p):
@@ -57,4 +67,5 @@ if __name__ == '__main__':
             path = p + "/" + filename
             new_path = "/Users/home/Documents/Projects/Coding/BOTC-Bot/botc/assets/tb_tokens_rgba/" + filename
             #crop(path, new_path)
-            alpha_to_color(path).save(new_path)
+            #alpha_to_color(path).save(new_path)
+            transform_png_to_rgba2(path, new_path)
