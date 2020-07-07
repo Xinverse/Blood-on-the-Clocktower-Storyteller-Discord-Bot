@@ -155,40 +155,7 @@ class GameLog:
 
 
 class Game(GameMeta):
-   """BoTC Game class
-   
-   Order of Action (First Night)
-   1. poisoner
-   2. washerwoman
-   3. librarian
-   4. investigator
-   5. chef
-   6. empath
-   7. fortune teller
-   8. butler
-   9. spy
-
-   Our equivalent:
-   night start: poisoner, fortune teller, butler
-   night end: washerwoman, librarian, investigator, chef, empath, spy
-
-
-   Order of Action (All Other Nights)
-   1. poisoner
-   2. monk
-   3. scarlet woman 
-   4. imp
-   5. ravenkeeper
-   6. empath
-   7. fortune teller
-   8. butler
-   9. undertaker
-   10. spy
-
-   Our equivalent:
-   night start: poisoner, monk, imp, fortune teller, butler
-   night end: empath, spy, ravenkeeper, undertaker
-   """
+   """BoTC Game class"""
 
    MIN_PLAYERS = 5
    MAX_PLAYERS = 15
@@ -345,6 +312,82 @@ class Game(GameMeta):
       # Start the game loop
       self.gameloop.start(self)
    
+   def compute_night_ability_interactions(self):
+      """Order of Action (First Night)
+      1. poisoner
+      2. washerwoman
+      3. librarian
+      4. investigator
+      5. chef
+      6. empath
+      7. fortune teller
+      8. butler
+      9. spy
+
+      Order of Action (All Other Nights)
+      1. poisoner
+      2. monk
+      3. scarlet woman 
+      4. imp
+      5. ravenkeeper
+      6. empath
+      7. fortune teller
+      8. butler
+      9. undertaker
+      10. spy
+      """
+      from botc.gamemodes.troublebrewing._utils import TBRole
+      
+      # Night 1 order
+      if self._chrono.is_night_1():
+
+         poisoners = BOTCUtils.get_players_from_role_name(TBRole.poisoner)
+         for poisoner in poisoners:
+            poisoner.role.ego_self.process_night_ability(poisoner)
+
+      # Regular night order
+      else:
+
+         poisoners = BOTCUtils.get_players_from_role_name(TBRole.poisoner)
+         for poisoner in poisoners:
+            poisoner.role.ego_self.process_night_ability(poisoner)
+
+         monks = BOTCUtils.get_players_from_role_name(TBRole.monk)
+         for monk in monks:
+            monk.role.ego_self.process_night_ability(monk)
+
+         scarlet_women = BOTCUtils.get_players_from_role_name(TBRole.scarletwoman)
+         for scarlet_woman in scarlet_women:
+            scarlet_woman.role.ego_self.process_night_ability(scarlet_woman)
+
+         imps = BOTCUtils.get_players_from_role_name(TBRole.imp)
+         for imp in imps:
+            imp.role.ego_self.process_night_ability(imp)
+         
+         ravenkeepers = BOTCUtils.get_players_from_role_name(TBRole.ravenkeeper)
+         for ravenkeeper in ravenkeepers:
+            ravenkeeper.role.ego_self.process_night_ability(ravenkeeper)
+         
+         empaths = BOTCUtils.get_players_from_role_name(TBRole.empath)
+         for empath in empaths:
+            empath.role.ego_self.process_night_ability(empath)
+         
+         fortune_tellers = BOTCUtils.get_players_from_role_name(TBRole.fortuneteller)
+         for fortune_teller in fortune_tellers:
+            fortune_teller.role.ego_self.process_night_ability(fortune_teller)
+         
+         butlers = BOTCUtils.get_players_from_role_name(TBRole.butler)
+         for butler in butlers:
+            butler.role.ego_self.process_night_ability(butler)
+         
+         undertakers = BOTCUtils.get_players_from_role_name(TBRole.undertaker)
+         for undertaker in undertakers:
+            undertaker.role.ego_self.process_night_ability(undertaker)
+         
+         spies = BOTCUtils.get_players_from_role_name(TBRole.spy)
+         for spy in spies:
+            spy.role.ego_self.process_night_ability(spy)
+   
    def has_received_all_expected_dawn_actions(self):
       """Check if all players with expected dawn actions have submitted them"""
       for player in self.sitting_order:
@@ -370,7 +413,7 @@ class Game(GameMeta):
       # Unload game related commands
       globvars.client.unload_extension("botc.commands.botc_commands")
       globvars.client.unload_extension("botc.commands.botc_debug_commands")
-      # Send the lobby welcome message
+      # Send the lobby game conclusion message
       await botutils.send_lobby("Game over, todo")
       # Log the game over data
       await botutils.log(botutils.Level.info, "Game finished, to-do")

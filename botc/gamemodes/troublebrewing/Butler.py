@@ -4,7 +4,8 @@ import json
 import botutils
 import discord
 from botc.BOTCUtils import GameLogic
-from botc import Outsider, Character, Action, ActionTypes, BOTCUtils, RecurringAction
+from botc import Outsider, Character, Action, ActionTypes, BOTCUtils, RecurringAction, \
+    ButlerService
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -107,6 +108,28 @@ class Butler(Outsider, TroubleBrewing, Character, RecurringAction):
         msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
         await player.user.send(msg)
     
-    async def exec_serve(self, player, targets):
+    async def exec_serve(self, butler_player, master_player):
         """Execute the serve action (night ability interaction)"""
-        pass
+
+        if butler_player.is_alive() and not butler_player.is_droisoned():
+            butler_player.add_status_effect(ButlerService(butler_player, butler_player, master_player, 2))
+    
+    async def process_night_ability(self, player):
+        """Process night actions for the butler character.
+        @player : the Butler player (Player object)
+        """
+        
+        phase = globvars.master_state.game._chrono.phase_id
+        action = player.action_grid.retrieve_an_action(phase)
+        # The butler has submitted an action. We call the execution function immediately
+        if action:
+            assert action.action_type == ActionTypes.serve, f"Wrong action type {action} in butler"
+            targets = action.target_player
+            master_player = targets[0]
+            await self.exec_serve(player, master_player)
+        # The butler has not submitted an action. We randomize the master for him, 
+        # DM him the choice of the master, and then call the execution function
+        else:
+            master_player = BOTCUtils.get_random_player_excluding(player)
+            await self.exec_serve(player, master_player)
+            await player.user.send("your action was randomized to {}".format(master_player))

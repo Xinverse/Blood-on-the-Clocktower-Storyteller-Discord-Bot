@@ -15,6 +15,7 @@ with open('botc/game_text.json') as json_file:
     requires_different_targets_str = documentation["cmd_warnings"]["requires_different_targets_str"]
     changes_not_allowed = documentation["cmd_warnings"]["changes_not_allowed"]
     unique_ability_used = documentation["cmd_warnings"]["unique_ability_used"]
+    lore = documentation["lore"]
 
 
 # ========== TARGETS ===============================================================
@@ -48,6 +49,32 @@ def get_number_image(nb):
 
 class BOTCUtils:
    """Some utility functions"""
+
+   @staticmethod
+   def get_players_from_role_name(character_name_enum):
+      """Return the list of players holding a certain character, using ego_self"""
+      import globvars
+      game = globvars.master_state.game
+      ret = []
+      for player in game.sitting_order:
+         if player.role.ego_self.name == character_name_enum:
+            ret.append(player)
+      return ret
+
+   @staticmethod
+   def get_random_player():
+      """Get any random player from the game"""
+      import globvars
+      game = globvars.master_state.game
+      return random.choice(game.sitting_order)
+
+   @staticmethod
+   def get_random_player_excluding(player):
+      """Get any random player that is not the player passed in the argument"""
+      import globvars
+      game = globvars.master_state.game
+      possibilities = [p for p in game.sitting_order if p.user.id != player.user.id]
+      return random.choice(possibilities)
 
    @staticmethod
    def get_role_list(edition, category):
@@ -220,11 +247,15 @@ class GameLogic:
 
    @staticmethod
    def unique_ability(ability_type):
+      """Decorator for unique abilities to be used once per game. Decorator factory that 
+      creates decorators based on the ability type.
+
+      @ability_type: ActionTypes() enum object
+      """
       def decorator(func):
-         """Decorator for unique abilities to be used once per game"""
          def inner(self, player, targets):
             from botc import Flags, ActionTypes
-            # Slayer's unique "slay" ability
+            # Slayer's unique "slay" ability. Everyone may use it publicy once.
             if ability_type == ActionTypes.slay:
                if not player.role.ego_self.inventory.has_item_in_inventory(Flags.slayer_unique_attempt):
                   raise UniqueAbilityError(unique_ability_used.format(player.user.mention, x_emoji))
@@ -351,3 +382,22 @@ class PlayerParser(commands.Converter):
             await ctx.author.send(msg)
             raise commands.BadArgument(f"Player {raw} not found.")
       return Targets(actual_targets)
+
+
+# ========== MISCELLANEOUS =========================================================
+# ----------------------------------------------------------------------------------
+
+class LorePicker:
+   """Helps to pick lore strings from the json file"""
+
+   SLAY_SUCCESS = "slay_success"
+   SLAY_FAIL = "slay_fail"
+
+   def pick(self, category):
+      """Pick the lore string based on the weighted random function"""
+      chosen = random.choices(
+         lore[category]["outputs"],
+         weights = lore[category]["weights"]
+      )
+      return chosen[0]
+      

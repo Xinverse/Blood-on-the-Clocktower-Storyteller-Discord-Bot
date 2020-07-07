@@ -28,15 +28,19 @@ class Action:
 
     def __init__(self, source_player, target_player, action_type, phase_id):
         """Param:
-        source_player : player that did the action
-        target_player : player or players targetted by the action (Target() object)
-        action_type : enum object describing the action (see above)
-        birth_phase_id : the phase ID when it was registered
+        @source_player : player that did the action (Player() object)
+        @target_player : player or players targetted by the action (Target() object)
+        @action_type : enum object describing the action (see above)
+        @birth_phase_id : the phase ID when it was registered
         """
         self.source_player = source_player
         self.target_player = target_player
         self.action_type = action_type
         self.birth_phase_id = phase_id
+    
+    def __repr__(self):
+
+        return f"Action {self.action_type}"
 
 
 class _GrowingList(list):

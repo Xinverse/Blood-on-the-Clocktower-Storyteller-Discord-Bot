@@ -12,7 +12,7 @@ class StatusList(enum.Enum):
    drunkenness = "drunkenness"
    poison = "poisoned"
    red_herring = "red_herring"
-   under_service = "under_service"
+   butler_service = "butler_service"  # For butler serving a master
 
 
 class Storyteller:
@@ -23,7 +23,7 @@ class Storyteller:
 class StatusEffect:
     """Parent class for status effect."""
 
-    def __init__(self, source_player, affected_player, duration):
+    def __init__(self, source_player, affected_player, pointer_player, duration):
         """Initalize the object.
 
         Param:
@@ -35,12 +35,13 @@ class StatusEffect:
         """
         self.source_player = source_player
         self.affected_player = affected_player
+        self.pointer_player = pointer_player
         self.duration = duration
-        self.__is_active = None
-        self.__effect = None
+        self._is_active = None
+        self._effect = None
     
     def __repr__(self):
-        return f"Status {self.__effect} on {self.affected_player}"
+        return f"Status {self._effect} on {self.affected_player}"
     
     def wear_off(self):
         """Wear off the effect duration by 1 phase"""
@@ -48,60 +49,103 @@ class StatusEffect:
     
     def manually_enable(self):
         """Manually enable the effect"""
-        self.__is_active = True
+        self._is_active = True
     
     def manually_disable(self):
         """Manually disable the effect"""
-        self.__is_active = False
+        self._is_active = False
     
     def is_active(self):
         """Return True if the status effect is active, false otherwise. 
         Manual enabling and disabling have precedence over duration wearing off.
         """
-        if self.__is_active is not None:
-            return self.__is_active
+        if self._is_active is not None:
+            return self._is_active
         return self.duration > 0
     
     @property
     def effect(self):
         """Return the enum value of the effect"""
-        if self.__effect:
-            return self.__effect
+        if self._effect:
+            return self._effect
         else:
-            print(self.__repr__())
             raise NotImplementedError
 
 
 class SafetyFromDemon(StatusEffect):
     """Safety from demon effect. Affected player will not die from demon kill."""
 
-    def __init__(self, source_player, affected_player, duration = DEFAULT_EFFECT_DURATION):
-        super().__init__(source_player, affected_player, duration)
-        self.__effect = StatusList.safety_from_demon
+    def __init__(
+            self, 
+            source_player, 
+            affected_player, 
+            pointer_player = None, 
+            duration = DEFAULT_EFFECT_DURATION
+        ):
+        super().__init__(source_player, affected_player, pointer_player, duration)
+        self._effect = StatusList.safety_from_demon
 
 
 class Drunkenness(StatusEffect):
     """Drunkenness effect"""
 
-    def __init__(self, source_player, affected_player, duration = DEFAULT_EFFECT_DURATION):
-        super().__init__(source_player, affected_player, duration)
-        self.__effect = StatusList.drunkenness
+    def __init__(
+            self, 
+            source_player, 
+            affected_player, 
+            pointer_player = None,
+            duration = DEFAULT_EFFECT_DURATION
+        ):
+        super().__init__(source_player, affected_player, pointer_player, duration)
+        self._effect = StatusList.drunkenness
 
 
 class Poison(StatusEffect):
     """Poison effect"""
 
-    def __init__(self, source_player, affected_player, duration = DEFAULT_EFFECT_DURATION):
-        super().__init__(source_player, affected_player, duration)
-        self.__effect = StatusList.poison
+    def __init__(
+            self, 
+            source_player, 
+            affected_player, 
+            pointer_player = None, 
+            duration = DEFAULT_EFFECT_DURATION
+        ):
+        super().__init__(source_player, affected_player, pointer_player, duration)
+        self._effect = StatusList.poison
 
 
 class RedHerring(StatusEffect):
     """Red herring for the fortune teller character."""
 
-    def __init__(self, source_player, affected_player, duration = 1000000):
+    def __init__(
+            self, 
+            source_player, 
+            affected_player, 
+            pointer_player = None, 
+            duration = 1000000
+        ):
         """The red herring effect lasts the whole game, so we initialize it with 
         a really large number
         """
-        super().__init__(source_player, affected_player, duration)
-        self.__effect = StatusList.red_herring
+        super().__init__(source_player, affected_player, pointer_player, duration)
+        self._effect = StatusList.red_herring
+    
+
+class ButlerService(StatusEffect):
+    """Butler under service of a master"""
+
+    def __init__(
+            self, 
+            source_player, 
+            affected_player, 
+            pointer_player, 
+            duration = DEFAULT_EFFECT_DURATION
+        ):
+        """
+        @source_player : the butler
+        @affected_player : the butler
+        @pointer_player : the master
+        @duration : 3 phases by default (the same night, next dawn, and next day)
+        """
+        super().__init__(source_player, affected_player, pointer_player, duration)
+        self._effect = StatusList.butler_service

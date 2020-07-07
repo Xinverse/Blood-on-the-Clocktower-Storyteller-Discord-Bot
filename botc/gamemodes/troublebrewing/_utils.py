@@ -37,6 +37,6 @@ class TroubleBrewing:
     def __init__(self):
 
         self._gm_of_appearance = Gamemode.trouble_brewing
-        self._gm_art_link = "http://bloodontheclocktower.com/wiki/images/9/92/TB_Logo.png"
+        self._gm_art_link = "https://imgur.com/3ENrO0y.png"
         self._gm_main_page = "http://bloodontheclocktower.com/wiki/Trouble_Brewing"
 

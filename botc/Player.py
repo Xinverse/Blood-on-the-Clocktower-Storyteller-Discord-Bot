@@ -36,6 +36,17 @@ class Player:
         await botutils.add_dead_role(self.user)
         await botutils.remove_alive_role(self.user)
     
+    async def exec_apparent_death(self):
+        """Turn the player's apparent state into the death state, but the real state 
+        remains alive
+        """
+        if self.is_apparently_dead():
+            raise AlreadyDead("Player is already 'apparently' dead, you are trying to " \
+                "kill them again.")
+        self._apparent_state_obj = PlayerState.dead
+        await botutils.add_dead_role(self.user)
+        await botutils.remove_alive_role(self.user)
+    
     def is_droisoned(self):
         """Return true if the player is currently drunk or poisoned (droison) when the 
         check is performed, false otherwise.
@@ -57,6 +68,7 @@ class Player:
     
     def add_status_effect(self, new_status_effect):
         """Add a status effect"""
+        print(new_status_effect)
         self._status_effects.append(new_status_effect)
     
     def is_apparently_alive(self):

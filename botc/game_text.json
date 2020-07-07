@@ -101,6 +101,56 @@
 
     },
 
+    "lore" : {
+
+        "slay_success" : {
+
+            "outputs" : [
+                "No one owns life, but anyone who can pick up a frying pan owns death. Frying pan in hand, {slayer} smacks {slain} with full force, and the Clocktower is now stained with the Demon's blood. Congratulations! The Demon has been slayed by our brave Dragon Sla-- oh wait, sorry, it's *Demon* Slayer.\nPlayer {slain} is now **dead**.",
+                "According to most studies, people's number one fear is public speaking. Number two is death. Death is number two! Does that sound right? This means to the average person, if you go to a funeral, you're better off in the casket than doing the eulogy. And the casket was where {slayer} decided to send {slain}.\nPlayer {slain} is now **dead**."
+            ],
+
+            "weights" : [
+                0.5,
+                0.5
+            ]
+        },
+
+        "slay_fail" : {
+
+            "outputs" : [
+                "{slayer} launched themself towards {slain}, but tripped instead. As they got up awkwardly, they mumbled, 'I didn't trip. The floor gave me a dirty look, so I attacked it instead.'\nPlayer {slain} is still **alive**."
+            ],
+
+            "weights" : [
+                1.0
+            ]
+        },
+
+        "night_death" : {
+
+            "outputs" : [
+                
+            ],
+
+            "weights" : [
+
+            ]
+        },
+
+        "day_lynch" : {
+
+            "outputs" : [
+                
+            ],
+
+            "weights" : [
+
+            ]
+        }
+        
+    },
+
     "gameplay" : {
 
         "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",

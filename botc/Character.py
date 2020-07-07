@@ -7,6 +7,7 @@ import datetime
 import configparser
 from .Category import Category
 from .Team import Team
+from .BOTCUtils import LorePicker
 from .flag_inventory import Inventory, Flags
 from .abilities import ActionTypes, Action
 from .BOTCUtils import GameLogic
@@ -384,6 +385,13 @@ class Character:
         pass
     
     # -------------------- Character ABILITIES --------------------
+
+    async def process_night_ability(self, player):
+        """Process night ability for a character.
+        This is the sole function called by the night interaction processing function.
+        Default is to do nothing. Override by child classes
+        """
+        return
     
     async def exec_serve(self, player, targets):
         """Serve command. Override by child classes."""
@@ -432,7 +440,16 @@ class Character:
         All non-slayers characters will be able to use the slay command just like the slayer, 
         but without any consequences for the game.
         """
+
+        # Remove the unique use ability from the player's inventory
         slayer_player.role.ego_self.inventory.remove_item_from_inventory(Flags.slayer_unique_attempt)
+        # The ability fails no matter what, because the player is not a slayer
+        string = LorePicker().pick(LorePicker().SLAY_FAIL)
+        string = string.format(
+            slayer = slayer_player.game_nametag, 
+            slain = slain_player.game_nametag
+        )
+        await botutils.send_lobby(string)
 
     @GameLogic.unique_ability(ActionTypes.slay)
     @GameLogic.requires_one_target
@@ -443,7 +460,6 @@ class Character:
         assert len(targets) == 1, "Received a number of targets different than 1 for slayer 'slay'"
         action = Action(player, targets, ActionTypes.slay, globvars.master_state.game._chrono.phase_id)
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
-        await player.user.send("You decided to slay **{}**.".format(targets[0].user.display_name))
         await self.exec_slay(player, targets[0])
 
     async def exec_protect(self, player, targets):
