@@ -9,6 +9,10 @@ from .gamemodes.badmoonrising import Assassin, Chambermaid, Courtier, DevilsAdvo
         Exorcist, Fool, Gambler, Godfather, Goon, Gossip, Grandmother, Innkeeper, Lunatic, \
         Mastermind, Minstrel, Moonchild, Pacifist, Po, Professor, Pukka, Sailor, Shabaloth, \
         TeaLady, Tinker, Zombuul
+from .gamemodes.sectsandviolets import Artist, Barber, Cerenovus, Clockmaker, Dreamer, \
+    EvilTwin, FangGu, Flowergirl, Juggler, Klutz, Mathematician, Mutant, NoDashii, Oracle, \
+    Philosopher, PitHag, Sage, Savant, Seamstress, SnakeCharmer, Sweetheart, TownCrier, \
+    Vigormortis, Vortox, Witch
 
 
 class BOTCFormatter(FormatterMeta):
@@ -93,6 +97,36 @@ setup = {
                             TeaLady(),
                             Tinker(),
                             Zombuul()
+
+                        ],
+            
+            "sects-&-violets" : [
+
+                            Artist(),
+                            Barber(),
+                            Cerenovus(),
+                            Clockmaker(),
+                            Dreamer(),
+                            EvilTwin(),
+                            FangGu(),
+                            Flowergirl(),
+                            Juggler(),
+                            Klutz(),
+                            Mathematician(),
+                            Mutant(),
+                            NoDashii(),
+                            Oracle(),
+                            Philosopher(),
+                            PitHag(),
+                            Sage(),
+                            Savant(),
+                            Seamstress(),
+                            SnakeCharmer(),
+                            Sweetheart(),
+                            TownCrier(),
+                            Vigormortis(),
+                            Vortox(),
+                            Witch()
 
                         ]
 

@@ -81,7 +81,12 @@ class Empath(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     
     def __create_droisoned_info(self):
         """Create drunk/poisoned information for the empath info"""
-        return random.choice(range(2))
+
+        import globvars
+        nb_evils = random.choice(range(3))
+        log_msg = f">>> Empath: [droisoned] {nb_evils} alive evil neighbours"
+        globvars.logging.info(log_msg)
+        return nb_evils
     
     async def send_n1_end_message(self, recipient):
         """Send the number of pairs of evils sitting together."""
@@ -94,8 +99,10 @@ class Empath(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         if not player.is_alive():
             return 
 
+        # Poisoned info
         if player.is_droisoned():
             evil_pair_count = self.__create_droisoned_info()
+        # Good info
         else:
             evil_pair_count = self.get_nb_evil_neighbours(recipient)
         link = get_number_image(evil_pair_count)
@@ -115,6 +122,11 @@ class Empath(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             await recipient.send(embed = embed)
         except discord.Forbidden:
             pass
+    
+    async def send_regular_night_end_dm(self, recipient):
+        """Send the number of pairs of evils sitting together."""
+
+        await self.send_n1_end_message(recipient)
     
     def get_nb_evil_neighbours(self, recipient):
         """Send the number of alive evil neighbours"""

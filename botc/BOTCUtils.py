@@ -57,7 +57,7 @@ class BOTCUtils:
       game = globvars.master_state.game
       ret = []
       for player in game.sitting_order:
-         if player.role.ego_self.name == character_name_enum:
+         if player.role.ego_self.name == character_name_enum.value:
             ret.append(player)
       return ret
 
