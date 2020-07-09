@@ -312,7 +312,7 @@ class Game(GameMeta):
       # Start the game loop
       self.gameloop.start(self)
    
-   def compute_night_ability_interactions(self):
+   async def compute_night_ability_interactions(self):
       """Order of Action (First Night)
       1. poisoner
       2. washerwoman
@@ -336,58 +336,53 @@ class Game(GameMeta):
       9. undertaker
       10. spy
       """
-      from botc.gamemodes.troublebrewing._utils import TBRole
+      if self.gamemode == Gamemode.trouble_brewing:
+         
+         from botc.gamemodes.troublebrewing._utils import TBRole
       
-      # Night 1 order
-      if self._chrono.is_night_1():
+         night_1_order = [
 
-         poisoners = BOTCUtils.get_players_from_role_name(TBRole.poisoner)
-         for poisoner in poisoners:
-            poisoner.role.ego_self.process_night_ability(poisoner)
+            TBRole.poisoner,
+            TBRole.washerwoman,
+            TBRole.librarian,
+            TBRole.investigator,
+            TBRole.chef,
+            TBRole.empath,
+            TBRole.fortuneteller,
+            TBRole.butler,
+            TBRole.spy
 
-      # Regular night order
-      else:
+         ]
 
-         poisoners = BOTCUtils.get_players_from_role_name(TBRole.poisoner)
-         for poisoner in poisoners:
-            poisoner.role.ego_self.process_night_ability(poisoner)
+         night_regular_order = [
 
-         monks = BOTCUtils.get_players_from_role_name(TBRole.monk)
-         for monk in monks:
-            monk.role.ego_self.process_night_ability(monk)
+            TBRole.poisoner,
+            TBRole.monk,
+            TBRole.scarletwoman,
+            TBRole.imp,
+            TBRole.ravenkeeper,
+            TBRole.empath,
+            TBRole.fortuneteller,
+            TBRole.butler,
+            TBRole.undertaker,
+            TBRole.spy
 
-         scarlet_women = BOTCUtils.get_players_from_role_name(TBRole.scarletwoman)
-         for scarlet_woman in scarlet_women:
-            scarlet_woman.role.ego_self.process_night_ability(scarlet_woman)
+         ]
 
-         imps = BOTCUtils.get_players_from_role_name(TBRole.imp)
-         for imp in imps:
-            imp.role.ego_self.process_night_ability(imp)
-         
-         ravenkeepers = BOTCUtils.get_players_from_role_name(TBRole.ravenkeeper)
-         for ravenkeeper in ravenkeepers:
-            ravenkeeper.role.ego_self.process_night_ability(ravenkeeper)
-         
-         empaths = BOTCUtils.get_players_from_role_name(TBRole.empath)
-         for empath in empaths:
-            empath.role.ego_self.process_night_ability(empath)
-         
-         fortune_tellers = BOTCUtils.get_players_from_role_name(TBRole.fortuneteller)
-         for fortune_teller in fortune_tellers:
-            fortune_teller.role.ego_self.process_night_ability(fortune_teller)
-         
-         butlers = BOTCUtils.get_players_from_role_name(TBRole.butler)
-         for butler in butlers:
-            butler.role.ego_self.process_night_ability(butler)
-         
-         undertakers = BOTCUtils.get_players_from_role_name(TBRole.undertaker)
-         for undertaker in undertakers:
-            undertaker.role.ego_self.process_night_ability(undertaker)
-         
-         spies = BOTCUtils.get_players_from_role_name(TBRole.spy)
-         for spy in spies:
-            spy.role.ego_self.process_night_ability(spy)
-   
+         # Night 1 order
+         if self._chrono.is_night_1():
+            for character_enum in night_1_order:
+               list_of_characters = BOTCUtils.get_players_from_role_name(character_enum)
+               for character in list_of_characters:
+                  await character.role.ego_self.process_night_ability(character)
+
+         # Regular night order
+         else:
+            for character_enum in night_regular_order:
+               list_of_characters = BOTCUtils.get_players_from_role_name(character_enum)
+               for character in list_of_characters:
+                  await character.role.ego_self.process_night_ability(character)
+
    def has_received_all_expected_dawn_actions(self):
       """Check if all players with expected dawn actions have submitted them"""
       for player in self.sitting_order:

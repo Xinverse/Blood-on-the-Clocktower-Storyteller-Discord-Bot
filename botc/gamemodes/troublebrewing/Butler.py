@@ -16,6 +16,10 @@ with open('botutils/bot_text.json') as json_file:
     bot_text = json.load(json_file)
     butterfly = bot_text["esthetics"]["butterfly"]
 
+with open('botc/game_text.json') as json_file: 
+    documentation = json.load(json_file)
+    action_assign = documentation["gameplay"]["action_assign"]
+
 
 class Butler(Outsider, TroubleBrewing, Character, RecurringAction):
     """Butler: Each night, choose a player (not yourself): tomorrow, you may only vote if 
@@ -132,4 +136,10 @@ class Butler(Outsider, TroubleBrewing, Character, RecurringAction):
         else:
             master_player = BOTCUtils.get_random_player_excluding(player)
             await self.exec_serve(player, master_player)
-            await player.user.send("your action was randomized to {}".format(master_player))
+            msg = botutils.BotEmoji.butterfly
+            msg += " "
+            msg += action_assign.format(master_player.game_nametag)
+            try:
+                await player.user.send(msg)
+            except discord.Forbidden:
+                pass

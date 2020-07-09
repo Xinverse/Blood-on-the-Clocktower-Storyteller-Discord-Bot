@@ -110,5 +110,23 @@ class Poisoner(Minion, TroubleBrewing, Character, RecurringAction):
     async def exec_poison(self, poisoner_player, poisoned_player):
         """Execute the poison actions (night interaction)"""
         if not poisoner_player.is_droisoned() and poisoner_player.is_alive():
-            poisoner_player.add_status_effect(Poison(poisoner_player, poisoned_player))
+            poisoned_player.add_status_effect(Poison(poisoner_player, poisoned_player))
     
+    async def process_night_ability(self, player):
+        """Process night actions for the poisoner character.
+        @player : the Butler player (Player object)
+        """
+        
+        phase = globvars.master_state.game._chrono.phase_id
+        action = player.action_grid.retrieve_an_action(phase)
+        # The poisoner has submitted an action. We call the execution function immediately
+        if action:
+            assert action.action_type == ActionTypes.poison, f"Wrong action type {action} in poisoner"
+            targets = action.target_player
+            poisoned_player = targets[0]
+            await self.exec_poison(player, poisoned_player)
+        # The poisoner has not submitted an action. We will not randomize the action since 
+        # the poison ability is a "priviledged" ability
+        else:
+            pass
+        

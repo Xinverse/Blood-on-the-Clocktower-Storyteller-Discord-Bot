@@ -86,6 +86,8 @@ class Chef(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             len(globvars.master_state.game.setup.demon)
         possibilities = range(total_nb_evils)
         ret = random.choice(possibilities)
+        log_msg = f">>> Chef: [droisoned] {ret} pairs of evils"
+        globvars.logging.info(log_msg)
         return ret
     
     async def send_n1_end_message(self, recipient):
@@ -99,8 +101,10 @@ class Chef(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         if not player.is_alive():
             return 
 
+        # Poisoned info
         if player.is_droisoned():
             evil_pair_count = self.__create_droisoned_info()
+        # Good info
         else:
             evil_pair_count = self.get_nb_pairs_of_evils()
         link = get_number_image(evil_pair_count)

@@ -83,12 +83,14 @@ async def before_night(game):
 async def after_night_1(game):
     """Run after night 1 ends. Handle the night 1 end."""
     # Send n1 end messages
+    await game.compute_night_ability_interactions()
     for player in game.sitting_order:
         await player.role.ego_self.send_n1_end_message(player.user)
 
 
 async def after_night(game):
     """Run after a regular (not the first) night ends. Handle the regular night end."""
+    await game.compute_night_ability_interactions()
     for player in game.sitting_order:
         await player.role.ego_self.send_regular_night_end_dm(player.user)
 
