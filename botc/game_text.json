@@ -16,7 +16,13 @@
 
         "blank_token" : "https://imgur.com/Y5tPO28.png",
         "good" : "https://imgur.com/vXzuSh9.png",
-        "evil" : "https://imgur.com/iTaPY4K.png"
+        "evil" : "https://imgur.com/iTaPY4K.png",
+        "nightfall" : "https://imgur.com/G2z4f47.png",
+        "dawn" : "https://imgur.com/CDux0p3.jpeg",
+        "daybreak" : "https://imgur.com/NhnhbFi.jpg",
+        "moon" : "https://imgur.com/PNfx03u.png",
+        "sun" : "https://imgur.com/YzR6njX.png",
+        "sunrise" : "https://imgur.com/EwakqwA.png"
         
     },
 
@@ -161,7 +167,7 @@
         "dawn" : "It is currently **dawn**.",
         "daybreak" : "It is currently **daytime**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
-        "lobby_game_start" : "{} Welcome to **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, played using the **{}** Edition with **{}** players.\n\n*𝐈𝐧 𝐭𝐡𝐞 𝐪𝐮𝐢𝐞𝐭 𝐯𝐢𝐥𝐥𝐚𝐠𝐞 𝐨𝐟 𝐑𝐚𝐯𝐞𝐧𝐬𝐰𝐨𝐨𝐝 𝐁𝐥𝐮𝐟𝐟, ‌𝐨𝐧 𝐭𝐡𝐞 𝐬𝐭𝐫𝐨𝐤𝐞 𝐨𝐟 𝐦𝐢𝐝𝐧𝐢𝐠𝐡𝐭, 𝐭𝐡𝐞𝐫𝐞 𝐞𝐜𝐡𝐨𝐞𝐬 𝐚 𝐛𝐨𝐧𝐞-𝐜𝐡𝐢𝐥𝐥𝐢𝐧𝐠 𝐬𝐜𝐫𝐞𝐚𝐦. 𝐓𝐡𝐞 𝐭𝐨𝐰𝐧𝐬𝐟𝐨𝐥𝐤 𝐫𝐮𝐬𝐡 𝐭𝐨 𝐢𝐧𝐯𝐞𝐬𝐭𝐢𝐠𝐚𝐭𝐞 𝐚𝐧𝐝 𝐟𝐢𝐧𝐝 𝐭𝐡𝐞 𝐭𝐨𝐰𝐧 𝐬𝐭𝐨𝐫𝐲𝐭𝐞𝐥𝐥𝐞𝐫 𝐦𝐮𝐫𝐝𝐞𝐫𝐞𝐝, 𝐭𝐡𝐞𝐢𝐫 𝐛𝐨𝐝𝐲 𝐢𝐦𝐩𝐚𝐥𝐞𝐝 𝐨𝐧 𝐭𝐡𝐞 𝐡𝐚𝐧𝐝𝐬 𝐨𝐟 𝐭𝐡𝐞 𝐜𝐥𝐨𝐜𝐤𝐭𝐨𝐰𝐞𝐫.*\n\n*𝐖𝐢𝐥𝐥 𝐭𝐡𝐞 𝐠𝐨𝐨𝐝 𝐭𝐨𝐰𝐧𝐬𝐟𝐨𝐥𝐤 𝐩𝐮𝐭 𝐭𝐡𝐞 𝐩𝐮𝐳𝐳𝐥𝐞 𝐭𝐨𝐠𝐞𝐭𝐡𝐞𝐫 𝐢𝐧 𝐭𝐢𝐦𝐞 𝐭𝐨 𝐞𝐱𝐞𝐜𝐮𝐭𝐞 𝐭𝐡𝐞 𝐭𝐫𝐮𝐞 𝐝𝐞𝐦𝐨𝐧? 𝐎𝐫 𝐰𝐢𝐥𝐥 𝐞𝐯𝐢𝐥 𝐨𝐯𝐞𝐫𝐫𝐮𝐧 𝐭𝐡𝐢𝐬 𝐨𝐧𝐜𝐞 𝐩𝐞𝐚𝐜𝐞𝐟𝐮𝐥 𝐯𝐢𝐥𝐥𝐚𝐠𝐞?*\n\nPlease review the rules of the game before you start. All players should now have received a DM from me for private instructions.\n_ _",
+        "lobby_game_start" : "{} Welcome to **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, played using the **{}** Edition with **{}** players. All players should now have received a DM from me for private instructions.",
         "demonbluffs" : "To help you survive, here are 3 not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",
         "evilteammates" : "Your Evil teammates are shown below: ",
         "chef_init" : "You learn a `{}`.",

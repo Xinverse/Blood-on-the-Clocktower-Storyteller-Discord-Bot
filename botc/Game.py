@@ -30,25 +30,37 @@ from models import GameMeta
 Config = configparser.ConfigParser()
 Config.read("preferences.INI")
 
-IN_GAME_NORMAL = Config["colors"]["IN_GAME_NORMAL"]
-IN_GAME_NORMAL = int(IN_GAME_NORMAL, 16)
+CARD_NIGHT = Config["colors"]["CARD_NIGHT"]
+CARD_NIGHT = int(CARD_NIGHT, 16)
+
+CARD_DAWN = Config["colors"]["CARD_DAWN"]
+CARD_DAWN = int(CARD_DAWN, 16)
+
+CARD_DAY = Config["colors"]["CARD_DAY"]
+CARD_DAY = int(CARD_DAY, 16)
 
 random.seed(datetime.datetime.now())
 
 with open('botc/game_text.json') as json_file: 
-    strings = json.load(json_file)
-    nightfall = strings["gameplay"]["nightfall"]
-    daybreak = strings["gameplay"]["daybreak"]
-    dawn = strings["gameplay"]["dawn"]
-    lobby_game_start = strings["gameplay"]["lobby_game_start"]
-    evilteammates = strings["gameplay"]["evilteammates"]
-    copyrights_str = strings["misc"]["copyrights"]
-    tb_lore = strings["gameplay"]["tb_lore"]
+   strings = json.load(json_file)
+   nightfall = strings["gameplay"]["nightfall"]
+   daybreak = strings["gameplay"]["daybreak"]
+   dawn = strings["gameplay"]["dawn"]
+   lobby_game_start = strings["gameplay"]["lobby_game_start"]
+   evilteammates = strings["gameplay"]["evilteammates"]
+   copyrights_str = strings["misc"]["copyrights"]
+   tb_lore = strings["gameplay"]["tb_lore"]
+   nightfall_image = strings["images"]["nightfall"]
+   dawn_image = strings["images"]["dawn"]
+   daybreak_image = strings["images"]["daybreak"]
+   moon_image = strings["images"]["moon"]
+   sun_image = strings["images"]["sun"]
+   sunrise_image = strings["images"]["sunrise"]
 
 with open('botutils/bot_text.json') as json_file: 
-    language = json.load(json_file)
-    skull_unicode = language["esthetics"]["skull"]
-    fquit_unicode = language["esthetics"]["fquit"]
+   language = json.load(json_file)
+   skull_unicode = language["esthetics"]["skull"]
+   fquit_unicode = language["esthetics"]["fquit"]
 
 
 class Setup:
@@ -256,16 +268,12 @@ class Game(GameMeta):
       # Trouble Brewing Edition
       if self.gamemode == Gamemode.trouble_brewing:
          embed = discord.Embed(
-            title = "WELCOME TO RAVENSWOOD BLUFF", 
-            url = TroubleBrewing()._gm_main_page, 
-            description = tb_lore,
-            color = IN_GAME_NORMAL
+            description = tb_lore
             )
          # Using the Saint() object to access some URL's
-         embed.set_thumbnail(url = Saint()._botc_logo_link)
-         embed.set_author(name = "Trouble Brewing Edition - Blood on the Clocktower (BoTC)",
-                          icon_url = Saint()._botc_demon_link)
-         embed.set_image(url = TroubleBrewing()._gm_art_link)
+         embed.set_thumbnail(url = TroubleBrewing()._gm_art_link)
+         embed.set_author(name = "𝕿𝖗𝖔𝖚𝖇𝖑𝖊 𝕭𝖗𝖊𝖜𝖎𝖓𝖌 - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)",
+                          icon_url = Saint()._botc_logo_link)
          embed.timestamp = datetime.datetime.utcnow()
          embed.set_footer(text = copyrights_str)
          
@@ -420,17 +428,41 @@ class Game(GameMeta):
    async def make_nightfall(self):
       """Transition the game into night phase"""
       self._chrono.next()
-      await botutils.send_lobby(nightfall)
+      embed = discord.Embed(
+         description = nightfall,
+         color = CARD_NIGHT
+      )
+      embed.set_thumbnail(url = moon_image)
+      embed.set_footer(text = copyrights_str)
+      embed.set_image(url = nightfall_image)
+      embed.timestamp = datetime.datetime.utcnow()
+      await botutils.send_lobby(message = "", embed = embed)
    
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""
       self._chrono.next()
-      await botutils.send_lobby(dawn)
+      embed = discord.Embed(
+         description = dawn,
+         color = CARD_DAWN
+      )
+      embed.set_thumbnail(url = sunrise_image)
+      embed.set_footer(text = copyrights_str)
+      embed.set_image(url = dawn_image)
+      embed.timestamp = datetime.datetime.utcnow()
+      await botutils.send_lobby(message = "", embed = embed)
 
    async def make_daybreak(self):
       """Transition the game into day phase"""
       self._chrono.next()
-      await botutils.send_lobby(daybreak)
+      embed = discord.Embed(
+         description = daybreak,
+         color = CARD_DAY
+      )
+      embed.set_thumbnail(url = sun_image)
+      embed.set_footer(text = copyrights_str)
+      embed.set_image(url = daybreak_image)
+      embed.timestamp = datetime.datetime.utcnow()
+      await botutils.send_lobby(message = "", embed = embed)
 
    def generate_role_set(self):
       """Generate a list of roles according to the number of players"""

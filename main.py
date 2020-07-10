@@ -12,11 +12,10 @@ affiliated with them in any way.
 """
 
 # TODO
-# Night interactions
-# Lobby game start message: make it look better
-# Spy grimoire lookup
-# End night information/feedback
-# Drunk/poison effect when sending info
+# Night interactions (starting from investigator)
+# Spy grimoire reminder tokens and player names
+# Lore/accompaniment strings for phase announcements
+# Townsquare public command
 # Better log with embed
 # Voting and nomination
 
