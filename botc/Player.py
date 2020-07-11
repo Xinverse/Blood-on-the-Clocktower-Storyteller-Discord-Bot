@@ -90,6 +90,9 @@ class Player:
     def is_fleaved(self):
         return self.state == PlayerState.fleaved
     
+    def has_vote(self):
+        return True
+    
     @property
     def game_nametag(self):
         """Return a nicely formatted name for the player."""

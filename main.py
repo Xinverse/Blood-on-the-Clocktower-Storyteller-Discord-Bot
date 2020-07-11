@@ -16,7 +16,8 @@ affiliated with them in any way.
 # Spy grimoire reminder tokens and player names
 # Lore/accompaniment strings for phase announcements
 # Townsquare public command
-# Better log with embed
+# Better logging with embeds
+# Winning conditions
 # Voting and nomination
 
 
@@ -46,17 +47,17 @@ if __name__ == "__main__":
 
     globvars.client = commands.Bot(
         command_prefix=command_prefix, 
-        owner_id=OWNER_ID, 
+        owner_id=int(OWNER_ID), 
         case_insensitive=True, 
         description="Storyteller Bot"
-        )
+    )
 
     # Loading game packs
     print("===== LOADING GAME PACKS =====")
     botc.load_pack(globvars.master_state)
     print(globvars.master_state.game_packs)
 
-    extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners"]
+    extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners", "Owner"]
 
     # Loading command extensions
     print("===== LOADING COMMAND EXTENSIONS =====")

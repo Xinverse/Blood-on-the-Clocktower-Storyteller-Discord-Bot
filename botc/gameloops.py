@@ -3,6 +3,9 @@
 import botutils
 import asyncio
 import math
+import json
+import discord
+import configparser
 from discord.ext import tasks
 
 BASE_NIGHT = 10
@@ -11,9 +14,104 @@ NIGHT_MULTIPLER = 1
 BASE_DAWN = 15
 DAWN_MULTIPLIER = 0
 
+VOTE_TIMEOUT = 7
+DELETE_VOTE_AFTER = 45
+
 INCREMENT = 1
 
+Config = configparser.ConfigParser()
+Config.read("preferences.INI")
+
+CARD_LYNCH = Config["colors"]["CARD_LYNCH"]
+CARD_LYNCH = int(CARD_LYNCH, 16)
+CARD_NO_LYNCH = Config["colors"]["CARD_NO_LYNCH"]
+CARD_NO_LYNCH = int(CARD_NO_LYNCH, 16)
+
+with open('botc/game_text.json') as json_file: 
+    documentation = json.load(json_file)
+    ghost_vote_url = documentation["images"]["ghost_vote"]
+    blank_token_url = documentation["images"]["blank_token"]
+    alive_lynch = documentation["images"]["alive_lynch"]
+    alive_no_lynch = documentation["images"]["alive_no_lynch"]
+    dead_lynch = documentation["images"]["dead_lynch"]
+    dead_no_lynch = documentation["images"]["dead_no_lynch"]
+
 global botc_game_obj
+
+
+async def nomination_loop(game, nominated):
+    """One round of nomination. Iterate through all players with available 
+    votes and register votes using reactions.
+    """
+    import globvars
+
+    for player in game.sitting_order:
+        if player.has_vote():
+
+            link = ghost_vote_url if player.is_apparently_dead() else blank_token_url
+            msg = f"***{player.user.name}#{player.user.discriminator}***, Will you vote for the execution of ---?"
+            embed = discord.Embed(description = msg)
+            embed.set_thumbnail(url = link)
+
+            message = await botutils.send_lobby(message = player.user.mention, embed = embed)
+            await message.add_reaction(botutils.BotEmoji.approved)
+            await message.add_reaction(botutils.BotEmoji.denied)
+
+            def check(reaction, user):
+                """Reaction must meet these criteria:
+                - Must be from the user in question
+                - Must be one of the two voting emojis
+                - Must be on the same voting call message
+                """
+                return user.id == player.user.id and \
+                    str(reaction.emoji) in (botutils.BotEmoji.approved, botutils.BotEmoji.denied) and \
+                    reaction.message.id == message.id
+            
+            try:
+                reaction, user = await globvars.client.wait_for('reaction_add', timeout=VOTE_TIMEOUT, check=check)
+                assert user.id == player.user.id, f"{user} reacted instead"
+            
+            # The player did not vote. It counts as a "No" (hand down)
+            except asyncio.TimeoutError:
+                new_embed = discord.Embed(
+                        description = msg,
+                        color = CARD_NO_LYNCH
+                    )
+                if player.is_apparently_alive():
+                    new_embed.set_thumbnail(url = alive_no_lynch)
+                else:
+                    new_embed.set_thumbnail(url = dead_no_lynch)
+                await message.edit(embed = new_embed, delete_after = DELETE_VOTE_AFTER)
+                await message.clear_reactions()
+                continue
+
+            # The player has voted
+            else:
+
+                # Hand up (lynch)
+                if str(reaction.emoji) == botutils.BotEmoji.approved:
+                    new_embed = discord.Embed(
+                        description = msg,
+                        color = CARD_LYNCH
+                    )
+                    if player.is_apparently_alive():
+                        new_embed.set_thumbnail(url = alive_lynch)
+                    else:
+                        new_embed.set_thumbnail(url = dead_lynch)
+                
+                # Hand down (no lynch)
+                elif str(reaction.emoji) == botutils.BotEmoji.denied:
+                    new_embed = discord.Embed(
+                        description = msg,
+                        color = CARD_NO_LYNCH
+                    )
+                    if player.is_apparently_alive():
+                        new_embed.set_thumbnail(url = alive_no_lynch)
+                    else:
+                        new_embed.set_thumbnail(url = dead_no_lynch)
+                
+                await message.edit(embed = new_embed, delete_after = DELETE_VOTE_AFTER)
+                await message.clear_reactions()
 
 
 async def night_loop(game):
@@ -70,7 +168,7 @@ async def day_loop(game):
     # base_day_length = math.sqrt(game.nb_players)
     # base_day_length = math.ceil(base_day_length)
     # base_day_length = base_day_length * 60
-    base_day_length = 5
+    base_day_length = 500
     await asyncio.sleep(base_day_length)
 
 

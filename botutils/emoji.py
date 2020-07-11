@@ -19,6 +19,8 @@ class BotEmoji:
 
     # Plain emojis
     scroll = emojis["scroll"]
+    approved = emojis["approved"]
+    denied = emojis["denied"]
 
     # Unicode emojis
     skull = emojis["skull"]

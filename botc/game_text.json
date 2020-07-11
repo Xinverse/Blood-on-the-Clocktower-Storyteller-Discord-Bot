@@ -15,14 +15,16 @@
     "images" : {
 
         "blank_token" : "https://imgur.com/Y5tPO28.png",
+        "ghost_vote" : "https://imgur.com/h1jC9oz.png",
         "good" : "https://imgur.com/vXzuSh9.png",
         "evil" : "https://imgur.com/iTaPY4K.png",
         "nightfall" : "https://imgur.com/G2z4f47.png",
         "dawn" : "https://imgur.com/CDux0p3.jpeg",
         "daybreak" : "https://imgur.com/NhnhbFi.jpg",
-        "moon" : "https://imgur.com/PNfx03u.png",
-        "sun" : "https://imgur.com/YzR6njX.png",
-        "sunrise" : "https://imgur.com/EwakqwA.png"
+        "alive_lynch" : "https://imgur.com/ZeASqui.png",
+        "alive_no_lynch" : "https://imgur.com/HKFuogo.png",
+        "dead_lynch" : "https://imgur.com/NikbRVs.png",
+        "dead_no_lynch" : "https://imgur.com/RHuxhIL.png"
         
     },
 
@@ -163,9 +165,9 @@
 
         "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
         "welcome_dm" : "**𝖂𝖊𝖑𝖈𝖔𝖒𝖊 𝖙𝖔 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗**",
-        "nightfall" : "It is currently **nighttime**.",
-        "dawn" : "It is currently **dawn**.",
-        "daybreak" : "It is currently **daytime**.",
+        "nightfall" : "It is currently **𝖓𝖎𝖌𝖍𝖙𝖙𝖎𝖒𝖊**.",
+        "dawn" : "It is currently **𝖉𝖆𝖜𝖓**.",
+        "daybreak" : "It is currently **𝖉𝖆𝖞𝖙𝖎𝖒𝖊**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
         "lobby_game_start" : "{} Welcome to **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, played using the **{}** Edition with **{}** players. All players should now have received a DM from me for private instructions.",
         "demonbluffs" : "To help you survive, here are 3 not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",

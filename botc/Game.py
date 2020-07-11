@@ -53,9 +53,6 @@ with open('botc/game_text.json') as json_file:
    nightfall_image = strings["images"]["nightfall"]
    dawn_image = strings["images"]["dawn"]
    daybreak_image = strings["images"]["daybreak"]
-   moon_image = strings["images"]["moon"]
-   sun_image = strings["images"]["sun"]
-   sunrise_image = strings["images"]["sunrise"]
 
 with open('botutils/bot_text.json') as json_file: 
    language = json.load(json_file)
@@ -432,7 +429,6 @@ class Game(GameMeta):
          description = nightfall,
          color = CARD_NIGHT
       )
-      embed.set_thumbnail(url = moon_image)
       embed.set_footer(text = copyrights_str)
       embed.set_image(url = nightfall_image)
       embed.timestamp = datetime.datetime.utcnow()
@@ -445,7 +441,6 @@ class Game(GameMeta):
          description = dawn,
          color = CARD_DAWN
       )
-      embed.set_thumbnail(url = sunrise_image)
       embed.set_footer(text = copyrights_str)
       embed.set_image(url = dawn_image)
       embed.timestamp = datetime.datetime.utcnow()
@@ -458,7 +453,6 @@ class Game(GameMeta):
          description = daybreak,
          color = CARD_DAY
       )
-      embed.set_thumbnail(url = sun_image)
       embed.set_footer(text = copyrights_str)
       embed.set_image(url = daybreak_image)
       embed.timestamp = datetime.datetime.utcnow()

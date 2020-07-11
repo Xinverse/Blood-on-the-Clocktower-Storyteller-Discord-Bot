@@ -784,58 +784,11 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
         usage: nominate <player> and <player> and...
         characters: living players
         """
-        pass
+        from botc.gameloops import nomination_loop
+        await nomination_loop(globvars.master_state.game, nominated)
 
     @nominate.error
     async def nominate_error(self, ctx, error):
-        try:
-            raise error
-        except Exception:
-            await ctx.send(error_str)
-            await botutils.log(botutils.Level.error, traceback.format_exc()) 
-
-    
-    # ---------- YES COMMAND (Voting) ----------------------------------------
-    @commands.command(
-        pass_context = True, 
-        name = "yes", 
-        aliases = ["y", "ye", "yay"]
-    )
-    @commands.check(check_if_lobby)
-    @commands.check(check_if_is_day)
-    async def yes(self, ctx):
-        """Yes command
-        usage: yes
-        characters: all players
-        """
-        pass
-
-    @yes.error
-    async def yes_error(self, ctx, error):
-        try:
-            raise error
-        except Exception:
-            await ctx.send(error_str)
-            await botutils.log(botutils.Level.error, traceback.format_exc()) 
-    
-
-    # ---------- NO COMMAND (Voting) ----------------------------------------
-    @commands.command(
-        pass_context = True, 
-        name = "no", 
-        aliases = ["n", "nay", "nope"]
-    )
-    @commands.check(check_if_lobby)
-    @commands.check(check_if_is_day)
-    async def no(self, ctx):
-        """No command
-        usage: no
-        characters: all players
-        """
-        pass
-
-    @no.error
-    async def no_error(self, ctx, error):
         try:
             raise error
         except Exception:

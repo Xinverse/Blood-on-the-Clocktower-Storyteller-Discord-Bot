@@ -27,7 +27,7 @@ class Listeners(commands.Cog):
         print(f"Logged in as {self.client.user.name}")
         print(f"Bot ID {self.client.user.id}")
         print("----------")
-        activity = discord.Activity(name='BOTC', type=discord.ActivityType.playing)
+        activity = discord.Activity(name='Blood on the Clocktower', type=discord.ActivityType.playing)
         await self.client.change_presence(activity=activity)
         await botutils.log(botutils.Level.info, restart_msg)
     
