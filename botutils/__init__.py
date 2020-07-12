@@ -10,7 +10,8 @@ from .checks import check_if_in_pregame, check_if_not_in_game, check_if_not_in_e
     check_if_is_pregame_player
 from .emoji import BotEmoji
 from .helpers import make_ping, make_role_ping, strip_ping, get_member_obj, get_user_obj, \
-    make_code_block, make_time_string, update_state_machine, find_role_in_all
+    make_code_block, make_time_string, update_state_machine, find_role_in_all, \
+    make_alive_ping
 from .MasterState import MasterState, StateMachine
 from .Pregame import Pregame
 from .sends import send_lobby, log, Level, send_pregame_stats

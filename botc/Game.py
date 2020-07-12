@@ -177,6 +177,7 @@ class Game(GameMeta):
       self._sitting_order = tuple()  # tuple object (for immutability)
       self._chrono = GameChrono()
       self._setup = Setup()
+      self.chopping_block = None  # ChoppingBlock object
       self.gameloop = master_game_loop
    
    @property

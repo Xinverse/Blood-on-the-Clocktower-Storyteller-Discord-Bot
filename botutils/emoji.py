@@ -25,3 +25,6 @@ class BotEmoji:
     # Unicode emojis
     skull = emojis["skull"]
     fquit = emojis["fquit"]
+
+    # BOTC
+    demonhead = emojis["demon_head"]

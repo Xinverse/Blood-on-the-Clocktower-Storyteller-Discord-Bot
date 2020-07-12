@@ -22,6 +22,7 @@ class Player:
         self._apparent_state_obj = PlayerState.alive  # Enum object
         self.action_grid = ActionGrid()  # ActionGrib object
         self._status_effects = []  # List object
+        self.ghost_vote = 1
     
     def exec_change_role(self, new_role):
         """Change the player's old role to a new role"""
@@ -90,9 +91,25 @@ class Player:
     def is_fleaved(self):
         return self.state == PlayerState.fleaved
     
-    def has_vote(self):
-        return True
+    def spend_vote(self):
+        """Spend a vote after a vote has been cast by the player"""
+        # An alive player has infinite votes
+        if self.is_apparently_alive():
+            return
+        # A dead player has only one ghost vote.
+        else:
+            assert self.ghost_vote, f"{self.game_nametag} ghost vote has been spent."
+            self.ghost_vote -= 1
     
+    def has_vote(self):
+        """Retrun True if the player is able to vote. False otherwise."""
+        # An alive player has infinite votes
+        if self.is_apparently_alive():
+            return True
+        # A dead player has only one ghost vote
+        else:
+            return self.ghost_vote
+
     @property
     def game_nametag(self):
         """Return a nicely formatted name for the player."""

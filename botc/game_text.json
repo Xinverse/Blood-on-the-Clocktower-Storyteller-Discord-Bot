@@ -24,7 +24,10 @@
         "alive_lynch" : "https://imgur.com/ZeASqui.png",
         "alive_no_lynch" : "https://imgur.com/HKFuogo.png",
         "dead_lynch" : "https://imgur.com/NikbRVs.png",
-        "dead_no_lynch" : "https://imgur.com/RHuxhIL.png"
+        "dead_no_lynch" : "https://imgur.com/RHuxhIL.png",
+        "approved_seal" : "https://imgur.com/IJv9e3y.png",
+        "denied_seal" : "https://imgur.com/JPmfCgL.png",
+        "clockface" : "https://imgur.com/71J4CTm.png"
         
     },
 
@@ -183,7 +186,19 @@
         "spy_nightly" : "The Grimoire is shown below.",
         "action_assign" : "Since you did not pick a target for your manditory action, it has been randomized to {}.",
         "yes" : "yes",
-        "no" : "no"
+        "no" : "no",
+        "call_for_vote" : "Do you vote for the 𝖊𝖝𝖊𝖈𝖚𝖙𝖎𝖔𝖓 of {}?",
+        "votes_stats" : "**{total}** players `total`. **{alive}** players `alive`. **{votes}** available `voters`.",
+        "votes_to_exe" : "【 **{votes}** {emoji} votes to execute. 】",
+        "votes_to_tie" : "【 **{votes}** {emoji} votes to tie. 】",
+        "votes_current" : "【 **{votes}** {emoji} votes currently. 】",
+        "voted_yes" : "has voted \"***yes***\" {} on the 𝖊𝖝𝖊𝖈𝖚𝖙𝖎𝖔𝖓 of {}.",
+        "voted_no" : "has voted \"***no***\" {} on the 𝖊𝖝𝖊𝖈𝖚𝖙𝖎𝖔𝖓 of {}.",
+        "verdict_chopping" : "**𝖁𝖊𝖗𝖉𝖎𝖈𝖙** : {} is now on the **chopping block**.",
+        "verdict_safe" : "**𝖁𝖊𝖗𝖉𝖎𝖈𝖙** : {} is **safe** today.",
+        "vote_summary" : "𝖁𝖔𝖙𝖊 𝕾𝖚𝖒𝖒𝖆𝖗𝖞",
+        "nomination_short" : "{} was nominated by {}.",
+        "nomination_intro" : "{} {} {} has nominated {}. You have **{}** seconds to discuss amongst yourselves. Then, you will be called one by one to cast your vote."
 
     },
 

@@ -5,23 +5,25 @@ import asyncio
 import math
 import json
 import discord
+import datetime
 import configparser
+from botc import ChoppingBlock
 from discord.ext import tasks
-
-BASE_NIGHT = 10
-NIGHT_MULTIPLER = 1
-
-BASE_DAWN = 15
-DAWN_MULTIPLIER = 0
-
-VOTE_TIMEOUT = 7
-DELETE_VOTE_AFTER = 45
-
-INCREMENT = 1
 
 Config = configparser.ConfigParser()
 Config.read("preferences.INI")
 
+# Lengths
+BASE_NIGHT = int(Config["botc"]["BASE_NIGHT"])
+NIGHT_MULTIPLER = int(Config["botc"]["NIGHT_MULTIPLER"])
+BASE_DAWN = int(Config["botc"]["BASE_DAWN"])
+DAWN_MULTIPLIER = int(Config["botc"]["DAWN_MULTIPLIER"])
+VOTE_TIMEOUT = int(Config["botc"]["VOTE_TIMEOUT"])
+DELETE_VOTE_AFTER = int(Config["botc"]["DELETE_VOTE_AFTER"])
+DEBATE_TIME = int(Config["botc"]["DEBATE_TIME"])
+INCREMENT = int(Config["botc"]["INCREMENT"])
+
+# Colors
 CARD_LYNCH = Config["colors"]["CARD_LYNCH"]
 CARD_LYNCH = int(CARD_LYNCH, 16)
 CARD_NO_LYNCH = Config["colors"]["CARD_NO_LYNCH"]
@@ -29,30 +31,120 @@ CARD_NO_LYNCH = int(CARD_NO_LYNCH, 16)
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
+    clockface = documentation["images"]["clockface"]
+    approved_seal = documentation["images"]["approved_seal"]
+    denied_seal = documentation["images"]["denied_seal"]
     ghost_vote_url = documentation["images"]["ghost_vote"]
     blank_token_url = documentation["images"]["blank_token"]
     alive_lynch = documentation["images"]["alive_lynch"]
     alive_no_lynch = documentation["images"]["alive_no_lynch"]
     dead_lynch = documentation["images"]["dead_lynch"]
     dead_no_lynch = documentation["images"]["dead_no_lynch"]
+    call_for_vote = documentation["gameplay"]["call_for_vote"]
+    votes_stats = documentation["gameplay"]["votes_stats"]
+    votes_to_exe = documentation["gameplay"]["votes_to_exe"]
+    votes_to_tie = documentation["gameplay"]["votes_to_tie"]
+    votes_current = documentation["gameplay"]["votes_current"]
+    voted_yes = documentation["gameplay"]["voted_yes"]
+    voted_no = documentation["gameplay"]["voted_no"]
+    verdict_chopping = documentation["gameplay"]["verdict_chopping"]
+    verdict_safe = documentation["gameplay"]["verdict_safe"]
+    nomination_intro = documentation["gameplay"]["nomination_intro"]
+    vote_summary = documentation["gameplay"]["vote_summary"]
+    nomination_short = documentation["gameplay"]["nomination_short"]
+    copyrights_str = documentation["misc"]["copyrights"]
 
 global botc_game_obj
 
 
-async def nomination_loop(game, nominated):
+async def nomination_loop(game, nominator, nominated):
     """One round of nomination. Iterate through all players with available 
     votes and register votes using reactions.
+
+    A vote results in an execution if the number of votes equals or exceeds 
+    half the number of alive players.
     """
+    intro_msg = nomination_intro.format(
+        botutils.BotEmoji.demonhead,
+        botutils.make_alive_ping(),
+        nominator.user.mention, 
+        nominated.user.mention,
+        DEBATE_TIME
+    )
+    await botutils.send_lobby(intro_msg)
+
     import globvars
 
-    for player in game.sitting_order:
+    # Debate time
+    await asyncio.sleep(DEBATE_TIME)
+
+    # Counts
+    nb_total_players = len(game.sitting_order)
+    nb_alive_players = len([player for player in game.sitting_order if player.is_apparently_alive()])
+    nb_available_votes = len([player for player in game.sitting_order if player.has_vote()])
+    nb_required_votes = math.ceil(nb_alive_players / 2)
+    nb_current_votes = 0
+
+    # The starting index is one after the nominated player
+    find_nominated = lambda p: p.user.id == nominated.user.id
+    nominated_idx = next(i for i, v in enumerate(game.sitting_order) if find_nominated(v))
+    start_idx = nominated_idx + 1
+    end_idx = start_idx + len(game.sitting_order)
+
+    for i in range(start_idx, end_idx):
+
+        idx = i % len(game.sitting_order)
+        player = game.sitting_order[idx]
+ 
         if player.has_vote():
 
             link = ghost_vote_url if player.is_apparently_dead() else blank_token_url
-            msg = f"***{player.user.name}#{player.user.discriminator}***, Will you vote for the execution of ---?"
+
+            # Construct the message
+            author_str = f"{player.user.name}#{player.user.discriminator}, "
+            msg = call_for_vote.format(nominated.game_nametag)
+            msg += "\n\n"
+
+            # General vote stats
+            # 10 players total. 10 players alive. 10 available voters.
+            msg += votes_stats.format(
+                total = nb_total_players,
+                alive = nb_alive_players,
+                votes = nb_available_votes
+            )
+            msg += "\n"
+
+            # Goal vote stats
+            # 【 5 :approved: votes to execute. 】 or 【 5 :approved: votes to tie. 】
+            # Someone is already on the chopping block.
+            if game.chopping_block:
+                msg += votes_to_tie.format(
+                    votes = game.chopping_block.nb_votes,
+                    emoji = botutils.BotEmoji.approved
+                )
+
+            # No one is on the chopping block yet
+            else:
+                msg += votes_to_exe.format(
+                    votes = nb_required_votes,
+                    emoji = botutils.BotEmoji.approved
+                )
+            
+            msg += "\n"
+
+            # Current vote stats
+            # 【 0 :approved: votes currently. 】
+            msg += votes_current.format(
+                votes = nb_current_votes,
+                emoji = botutils.BotEmoji.approved
+            )
+
+            # Create the embed and associated assets
             embed = discord.Embed(description = msg)
+            embed.set_author(name = author_str, icon_url=player.user.avatar_url)
             embed.set_thumbnail(url = link)
 
+            # Send the message and add reactions
             message = await botutils.send_lobby(message = player.user.mention, embed = embed)
             await message.add_reaction(botutils.BotEmoji.approved)
             await message.add_reaction(botutils.BotEmoji.denied)
@@ -73,10 +165,16 @@ async def nomination_loop(game, nominated):
             
             # The player did not vote. It counts as a "No" (hand down)
             except asyncio.TimeoutError:
+                author_str = f"{player.user.name}#{player.user.discriminator}, "
+                msg = voted_no.format(
+                    botutils.BotEmoji.denied,
+                    nominated.game_nametag
+                )
                 new_embed = discord.Embed(
-                        description = msg,
-                        color = CARD_NO_LYNCH
-                    )
+                    description = msg,
+                    color = CARD_NO_LYNCH
+                )
+                new_embed.set_author(name = author_str, icon_url=player.user.avatar_url)
                 if player.is_apparently_alive():
                     new_embed.set_thumbnail(url = alive_no_lynch)
                 else:
@@ -90,10 +188,18 @@ async def nomination_loop(game, nominated):
 
                 # Hand up (lynch)
                 if str(reaction.emoji) == botutils.BotEmoji.approved:
+                    author_str = f"{player.user.name}#{player.user.discriminator}, "
+                    msg = voted_yes.format(
+                        botutils.BotEmoji.approved,
+                        nominated.game_nametag
+                    )
+                    nb_current_votes += 1
+                    player.spend_vote()
                     new_embed = discord.Embed(
                         description = msg,
                         color = CARD_LYNCH
                     )
+                    new_embed.set_author(name = author_str, icon_url=player.user.avatar_url)
                     if player.is_apparently_alive():
                         new_embed.set_thumbnail(url = alive_lynch)
                     else:
@@ -101,10 +207,16 @@ async def nomination_loop(game, nominated):
                 
                 # Hand down (no lynch)
                 elif str(reaction.emoji) == botutils.BotEmoji.denied:
+                    author_str = f"{player.user.name}#{player.user.discriminator}, "
+                    msg = voted_no.format(
+                        botutils.BotEmoji.denied,
+                        nominated.game_nametag
+                    )
                     new_embed = discord.Embed(
                         description = msg,
                         color = CARD_NO_LYNCH
                     )
+                    new_embed.set_author(name = author_str, icon_url=player.user.avatar_url)
                     if player.is_apparently_alive():
                         new_embed.set_thumbnail(url = alive_no_lynch)
                     else:
@@ -112,6 +224,83 @@ async def nomination_loop(game, nominated):
                 
                 await message.edit(embed = new_embed, delete_after = DELETE_VOTE_AFTER)
                 await message.clear_reactions()
+    
+    # ----- The summmary embed message -----
+
+    msg = nomination_short.format(
+        nominated.game_nametag,
+        nominator.game_nametag
+    )
+    msg += "\n"
+
+    # General vote stats
+    msg += votes_stats.format(
+            total = nb_total_players,
+            alive = nb_alive_players,
+            votes = nb_available_votes
+    )
+    msg += "\n"
+
+    # Goal vote stats
+    if game.chopping_block:
+        msg += votes_to_tie.format(
+            votes = game.chopping_block.nb_votes,
+            emoji = botutils.BotEmoji.approved
+        )
+    else:
+        msg += votes_to_exe.format(
+            votes = nb_required_votes,
+            emoji = botutils.BotEmoji.approved
+        )
+    msg += "\n"
+
+    # Current vote stats
+    msg += votes_current.format(
+        votes = nb_current_votes,
+        emoji = botutils.BotEmoji.approved
+    )
+    msg += "\n"
+    msg += "\n"
+
+    # The vote count has reached execution threshold. 
+    if nb_current_votes >= nb_required_votes:
+        # Someone is on the chopping block
+        if game.chopping_block:
+            # Tie: no one is lynched
+            if nb_current_votes == game.chopping_block.nb_votes:
+                globvars.master_state.game.chopping_block = ChoppingBlock(None, nb_current_votes)
+                msg += verdict_safe.format(nominated.game_nametag)
+                thumbnail_url = denied_seal
+            # This player will replace the person on the chopping block.
+            elif nb_current_votes > game.chopping_block.nb_votes:
+                globvars.master_state.game.chopping_block = ChoppingBlock(nominated, nb_current_votes)
+                msg += verdict_chopping.format(nominated.game_nametag)
+                thumbnail_url = approved_seal
+            # The player on the chopping block remains there.
+            else:
+                msg += verdict_safe.format(nominated.game_nametag)
+                thumbnail_url = denied_seal
+        # No one is on the chopping block currently. 
+        # The player is now on the chopping block awaiting death.
+        else:
+            globvars.master_state.game.chopping_block = ChoppingBlock(nominated, nb_current_votes)
+            msg += verdict_chopping.format(nominated.game_nametag)
+            thumbnail_url = approved_seal
+
+    # The execution did not pass. The player is safe.
+    else:
+        msg += verdict_safe.format(nominated.game_nametag)
+        thumbnail_url = denied_seal
+        
+    summary_embed = discord.Embed(description = msg)
+    summary_embed.set_author(
+        name = vote_summary,
+        icon_url = clockface
+    )
+    summary_embed.set_thumbnail(url = thumbnail_url)
+    summary_embed.set_footer(text = copyrights_str)
+    summary_embed.timestamp = datetime.datetime.utcnow()
+    await botutils.send_lobby(message = None, embed = summary_embed)
 
 
 async def night_loop(game):

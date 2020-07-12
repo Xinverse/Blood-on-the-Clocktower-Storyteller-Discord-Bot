@@ -12,13 +12,16 @@ affiliated with them in any way.
 """
 
 # TODO
-# Night interactions (starting from investigator)
+# Night interactions (left from investigator)
 # Spy grimoire reminder tokens and player names
+# Investigator minion bug fix
 # Lore/accompaniment strings for phase announcements
 # Townsquare public command
 # Better logging with embeds
-# Winning conditions
-# Voting and nomination
+# Winning conditions (only 2 if statements...)
+# Vote/lynch command to check vote stats
+# Nomination command error handling
+# Full day phase cycle
 
 
 import globvars

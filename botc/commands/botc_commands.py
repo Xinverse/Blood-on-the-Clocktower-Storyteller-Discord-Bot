@@ -8,7 +8,8 @@ import discord
 import globvars
 from discord.ext import commands
 from botc import BOTCUtils, NotAPlayer, PlayerParser, RoleCannotUseCommand, NotDMChannel, \
-    NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand, AbilityForbidden
+    NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand, \
+    AbilityForbidden, PlayerConverter
 from botc.gamemodes.troublebrewing._utils import TBRole
 
 Config = configparser.ConfigParser()
@@ -779,13 +780,14 @@ class BoTCCommands(commands.Cog, name = "BoTC in-game commands"):
     @commands.check(check_if_lobby)
     @commands.check(check_if_is_day)
     @commands.check(check_if_player_apparently_alive)
-    async def nominate(self, ctx, *, nominated: PlayerParser()):
+    async def nominate(self, ctx, *, nominated: PlayerConverter()):
         """Nominate command
-        usage: nominate <player> and <player> and...
+        usage: nominate <player> 
         characters: living players
         """
         from botc.gameloops import nomination_loop
-        await nomination_loop(globvars.master_state.game, nominated)
+        player = BOTCUtils.get_player_from_id(ctx.author.id)
+        await nomination_loop(globvars.master_state.game, player, nominated)
 
     @nominate.error
     async def nominate_error(self, ctx, error):

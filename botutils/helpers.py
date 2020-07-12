@@ -9,6 +9,7 @@ Config = configparser.ConfigParser()
 Config.read("config.INI")
 
 SERVER_ID = Config["user"]["SERVER_ID"]
+ALIVE_ROLE_ID = Config["user"]["ALIVE_ROLE_ID"]
 
 
 def make_ping(userid):
@@ -19,6 +20,12 @@ def make_ping(userid):
 def make_role_ping(roleid):
     """Turn a role ID into a ping"""
     return f"<@&{roleid}>"
+
+
+def make_alive_ping():
+    """Ping the @alive role."""
+    global ALIVE_ROLE_ID
+    return f"<@&{ALIVE_ROLE_ID}>"
 
 
 def strip_ping(raw):
