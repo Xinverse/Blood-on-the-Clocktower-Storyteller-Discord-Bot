@@ -115,9 +115,9 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character, RecurringAction):
             return received_action is not None and received_action.action_type == ActionTypes.read
         return True
 
-    @GameLogic.changes_not_allowed
     @GameLogic.requires_two_targets
     @GameLogic.requires_different_targets
+    @GameLogic.changes_not_allowed
     async def register_read(self, player, targets):
         """Read command"""
 

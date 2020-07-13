@@ -96,8 +96,8 @@ class Poisoner(Minion, TroubleBrewing, Character, RecurringAction):
             return received_action is not None and received_action.action_type == ActionTypes.poison
         return True
     
-    @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
+    @GameLogic.changes_not_allowed
     async def register_poison(self, player, targets):
         """Poison command"""
         # Must be 1 target

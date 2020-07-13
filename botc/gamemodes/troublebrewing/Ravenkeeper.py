@@ -74,8 +74,8 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             
         return msg
     
-    @GameLogic.changes_not_allowed
     @GameLogic.requires_one_target
+    @GameLogic.changes_not_allowed
     async def register_learn(self, player, targets):
         """Learn command"""
         
