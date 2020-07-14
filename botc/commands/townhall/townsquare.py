@@ -1,0 +1,73 @@
+"""Townsquare command"""
+
+import traceback
+import json
+import discord
+import botutils
+from botc import Townsquare as TownsquareImage
+from discord.ext import commands
+
+with open('botutils/bot_text.json') as json_file: 
+    language = json.load(json_file)
+
+error_str = language["system"]["error"]
+
+with open('botc/game_text.json') as json_file: 
+    documentation = json.load(json_file)
+    townsquare_loading = documentation["cmd_warnings"]["townsquare_loading"]
+    cooldown = documentation["cmd_warnings"]["cooldown"]
+
+
+class Townsquare(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔱𝔬𝔴𝔫𝔥𝔞𝔩𝔩"):
+    """BoTC in-game commands cog
+    Townsquare command - used for viewing the townsquare image
+    """
+    
+    def __init__(self, client):
+        self.client = client
+    
+    def cog_check(self, ctx):
+        """Check the channel of the context, return True if it is sent in either 
+        lobby, in spec chat, or in a private channel.
+        Admins can bypass.
+        """
+        return botutils.check_if_lobby_or_spec_or_dm_or_admin(ctx)
+    
+    # ---------- TOWNSQUARE COMMAND (Stats) ----------------------------------------
+    @commands.command(
+        pass_context = True, 
+        name = "townsquare", 
+        hidden = False, 
+        brief = documentation["doc"]["townsquare"]["brief"],
+        help = documentation["doc"]["townsquare"]["help"],
+        description = documentation["doc"]["townsquare"]["description"]
+    )
+    @commands.cooldown(1, 45, commands.BucketType.channel)
+    async def townsquare(self, ctx):
+        """Townsquare command
+        usage: townsquare
+        can be used by all players, spectators in spec-chat or in DM
+        """
+        loading_msg = await ctx.send(townsquare_loading.format(botutils.BotEmoji.loading))
+        async with ctx.channel.typing():
+            import globvars
+            TownsquareImage().create(globvars.master_state.game)
+            await ctx.send(file=discord.File('botc/assets/townsquare.png'))
+        await loading_msg.delete()
+
+    @townsquare.error
+    async def townsquare_error(self, ctx, error):
+        emoji = botutils.BotEmoji.cross
+        # Command on cooldown -> commands.CommandOnCooldown
+        if isinstance(error, commands.CommandOnCooldown):
+            await ctx.send(cooldown.format(ctx.author.mention, emoji))
+        else:
+            try:
+                raise error
+            except Exception:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+
+def setup(client):
+    client.add_cog(Townsquare(client))
+    

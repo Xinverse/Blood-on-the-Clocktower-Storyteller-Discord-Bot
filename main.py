@@ -18,7 +18,7 @@ affiliated with them in any way.
 # Lore/accompaniment strings for phase announcements
 # Townsquare public command
 # Better logging with embeds
-# Winning conditions (only 2 if statements...)
+# Winning conditions
 # Vote/lynch command to check vote stats
 # Nomination command error handling
 # Full day phase cycle

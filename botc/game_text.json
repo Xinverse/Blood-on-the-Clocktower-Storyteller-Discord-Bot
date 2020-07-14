@@ -222,91 +222,87 @@
         "requires_different_targets_str" : "{} {} You must pick different targets for your ability.",
         "changes_not_allowed" : "{} {} You may not change your action once it is submitted.",
         "unique_ability_used" : "{} {} Your ability is single-use, and you have used it up already.",
-        "no_game_running" : "{} {} No game is currently running."
+        "no_game_running" : "{} {} No game is currently running.",
+        "townsquare_loading" : "{} Generating townsquare image, please wait a moment...",
+        "cooldown" : "{} {} This command has a cooldown."
 
     },
 
     "doc" : {
 
         "frole" : {
-            "brief" : "Set a player's role to a specified one.",
+            "brief" : "set a player's role to a specified one",
             "help" : "This debugging command changes a player's role to one that you specify. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. The role name can also be typed in full or partially.",
             "description" : "[FROLE] command - BOTC (debug)",
             "feedback" : "{} Successfully changed {}'s character from `{}` to {} `{}`."
         },
 
         "modkill" : {
-            "brief" : "modkill a player.",
+            "brief" : "modkill a player",
             "help" : "This debugging command modkills a specified player. The player will remain in the game, but as a dead player. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially.",
             "description" : "[MODKILL] command - BOTC (debug)",
             "feedback" : "{} Successfully modkilled {} with the character of {} `{}`."
         },
 
         "fstop" : {
-            "brief" : "Stop a game that is currently running.",
+            "brief" : "stop a game that is currently running",
             "help" : "This debugging command forcefully stops a game that is currently running.",
             "description" : "[FSTOP] command - BOTC (debug)",
             "feedback" : "{} Successfully stopped the game."
         },
 
         "serve" : {
-            "brief" : "Pick a 'serve' target.",
+            "brief" : "pick a 'serve' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[SERVE] command - BOTC"
         },
 
         "poison" : {
-            "brief" : "Pick a 'poison' target.",
+            "brief" : "pick a 'poison' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[POISON] command - BOTC"
         },
 
         "learn" : {
-            "brief" : "Pick a 'learn' target.",
+            "brief" : "pick a 'learn' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[LEARN] command - BOTC"
         },
 
         "read" : {
-            "brief" : "Pick a 'read' target.",
+            "brief" : "pick a 'read' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[READ] command - BOTC"
         },
 
         "kill" : {
-            "brief" : "Pick a 'kill' target.",
+            "brief" : "pick a 'kill' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[KILL] command - BOTC"
         },
 
         "slay" : {
-            "brief" : "Pick a 'slay' target.",
+            "brief" : "pick a 'slay' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in the public game text channel.",
             "description" : "[SLAY] command - BOTC"
         },
 
         "protect" : {
-            "brief" : "Pick a 'protect' target.",
+            "brief" : "pick a 'protect' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
             "description" : "[PROTECT] command - BOTC"
         },
 
         "nominate" : {
-            "brief" : "",
-            "help" : "",
+            "brief" : "nominate a player for execution",
+            "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in the public game text channel.",
             "description" : "[NOMINATE] command - BOTC"
         },
 
-        "yes" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[YES] command - BOTC"
-        },
-
-        "no" : {
-            "brief" : "",
-            "help" : "",
-            "description" : "[NO] command - BOTC"
+        "townsquare" : {
+            "brief" : "show the townsquare",
+            "help" : "The \"Townsquare\" is a graphical representation of the players' circular sitting order, and provides information such as vote availability and player life or death states.",
+            "description" : "[TOWNSQUARE] command - BOTC"
         }
 
     }

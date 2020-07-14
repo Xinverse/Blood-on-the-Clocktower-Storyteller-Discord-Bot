@@ -25,6 +25,7 @@ from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
 from .gameloops import master_game_loop
+from .commands import load_abilities, load_townhall
 from models import GameMeta
 
 Config = configparser.ConfigParser()
@@ -313,7 +314,8 @@ class Game(GameMeta):
       # Log the game data
       await GameLog(self).send_game_obj_log_str()
       # Load game related commands
-      globvars.client.load_extension("botc.commands.botc_commands")
+      load_abilities()
+      load_townhall()
       globvars.client.load_extension("botc.commands.botc_debug_commands")
       # Start the game loop
       self.gameloop.start(self)

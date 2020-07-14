@@ -1,145 +1,132 @@
+"""Contains the Townsquare class"""
+
 import math
-from .RoleGuide import RoleGuide
-from PIL import Image, ImageDraw, ImageFont
-from .PlayerState import PlayerState
+from PIL import Image
+from botc.gamemodes import Gamemode
 
-class TownSquare:
-    """Graphical representation of player sittings in a BoTC game."""
+
+class Townsquare:
+    """Townsquare object to show a graphical representation player sitting 
+    order.
+    """
+
+    BACKGROUND_PATH = "botc/assets/grimoire/background2.png"
+    TOWNSQUARE_PATH = "botc/assets/townsquare.png"
+    TOKEN_DEATH = "botc/assets/grimoire/death.png"
+    TOKEN_GHOST_VOTE = "botc/assets/grimoire/ghostvote.png"
+    TOKEN_LIFE = "botc/assets/grimoire/life.png"
+    TB_ICON = "botc/assets/editions/TB_Logo.png"
+    BMR_ICON = "botc/assets/editions/BMR_Logo.png"
+    SV_ICON = "botc/assets/editions/SV_Logo.png"
+    FONT = "botc/assets/grimoire/Bitstream_Cyberbit.ttf"
+
+    def __init__(self):
+
+        background = Image.open(self.BACKGROUND_PATH)
+        background.convert("RGBA")
+
+        self.PIC_SQUARE_SIDE = min(background.size)
+        self.PIC_LENGTH = max(background.size)
+
+        background.save(self.TOWNSQUARE_PATH, format="PNG")
     
-    PIC_SQUARE_SIDE = 500
-    BUFFER = 50
-    RADIUS = 200
-    TOKEN_RADIUS = 25
-    VOTE_TOKEN_RADIUS = 5
-    ALIVE_TOKEN_COLOR = (242, 228, 201)
-    DEAD_TOKEN_COLOR = (0, 0, 0)
-    VOTE_TOKEN_COLOR = (255, 255, 255)
-    BACKGROUND_COLOR = (181, 178, 172)
-    TABLE_COLOR = (84, 84, 84)
-    TEXT_COLOR = (255, 255, 255)
-    LABEL_BACKGROUND_COLOR = (51, 51, 153)
+    @property
+    def token_width(self):
+        """Find the width of each token based on the background size"""
+        return math.ceil(self.PIC_SQUARE_SIDE/5.5)
+    
+    @property
+    def sitting_circle_radius(self):
+        """Find the radius of the big sitting circle based on the background size"""
+        return math.ceil(self.PIC_SQUARE_SIDE * 0.75 * 0.5)
+    
+    def create(self, game_obj):
 
-    def __init__(self, game_obj):
-
-        nb_players = len(game_obj.frozen_sitting)
-
-        im = Image.new('RGB', (self.PIC_SQUARE_SIDE, self.PIC_SQUARE_SIDE), self.BACKGROUND_COLOR)
-        draw = ImageDraw.Draw(im)
-
-        # Draw the table
-        draw.ellipse(self.find_boundary_box(self.get_x_center(), self.get_y_center(), self.RADIUS),
-                     outline=self.TABLE_COLOR, fill=self.TABLE_COLOR)
+        nb_players = len(game_obj.sitting_order)
+        background = Image.open(self.TOWNSQUARE_PATH)
+        self.paste_gamemode_icon(game_obj, background)
 
         for n in range(nb_players):
 
-            player_obj = game_obj.frozen_sitting[n]
+            player_obj = game_obj.sitting_order[n]
 
-            # Draw the tokens
-            center_x = self.get_x_from_angle(n*self.get_rad_angle(nb_players))
-            center_y = self.get_y_from_angle(n*self.get_rad_angle(nb_players))
-
-            # Alive player token
-            if player_obj.apparent_state == PlayerState.alive:
-                draw.ellipse(self.find_boundary_box(center_x, center_y, self.TOKEN_RADIUS), 
-                            outline=self.ALIVE_TOKEN_COLOR, fill=self.ALIVE_TOKEN_COLOR)
-
-            # Dead player token
-            elif player_obj.apparent_state == PlayerState.dead:
-                draw.ellipse(self.find_boundary_box(center_x, center_y, self.TOKEN_RADIUS), 
-                            outline=self.DEAD_TOKEN_COLOR, fill=self.DEAD_TOKEN_COLOR)
-
-            # Fleaved player is drawn with a dead token without the vote token
+            if player_obj.is_apparently_alive():
+                # The player is alive. We use the alive token image.
+                token = Image.open(self.TOKEN_LIFE)
             else:
-                draw.ellipse(self.find_boundary_box(center_x, center_y, self.TOKEN_RADIUS), 
-                            outline=self.DEAD_TOKEN_COLOR, fill=self.DEAD_TOKEN_COLOR)
-            
-            # Draw the username labels
-            member = player_obj._user_obj
-            label = member.name[:10]
-            unicode_font = ImageFont.truetype("botc/assets/DejaVuSans.ttf", 12)
-            w, h = unicode_font.getsize(label)
-            x = center_x - 1.2 * self.TOKEN_RADIUS
-            y = center_y + 1.2 * self.TOKEN_RADIUS
-            draw.rectangle((x, y, x + w, y + h), fill = self.LABEL_BACKGROUND_COLOR)
-            draw.text((x, y), font=unicode_font, text = label)
+                # The player is dead, and has a ghost vote.
+                if player_obj.has_vote():
+                    token = Image.open(self.TOKEN_GHOST_VOTE)
+                # The player is dead, and does not have a ghost vote.
+                else:
+                    token = Image.open(self.TOKEN_DEATH)
 
-        # Center stats text
-        guide = RoleGuide(nb_players)
+            token.thumbnail((self.token_width, self.token_width), Image.ANTIALIAS)
 
-        nb_townsfolk = guide.nb_townsfolks
-        nb_outsider = guide.nb_outsiders
-        nb_minion = guide.nb_minions
-        nb_demon = guide.nb_demons
+            x = self.get_x_from_angle(n*self.get_rad_angle(nb_players))
+            y = self.get_y_from_angle(n*self.get_rad_angle(nb_players))
 
-        center_msg = "{}\n[TOTAL] {} players.\n\nTownsfolk: {}\nOutsider: {}\nMinion: {}\n" \
-                     "Demon: {}".format(
-                         game_obj.gamemode.value,
-                         str(nb_players),
-                         str(nb_townsfolk),
-                         str(nb_outsider),
-                         str(nb_minion),
-                         str(nb_demon)
-                    )
+            new_x, new_y = self.translate(x, y)
 
-        font_path = "botc/assets/wilson.ttf"
-        font = ImageFont.truetype(font_path, 22)
-        draw.text((180, 180), center_msg, fill=self.TEXT_COLOR, font=font)
+            try:
+                background.paste(token, (new_x, new_y), token.convert("RGBA"))
+            except Exception:
+                pass
 
-        im.save('botc/assets/botctownsquare.jpg', quality=95)
-
-        background = Image.open("botc/assets/botctownsquare.jpg")
-        chair = Image.open("botc/assets/chair.png")
-        chair_size_width, chair_size_height = chair.size[0], chair.size[1]
-
-        # Draw the chairs
-        for n in range(nb_players):
-            x = self.get_chair_x_from_angle(n*self.get_rad_angle(nb_players))
-            y = self.get_chair_y_from_angle(n*self.get_rad_angle(nb_players))
-            x -= chair_size_width * 0.5
-            y -= chair_size_height * 0.5
-            rotated = chair.rotate(math.degrees(n*self.get_rad_angle(nb_players)), Image.NEAREST, expand=False)
-            transposed  = rotated.transpose(Image.ROTATE_180)
-            background.paste(transposed, (int(x), int(y)), transposed)
-
-        background.save("botc/assets/botctownsquare.jpg", "JPEG")
+        background.save(self.TOWNSQUARE_PATH)
     
-    @staticmethod
-    def get_x_center():
-        coord = TownSquare.PIC_SQUARE_SIDE - TownSquare.BUFFER - TownSquare.RADIUS
-        return coord
+    def paste_gamemode_icon(self, game_obj, background):
 
-    @staticmethod
-    def get_y_center():
-        return TownSquare.get_x_center()
+        x = self.PIC_LENGTH / 2
+        y = self.PIC_SQUARE_SIDE / 2
 
-    @staticmethod
-    def get_rad_angle(nb_player):
-        return 2 * math.pi / nb_player
+        if game_obj.gamemode == Gamemode.trouble_brewing:
+
+            edition_logo = Image.open(self.TB_ICON)
+
+            logo_size_x = edition_logo.size[0]
+            logo_size_y = edition_logo.size[1]
+            ratio = logo_size_y / (self.PIC_SQUARE_SIDE / 4)
+            ratio = 1 / ratio
+            thumbnail_x = int(logo_size_x * ratio)
+            thumbnail_y = int(logo_size_y * ratio)
+
+            edition_logo.thumbnail((thumbnail_x, thumbnail_y), Image.ANTIALIAS)
+
+            x -= thumbnail_x / 2
+            y -= thumbnail_y / 2
+
+            try:
+                background.paste(edition_logo, (int(x), int(y)), edition_logo.convert("RGBA"))
+            except Exception:
+                pass
+
+        elif game_obj.gamemode == Gamemode.bad_moon_rising:
+            pass
+
+        elif game_obj.gamemode == Gamemode.sects_and_violets:
+            pass
     
-    @staticmethod
-    def get_x_from_angle(rad_angle):
-        """For the tokens only"""
-        return 0.8 * TownSquare.RADIUS * math.sin(rad_angle) + TownSquare.get_x_center()
-    
-    @staticmethod
-    def get_y_from_angle(rad_angle):
-        """For the tokens only"""
-        return 0.8 * TownSquare.RADIUS * math.cos(rad_angle) + TownSquare.get_y_center()
-    
-    @staticmethod
-    def get_chair_x_from_angle(rad_angle):
-        """For the chairs only"""
-        return 1.2 * TownSquare.RADIUS * math.sin(rad_angle) + TownSquare.get_x_center()
-    
-    @staticmethod
-    def get_chair_y_from_angle(rad_angle):
-        """For the chairs only"""
-        return 1.2 * TownSquare.RADIUS * math.cos(rad_angle) + TownSquare.get_y_center()
-    
-    @staticmethod
-    def find_boundary_box(center_x, center_y, r):
-        return (center_x - r, center_y - r, center_x + r, center_y + r)
+    def translate(self, x, y):
+        image_center_x = self.PIC_LENGTH / 2
+        image_center_y = self.PIC_SQUARE_SIDE / 2
+
+        image_center_x -= self.token_width / 2
+        image_center_y -= self.token_width / 2
+
+        return(int(x + image_center_x), int(y + image_center_y))
     
     def get_image(self):
-        return 'botc/assets/botctownsquare.jpg'
-
+        return self.TOWNSQUARE_PATH
+    
+    def get_rad_angle(self, nb_player):
+        return 2 * math.pi / nb_player
+    
+    def get_x_from_angle(self, rad_angle):
+        """For the tokens only"""
+        return self.sitting_circle_radius * math.sin(rad_angle)
+    
+    def get_y_from_angle(self, rad_angle):
+        """For the tokens only"""
+        return self.sitting_circle_radius * math.cos(rad_angle)
+    

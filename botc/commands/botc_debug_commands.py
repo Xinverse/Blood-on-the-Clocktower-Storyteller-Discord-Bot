@@ -123,8 +123,8 @@ class BoTCDebugCommands(commands.Cog, name = "BoTC debug commands"):
             feedback = documentation["doc"]["fstop"]["feedback"]
             await ctx.send(feedback.format(botutils.BotEmoji.check))
         else:
-            feedback = documentation["doc"]["fstop"]["feedback"]
-            await ctx.send(feedback.format(ctx.author.mention, botutils.BotEmoji.check))
+            feedback = documentation["cmd_warnings"]["no_game_running"]
+            await ctx.send(feedback.format(ctx.author.mention, botutils.BotEmoji.cross))
 
     @fstop.error
     async def fstop_error(self, ctx, error):
