@@ -13,14 +13,13 @@ affiliated with them in any way.
 
 # TODO
 # Night interactions (left from investigator)
-# Spy grimoire reminder tokens and player names
+# Spy grimoire reminder tokens
 # Investigator minion bug fix
 # Lore/accompaniment strings for phase announcements
-# Townsquare public command
 # Better logging with embeds
+# Center text for townsquare
 # Winning conditions
 # Vote/lynch command to check vote stats
-# Nomination command error handling
 # Full day phase cycle
 
 

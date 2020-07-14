@@ -1,7 +1,7 @@
 """Contains the Townsquare class"""
 
 import math
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 from botc.gamemodes import Gamemode
 
 
@@ -40,10 +40,17 @@ class Townsquare:
         """Find the radius of the big sitting circle based on the background size"""
         return math.ceil(self.PIC_SQUARE_SIDE * 0.75 * 0.5)
     
+    @property
+    def font_size(self):
+        """Find the font size appropriate for the size of the image"""
+        return math.ceil(self.PIC_SQUARE_SIDE * 0.04)
+    
     def create(self, game_obj):
 
         nb_players = len(game_obj.sitting_order)
         background = Image.open(self.TOWNSQUARE_PATH)
+        draw = ImageDraw.Draw(background, "RGBA")
+        font = ImageFont.truetype(self.FONT, self.font_size)
         self.paste_gamemode_icon(game_obj, background)
 
         for n in range(nb_players):
@@ -72,6 +79,12 @@ class Townsquare:
                 background.paste(token, (new_x, new_y), token.convert("RGBA"))
             except Exception:
                 pass
+            
+            text = player_obj.user.display_name
+            w, h = font.getsize(text)
+            new_x, new_y = self.translate_text(x, y, w)
+            draw.rectangle((new_x, new_y, new_x + w, new_y + h), fill = (37, 30, 23, 140))
+            draw.text((new_x, new_y), text, (255, 255, 255), font = font)
 
         background.save(self.TOWNSQUARE_PATH)
     
@@ -115,6 +128,17 @@ class Townsquare:
         image_center_y -= self.token_width / 2
 
         return(int(x + image_center_x), int(y + image_center_y))
+    
+    def translate_text(self, x, y, text_width):
+        image_center_x = self.PIC_LENGTH / 2
+        image_center_y = self.PIC_SQUARE_SIDE / 2
+
+        image_center_x -= self.token_width / 2
+        image_center_y -= self.token_width / 2
+
+        offset = (text_width - self.token_width) / 2
+
+        return(int(x + image_center_x - offset), int(y + image_center_y))
     
     def get_image(self):
         return self.TOWNSQUARE_PATH

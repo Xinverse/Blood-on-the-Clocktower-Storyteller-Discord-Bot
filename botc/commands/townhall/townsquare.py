@@ -42,7 +42,7 @@ class Townsquare(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙�
         help = documentation["doc"]["townsquare"]["help"],
         description = documentation["doc"]["townsquare"]["description"]
     )
-    @commands.cooldown(1, 45, commands.BucketType.channel)
+    @commands.cooldown(1, 60, commands.BucketType.channel)
     async def townsquare(self, ctx):
         """Townsquare command
         usage: townsquare
