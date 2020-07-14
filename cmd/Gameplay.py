@@ -101,7 +101,7 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
 
     
     # ---------- ROLE COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "role", aliases = ["roles"])
+    @commands.command(pass_context=True, name = "role", aliases = ["roles", "character", 'characters"'])
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     async def role(self, ctx, *, role_name):
         """Role command"""
@@ -217,7 +217,7 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
     
 
     # ---------- STATS COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "stats", aliases = ["statistics"])
+    @commands.command(pass_context=True, name = "session", aliases = ["statistics"])
     @commands.check(botutils.check_if_lobby_or_spec_or_dm_or_admin)
     @commands.check(botutils.check_if_not_in_empty)
     async def stats(self, ctx):

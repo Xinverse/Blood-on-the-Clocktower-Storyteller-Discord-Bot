@@ -21,10 +21,14 @@ class BotEmoji:
     scroll = emojis["scroll"]
     approved = emojis["approved"]
     denied = emojis["denied"]
+    people = emojis["people"]
+    votes = emojis["votes"]
+    alive = emojis["alive"]
 
     # Unicode emojis
     skull = emojis["skull"]
     fquit = emojis["fquit"]
+    vote = emojis["vote"]
 
     # BOTC
     demonhead = emojis["demon_head"]

@@ -13,14 +13,14 @@ affiliated with them in any way.
 
 # TODO
 # Night interactions (left from investigator)
-# Spy grimoire reminder tokens
 # Investigator minion bug fix
 # Lore/accompaniment strings for phase announcements
+# Master states stability and inter-game state clearing
+# Winning conditions and end game message
+# Full day phase cycle
+# Spy grimoire reminder tokens
 # Better logging with embeds
 # Center text for townsquare
-# Winning conditions
-# Vote/lynch command to check vote stats
-# Full day phase cycle
 
 
 import globvars

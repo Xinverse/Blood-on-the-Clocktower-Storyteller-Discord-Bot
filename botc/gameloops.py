@@ -109,8 +109,11 @@ async def nomination_loop(game, nominator, nominated):
             # 10 players total. 10 players alive. 10 available voters.
             msg += votes_stats.format(
                 total = nb_total_players,
+                emoji_total = botutils.BotEmoji.people,
                 alive = nb_alive_players,
-                votes = nb_available_votes
+                emoji_alive = botutils.BotEmoji.alive,
+                votes = nb_available_votes,
+                emoji_votes = botutils.BotEmoji.votes
             )
             msg += "\n"
 
@@ -236,8 +239,11 @@ async def nomination_loop(game, nominator, nominated):
     # General vote stats
     msg += votes_stats.format(
             total = nb_total_players,
+            emoji_total = botutils.BotEmoji.people,
             alive = nb_alive_players,
-            votes = nb_available_votes
+            emoji_alive = botutils.BotEmoji.alive,
+            votes = nb_available_votes,
+            emoji_votes = botutils.BotEmoji.votes
     )
     msg += "\n"
 

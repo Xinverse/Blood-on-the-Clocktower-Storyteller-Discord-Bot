@@ -25,7 +25,6 @@ from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
 from .gameloops import master_game_loop
-from .commands import load_abilities, load_townhall
 from models import GameMeta
 
 Config = configparser.ConfigParser()
@@ -242,7 +241,10 @@ class Game(GameMeta):
          if player.is_alive():
             line = f"{player.user.display_name} ({player.user.id}) [alive]\n"
          elif player.is_dead():
-            line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode}\n"
+            if player.has_vote:
+               line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode} {botutils.BotEmoji.vote}\n"
+            else:
+               line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode}\n"
          else:
             line = f"{player.user.display_name} ({player.user.id}) [quit] {fquit_unicode}\n"
          msg += line
@@ -314,8 +316,8 @@ class Game(GameMeta):
       # Log the game data
       await GameLog(self).send_game_obj_log_str()
       # Load game related commands
-      load_abilities()
-      load_townhall()
+      globvars.client.load_extension("botc.commands.abilities")
+      globvars.client.load_extension("botc.commands.townhall")
       globvars.client.load_extension("botc.commands.botc_debug_commands")
       # Start the game loop
       self.gameloop.start(self)
@@ -413,9 +415,6 @@ class Game(GameMeta):
       """End the game, compute winners etc. 
       Must be implemented.
       """
-      # Unload game related commands
-      globvars.client.unload_extension("botc.commands.botc_commands")
-      globvars.client.unload_extension("botc.commands.botc_debug_commands")
       # Send the lobby game conclusion message
       await botutils.send_lobby("Game over, todo")
       # Log the game over data

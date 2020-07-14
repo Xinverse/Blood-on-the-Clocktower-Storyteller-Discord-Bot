@@ -53,9 +53,10 @@ class Townsquare:
         font = ImageFont.truetype(self.FONT, self.font_size)
         self.paste_gamemode_icon(game_obj, background)
 
-        for n in range(nb_players):
+        # Iterate in reverse to make the sitting order clockwise
+        for i, n in enumerate(range(nb_players - 1, -1, -1)):
 
-            player_obj = game_obj.sitting_order[n]
+            player_obj = game_obj.sitting_order[i]
 
             if player_obj.is_apparently_alive():
                 # The player is alive. We use the alive token image.

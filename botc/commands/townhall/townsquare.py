@@ -28,10 +28,12 @@ class Townsquare(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙�
     
     def cog_check(self, ctx):
         """Check the channel of the context, return True if it is sent in either 
-        lobby, in spec chat, or in a private channel.
+        lobby, or in spec chat.
         Admins can bypass.
         """
-        return botutils.check_if_lobby_or_spec_or_dm_or_admin(ctx)
+        return botutils.check_if_admin(ctx) or \
+               botutils.check_if_lobby(ctx) or \
+               botutils.check_if_spec(ctx)
     
     # ---------- TOWNSQUARE COMMAND (Stats) ----------------------------------------
     @commands.command(
@@ -58,8 +60,11 @@ class Townsquare(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙�
     @townsquare.error
     async def townsquare_error(self, ctx, error):
         emoji = botutils.BotEmoji.cross
+        # Check failed -> commands.CheckFailure
+        if isinstance(error, commands.CheckFailure):
+            return
         # Command on cooldown -> commands.CommandOnCooldown
-        if isinstance(error, commands.CommandOnCooldown):
+        elif isinstance(error, commands.CommandOnCooldown):
             await ctx.send(cooldown.format(ctx.author.mention, emoji))
         else:
             try:

@@ -188,7 +188,7 @@
         "yes" : "yes",
         "no" : "no",
         "call_for_vote" : "Do you vote for the 𝖊𝖝𝖊𝖈𝖚𝖙𝖎𝖔𝖓 of {}?",
-        "votes_stats" : "**{total}** players `total`. **{alive}** players `alive`. **{votes}** available `voters`.",
+        "votes_stats" : "**{total}** {emoji_total} players `total`. **{alive}** {emoji_alive} players `alive`. **{votes}** {emoji_votes} available `voters`.",
         "votes_to_exe" : "【 **{votes}** {emoji} votes to execute. 】",
         "votes_to_tie" : "【 **{votes}** {emoji} votes to tie. 】",
         "votes_current" : "【 **{votes}** {emoji} votes currently. 】",
@@ -198,7 +198,15 @@
         "verdict_safe" : "**𝖁𝖊𝖗𝖉𝖎𝖈𝖙** : {} is **safe** today.",
         "vote_summary" : "𝖁𝖔𝖙𝖊 𝕾𝖚𝖒𝖒𝖆𝖗𝖞",
         "nomination_short" : "{} was nominated by {}.",
-        "nomination_intro" : "{} {} {} has nominated {}. You have **{}** seconds to discuss amongst yourselves. Then, you will be called one by one to cast your vote."
+        "nomination_intro" : "{} {} {} has nominated {}. You have **{}** seconds to discuss amongst yourselves. Then, you will be called one by one to cast your vote.",
+        "current_phase" : "The current phase is **{}**.",
+        "stats_tied" : "Nominated players are tied at **{}** votes, so no one is currently on the chopping block.",
+        "stats_no_one" : "No one is currently on the chopping block.",
+        "stats_chopping" : "{} is currently on the chopping block with **{}** votes.",
+        "stats_header" : "**𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗**, played with **{}** players using the **{}** Edition.",
+        "stats_1" : "【 **{}** votes to tie, **{}** votes to execute. 】",
+        "stats_2" : "【 **{}** votes to execute. 】",
+        "stats_3" : "【 **{}** votes to execute. 】"
 
     },
 
@@ -303,6 +311,12 @@
             "brief" : "show the townsquare",
             "help" : "The \"Townsquare\" is a graphical representation of the players' circular sitting order, and provides information such as vote availability and player life or death states.",
             "description" : "[TOWNSQUARE] command - BOTC"
+        },
+
+        "stats" : {
+            "brief" : "show the game statistics board",
+            "help" : "The game statistics board contains information about player life or death states, the sitting order, and pending executions.",
+            "description" : "[STATS] command - BOTC"
         }
 
     }

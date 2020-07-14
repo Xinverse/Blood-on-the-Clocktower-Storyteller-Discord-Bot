@@ -49,9 +49,10 @@ class Grimoire:
         font = ImageFont.truetype(self.FONT, self.font_size)
         self.paste_gamemode_icon(game_obj, background)
 
-        for n in range(nb_players):
+        # Iterate in reverse to make the sitting order clockwise
+        for i, n in enumerate(range(nb_players - 1, -1, -1)):
 
-            player_obj = game_obj.sitting_order[n]
+            player_obj = game_obj.sitting_order[i]
             true_role = player_obj.role.true_self
             token_file_path = TokenPathGrabber().getpath(true_role)
             token = Image.open(token_file_path)

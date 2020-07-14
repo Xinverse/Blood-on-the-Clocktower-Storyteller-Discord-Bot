@@ -82,6 +82,11 @@ def check_if_lobby(ctx):
     return __is_lobby(ctx)
 
 
+def check_if_spec(ctx):
+    """Check the channel of the context, return True if it is sent in the spec channel"""
+    return __is_specchat(ctx)
+
+
 def check_if_not_ignored(ctx):
     """Check the author of the context, return True if they are not ignored"""
     return True

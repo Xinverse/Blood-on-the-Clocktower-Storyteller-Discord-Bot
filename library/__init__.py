@@ -1,0 +1,1 @@
+from .fancytext import fancy
