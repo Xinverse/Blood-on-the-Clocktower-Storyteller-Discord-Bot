@@ -15,6 +15,8 @@ error_str = language["system"]["error"]
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
+    nomination_ongoing = documentation["cmd_warnings"]["nomination_ongoing"]
+    nominations_not_open = documentation["cmd_warnings"]["nominations_not_open"]
 
 
 class Nominate(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔱𝔬𝔴𝔫𝔥𝔞𝔩𝔩"):
@@ -49,9 +51,17 @@ class Nominate(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍�
         characters: living players
         """
         import globvars
-        from botc.gameloops import nomination_loop
+        from botc.gameloops import nomination_loop, base_day_loop
         player = BOTCUtils.get_player_from_id(ctx.author.id)
-        await nomination_loop(globvars.master_state.game, player, nominated)
+        if nomination_loop.is_running():
+            msg = nomination_ongoing.format(ctx.author.mention, botutils.BotEmoji.cross)
+            await ctx.send(msg)
+            return
+        elif base_day_loop.is_running():
+            msg = nominations_not_open.format(ctx.author.mention, botutils.BotEmoji.cross)
+            await ctx.send(msg)
+            return
+        nomination_loop.start(globvars.master_state.game, player, nominated)
 
     @nominate.error
     async def nominate_error(self, ctx, error):

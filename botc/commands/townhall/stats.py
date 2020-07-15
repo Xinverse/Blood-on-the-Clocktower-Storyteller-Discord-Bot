@@ -66,9 +66,9 @@ class Stats(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊
         msg += current_phase.format(fancy.bold(game.current_phase.value))
         msg += "\n"
 
-        if globvars.master_state.game.current_phase == Phase.day:
+        if game.current_phase == Phase.day:
 
-            chopping_block = globvars.master_state.game.chopping_block
+            chopping_block = game.chopping_block
             nb_total_players = len(game.sitting_order)
             nb_alive_players = len([player for player in game.sitting_order if player.is_apparently_alive()])
             nb_available_votes = len([player for player in game.sitting_order if player.has_vote()])

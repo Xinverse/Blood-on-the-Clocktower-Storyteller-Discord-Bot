@@ -24,7 +24,7 @@ from .gamemodes.troublebrewing.Saint import Saint
 from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
-from .gameloops import master_game_loop
+from .gameloops import master_game_loop, nomination_loop
 from models import GameMeta
 
 Config = configparser.ConfigParser()

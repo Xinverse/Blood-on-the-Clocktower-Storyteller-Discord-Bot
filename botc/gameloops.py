@@ -29,6 +29,11 @@ CARD_LYNCH = int(CARD_LYNCH, 16)
 CARD_NO_LYNCH = Config["colors"]["CARD_NO_LYNCH"]
 CARD_NO_LYNCH = int(CARD_NO_LYNCH, 16)
 
+# Config
+Config.read("config.INI")
+
+PREFIX = Config["settings"]["PREFIX"]
+
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
     clockface = documentation["images"]["clockface"]
@@ -52,11 +57,17 @@ with open('botc/game_text.json') as json_file:
     nomination_intro = documentation["gameplay"]["nomination_intro"]
     vote_summary = documentation["gameplay"]["vote_summary"]
     nomination_short = documentation["gameplay"]["nomination_short"]
+    nominations_open = documentation["gameplay"]["nominations_open"]
+    nomination_countdown = documentation["gameplay"]["nomination_countdown"]
+    day_over_soon = documentation["gameplay"]["day_over_soon"]
+    no_execution = documentation["gameplay"]["no_execution"]
+    execution = documentation["gameplay"]["execution"]
     copyrights_str = documentation["misc"]["copyrights"]
 
 global botc_game_obj
 
 
+@tasks.loop(count = 1)
 async def nomination_loop(game, nominator, nominated):
     """One round of nomination. Iterate through all players with available 
     votes and register votes using reactions.
@@ -355,6 +366,12 @@ async def dawn_loop(game):
         await asyncio.sleep(INCREMENT)
 
 
+@tasks.loop(count = 1)
+async def base_day_loop(duration):
+    """The base day length during which it's not possible to nominate"""
+    await asyncio.sleep(duration)
+
+
 async def day_loop(game):
     """Day loop"""
     # Start day
@@ -363,8 +380,54 @@ async def day_loop(game):
     # base_day_length = math.sqrt(game.nb_players)
     # base_day_length = math.ceil(base_day_length)
     # base_day_length = base_day_length * 60
-    base_day_length = 500
+    base_day_length = 15
+    base_day_loop.start(base_day_length)
     await asyncio.sleep(base_day_length)
+
+    # Nominations are open
+    msg = botutils.BotEmoji.grimoire + " " + nominations_open.format(PREFIX)
+    await botutils.send_lobby(msg)
+
+    timers = [90, 60, 45, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+
+    for timer in timers:
+
+        msg = botutils.BotEmoji.grimoire + " " + nomination_countdown.format(timer)
+        await botutils.send_lobby(msg)
+
+        countdown = timer
+        count = 0
+
+        while not nomination_loop.is_running():
+
+            count += 1
+            await asyncio.sleep(1)
+
+            # Give a time remaining reminder
+            remaining_time = countdown - count
+            if remaining_time == 10:
+                msg = botutils.BotEmoji.hourglass + " " + day_over_soon
+                await botutils.send_lobby(msg)
+
+            # Time has run out
+            if count >= countdown:
+                if game.chopping_block:
+                    if game.chopping_block.player_about_to_die:
+                        await game.chopping_block.player_about_to_die.exec_real_death()
+                        msg = botutils.BotEmoji.grimoire + " " + execution.format(
+                            game.chopping_block.player_about_to_die.game_nametag, 
+                            game.chopping_block.nb_votes
+                        )
+                    else:
+                        msg = botutils.BotEmoji.grimoire + " " + no_execution
+                    await botutils.send_lobby(msg)
+                else:
+                    msg = botutils.BotEmoji.grimoire + " " + no_execution
+                    await botutils.send_lobby(msg)
+                return
+
+        while nomination_loop.is_running():
+            await asyncio.sleep(1)
 
 
 async def before_night(game):

@@ -14,12 +14,11 @@ affiliated with them in any way.
 # TODO
 # Night interactions (left from investigator)
 # Investigator minion bug fix
-# Lore/accompaniment strings for phase announcements
+# Execution string in night announcement. Night death string in day announcement.
 # Master states stability and inter-game state clearing
 # Winning conditions and end game message
-# Full day phase cycle
 # Spy grimoire reminder tokens
-# Better logging with embeds
+# Better logging system
 # Center text for townsquare
 
 

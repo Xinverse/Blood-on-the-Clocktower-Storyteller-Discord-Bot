@@ -206,13 +206,20 @@
         "stats_header" : "**𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗**, played with **{}** players using the **{}** Edition.",
         "stats_1" : "【 **{}** votes to tie, **{}** votes to execute. 】",
         "stats_2" : "【 **{}** votes to execute. 】",
-        "stats_3" : "【 **{}** votes to execute. 】"
+        "stats_3" : "【 **{}** votes to execute. 】",
+        "nominations_open" : "**Nominations are now open. Alive Players may use the command `{}nominate <player>` to start a public trial.**",
+        "nomination_countdown" : "You have **{}** seconds to nominate someone. If no nomination is received, the game will move on to nightfall.",
+        "day_over_soon" : "The Day Phase will be over in a few seconds if no one else is nominated.",
+        "no_execution" : "Nominations are now closed, and no one is executed today. Goodnight everyone.",
+        "execution" : "Nominations are now closed. {} is now executed with **{}** votes. Goodnight everyone."
 
     },
 
     "cmd_warnings" : {
 
         "x_emoji" : "<a:animated_cross:728029756372680785>",
+        "nominations_not_open" : "{} {} Nominations are not open yet.",
+        "nomination_ongoing" : "{} {} You may not nominate when a nomination is already ongoing. Please wait until the current trial is over.",
         "dm_only" : "{} {} You may not use this command outside of a private DM channel.",
         "lobby_only" : "{} {} You may not use this command outside of the public game text channel.",
         "alive_only" : "{} {} You may not use this command while dead.",
