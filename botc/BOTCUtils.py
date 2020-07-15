@@ -2,6 +2,7 @@
 
 import json
 import random
+from .Category import Category
 from discord.ext import commands
 
 with open('botc/game_text.json') as json_file: 
@@ -49,6 +50,17 @@ def get_number_image(nb):
 
 class BOTCUtils:
    """Some utility functions"""
+
+   @staticmethod
+   def has_alive_demons():
+      """Return true if the game still has alive demons. Using real life state."""
+      import globvars
+      game = globvars.master_state.game
+      for player in game.sitting_order:
+         if player.is_alive():
+            if player.role.true_self.category == Category.demon:
+               return True
+      return False
 
    @staticmethod
    def get_players_from_role_name(character_name_enum):

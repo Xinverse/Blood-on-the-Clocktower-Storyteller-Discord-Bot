@@ -26,6 +26,7 @@ class BotEmoji:
     alive = emojis["alive"]
     grimoire = emojis["grimoire"]
     hourglass = emojis["hourglass"]
+    winner = emojis["winner"]
 
     # Unicode emojis
     skull = emojis["skull"]

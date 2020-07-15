@@ -10,6 +10,7 @@ import configparser
 import discord
 import asyncio
 import math
+from library import fancy
 from .chrono import GameChrono
 from .BOTCUtils import BOTCUtils
 from .Category import Category
@@ -39,6 +40,11 @@ CARD_DAWN = int(CARD_DAWN, 16)
 CARD_DAY = Config["colors"]["CARD_DAY"]
 CARD_DAY = int(CARD_DAY, 16)
 
+TOWNSFOLK_COLOR = Config["colors"]["TOWNSFOLK_COLOR"]
+DEMON_COLOR = Config["colors"]["DEMON_COLOR"]
+TOWNSFOLK_COLOR = int(TOWNSFOLK_COLOR, 16)
+DEMON_COLOR = int(DEMON_COLOR, 16)
+
 random.seed(datetime.datetime.now())
 
 with open('botc/game_text.json') as json_file: 
@@ -47,12 +53,19 @@ with open('botc/game_text.json') as json_file:
    daybreak = strings["gameplay"]["daybreak"]
    dawn = strings["gameplay"]["dawn"]
    lobby_game_start = strings["gameplay"]["lobby_game_start"]
+   lobby_game_closing = strings["gameplay"]["lobby_game_closing"]
    evilteammates = strings["gameplay"]["evilteammates"]
    copyrights_str = strings["misc"]["copyrights"]
    tb_lore = strings["gameplay"]["tb_lore"]
    nightfall_image = strings["images"]["nightfall"]
    dawn_image = strings["images"]["dawn"]
    daybreak_image = strings["images"]["daybreak"]
+   dove = strings["images"]["dove"]
+   demon = strings["images"]["demon"]
+   no_one_wins = strings["gameplay"]["no_one_wins"]
+   good_wins = strings["gameplay"]["good_wins"]
+   evil_wins = strings["gameplay"]["evil_wins"]
+   role_reveal = strings["gameplay"]["role_reveal"]
 
 with open('botutils/bot_text.json') as json_file: 
    language = json.load(json_file)
@@ -179,6 +192,7 @@ class Game(GameMeta):
       self._setup = Setup()
       self.chopping_block = None  # ChoppingBlock object
       self.gameloop = master_game_loop
+      self.winners = None  # botc.Team object
    
    @property
    def nb_players(self):
@@ -286,6 +300,99 @@ class Game(GameMeta):
       # Bad Moon Rising Edition
       elif self.gamemode == Gamemode.bad_moon_rising:
          pass
+   
+   async def send_lobby_closing_message(self):
+      """Send the closing message in lobby"""
+
+      from botc import Team
+
+      gamemode = fancy.bold(self.gamemode.value)
+
+      # ----- The good team wins -----
+      if self.winners == Team.good:
+
+         # Revealing the role list
+         role_list_str = ""
+         for player in self.sitting_order:
+            short = "{} **{}** was the {} **{}**".format(
+               botutils.BotEmoji.winner if player.role.true_self.is_good() else "---",
+               player.user.mention, 
+               player.role.true_self.emoji, 
+               player.role.true_self.name
+            ) 
+            role_list_str += short
+            role_list_str += "\n"
+
+         # The embed
+         embed = discord.Embed(
+            title = good_wins,
+            description = role_list_str,
+            color = TOWNSFOLK_COLOR
+         )
+         embed.set_author(
+            name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
+            icon_url = Saint()._botc_logo_link
+         )
+         embed.set_thumbnail(url = dove)
+
+      # ----- The evil team wins -----
+      elif self.winners == Team.evil:
+
+         # Revealing the role list
+         role_list_str = ""
+         for player in self.sitting_order:
+            short = role_reveal.format(
+               botutils.BotEmoji.winner if player.role.true_self.is_evil() else "---",
+               player.user.mention, 
+               player.role.true_self.emoji, 
+               player.role.true_self.name
+            ) 
+            role_list_str += short
+            role_list_str += "\n"
+
+         # The embed
+         embed = discord.Embed(
+            title = evil_wins,
+            description = role_list_str,
+            color = DEMON_COLOR
+         )
+         embed.set_author(
+            name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
+            icon_url = Saint()._botc_logo_link
+         )
+         embed.set_thumbnail(url = demon)
+      
+      # ----- No one wins -----
+      else:
+         # Revealing the role list
+         role_list_str = ""
+         for player in self.sitting_order:
+            short = role_reveal.format(
+               "",
+               player.user.mention, 
+               player.role.true_self.emoji, 
+               player.role.true_self.name
+            ) 
+            role_list_str += short
+            role_list_str += "\n"
+
+         # The embed
+         embed = discord.Embed(
+            title = no_one_wins,
+            description = role_list_str
+         )
+         embed.set_author(
+            name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
+            icon_url = Saint()._botc_logo_link
+         )
+      
+      embed.timestamp = datetime.datetime.utcnow()
+      embed.set_footer(text = copyrights_str)
+      
+      pings = " ".join([player.user.mention for player in self.sitting_order])
+      msg = lobby_game_closing.format(pings, gamemode, self.nb_players)
+
+      await botutils.send_lobby(msg, embed=embed)
 
    async def start_game(self):
       """Start the game. 
@@ -407,17 +514,48 @@ class Game(GameMeta):
             return False
       return True
    
-   def has_reached_wincon(self):
-      """Check if the game has reached win con. Return True if yes, else no."""
-      return False
+   @property
+   def nb_alive_players(self):
+      """Return the number of alive players (apparently alive state)"""
+      count = 0
+      for player in self.sitting_order:
+         if player.is_apparently_alive():
+            count += 1
+      return count
+   
+   async def check_winning_conditions(self):
+      """Check if the game has reached the winning conditons. Promote new demons or 
+      end the game is necessary.
+      """
+      # Less than or equal to 2 alive players. Winning condition is definitely triggered.
+      if self.nb_alive_players <= 2:
+         # There are still alive demons. The game is over with Evil win.
+         if BOTCUtils.has_alive_demons():
+            from botc import Team
+            self.winners = Team.evil
+            self.gameloop.cancel()
+         # There is no alive demon. The game is over with Good win.
+         else:
+            from botc import Team
+            self.winners = Team.good
+            self.gameloop.cancel()
+      # More than 2 players still alive.
+      else:
+         # There are still alive demons. The game is not over yet.
+         if BOTCUtils.has_alive_demons():
+            return
+         # There is no alive demon. The game is over with Good win.
+         else:
+            from botc import Team
+            self.winners = Team.good
+            self.gameloop.cancel()
 
    async def end_game(self):
       """End the game, compute winners etc. 
       Must be implemented.
       """
       # Send the lobby game conclusion message
-      await botutils.send_lobby("Game over, todo")
-      # Log the game over data
+      await self.send_lobby_closing_message()
       await botutils.log(botutils.Level.info, "Game finished, to-do")
       # Clear the game object
       self.__init__()

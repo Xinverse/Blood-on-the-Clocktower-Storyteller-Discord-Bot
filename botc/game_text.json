@@ -27,7 +27,9 @@
         "dead_no_lynch" : "https://imgur.com/RHuxhIL.png",
         "approved_seal" : "https://imgur.com/IJv9e3y.png",
         "denied_seal" : "https://imgur.com/JPmfCgL.png",
-        "clockface" : "https://imgur.com/71J4CTm.png"
+        "clockface" : "https://imgur.com/71J4CTm.png",
+        "dove" : "https://imgur.com/SSyMLfJ.png",
+        "demon" : "https://imgur.com/zrVfclB.png"
         
     },
 
@@ -173,6 +175,7 @@
         "daybreak" : "It is currently **𝖉𝖆𝖞𝖙𝖎𝖒𝖊**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
         "lobby_game_start" : "{} Welcome to **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, played using the **{}** Edition with **{}** players. All players should now have received a DM from me for private instructions.",
+        "lobby_game_closing" : "{} Game over! Thank you for playing **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, using the **{}** Edition with **{}** players.",
         "demonbluffs" : "To help you survive, here are 3 not-in-play characters that you may decide to bluff as: **{}**, **{}** and **{}**.",
         "evilteammates" : "Your Evil teammates are shown below: ",
         "chef_init" : "You learn a `{}`.",
@@ -211,7 +214,11 @@
         "nomination_countdown" : "You have **{}** seconds to nominate someone. If no nomination is received, the game will move on to nightfall.",
         "day_over_soon" : "The Day Phase will be over in a few seconds if no one else is nominated.",
         "no_execution" : "Nominations are now closed, and no one is executed today. Goodnight everyone.",
-        "execution" : "Nominations are now closed. {} is now executed with **{}** votes. Goodnight everyone."
+        "execution" : "Nominations are now closed. {} is now executed with **{}** votes. Goodnight everyone.",
+        "no_one_wins" : "**Game over! No one has won.**",
+        "good_wins" : "**Game over! The Good team has won.**",
+        "evil_wins" : "**Game over! The Evil team has won.**",
+        "role_reveal" : "{} **{}** was the {} **{}**"
 
     },
 

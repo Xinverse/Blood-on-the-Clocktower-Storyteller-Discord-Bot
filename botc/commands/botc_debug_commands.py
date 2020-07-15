@@ -39,7 +39,7 @@ class BoTCDebugCommands(commands.Cog, name = "BoTC debug commands"):
     async def frole(self, ctx, player: PlayerConverter(), role: RoleConverter()):
         """Frole command"""
         old_role = player.role.true_self
-        player.exec_change_role(role)
+        await player.exec_change_role(role)
         player.role.exec_init_role(globvars.master_state.game.setup)
         try:
             await player.role.ego_self.send_opening_dm_embed(player.user)

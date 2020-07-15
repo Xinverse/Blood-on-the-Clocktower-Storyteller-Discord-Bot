@@ -484,22 +484,13 @@ async def master_game_loop(game_obj):
     """
     global botc_game_obj
     botc_game_obj = game_obj
-    while not game_obj.has_reached_wincon():
+    while True:
         # Night
         await night_loop(game_obj)
-        # Check win con
-        if game_obj.has_reached_wincon():
-            break
         # Dawn
         await dawn_loop(game_obj)
-        # Check win con
-        if game_obj.has_reached_wincon():
-            break
         # Day
         await day_loop(game_obj)
-        # Check win con
-        if game_obj.has_reached_wincon():
-            break
     
 
 @master_game_loop.after_loop

@@ -24,18 +24,22 @@ class Player:
         self._status_effects = []  # List object
         self.ghost_vote = 1
     
-    def exec_change_role(self, new_role):
+    async def exec_change_role(self, new_role):
         """Change the player's old role to a new role"""
+        import globvars
         self._role_obj = new_role
+        await globvars.master_state.game.check_winning_conditions()
     
     async def exec_real_death(self):
         """Turn the player's real state into the death state"""
+        import globvars
         if self.is_dead():
             raise AlreadyDead("Player is already dead, you are trying to kill them again.")
         self._state_obj = PlayerState.dead
         self._apparent_state_obj = PlayerState.dead
         await botutils.add_dead_role(self.user)
         await botutils.remove_alive_role(self.user)
+        await globvars.master_state.game.check_winning_conditions()
     
     async def exec_apparent_death(self):
         """Turn the player's apparent state into the death state, but the real state 

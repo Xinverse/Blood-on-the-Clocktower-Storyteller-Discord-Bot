@@ -14,7 +14,7 @@ affiliated with them in any way.
 # TODO
 # Night interactions (left from investigator)
 # Investigator minion bug fix
-# Execution string in night announcement. Night death string in day announcement.
+# Night death string in day announcement.
 # Master states stability and inter-game state clearing
 # Winning conditions and end game message
 # Spy grimoire reminder tokens
