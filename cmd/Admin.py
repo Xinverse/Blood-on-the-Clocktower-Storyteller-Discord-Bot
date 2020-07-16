@@ -28,23 +28,6 @@ class Admin(commands.Cog, name="Admin Commands"):
 
     def cog_check(self, ctx):
         return botutils.check_if_admin(ctx)
-    
-
-    # ---------- OP COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "op")
-    async def op(self, ctx):
-        """Give the admin role to the user"""
-        await botutils.add_admin_role(ctx.author)
-        await ctx.send(f"{ctx.author.mention} {botutils.BotEmoji.success}")
-    
-
-    # ---------- DEOP COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "deop")
-    async def deop(self, ctx):
-        """Remove the admin role from the user"""
-        await botutils.remove_admin_role(ctx.author)
-        await ctx.send(f"{ctx.author.mention} {botutils.BotEmoji.success}")
-
 
     # ---------- FJOIN COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "fjoin")
@@ -72,28 +55,3 @@ class Admin(commands.Cog, name="Admin Commands"):
         else:
             await ctx.send(fleaved_str.format(ctx.author.mention, member.name))
         await botutils.remove_alive_role(member)
-
-
-    async def cog_command_error(self, ctx, error):
-        """Error handling on command"""
-
-        # Case: bad argument (user not found)
-        if isinstance(error, commands.BadArgument):
-            await ctx.send(user_not_found_str.format(ctx.author.mention))
-            return
-        # Case: missing required argument (user not specified)
-        elif isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send(missing_user_str.format(ctx.author.mention))
-            return
-        elif isinstance(error, commands.CheckFailure):
-            return
-        else:
-            try:
-                raise error
-            except Exception:
-                await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
-      
-
-def setup(client):
-    client.add_cog(Admin(client))

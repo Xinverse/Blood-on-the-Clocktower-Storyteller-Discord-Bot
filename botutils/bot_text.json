@@ -1,9 +1,9 @@
 {
     "cmd" : {
 
-        "github" : "The Github page of the bot can be found here: <https://github.com/Xinverse/BOTC-Bot>",
-        "ping" : ":ping_pong: **Pong!** Latency: **{}** seconds.",
-        "uptime" : ":clock: **uptime:** {}",
+        "github" : "The Github page of the bot can be found here: https://github.com/Xinverse/Blood-on-the-Clocktower-Storyteller-Discord-Bot",
+        "ping" : "{} Ping! The bot's latency is **{}** seconds.",
+        "uptime" : "{} The current uptime is **{}**.",
         "join" : "**{}** joined the game and raised the number of players to **{}**.",
         "joined" : "{} You are already in the game!",
         "quit" : "**{}** left the game. There are **{}** players remaining.",
@@ -82,10 +82,10 @@
             "help" : "We know by now that the cat always lands on its feet... but what about dogs? Will we ever find out?...",
             "description" : "[DOG] command",
             "outputs" : [
-                "Did the dog land on its feet?",
-                "I really wonder, did the dog land on its feet?",
-                "Now I *really* wonder, did the dog land on its feet?!",
-                "I'm deeply sorry, but the Programmer has forgotten to implement this function, and so the eternal question of the Dog and its legendary Feet will forever remain a mystery."
+                "{} Did the dog land on its feet?",
+                "{} I really wonder, did the dog land on its feet?",
+                "{} Now I *really* wonder, did the dog land on its feet?!",
+                "{} I'm deeply sorry, but the Programmer has forgotten to implement this function, and so the eternal question of the Dog and its legendary Feet will forever remain a mystery."
             ],
             "weights" : [
                 0.70,
@@ -111,6 +111,46 @@
                 0.01,
                 0.01
             ]
+        },
+
+        "github" : {
+            "brief" : "see the github link",
+            "help" : "This bot is open source on Github. Please visit the official Github page to report an issue, sugggest a feature, or to contact the Developer.",
+            "description" : "[GITHUB] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "ping" : {
+            "brief" : "check the bot's latency",
+            "help" : "See the bot's latency in seconds and test its responsiveness.",
+            "description" : "[PING] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "op" : {
+            "brief" : "grant the admin role",
+            "help" : "Removing the admin role allows server admins to participate in gaming sessions without being able to see game logs. Adding the admin role gives administrator permissions back.",
+            "description" : "[OP] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "deop" : {
+            "brief" : "remove the admin role",
+            "help" : "Removing the admin role allows server admins to participate in gaming sessions without being able to see game logs. Adding the admin role gives administrator permissions back.",
+            "description" : "[DEOP] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "uptime" : {
+            "brief" : "check the bot's uptime",
+            "help" : "See the total time during which the bot has been in operation since its last restart.",
+            "description" : "[UPTIME] command",
+            "outputs" : [],
+            "weights" : []
         },
 
         "ignore" : {

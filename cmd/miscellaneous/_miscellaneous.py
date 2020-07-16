@@ -1,9 +1,8 @@
-"""Contains the Owner only cog"""
+"""Contains miscellaneous commands"""
 
+import json
 import botutils
 import traceback
-import json
-import globvars
 from discord.ext import commands
 
 with open('botutils/bot_text.json') as json_file: 
@@ -12,20 +11,15 @@ with open('botutils/bot_text.json') as json_file:
 error_str = language["system"]["error"]
 
 
-class Owner(commands.Cog, name="Owner-only Commands"):
-    """Owner commands cog"""
-    
+class Miscellaneous(commands.Cog, name = "༺ 𝕸𝖎𝖘𝖈𝖊𝖑𝖑𝖆𝖓𝖊𝖔𝖚𝖘 ༻"):
+    """Miscellaneous commands cog"""
+
     def __init__(self, client):
         self.client = client
 
-    @commands.command(
-        pass_context = True,
-        name = "eval"
-    )
-    @commands.is_owner()
-    async def cmd_eval(self, ctx, *, expression):
-        await ctx.send(botutils.make_code_block(eval(expression)))
-
+    def cog_check(self, ctx):
+        return botutils.check_if_not_ignored(ctx)
+    
     async def cog_command_error(self, ctx, error):
         """Error handling on commands"""
 
@@ -38,7 +32,3 @@ class Owner(commands.Cog, name="Owner-only Commands"):
             except Exception:
                 await ctx.send(error_str)
                 await botutils.log(botutils.Level.error, traceback.format_exc()) 
-
-
-def setup(client):
-    client.add_cog(Owner(client))

@@ -11,18 +11,6 @@ affiliated with them in any way.
 
 """
 
-# TODO
-# Night interactions (left from investigator)
-# Investigator minion bug fix
-# Night death string in day announcement.
-# Master states stability, inter-game state clearing, and safe starting
-# Instant replay
-# Revealroles command
-# Spy grimoire reminder tokens
-# Better logging system
-# Center text for townsquare
-
-
 import globvars
 import configparser
 import botc
@@ -63,7 +51,7 @@ if __name__ == "__main__":
     botc.load_pack(globvars.master_state)
     print(globvars.master_state.game_packs)
 
-    extensions = ["admin", "Fun", "Gameplay", "Info", "listeners", "Owner"]
+    extensions = ["admin", "Gameplay", "miscellaneous", "listeners"]
 
     # Loading command extensions
     print("===== LOADING COMMAND EXTENSIONS =====")

@@ -16,6 +16,7 @@ class BotEmoji:
     cross = emojis["cross"]
     gears = emojis["gears"]
     success = emojis["success"]
+    beating_heart = emojis["beating_heart"]
 
     # Plain emojis
     scroll = emojis["scroll"]
@@ -27,6 +28,9 @@ class BotEmoji:
     grimoire = emojis["grimoire"]
     hourglass = emojis["hourglass"]
     winner = emojis["winner"]
+    puppy = emojis["puppy"]
+    guillotine = emojis["guillotine"]
+    alarmclock = emojis["alarmclock"]
 
     # Unicode emojis
     skull = emojis["skull"]
