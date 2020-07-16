@@ -20,3 +20,8 @@ def init_client():
     """Initialize client. Must only be used by main.py"""
     global client
     client = None
+
+
+ratelimit_dict = dict()
+
+ignore_list = []

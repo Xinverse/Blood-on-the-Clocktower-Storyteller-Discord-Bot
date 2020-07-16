@@ -556,6 +556,13 @@ class Game(GameMeta):
       """
       # Send the lobby game conclusion message
       await self.send_lobby_closing_message()
+      # Remove roles
+      await botutils.remove_all_alive_dead_roles_after_game()
+      # Unload extensions
+      globvars.client.unload_extension("botc.commands.abilities")
+      globvars.client.unload_extension("botc.commands.townhall")
+      globvars.client.unload_extension("botc.commands.botc_debug_commands")
+      # Log the game
       await botutils.log(botutils.Level.info, "Game finished, to-do")
       # Clear the game object
       self.__init__()

@@ -1,35 +1,22 @@
-"""Contains event listeners"""
+"""Contains the on_command_error listener cog"""
 
-import json
 import sys
-import traceback
-import discord
 import botutils
+import json
+import traceback
 from discord.ext import commands
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
-restart_msg = language["system"]["restart"]
 
 
-class Listeners(commands.Cog):
-    """Event listeners"""
+class on_command_error(commands.Cog):
+    """Event listener on_command_error"""
     
     def __init__(self, client):
         self.client = client
-      
-    @commands.Cog.listener()
-    async def on_ready(self):
-        """On_ready event"""
-        
-        print(f"Logged in as {self.client.user.name}")
-        print(f"Bot ID {self.client.user.id}")
-        print("----------")
-        activity = discord.Activity(name='Blood on the Clocktower', type=discord.ActivityType.playing)
-        await self.client.change_presence(activity=activity)
-        await botutils.log(botutils.Level.info, restart_msg)
     
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -64,9 +51,16 @@ class Listeners(commands.Cog):
 
         else:
             # All other Errors not returned come here. And we can just print the default TraceBack.
-            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+            #print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+            #traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+
+            # Log the error
+            try:
+                raise error
+            except Exception:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc()) 
 
 
 def setup(client):
-    client.add_cog(Listeners(client))
+    client.add_cog(on_command_error(client))

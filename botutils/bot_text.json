@@ -13,7 +13,16 @@
         "fleave" : "**{}** was forced to leave the game. There are **{}** players remaining.",
         "fleaved" : "{} **{}** is already not in the game!",
         "time_pregame" : "There is **{}** left until the game is automatically cancelled. Lobby timeout is currently set to {}.",
-        "stats_pregame_header" : "{} players in lobby:"
+        "stats_pregame_header" : "{} players in lobby:",
+        "add_ignore" : "{} **{}** ({}) is added to the ignore list.",
+        "remove_ignore" : "{} **{}** ({}) is removed from the ignore list.",
+        "already_ignored" : "{} {} **{}** ({}) is already in the ignore list.",
+        "not_ignored" : "{} {} **{}** ({}) is not in the ignore list.",
+        "ignore_list_empty" : "The ignore list is empty.",
+        "people_total" : "**{}** {} total.",
+        "clear_ignore" : "{} Are you sure you want to clear the entire ignore list and delete all **{}** entrie(s)? Use `{}ignore clear --force` to proceed.",
+        "force_clear" : "{} The ignore list has been cleared. It is now empty.",
+        "ignore_sync" : "{} Purged **{}** user(s) not in server."
 
     },
 
@@ -102,14 +111,66 @@
                 0.01,
                 0.01
             ]
+        },
+
+        "ignore" : {
+
+            "ignore" : {
+                "brief" : "ignore or unignore a user",
+                "help" : "Add a user to the ignore list or remove a user from it. An ignored user can no longer invoke commands. Use the ignore feature to prevent abusive behaviour.",
+                "description" : "[IGNORE] command",
+                "outputs" : [],
+                "weights" : []
+            },
+    
+            "add" : {
+                "brief" : "add a user to the ignore list",
+                "help" : "Add a user to the ignore list . An ignored user can no longer invoke commands. Use the ignore feature to prevent abusive behaviour.",
+                "description" : "[IGNORE] [ADD] command",
+                "outputs" : [],
+                "weights" : []
+            },
+    
+            "remove" : {
+                "brief" : "remove a user from the ignore list",
+                "help" : "Remove a user from the ignore list. An ignored user can no longer invoke commands. Use the ignore feature to prevent abusive behaviour.",
+                "description" : "[IGNORE] [REMOVE] command",
+                "outputs" : [],
+                "weights" : []
+            },
+
+            "sync" : {
+                "brief" : "sync the ignore list",
+                "help" : "Remove users found in the ignore list that are not currently in the server.",
+                "description" : "[IGNORE] [CLEAR] command",
+                "outputs" : [],
+                "weights" : []
+            },
+
+            "clear" : {
+                "brief" : "clear the ignore list",
+                "help" : "Unignore all users found in the ignore list.",
+                "description" : "[IGNORE] [CLEAR] command",
+                "outputs" : [],
+                "weights" : []
+            },
+
+            "--force" : {
+                "brief" : "force flag for the clear subcommand",
+                "help" : "Force the clearing the entire ignore list.",
+                "description" : "[IGNORE] [CLEAR] [--FORCE] command",
+                "outputs" : [],
+                "weights" : []
+            }
+
         }
 
     },
 
     "errors" : {
 
-        "user_not_found" : "{} :x: Specified user is not found!",
-        "missing_user" : "{} :x: Missing argument, please specify a valid user!",
+        "user_not_found" : "{} :x: Specified user is not found.",
+        "missing_user" : "{} :x: Missing argument, please specify a valid user.",
         "cmd_cooldown" : "{} :x: This command is ratelimited."
 
         },
@@ -118,13 +179,14 @@
 
         "restart" : "Rebooted, powered on.",
         "error" : "An error occurred and has been logged.",
-        "lobby_timeout" : "{} The game has taken too long to start and has been cancelled!"
+        "lobby_timeout" : "{} The game has taken too long to start and has been cancelled!",
+        "ignore" : "{} You've used {} commands in the last {} seconds; I will ignore you from now on."
 
         },
 
     "formats" : {
 
-        "server_header": "Discord Werewolf Server"
+        "server_header": "Storyteller Bot by Xinverse"
 
     }
     

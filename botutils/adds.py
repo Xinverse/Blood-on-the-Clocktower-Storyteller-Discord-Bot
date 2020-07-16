@@ -54,10 +54,18 @@ async def remove_dead_role(member_obj):
 async def remove_all_alive_roles_pregame():
     """Remove the alive roles from all players during pre-game"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
-    import main
     for userid in globvars.master_state.pregame:
         member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(int(userid))
         await member_obj.remove_roles(role)
+
+
+async def remove_all_alive_dead_roles_after_game():
+    """Remove the alive and the dead roles from all players after the game is 
+    over.
+    """
+    for player in globvars.master_state.game.sitting_order:
+        await remove_alive_role(player.user)
+        await remove_dead_role(player.user)
 
 
 async def lock_lobby():

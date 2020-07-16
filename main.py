@@ -15,8 +15,9 @@ affiliated with them in any way.
 # Night interactions (left from investigator)
 # Investigator minion bug fix
 # Night death string in day announcement.
-# Master states stability and inter-game state clearing
-# Winning conditions and end game message
+# Master states stability, inter-game state clearing, and safe starting
+# Instant replay
+# Revealroles command
 # Spy grimoire reminder tokens
 # Better logging system
 # Center text for townsquare
@@ -25,6 +26,7 @@ affiliated with them in any way.
 import globvars
 import configparser
 import botc
+import botutils
 from discord.ext import commands
 
 
@@ -47,18 +49,21 @@ if __name__ == "__main__":
             return PREFIX
 
     globvars.client = commands.Bot(
-        command_prefix=command_prefix, 
-        owner_id=int(OWNER_ID), 
-        case_insensitive=True, 
-        description="Storyteller Bot"
+        command_prefix = command_prefix, 
+        owner_id = int(OWNER_ID), 
+        case_insensitive = True, 
+        description = "Storyteller Bot"
     )
+
+    globvars.client.add_check(botutils.check_if_not_ignored)
+    botutils.rate_limit_commands.start()
 
     # Loading game packs
     print("===== LOADING GAME PACKS =====")
     botc.load_pack(globvars.master_state)
     print(globvars.master_state.game_packs)
 
-    extensions = ["Admin", "Fun", "Gameplay", "Info", "listeners", "Owner"]
+    extensions = ["admin", "Fun", "Gameplay", "Info", "listeners", "Owner"]
 
     # Loading command extensions
     print("===== LOADING COMMAND EXTENSIONS =====")

@@ -89,7 +89,11 @@ def check_if_spec(ctx):
 
 def check_if_not_ignored(ctx):
     """Check the author of the context, return True if they are not ignored"""
-    return True
+    import globvars
+    if __is_admin(ctx):
+        return True
+    else:
+        return not ctx.author.id in globvars.ignore_list
 
 
 def return_false(ctx):
