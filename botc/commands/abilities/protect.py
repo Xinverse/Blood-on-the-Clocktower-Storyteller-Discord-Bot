@@ -18,7 +18,7 @@ with open('botc/game_text.json') as json_file:
     documentation = json.load(json_file)
 
 
-class Protect(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔄𝔟𝔦𝔩𝔦𝔱𝔦𝔢𝔰"):
+class Protect(commands.Cog, name = documentation["misc"]["abilities_cog"]):
     """BoTC in-game commands cog
     Protect command - used by monk
     """
@@ -36,7 +36,7 @@ class Protect(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍�
     @commands.command(
         pass_context = True, 
         name = "protect",
-        hidden = True,
+        hidden = False,
         brief = documentation["doc"]["protect"]["brief"],
         help = documentation["doc"]["protect"]["help"],
         description = documentation["doc"]["protect"]["description"]

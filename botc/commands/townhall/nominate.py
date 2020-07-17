@@ -19,7 +19,7 @@ with open('botc/game_text.json') as json_file:
     nominations_not_open = documentation["cmd_warnings"]["nominations_not_open"]
 
 
-class Nominate(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔱𝔬𝔴𝔫𝔥𝔞𝔩𝔩"):
+class Nominate(commands.Cog, name = documentation["misc"]["townhall_cog"]):
     """BoTC in-game commands cog
     Nominate command - used for execution
     """

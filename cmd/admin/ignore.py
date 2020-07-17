@@ -26,7 +26,7 @@ with open('botutils/bot_text.json') as json_file:
     ignore_sync = language["cmd"]["ignore_sync"]
     
 
-class Ignore(Admin, name = "༺ 𝕬𝖉𝖒𝖎𝖓𝖎𝖘𝖙𝖗𝖆𝖙𝖔𝖗 ༻"):
+class Ignore(Admin, name = language["system"]["admin_cog"]):
     """Ignore command"""
 
     @commands.group(

@@ -44,21 +44,21 @@
             "help" : "Leave city, leave reality! Enter lobby, enter fantasy!",
             "description" : "[JOIN] command",
             "outputs" : [
-                "**{}** is rereading the role list before claiming their role.  I'm sure they're innocent. The lobby now holds **{}** player(s).",
-                "**{}**, your role is **Server Owner**. Your role does nothing and you die immediately upon receiving it. The lobby now holds **{}** player(s).",
-                "Time is an illusion, my dear **{}**, and lunchtime doubly so. The lobby now holds **{}** player(s).",
-                "For a moment, nothing happened. Then, after a second or so, nothing continued to happen. Then, after another second, **{}** joined the game. The lobby now holds **{}** player(s).",
-                "**{}**... you're turning into a penguin. Stop it. The lobby now holds **{}** player(s).",
-                "**{}** was of the opinion that we'd all made a big mistake in coming down from the trees in the first place. The lobby now holds **{}** player(s).",
-                "'The answer is **{}**,' said Deep Thought, with infinite majesty and calm. The lobby now holds **{}** player(s).",
-                "Since **{}** decided a few weeks ago to adopt the leaf as legal tender, we have, of course, all become immensely rich. The lobby now holds **{}** player(s).",
-                "Nothing travels faster than the speed of light with the possible exception of bad news of **{}**'s arrival, which obeys its own special laws. The lobby now holds **{}** player(s).",
-                "In the beginning the Universe was created. This has made **{}** very angry and been widely regarded as a bad move. The lobby now holds **{}** player(s).",
-                "**{}**'s doctor says that they have a malformed public-duty gland and a natural deficiency in moral fibre, and that they are therefore excused from saving Universes. The lobby now holds **{}** player(s).",
-                "So long, **{}**, and thanks for all the fish. The lobby now holds **{}** player(s).",
-                "Listen, **{}**, don’t you try to outweird me, I get stranger things than you free with my breakfast cereal. The lobby now holds **{}** player(s).",
-                "**{}** discovered only a small asteroid inhabited by a solitary old man who claimed repeatedly that nothing was true, though he was later discovered to be lying. The lobby now holds **{}** player(s).",
-                "**{}** was staring at the instruments with the air of one who is trying to convert Fahrenheit to centigrade in his head while his house is burning down. The lobby now holds **{}** player(s)."
+                "**{}** is rereading the role list before claiming their role.  I'm sure they're innocent. The lobby now holds **{}** {}.",
+                "**{}**, your role is **Server Owner**. Your role does nothing and you die immediately upon receiving it. The lobby now holds **{}** {}.",
+                "Time is an illusion, my dear **{}**, and lunchtime doubly so. The lobby now holds **{}** {}.",
+                "For a moment, nothing happened. Then, after a second or so, nothing continued to happen. Then, after another second, **{}** joined the game. The lobby now holds **{}** {}.",
+                "**{}**... you're turning into a penguin. Stop it. The lobby now holds **{}** {}.",
+                "**{}** was of the opinion that we'd all made a big mistake in coming down from the trees in the first place. The lobby now holds **{}** {}.",
+                "'The answer is **{}**,' said Deep Thought, with infinite majesty and calm. The lobby now holds **{}** {}.",
+                "Since **{}** decided a few weeks ago to adopt the leaf as legal tender, we have, of course, all become immensely rich. The lobby now holds **{}** {}.",
+                "Nothing travels faster than the speed of light with the possible exception of bad news of **{}**'s arrival, which obeys its own special laws. The lobby now holds **{}** {}.",
+                "In the beginning the Universe was created. This has made **{}** very angry and been widely regarded as a bad move. The lobby now holds **{}** {}.",
+                "**{}**'s doctor says that they have a malformed public-duty gland and a natural deficiency in moral fibre, and that they are therefore excused from saving Universes. The lobby now holds **{}** {}.",
+                "So long, **{}**, and thanks for all the fish. The lobby now holds **{}** {}.",
+                "Listen, **{}**, don’t you try to outweird me, I get stranger things than you free with my breakfast cereal. The lobby now holds **{}** {}.",
+                "**{}** discovered only a small asteroid inhabited by a solitary old man who claimed repeatedly that nothing was true, though he was later discovered to be lying. The lobby now holds **{}** {}.",
+                "**{}** was staring at the instruments with the air of one who is trying to convert Fahrenheit to centigrade in his head while his house is burning down. The lobby now holds **{}** {}."
             ],
             "weights" : [
 
@@ -67,7 +67,7 @@
 
         "quit" : {
             "brief" : "quit a game",
-            "help" : "",
+            "help" : "Leave the game you are currently in.",
             "description" : "[QUIT] command",
             "outputs" : [
                ""
@@ -129,6 +129,30 @@
             "weights" : []
         },
 
+        "help" : {
+            "brief" : "show the help message",
+            "help" : "See a list of bot commands grouped by category, or read the documentation of a specified command.",
+            "description" : "[HELP] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "time" : {
+            "brief" : "check the time remaining in the lobby",
+            "help" : "See the time remaining until the lobby timeouts, i.e. when the lobby clears its waiting players.",
+            "description" : "[TIME] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "stats" : {
+            "brief" : "see a list players in the pre-game lobby",
+            "help" : "See a list of players who are currently in the lobby waiting for a game.",
+            "description" : "[STATS] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
         "op" : {
             "brief" : "grant the admin role",
             "help" : "Removing the admin role allows server admins to participate in gaming sessions without being able to see game logs. Adding the admin role gives administrator permissions back.",
@@ -141,6 +165,14 @@
             "brief" : "remove the admin role",
             "help" : "Removing the admin role allows server admins to participate in gaming sessions without being able to see game logs. Adding the admin role gives administrator permissions back.",
             "description" : "[DEOP] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "role" : {
+            "brief" : "look up a role's documentation",
+            "help" : "Read the detailed documentation card of a specified role. When invoked without arguments, show the full list of roles from loaded game packs.",
+            "description" : "[ROLE] command",
             "outputs" : [],
             "weights" : []
         },
@@ -220,7 +252,11 @@
         "restart" : "Rebooted, powered on.",
         "error" : "An error occurred and has been logged.",
         "lobby_timeout" : "{} The game has taken too long to start and has been cancelled!",
-        "ignore" : "{} You've used {} commands in the last {} seconds; I will ignore you from now on."
+        "ignore" : "{} You've used {} commands in the last {} seconds; I will ignore you from now on.",
+        "others_cog" : "༺ 𝕺𝖙𝖍𝖊𝖗𝖘 ༻",
+        "admin_cog" : "༺ 𝕬𝖉𝖒𝖎𝖓𝖎𝖘𝖙𝖗𝖆𝖙𝖔𝖗 ༻",
+        "miscellaneous_cog" : "༺ 𝕸𝖎𝖘𝖈𝖊𝖑𝖑𝖆𝖓𝖊𝖔𝖚𝖘 ༻",
+        "gameplay_cog" : "༺ 𝕲𝖆𝖒𝖊𝖕𝖑𝖆𝖞 ༻"
 
         },
 

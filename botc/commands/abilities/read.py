@@ -18,7 +18,7 @@ with open('botc/game_text.json') as json_file:
     documentation = json.load(json_file)
 
 
-class Read(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔄𝔟𝔦𝔩𝔦𝔱𝔦𝔢𝔰"):
+class Read(commands.Cog, name = documentation["misc"]["abilities_cog"]):
     """BoTC in-game commands cog
     Read command - used by fortune teller
     """
@@ -36,7 +36,7 @@ class Read(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 
     @commands.command(
         pass_context = True, 
         name = "read",
-        hidden = True,
+        hidden = False,
         brief = documentation["doc"]["read"]["brief"],
         help = documentation["doc"]["read"]["help"],
         description = documentation["doc"]["read"]["description"]

@@ -9,7 +9,7 @@ with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 
-class Deop(Admin, name = "༺ 𝕬𝖉𝖒𝖎𝖓𝖎𝖘𝖙𝖗𝖆𝖙𝖔𝖗 ༻"):
+class Deop(Admin, name = language["system"]["admin_cog"]):
     """Deop command"""
 
     @commands.command(

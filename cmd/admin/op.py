@@ -9,7 +9,7 @@ with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 
-class Op(Admin, name = "༺ 𝕬𝖉𝖒𝖎𝖓𝖎𝖘𝖙𝖗𝖆𝖙𝖔𝖗 ༻"):
+class Op(Admin, name = language["system"]["admin_cog"]):
     """Op command"""
 
     @commands.command(

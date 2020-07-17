@@ -10,7 +10,7 @@ with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 
-class Dog(Miscellaneous, name = "༺ 𝕸𝖎𝖘𝖈𝖊𝖑𝖑𝖆𝖓𝖊𝖔𝖚𝖘 ༻"):
+class Dog(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Dog command"""
 
     @commands.command(

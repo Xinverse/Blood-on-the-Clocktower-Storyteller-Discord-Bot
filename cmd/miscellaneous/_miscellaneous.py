@@ -11,7 +11,7 @@ with open('botutils/bot_text.json') as json_file:
 error_str = language["system"]["error"]
 
 
-class Miscellaneous(commands.Cog, name = "༺ 𝕸𝖎𝖘𝖈𝖊𝖑𝖑𝖆𝖓𝖊𝖔𝖚𝖘 ༻"):
+class Miscellaneous(commands.Cog, name = language["system"]["miscellaneous_cog"]):
     """Miscellaneous commands cog"""
 
     def __init__(self, client):

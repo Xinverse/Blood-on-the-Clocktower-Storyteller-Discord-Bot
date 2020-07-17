@@ -11,7 +11,7 @@ with open('botutils/bot_text.json') as json_file:
 github_str = language["cmd"]["github"]
 
 
-class Github(Miscellaneous, name = "༺ 𝕸𝖎𝖘𝖈𝖊𝖑𝖑𝖆𝖓𝖊𝖔𝖚𝖘 ༻"):
+class Github(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
 
     @commands.command(
         pass_context=True, 

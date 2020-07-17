@@ -13,7 +13,7 @@ missing_user_str = language["errors"]["missing_user"]
 error_str = language["system"]["error"]
 
 
-class Admin(commands.Cog, name = "༺ 𝕬𝖉𝖒𝖎𝖓𝖎𝖘𝖙𝖗𝖆𝖙𝖔𝖗 ༻"):
+class Admin(commands.Cog, name = language["system"]["admin_cog"]):
     """Admins only commands cog"""
     
     def __init__(self, client):

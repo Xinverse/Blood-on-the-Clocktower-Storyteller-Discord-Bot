@@ -11,7 +11,7 @@ with open('botutils/bot_text.json') as json_file:
 ping_str = language["cmd"]["ping"]
 
 
-class Ping(Miscellaneous, name = "༺ 𝕸𝖎𝖘𝖈𝖊𝖑𝖑𝖆𝖓𝖊𝖔𝖚𝖘 ༻"):
+class Ping(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Ping command"""
 
     @commands.command(

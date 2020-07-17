@@ -18,7 +18,7 @@ with open('botc/game_text.json') as json_file:
     cooldown = documentation["cmd_warnings"]["cooldown"]
 
 
-class Townsquare(commands.Cog, name = "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔱𝔬𝔴𝔫𝔥𝔞𝔩𝔩"):
+class Townsquare(commands.Cog, name = documentation["misc"]["townhall_cog"]):
     """BoTC in-game commands cog
     Townsquare command - used for viewing the townsquare image
     """

@@ -14,6 +14,7 @@ affiliated with them in any way.
 import globvars
 import configparser
 import botc
+import json
 import botutils
 from discord.ext import commands
 
@@ -36,11 +37,31 @@ if __name__ == "__main__":
         else:
             return PREFIX
 
+    # The help command
+    with open('botutils/bot_text.json') as json_file: 
+        language = json.load(json_file)
+
+    help_command = commands.DefaultHelpCommand(
+        verify_checks = False, 
+        show_hidden = False,
+        dm_help = None,
+        dm_help_threshold = 700,
+        no_category = language["system"]["others_cog"],
+        command_attrs = {
+            "brief" : language["doc"]["help"]["brief"],
+            "help" : language["doc"]["help"]["help"],
+            "description" : language["doc"]["help"]["description"]
+        }
+    )
+
+    # The bot
     globvars.client = commands.Bot(
         command_prefix = command_prefix, 
         owner_id = int(OWNER_ID), 
         case_insensitive = True, 
-        description = "Storyteller Bot"
+        description = "〘 Blood on the Clocktower Storyteller Bot 〙 - by Xinverse#4011",
+        paginator = commands.Paginator(),
+        help_command = help_command
     )
 
     globvars.client.add_check(botutils.check_if_not_ignored)
@@ -51,7 +72,7 @@ if __name__ == "__main__":
     botc.load_pack(globvars.master_state)
     print(globvars.master_state.game_packs)
 
-    extensions = ["admin", "Gameplay", "miscellaneous", "listeners"]
+    extensions = ["admin", "gameplay", "miscellaneous", "listeners"]
 
     # Loading command extensions
     print("===== LOADING COMMAND EXTENSIONS =====")

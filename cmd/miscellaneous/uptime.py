@@ -13,7 +13,7 @@ with open('botutils/bot_text.json') as json_file:
 uptime_str = language["cmd"]["uptime"]
 
 
-class Uptime(Miscellaneous, name = "༺ 𝕸𝖎𝖘𝖈𝖊𝖑𝖑𝖆𝖓𝖊𝖔𝖚𝖘 ༻"):
+class Uptime(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Uptime command"""
 
     @commands.command(
