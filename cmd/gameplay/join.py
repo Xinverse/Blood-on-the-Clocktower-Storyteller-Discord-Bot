@@ -6,7 +6,7 @@ import random
 import traceback
 from discord.ext import commands
 from ._gameplay import Gameplay
-from botutils import after_lobby_timeout, lobby_timeout
+from botutils import lobby_timeout
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)

@@ -4,7 +4,7 @@ import botutils
 import json
 import traceback
 from discord.ext import commands
-from ._gameplay import Gameplay
+from ._miscellaneous import Miscellaneous
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
@@ -12,7 +12,7 @@ with open('botutils/bot_text.json') as json_file:
 error_str = language["system"]["error"]
 
 
-class Role(Gameplay, name = language["system"]["gameplay_cog"]):
+class Role(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Role command cog"""
 
     @commands.command(

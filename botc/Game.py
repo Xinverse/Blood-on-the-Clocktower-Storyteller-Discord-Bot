@@ -45,6 +45,12 @@ DEMON_COLOR = Config["colors"]["DEMON_COLOR"]
 TOWNSFOLK_COLOR = int(TOWNSFOLK_COLOR, 16)
 DEMON_COLOR = int(DEMON_COLOR, 16)
 
+CONFLICTING_CMDS = [
+
+   "cmd.gameplay"
+
+]
+
 random.seed(datetime.datetime.now())
 
 with open('botc/game_text.json') as json_file: 
@@ -422,6 +428,9 @@ class Game(GameMeta):
          await player.role.ego_self.send_opening_dm_embed(player.user)
       # Log the game data
       await GameLog(self).send_game_obj_log_str()
+      # Unload conflicting commands
+      for extension in CONFLICTING_CMDS:
+         globvars.client.unload_extension(extension)
       # Load game related commands
       globvars.client.load_extension("botc.commands.abilities")
       globvars.client.load_extension("botc.commands.townhall")
@@ -562,6 +571,9 @@ class Game(GameMeta):
       globvars.client.unload_extension("botc.commands.abilities")
       globvars.client.unload_extension("botc.commands.townhall")
       globvars.client.unload_extension("botc.commands.botc_debug_commands")
+      # Load conflicting commands
+      for extension in CONFLICTING_CMDS:
+         globvars.client.load_extension(extension)
       # Log the game
       await botutils.log(botutils.Level.info, "Game finished, to-do")
       # Clear the game object
@@ -691,4 +703,4 @@ class Game(GameMeta):
         globvars.logging.info(f"Sitting Order {str(self._sitting_order)}")
     
    def __repr__(self):
-      return "BOTC Game Object"
+      return "Blood on the Clocktower"

@@ -3,6 +3,7 @@ from .ping import Ping
 from .uptime import Uptime
 from .dog import Dog
 from .coin import Coin
+from .role import Role
 
 def setup(client):
     client.add_cog(Github(client))
@@ -10,3 +11,4 @@ def setup(client):
     client.add_cog(Uptime(client))
     client.add_cog(Dog(client))
     client.add_cog(Coin(client))
+    client.add_cog(Role(client))

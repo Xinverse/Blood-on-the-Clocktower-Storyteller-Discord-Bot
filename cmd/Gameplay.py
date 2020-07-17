@@ -45,15 +45,6 @@ class Gamplay(commands.Cog, name="Gameplay Commands"):
         """Global check for all commands of this cog: ignored users may not use commands"""
         
         return botutils.check_if_not_ignored(ctx)
-
-    
-    # ---------- START COMMAND ----------------------------------------
-    @commands.command(pass_context=True, name = "fstart")
-    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
-    async def fstart(self, ctx):
-        """Force start command"""
-        globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]
-        await globvars.master_state.game.start_game()
     
 
     # ---------- PLAYTEST COMMAND ----------------------------------------

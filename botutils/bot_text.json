@@ -129,6 +129,30 @@
             "weights" : []
         },
 
+        "fstart" : {
+            "brief" : "force the game to start",
+            "help" : "Force the game to start by bypassing the voting process needed to start a game.",
+            "description" : "[FSTART] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "fleave" : {
+            "brief" : "force a player to join",
+            "help" : "Remove a player from the lobby.",
+            "description" : "[FLEAVE] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "fjoin" : {
+            "brief" : "force a player to leave",
+            "help" : "Add a player to the lobby.",
+            "description" : "[FJOIN] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
         "help" : {
             "brief" : "show the help message",
             "help" : "See a list of bot commands grouped by category, or read the documentation of a specified command.",
@@ -243,7 +267,10 @@
 
         "user_not_found" : "{} :x: Specified user is not found.",
         "missing_user" : "{} :x: Missing argument, please specify a valid user.",
-        "cmd_cooldown" : "{} :x: This command is ratelimited."
+        "cmd_cooldown" : "{} :x: This command is ratelimited.",
+        "fstart_min" : "{} {} The currently selected game is **{}**, with a **minimum** of **{}** players. You may not start the game until the minimum player count is reached.",
+        "fstart_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby to run this game.",
+        "fjoin_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby."
 
         },
 

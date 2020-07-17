@@ -25,15 +25,16 @@ class Admin(commands.Cog, name = language["system"]["admin_cog"]):
     async def cog_command_error(self, ctx, error):
         """Error handling on command"""
 
+        # Case: check failure
+        if isinstance(error, commands.CheckFailure):
+            return
         # Case: bad argument (user not found)
-        if isinstance(error, commands.BadArgument):
+        elif isinstance(error, commands.BadArgument):
             await ctx.send(user_not_found_str.format(ctx.author.mention))
             return
         # Case: missing required argument (user not specified)
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(missing_user_str.format(ctx.author.mention))
-            return
-        elif isinstance(error, commands.CheckFailure):
             return
         else:
             try:
