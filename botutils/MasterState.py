@@ -26,7 +26,10 @@ class PregameState(State):
         master.transition_to_pregame()
     
     def update(self, master):
-        if master.pregame.is_empty():
+        if master.game:
+            master.transition_to_game()
+            return GameState()
+        elif master.pregame.is_empty():
             master.transition_to_empty()
             return EmptyState()
         else:
@@ -43,7 +46,11 @@ class GameState(State):
         master.transition_to_game()
     
     def update(self, master):
-        return GameState()
+        if master.game:
+            return GameState()
+        else:
+            master.transition_to_empty()
+            return EmptyState()
 
 
 class EmptyState(State):
@@ -144,6 +151,9 @@ class MasterState:
         self.game = None
     
     def transition_to_game(self):
+        import botutils
+        if botutils.lobby_timeout.is_running():
+            botutils.lobby_timeout.cancel()
         self._session = BotState.game
         self.pregame.clear()
     

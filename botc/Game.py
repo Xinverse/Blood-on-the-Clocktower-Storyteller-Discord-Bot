@@ -578,8 +578,11 @@ class Game(GameMeta):
       await botutils.log(botutils.Level.info, "Game finished, to-do")
       # Clear the game object
       self.__init__()
+      globvars.master_state.game = None
       # Unlock the lobby channel
       await botutils.unlock_lobby()
+      # Update the global state
+      botutils.update_state_machine()
 
    async def make_nightfall(self):
       """Transition the game into night phase"""
