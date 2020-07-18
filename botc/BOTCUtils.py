@@ -1,9 +1,10 @@
 """Contains some BoTC game related utility functions"""
 
+import asyncio
 import json
 import random
 from .Category import Category
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
@@ -412,4 +413,11 @@ class LorePicker:
          weights = lore[category]["weights"]
       )
       return chosen[0]
-      
+
+
+@tasks.loop(count = 1)
+async def showing_grimoire(sleeptime, message):
+   """Show the grimoire to the spy during the specified time. Then delete it."""
+   await asyncio.sleep(sleeptime)
+   await message.delete()
+   

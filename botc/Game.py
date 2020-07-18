@@ -321,7 +321,7 @@ class Game(GameMeta):
          role_list_str = ""
          for player in self.sitting_order:
             short = "{} **{}** was the {} **{}**".format(
-               botutils.BotEmoji.winner if player.role.true_self.is_good() else "---",
+               botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
                player.user.mention, 
                player.role.true_self.emoji, 
                player.role.true_self.name
@@ -348,7 +348,7 @@ class Game(GameMeta):
          role_list_str = ""
          for player in self.sitting_order:
             short = role_reveal.format(
-               botutils.BotEmoji.winner if player.role.true_self.is_evil() else "---",
+               botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
                player.user.mention, 
                player.role.true_self.emoji, 
                player.role.true_self.name
@@ -595,6 +595,9 @@ class Game(GameMeta):
       embed.set_image(url = nightfall_image)
       embed.timestamp = datetime.datetime.utcnow()
       await botutils.send_lobby(message = "", embed = embed)
+      # Reset the nomination data for the previous day phase
+      for player in self.sitting_order:
+         player.reset_nomination()
    
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""

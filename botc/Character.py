@@ -366,7 +366,7 @@ class Character:
         """
         pass
 
-    async def on_nomination(self, nominator_player, nominated_player):
+    async def on_being_nominated(self, nominator_player, nominated_player):
         """Function that runs after the player is nominated.
         Override by child classes and/or other classes inherited by child classes.
         """

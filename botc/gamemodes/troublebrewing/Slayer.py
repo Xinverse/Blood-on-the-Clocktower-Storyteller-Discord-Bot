@@ -9,7 +9,7 @@ import botutils
 import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
-    character_text = json.load(json_file)[TBRole.slayer.value.lower()]   
+    character_text = json.load(json_file)[TBRole.slayer.value.lower()] 
 
 
 class Slayer(Townsfolk, TroubleBrewing, Character, NonRecurringAction):

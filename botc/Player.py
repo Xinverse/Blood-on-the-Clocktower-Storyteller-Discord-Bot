@@ -23,6 +23,29 @@ class Player:
         self.action_grid = ActionGrid()  # ActionGrib object
         self._status_effects = []  # List object
         self.ghost_vote = 1
+        self.has_nominated = False
+        self.was_nominated = False
+    
+    def toggle_has_nominated(self):
+        """The player has nominated a person."""
+        self.has_nominated = True
+    
+    def can_nominate(self):
+        """Can this player nominate?"""
+        return not self.has_nominated
+    
+    def toggle_was_nominated(self):
+        """The player has been nominated"""
+        self.was_nominated = True
+    
+    def can_be_nominated(self):
+        """Can this player be nominated?"""
+        return not self.was_nominated
+    
+    def reset_nomination(self):
+        """Call this function at the end of each day to reset nomination data"""
+        self.has_nominated = False
+        self.was_nominated = False
     
     async def exec_change_role(self, new_role):
         """Change the player's old role to a new role"""

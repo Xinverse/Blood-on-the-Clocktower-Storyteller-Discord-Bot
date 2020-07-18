@@ -4,6 +4,7 @@ from .deop import Deop
 from .fstart import Fstart
 from .fjoin import Fjoin
 from .fleave import Fleave
+from .playtest import Playtest
 
 def setup(client):
     client.add_cog(Ignore(client))
@@ -12,3 +13,4 @@ def setup(client):
     client.add_cog(Fstart(client))
     client.add_cog(Fjoin(client))
     client.add_cog(Fleave(client))
+    client.add_cog(Playtest(client))

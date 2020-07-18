@@ -5,7 +5,7 @@ import random
 import discord
 import asyncio
 import datetime
-from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction
+from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction, showing_grimoire
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -17,7 +17,7 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
     spy_nightly = strings["gameplay"]["spy_nightly"]
 
-GRIMOIRE_SHOW_TIME = 30
+GRIMOIRE_SHOW_TIME = 40
 
 
 class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
@@ -84,13 +84,11 @@ class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
     
     def set_new_social_self(self, player):
         """Social self: what the other players think he is.
-        The spy may register as a townsfolk, an outsider, or as spy. If dead, the spy will 
-        register as spy.
+        The spy may register as a townsfolk, an outsider, or as spy, even if dead.
         """
 
-        # Use the real player life/death here. If the player is alive, the spy may register
-        # as good, or as spy.
-        if player.is_alive():
+        # The spy may register as good, or as spy, even if dead, except when poisoned
+        if not player.is_droisoned():
             possibilities = [role_class() for role_class in TroubleBrewing.__subclasses__() 
                             if issubclass(role_class, Townsfolk) or issubclass(role_class, Outsider)]
             possibilities.append(Spy())
@@ -98,7 +96,7 @@ class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
             chosen = random.choice(possibilities)
             self._social_role = chosen
             globvars.logging.info(f">>> Spy [social_self] Registered as {chosen}.")
-        # If the player is dead, the spy will register as spy.
+
         else:
             self._social_role = Spy()
             globvars.logging.info(f">>> Spy [social_self] Registered as {Spy()}.")
@@ -128,8 +126,8 @@ class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
         except discord.Forbidden:
             pass
         else:
-            await asyncio.sleep(GRIMOIRE_SHOW_TIME)
-            await grimoire.delete()
+            # Wait for the duration and then delete the grimoire
+            showing_grimoire.start(GRIMOIRE_SHOW_TIME, grimoire)
     
     async def send_n1_end_message(self, recipient):
         """Send the spy grimoire"""

@@ -6,6 +6,7 @@ import enum
 class Flags(enum.Enum):
 
     slayer_unique_attempt = "slayer_unique_attempt"
+    virgin_first_nomination = "virgin_first_nomination"
 
 
 class Inventory:

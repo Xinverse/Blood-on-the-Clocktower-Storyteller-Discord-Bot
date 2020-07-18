@@ -170,6 +170,8 @@
 
     "gameplay" : {
 
+        "cannot_be_nominated_again" : "{} {} {} cannot be nominated, because they have been nominated once today already.",
+        "cannot_nominate_again" : "{} {} You cannot nominate more than once per day.",
         "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
         "welcome_dm" : "**𝖂𝖊𝖑𝖈𝖔𝖒𝖊 𝖙𝖔 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗**",
         "nightfall" : "It is currently **𝖓𝖎𝖌𝖍𝖙𝖙𝖎𝖒𝖊**.",

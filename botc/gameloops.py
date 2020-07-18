@@ -75,6 +75,7 @@ async def nomination_loop(game, nominator, nominated):
     A vote results in an execution if the number of votes equals or exceeds 
     half the number of alive players.
     """
+    
     intro_msg = nomination_intro.format(
         botutils.BotEmoji.demonhead,
         botutils.make_alive_ping(),

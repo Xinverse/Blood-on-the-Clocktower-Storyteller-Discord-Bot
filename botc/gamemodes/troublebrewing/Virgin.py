@@ -1,7 +1,7 @@
 """Contains the Virgin Character class"""
 
 import json 
-from botc import Townsfolk, Character, NonRecurringAction
+from botc import Townsfolk, Character, NonRecurringAction, Inventory, Flags
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -53,6 +53,10 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._role_enum = TBRole.virgin
         self._emoji = "<:virgin:722687299363667988>"
 
+        self.inventory = Inventory(
+            Flags.virgin_first_nomination
+        )
+
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
 
@@ -68,3 +72,14 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
+    
+    async def on_being_nominated(self, nominator_player, nominated_player):
+        """Function that runs after the player is nominated.
+        Override the parent Character class' implementation which is to do nothing.
+        """
+
+        assert nominated_player.role.true_self.name == self.name, \
+            f"The nominated player's role is {nominated_player.role.true_self.name} instead of Virgin"
+        
+        if not nominated_player.is_droisoned():
+            pass

@@ -14,6 +14,23 @@ with open('botutils/bot_text.json') as json_file:
 joined_str = language["cmd"]["joined"]
 error_str = language["system"]["error"]
 
+emojis = [
+    botutils.BotEmoji.char1,
+    botutils.BotEmoji.char2,
+    botutils.BotEmoji.char3,
+    botutils.BotEmoji.char4,
+    botutils.BotEmoji.char5,
+    botutils.BotEmoji.char6,
+    botutils.BotEmoji.char7,
+    botutils.BotEmoji.char8,
+    botutils.BotEmoji.char9,
+    botutils.BotEmoji.char10,
+    botutils.BotEmoji.char11,
+    botutils.BotEmoji.char12,
+    botutils.BotEmoji.char13,
+    botutils.BotEmoji.char14
+]
+
 
 class Join(Gameplay, name = language["system"]["gameplay_cog"]):
     """Join command cog"""
@@ -53,7 +70,10 @@ class Join(Gameplay, name = language["system"]["gameplay_cog"]):
             else:
                 join_str = random.choice(join_replies)
 
-            msg = join_str.format(
+            emoji = random.choice(emojis)
+            msg = emoji
+            msg += " "
+            msg += join_str.format(
                 ctx.author.name, 
                 len(globvars.master_state.pregame),
                 "player" if len(globvars.master_state.pregame) else "players"
