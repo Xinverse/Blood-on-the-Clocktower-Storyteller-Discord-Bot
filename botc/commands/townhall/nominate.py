@@ -17,8 +17,8 @@ with open('botc/game_text.json') as json_file:
     documentation = json.load(json_file)
     nomination_ongoing = documentation["cmd_warnings"]["nomination_ongoing"]
     nominations_not_open = documentation["cmd_warnings"]["nominations_not_open"]
-    cannot_be_nominated_again = documentation["cmd_warnings"]["cannot_be_nominated_again"]
-    cannot_nominate_again = documentation["cmd_warnings"]["cannot_nominate_again"]
+    cannot_be_nominated_again = documentation["gameplay"]["cannot_be_nominated_again"]
+    cannot_nominate_again = documentation["gameplay"]["cannot_nominate_again"]
 
 
 class Nominate(commands.Cog, name = documentation["misc"]["townhall_cog"]):

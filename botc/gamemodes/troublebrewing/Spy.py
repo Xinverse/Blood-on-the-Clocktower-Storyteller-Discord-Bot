@@ -4,10 +4,17 @@ import json
 import random
 import discord
 import asyncio
+import configparser
 import datetime
 from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction, showing_grimoire
 from ._utils import TroubleBrewing, TBRole
 import globvars
+
+Config = configparser.ConfigParser()
+Config.read("preferences.INI")
+
+GRIMOIRE_SHOW_TIME = Config["botc"]["GRIMOIRE_SHOW_TIME"]
+GRIMOIRE_SHOW_TIME = int(GRIMOIRE_SHOW_TIME)
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.spy.value.lower()]
@@ -16,8 +23,6 @@ with open('botc/game_text.json') as json_file:
     strings = json.load(json_file)
     copyrights_str = strings["misc"]["copyrights"]
     spy_nightly = strings["gameplay"]["spy_nightly"]
-
-GRIMOIRE_SHOW_TIME = 40
 
 
 class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):

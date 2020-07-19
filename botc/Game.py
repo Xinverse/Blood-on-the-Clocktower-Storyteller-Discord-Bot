@@ -576,6 +576,18 @@ class Game(GameMeta):
          globvars.client.load_extension(extension)
       # Log the game
       await botutils.log(botutils.Level.info, "Game finished, to-do")
+      # Stop various loops from running
+      from botc import showing_grimoire, delete_whisper_after
+      from botc.gameloops import nomination_loop
+      # Stop the nomination loop if it is running
+      if nomination_loop.is_running():
+         nomination_loop.cancel()
+      # Stop the grimoire showing loop if it is running
+      if showing_grimoire.is_running():
+         showing_grimoire.cancel()
+      # Stop the whisper annoucement loop if it is running
+      if delete_whisper_after.is_running():
+         delete_whisper_after.cancel()
       # Clear the game object
       self.__init__()
       globvars.master_state.game = None

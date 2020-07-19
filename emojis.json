@@ -34,6 +34,10 @@
     "char12" : "<a:char12:734101540586913792>",
     "char13" : "<a:char13:734101540448501931>",
     "char14" : "<a:char14:734101540176134165>",
+    "whisper" : "<:whisper:734201408181501982>",
+    "unread_message" : "<:unread_message:734201328246456420>",
+    "opened_letter" : "<:opened_letter:734201328133341225>",
+    "warning_sign" : "<:warning_sign:734221894055886940>",
     "skull" : "💀",
     "fquit" : "❌",
     "vote" : "🗳️"

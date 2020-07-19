@@ -3,9 +3,16 @@
 import traceback
 import json
 import discord
+import configparser
 import botutils
 from botc import Townsquare as TownsquareImage
 from discord.ext import commands
+
+Config = configparser.ConfigParser()
+Config.read("preferences.INI")
+
+TOWNSQUARE_COOLDOWN = Config["botc"]["TOWNSQUARE_COOLDOWN"]
+TOWNSQUARE_COOLDOWN = int(TOWNSQUARE_COOLDOWN)
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
@@ -44,7 +51,7 @@ class Townsquare(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         help = documentation["doc"]["townsquare"]["help"],
         description = documentation["doc"]["townsquare"]["description"]
     )
-    @commands.cooldown(1, 60, commands.BucketType.channel)
+    @commands.cooldown(1, TOWNSQUARE_COOLDOWN, commands.BucketType.channel)
     async def townsquare(self, ctx):
         """Townsquare command
         usage: townsquare

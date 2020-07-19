@@ -2,9 +2,16 @@
 
 import asyncio
 import json
+import configparser
 import random
 from .Category import Category
 from discord.ext import commands, tasks
+
+Config = configparser.ConfigParser()
+Config.read("config.INI")
+
+MAX_MESSAGE_LEN = Config["misc"]["MAX_MESSAGE_LEN"]
+MAX_MESSAGE_LEN = int(MAX_MESSAGE_LEN)
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
@@ -151,9 +158,13 @@ class BOTCUtils:
 # ========== CHECK ERRORS ==========================================================
 # ----------------------------------------------------------------------------------
 
+class WhisperTooLong(commands.CommandInvokeError):
+   """Raised when a command user tries to whisper a message that is too long"""
+   pass
+
 class NotAPlayer(commands.CheckFailure):
-    """Raised when a command user is not a registered player"""
-    pass
+   """Raised when a command user is not a registered player"""
+   pass
 
 
 class RoleCannotUseCommand(commands.CheckFailure):
@@ -353,6 +364,16 @@ class PlayerConverter(commands.Converter):
       raise PlayerNotFound(f"Player {argument} not found.")
 
 
+class WhisperConverter(commands.Converter):
+   """Parse the whisper content"""
+
+   async def convert(self, ctx, argument):
+      """Convert to a string while also checking for the maximum length"""
+      if len(argument) > max(MAX_MESSAGE_LEN - 120, 0):
+         raise WhisperTooLong("Whisper is too long")
+      return argument
+
+
 class RoleConverter(commands.Converter):
     """Convert a role name to a botc character class"""
 
@@ -418,6 +439,13 @@ class LorePicker:
 @tasks.loop(count = 1)
 async def showing_grimoire(sleeptime, message):
    """Show the grimoire to the spy during the specified time. Then delete it."""
+   await asyncio.sleep(sleeptime)
+   await message.delete()
+
+
+@tasks.loop(count = 1)
+async def delete_whisper_after(sleeptime, message):
+   """Show the whisper annoucement during the specified time. Then delete it."""
    await asyncio.sleep(sleeptime)
    await message.delete()
    

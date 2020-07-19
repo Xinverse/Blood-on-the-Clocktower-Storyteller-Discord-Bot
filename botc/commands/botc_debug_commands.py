@@ -118,15 +118,20 @@ class BoTCDebugCommands(commands.Cog, name = "BoTC debug commands"):
     async def fstop(self, ctx):
         """Fstop command"""
 
-        # Stop the nomination loop if it is running
+        from botc import showing_grimoire, delete_whisper_after
         from botc.gameloops import nomination_loop
+
+        # Stop the nomination loop if it is running
         if nomination_loop.is_running():
             nomination_loop.cancel()
         
         # Stop the grimoire showing loop if it is running
-        from botc import showing_grimoire
         if showing_grimoire.is_running():
             showing_grimoire.cancel()
+        
+        # Stop the whisper annoucement loop if it is running
+        if delete_whisper_after.is_running():
+            delete_whisper_after.cancel()
         
         # Stop the gameplay loop if it is running
         import globvars

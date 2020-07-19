@@ -46,6 +46,10 @@ class BotEmoji:
     puppy = emojis["puppy"]
     guillotine = emojis["guillotine"]
     alarmclock = emojis["alarmclock"]
+    whisper = emojis["whisper"]
+    unread_message = emojis["unread_message"]
+    opened_letter = emojis["opened_letter"]
+    warning_sign = emojis["warning_sign"]
 
     # Unicode emojis
     skull = emojis["skull"]
