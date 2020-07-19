@@ -4,11 +4,11 @@ import botutils
 import traceback
 import discord
 import json
+import asyncio
 import configparser
 from discord.ext import commands
 from botc import check_if_is_player, check_if_dm, check_if_is_day, PlayerConverter, \
-    NotDMChannel, NotAPlayer, NotDay, WhisperConverter, WhisperTooLong, BOTCUtils, \
-    delete_whisper_after
+    NotDMChannel, NotAPlayer, NotDay, WhisperConverter, WhisperTooLong, BOTCUtils
 
 Config = configparser.ConfigParser()
 Config.read("preferences.INI")
@@ -84,7 +84,8 @@ class Whisper(commands.Cog, name = documentation["misc"]["townhall_cog"]):
                 recipient.game_nametag,
             )
             lobby_message = await botutils.send_lobby(announcement_msg)
-            delete_whisper_after.start(WHISPER_SHOW_TIME, lobby_message)
+            await asyncio.sleep(WHISPER_SHOW_TIME)
+            await lobby_message.delete()
             
     @whisper.error
     async def whisper_error(self, ctx, error):

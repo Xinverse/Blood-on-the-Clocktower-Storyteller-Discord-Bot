@@ -10,7 +10,8 @@
         "scripts" : "https://rebrand.ly/TBscript\nhttps://rebrand.ly/SVscript\nhttps://rebrand.ly/BMRscript",
         "social_medias" : "<:facebook:724126325501329509> Facebook: https://www.facebook.com/BloodOnTheClocktower/\n<:youtube:724126365443555348> YouTube: https://www.youtube.com/channel/UCVmPTpM355K0dXW4MbF_R6Q\n<:twitter:724126365443424277> Twitter: https://twitter.com/bloodclocktower?lang=en\n<:reddit:724126365481435187> Reddit: https://www.reddit.com/r/BloodOnTheClocktower/",
         "abilities_cog" : "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔄𝔟𝔦𝔩𝔦𝔱𝔦𝔢𝔰",
-        "townhall_cog" : "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔱𝔬𝔴𝔫𝔥𝔞𝔩𝔩"
+        "townhall_cog" : "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔗𝔬𝔴𝔫𝔥𝔞𝔩𝔩",
+        "debug_cog" :  "༺ 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 ༻ 𝔇𝔢𝔟𝔲𝔤"
 
     },
 
@@ -164,14 +165,14 @@
             "weights" : [
 
             ]
-        }
+        },
+
+        "storyteller_death" : "*During a hellish thunderstorm, on the stroke of midnight, there echoes a bone-chilling scream. The townsfolk found the town storyteller murdered, their body impaled on the hands of the clocktower. It is your duty to avenge the Storyteller's death by klling the Demon!*"
         
     },
 
     "gameplay" : {
 
-        "cannot_be_nominated_again" : "{} {} {} cannot be nominated, because they have been nominated once today already.",
-        "cannot_nominate_again" : "{} {} You cannot nominate more than once per day.",
         "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
         "welcome_dm" : "**𝖂𝖊𝖑𝖈𝖔𝖒𝖊 𝖙𝖔 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗**",
         "nightfall" : "It is currently **𝖓𝖎𝖌𝖍𝖙𝖙𝖎𝖒𝖊**.",
@@ -225,7 +226,8 @@
         "role_reveal" : "{} **{}** was the {} **{}**",
         "from" : "{} From {}: *{}*",
         "to" : "{} To {}: *{}*",
-        "whisper_announcement" : "{} {} is whispering to {}."
+        "whisper_announcement" : "{} {} is whispering to {}.",
+        "immediately_executed" : "{} {} is immediately executed. Goodnight."
 
     },
 
@@ -255,7 +257,9 @@
         "townsquare_loading" : "{} Generating townsquare image, please wait a moment...",
         "cooldown" : "{} {} This command has a cooldown.",
         "whisper_too_long" : "{} {} The content of your whisper is too long.",
-        "recipient_blocked" : "{} Your whisper cannot be delivered because the recipient has blocked me."
+        "recipient_blocked" : "{} Your whisper cannot be delivered because the recipient has blocked me.",
+        "cannot_be_nominated_again" : "{} {} {} cannot be nominated, because they have been nominated once today already.",
+        "cannot_nominate_again" : "{} {} You cannot nominate more than once per day."
 
     },
 
@@ -280,6 +284,13 @@
             "help" : "This debugging command forcefully stops a game that is currently running.",
             "description" : "[FSTOP] command - BOTC (debug)",
             "feedback" : "{} Successfully stopped the game."
+        },
+
+        "fnight" : {
+            "brief" : "change the game's phase to Nighttime",
+            "help" : "This debugging command forcefully transitions the game from the Daytime phase to the Nighttime phase.",
+            "description" : "[FNIGHT] command - BOTC (debug)",
+            "feedback" : "{} Successfully transitioned to the Night Phase."
         },
 
         "serve" : {

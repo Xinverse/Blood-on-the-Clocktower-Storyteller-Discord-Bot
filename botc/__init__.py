@@ -4,8 +4,7 @@ from .abilities import ActionTypes, Action, ActionGrid
 from .BOTCUtils import BOTCUtils, PlayerParser, NotAPlayer, RoleCannotUseCommand, NotDMChannel, \
     NotLobbyChannel, NotDay, NotDawn, NotNight, DeadOnlyCommand, AliveOnlyCommand, GameLogic, \
     get_number_image, AbilityForbidden, PlayerConverter, RoleConverter, PlayerNotFound, \
-    RoleNotFound, LorePicker, showing_grimoire, WhisperConverter, WhisperTooLong, \
-    delete_whisper_after
+    RoleNotFound, LorePicker, WhisperConverter, WhisperTooLong
 from .Category import Category
 from .Character import Character
 from .checks import check_if_is_player, can_use_serve, check_if_can_serve, can_use_poison, \

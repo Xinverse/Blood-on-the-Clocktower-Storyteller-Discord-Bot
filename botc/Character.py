@@ -370,7 +370,8 @@ class Character:
         """Function that runs after the player is nominated.
         Override by child classes and/or other classes inherited by child classes.
         """
-        pass
+        from botc.gameloops import nomination_loop
+        nomination_loop.start(globvars.master_state.game, nominator_player, nominated_player)
 
     async def on_night_death(self, dead_player):
         """Function that runs after the player dies at night, for any reason.

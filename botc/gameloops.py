@@ -380,6 +380,9 @@ async def base_day_loop(duration):
 
 async def day_loop(game):
     """Day loop"""
+
+    import botc.switches
+
     # Start day
     await game.make_daybreak()
     # Base day length
@@ -388,7 +391,13 @@ async def day_loop(game):
     # base_day_length = base_day_length * 60
     base_day_length = 15
     base_day_loop.start(base_day_length)
-    await asyncio.sleep(base_day_length)
+
+    for _ in range(base_day_length):
+        # The master switch has been turned on. Proceed to the next phase.
+        if botc.switches.master_proceed_to_night:
+            base_day_loop.cancel()
+            return
+        await asyncio.sleep(1)
 
     # Nominations are open
     msg = botutils.BotEmoji.grimoire + " " + nominations_open.format(PREFIX)
@@ -405,6 +414,10 @@ async def day_loop(game):
         count = 0
 
         while not nomination_loop.is_running():
+            
+            # The master switch has been turned on. Proceed to the next phase.
+            if botc.switches.master_proceed_to_night:
+                return
 
             count += 1
             await asyncio.sleep(1)
@@ -433,6 +446,11 @@ async def day_loop(game):
                 return
 
         while nomination_loop.is_running():
+
+            # The master switch has been turned on. Proceed to the next phase.
+            if botc.switches.master_proceed_to_night:
+                return
+
             await asyncio.sleep(1)
 
 

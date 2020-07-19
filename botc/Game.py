@@ -25,7 +25,7 @@ from .gamemodes.troublebrewing.Saint import Saint
 from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
-from .gameloops import master_game_loop, nomination_loop
+from .gameloops import master_game_loop, nomination_loop, base_day_loop
 from models import GameMeta
 
 Config = configparser.ConfigParser()
@@ -72,6 +72,7 @@ with open('botc/game_text.json') as json_file:
    good_wins = strings["gameplay"]["good_wins"]
    evil_wins = strings["gameplay"]["evil_wins"]
    role_reveal = strings["gameplay"]["role_reveal"]
+   storyteller_death = strings["lore"]["storyteller_death"]
 
 with open('botutils/bot_text.json') as json_file: 
    language = json.load(json_file)
@@ -197,6 +198,8 @@ class Game(GameMeta):
       self._chrono = GameChrono()
       self._setup = Setup()
       self.chopping_block = None  # ChoppingBlock object
+      self.today_executed_player = None  # Player object
+      self.night_deaths = []  # List of player objects
       self.gameloop = master_game_loop
       self.winners = None  # botc.Team object
    
@@ -434,7 +437,7 @@ class Game(GameMeta):
       # Load game related commands
       globvars.client.load_extension("botc.commands.abilities")
       globvars.client.load_extension("botc.commands.townhall")
-      globvars.client.load_extension("botc.commands.botc_debug_commands")
+      globvars.client.load_extension("botc.commands.debug")
       # Start the game loop
       self.gameloop.start(self)
    
@@ -575,19 +578,15 @@ class Game(GameMeta):
       for extension in CONFLICTING_CMDS:
          globvars.client.load_extension(extension)
       # Log the game
-      await botutils.log(botutils.Level.info, "Game finished, to-do")
+      await botutils.log(botutils.Level.info, "Game finished")
       # Stop various loops from running
-      from botc import showing_grimoire, delete_whisper_after
-      from botc.gameloops import nomination_loop
+      from botc.gameloops import nomination_loop, base_day_loop
       # Stop the nomination loop if it is running
       if nomination_loop.is_running():
          nomination_loop.cancel()
-      # Stop the grimoire showing loop if it is running
-      if showing_grimoire.is_running():
-         showing_grimoire.cancel()
-      # Stop the whisper annoucement loop if it is running
-      if delete_whisper_after.is_running():
-         delete_whisper_after.cancel()
+      # Stop the base day loop if it is running
+      if base_day_loop.is_running():
+         base_day_loop.cancel()
       # Clear the game object
       self.__init__()
       globvars.master_state.game = None
@@ -598,7 +597,21 @@ class Game(GameMeta):
 
    async def make_nightfall(self):
       """Transition the game into night phase"""
+
+      # Initialize the master switches at the start of a phase
+      import botc.switches
+      botc.switches.init_switches()
+
+      # Stop all tasks of the day phase
+      if nomination_loop.is_running():
+         nomination_loop.cancel()
+      if base_day_loop.is_running():
+         base_day_loop.cancel()
+
+      # Move the chrono forward by one phase
       self._chrono.next()
+
+      # Prepare the phase announcement message
       embed = discord.Embed(
          description = nightfall,
          color = CARD_NIGHT
@@ -607,13 +620,22 @@ class Game(GameMeta):
       embed.set_image(url = nightfall_image)
       embed.timestamp = datetime.datetime.utcnow()
       await botutils.send_lobby(message = "", embed = embed)
+
       # Reset the nomination data for the previous day phase
       for player in self.sitting_order:
          player.reset_nomination()
    
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""
+
+      # Initialize the master switches at the start of a phase
+      import botc.switches
+      botc.switches.init_switches()
+
+      # Move the chrono forward by one phase
       self._chrono.next()
+
+      # Prepare the phase announcement message
       embed = discord.Embed(
          description = dawn,
          color = CARD_DAWN
@@ -625,9 +647,24 @@ class Game(GameMeta):
 
    async def make_daybreak(self):
       """Transition the game into day phase"""
+
+      # Initialize the master switches at the start of a phase
+      import botc.switches
+      botc.switches.init_switches()
+
+      self.chopping_block = None
+      self.today_executed_player = None
+
+      # Move the chrono forward by one phase
       self._chrono.next()
+
+      # Prepare the phase announcement message
+      if self._chrono.cycle == 1 and self._chrono.phase == Phase.day:
+         death_message = storyteller_death
+      else:
+         death_message = ""
       embed = discord.Embed(
-         description = daybreak,
+         description = daybreak + " " + death_message,
          color = CARD_DAY
       )
       embed.set_footer(text = copyrights_str)

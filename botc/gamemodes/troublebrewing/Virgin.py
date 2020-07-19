@@ -1,11 +1,16 @@
 """Contains the Virgin Character class"""
 
 import json 
-from botc import Townsfolk, Character, NonRecurringAction, Inventory, Flags
+import botutils
+from botc import Townsfolk, Character, NonRecurringAction, Inventory, Flags, Category
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
     character_text = json.load(json_file)[TBRole.virgin.value.lower()]
+
+with open('botc/game_text.json') as json_file: 
+    documentation = json.load(json_file)
+    immediately_executed = documentation["gameplay"]["immediately_executed"]
 
 
 class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
@@ -73,13 +78,32 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             
         return msg
     
-    async def on_being_nominated(self, nominator_player, nominated_player):
+    async def on_being_nominated(self, nominator_player, virgin_player):
         """Function that runs after the player is nominated.
         Override the parent Character class' implementation which is to do nothing.
         """
+        import globvars
 
-        assert nominated_player.role.true_self.name == self.name, \
-            f"The nominated player's role is {nominated_player.role.true_self.name} instead of Virgin"
+        assert virgin_player.role.true_self.name == self.name, \
+            f"The nominated player's role is {virgin_player.role.true_self.name} instead of Virgin"
         
-        if not nominated_player.is_droisoned():
-            pass
+        # Virgin ability is active
+        if not virgin_player.is_droisoned():
+            if virgin_player.role.true_self.inventory.has_item_in_inventory(Flags.virgin_first_nomination):
+                # Remove the unique use ability from the player's inventory
+                virgin_player.role.true_self.inventory.remove_item_from_inventory(Flags.virgin_first_nomination)
+                # The nominator player registers as a new social self
+                nominator_player.role.set_new_social_self(nominator_player)
+                if nominator_player.role.social_self.category == Category.townsfolk:
+                    msg = immediately_executed.format(
+                        botutils.BotEmoji.guillotine,
+                        nominator_player.game_nametag
+                    )
+                    await nominator_player.exec_real_death()
+                    await botutils.send_lobby(msg)
+                    import botc.switches
+                    botc.switches.master_proceed_to_night = True
+                    return 
+
+        from botc.gameloops import nomination_loop
+        nomination_loop.start(globvars.master_state.game, nominator_player, virgin_player)

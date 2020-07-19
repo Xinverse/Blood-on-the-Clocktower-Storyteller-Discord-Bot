@@ -6,8 +6,9 @@ import discord
 import asyncio
 import configparser
 import datetime
-from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction, showing_grimoire
+from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
+from discord.ext import tasks
 import globvars
 
 Config = configparser.ConfigParser()
@@ -126,12 +127,22 @@ class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
         embed.set_image(url="attachment://grimoire.png")
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text = copyrights_str)
+
         try:
             grimoire = await recipient.send(file = file, embed = embed)
+
         except discord.Forbidden:
             pass
+
         else:
-            # Wait for the duration and then delete the grimoire
+
+            @tasks.loop(count = 1)
+            async def showing_grimoire(sleeptime, message):
+                """Show the grimoire to the spy during the specified time."""
+                showing_grimoire.message = message
+                await asyncio.sleep(sleeptime)
+                await message.delete()
+
             showing_grimoire.start(GRIMOIRE_SHOW_TIME, grimoire)
     
     async def send_n1_end_message(self, recipient):

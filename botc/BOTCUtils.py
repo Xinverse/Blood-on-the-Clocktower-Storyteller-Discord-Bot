@@ -434,18 +434,4 @@ class LorePicker:
          weights = lore[category]["weights"]
       )
       return chosen[0]
-
-
-@tasks.loop(count = 1)
-async def showing_grimoire(sleeptime, message):
-   """Show the grimoire to the spy during the specified time. Then delete it."""
-   await asyncio.sleep(sleeptime)
-   await message.delete()
-
-
-@tasks.loop(count = 1)
-async def delete_whisper_after(sleeptime, message):
-   """Show the whisper annoucement during the specified time. Then delete it."""
-   await asyncio.sleep(sleeptime)
-   await message.delete()
    

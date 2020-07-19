@@ -17,8 +17,8 @@ with open('botc/game_text.json') as json_file:
     documentation = json.load(json_file)
     nomination_ongoing = documentation["cmd_warnings"]["nomination_ongoing"]
     nominations_not_open = documentation["cmd_warnings"]["nominations_not_open"]
-    cannot_be_nominated_again = documentation["gameplay"]["cannot_be_nominated_again"]
-    cannot_nominate_again = documentation["gameplay"]["cannot_nominate_again"]
+    cannot_be_nominated_again = documentation["cmd_warnings"]["cannot_be_nominated_again"]
+    cannot_nominate_again = documentation["cmd_warnings"]["cannot_nominate_again"]
 
 
 class Nominate(commands.Cog, name = documentation["misc"]["townhall_cog"]):
@@ -80,14 +80,14 @@ class Nominate(commands.Cog, name = documentation["misc"]["townhall_cog"]):
                 player.toggle_has_nominated()
                 # The nominated player cannot be nominated again today
                 nominated.toggle_was_nominated()
-                nomination_loop.start(globvars.master_state.game, player, nominated)
+                await nominated.role.true_self.on_being_nominated(player, nominated)
             else:
                 msg = cannot_be_nominated_again.format(
                     ctx.author.mention, 
                     botutils.BotEmoji.cross, 
-                    nominated.user.game_nametag
+                    nominated.game_nametag
                 )
-                await ctx.send("That player cannot be nominated, because they have been nominated today already.")
+                await ctx.send(msg)
         else:
             msg = cannot_nominate_again.format(
                 ctx.author.mention, 
