@@ -3,7 +3,7 @@
 
         "copyrights" : "Copyrights of BoTC belong to the Pandemonium Institute.",
         "res_title" : "Blood on the Clocktower (BoTC) - Resources",
-        "res_desc" : "In the quiet village of Ravenswood Bluff, ‌a demon walks amongst you...",
+            "res_desc" : "In the quaint village of Ravenswood Bluff, ‌a demon walks amongst you...",
         "thumnail" : "https://bloodontheclocktower.com/img/website/logo.png?rel=1591572107883",
         "wiki" : "http://bloodontheclocktower.com/wiki/Main_Page",
         "rulebooks" : "https://rebrand.ly/BOTCrulebook\nhttps://rebrand.ly/TBalmanac\nhttps://rebrand.ly/BMRalmanac\nhttps://rebrand.ly/SValmanac\nhttps://rebrand.ly/TravellersFabledAlmanac",
@@ -129,16 +129,18 @@
                 "They say that death doesn't discriminate, between the slayers and the saints. It takes and it takes and it takes. History obliterates in every picture it paints, and it paints {slain} in all their mistakes. When {Slayer} aimed at the sky, {slain} might've been the first one to **die**. But the imp is the one who paid for it. They survived and they paid for it. \nPlayer {slain} is now **dead**.", 
                 "When one transcends the boundaries from life to death as {slain} has done before us, they present us a moral dilemna. Who is {slayer} to irrevocably take away this blessing (a curse if you will) from any of us? What do we gain, what do we lose? Is it a fair exchange? \nPlayer {slain} is now **dead**.",
                 "Innumerable stars flare into existence daily, becons of light in the void of space. Some say the fallen of our realm rise up and join them - a privileged member of the celestial army. Others such as the {slayer} believe that they are cursed. Doomed to insanity as their conscious rots within the stellar core. One must wonder if {slayer} thought of this prior to the dispatchment of {slain}. \nPlayer {slain} is now **dead**.",
-                "{slain} enters a void. No. Not a void. *The* void. They swims forward, and back. Up, then down. Left, then right. Direction means nothing. Their senses go numb. Fire blazes through their veins, freezing and falling out in place. Is this hell? Has {slayer} helped {slain} achieve immortality? Not too different now, eh? \nPlayer {slain} is now **dead**."
+                "{slain} enters a void. No. Not a void. *The* void. They swims forward, and back. Up, then down. Left, then right. Direction means nothing. Their senses go numb. Fire blazes through their veins, freezing and falling out in place. Is this hell? Has {slayer} helped {slain} achieve immortality? Not too different now, eh? \nPlayer {slain} is now **dead**.",
+                "We're no strangers to love. You know the rules, and so do I. Always gonna give you, always gonna let you down. Always gonna be {slayer} and murder you. Always gonna make you cry, always gonna say goodbye. Always gonna tell a lie, and hurt you. \nPlayer {slain} is now **dead**."
             ],
 
             "weights" : [
-                16.6,
-                16.6,
-                16.6,
-                16.6,
-                16.6,
-                16.6
+                0.16,
+                0.16,
+                0.16,
+                0.16,
+                0.16,
+                0.16,
+                0.04
             ]
         },
 
