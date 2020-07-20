@@ -1,7 +1,8 @@
 """Contains the Soldier Character class"""
 
 import json 
-from botc import Townsfolk, Character, NonRecurringAction
+from botc import Townsfolk, Character, NonRecurringAction, SafetyFromDemon, \
+    Storyteller
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -67,3 +68,11 @@ class Soldier(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
+    
+    async def process_night_ability(self, player):
+        """Process night actions for the soldier character.
+        @player : the Soldier player (Player object)
+        """
+
+        if not player.is_droisoned() and player.is_alive():
+            player.add_status_effect(SafetyFromDemon(Storyteller(), player, 2))

@@ -107,3 +107,22 @@ class Monk(Townsfolk, TroubleBrewing, Character, RecurringAction):
 
         if not monk_player.is_droisoned() and monk_player.is_alive():
             protected_player.add_status_effect(SafetyFromDemon(monk_player, protected_player, 2))
+    
+    async def process_night_ability(self, player):
+        """Process night actions for the monk character.
+        @player : the Monk player (Player object)
+        """
+        
+        phase = globvars.master_state.game._chrono.phase_id
+        action = player.action_grid.retrieve_an_action(phase)
+        # The monk has submitted an action. We call the execution function immediately
+        if action:
+            assert action.action_type == ActionTypes.protect, f"Wrong action type {action} in monk"
+            targets = action.target_player
+            protected_player = targets[0]
+            await self.exec_protect(player, protected_player)
+        # The imp has not submitted an action. We will not randomize the action because this 
+        # is a priviledged ability
+        else:
+            pass
+

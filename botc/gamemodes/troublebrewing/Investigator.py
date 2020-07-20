@@ -85,7 +85,7 @@ class Investigator(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         two_player_list = self.get_two_possible_minions()
         registered_minion_type = two_player_list[2]
         link = registered_minion_type.art_link
-        assert registered_minion_type.category == Category.minion, "Investigator did not receive a minion character"
+        assert registered_minion_type.category == Category.minion, f"Investigator received {registered_minion_type}"
 
         # Get rid of the last element (the minion type)
         two_player_list.pop()

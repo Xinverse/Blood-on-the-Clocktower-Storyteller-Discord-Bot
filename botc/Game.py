@@ -197,11 +197,15 @@ class Game(GameMeta):
       self._sitting_order = tuple()  # tuple object (for immutability)
       self._chrono = GameChrono()
       self._setup = Setup()
-      self.chopping_block = None  # ChoppingBlock object
-      self.today_executed_player = None  # Player object
-      self.night_deaths = []  # List of player objects
       self.gameloop = master_game_loop
       self.winners = None  # botc.Team object
+
+      # Temporary day data
+      self.chopping_block = None  # ChoppingBlock object
+      self.today_executed_player = None  # Player object
+
+      # Temporary night data
+      self.night_deaths = []  # List of player objects
    
    @property
    def nb_players(self):
@@ -247,6 +251,17 @@ class Game(GameMeta):
    def is_night(self):
       return self.current_phase == Phase.night
    
+   def init_temporary_day_data(self):
+      """Initialize temporary day data. To be called at the start of the day"""
+      # Temporary day data
+      self.chopping_block = None  # ChoppingBlock object
+      self.today_executed_player = None  # Player object
+   
+   def init_temporary_night_data(self):
+      """Initialize temporary night data. To be called at the start of the night"""
+      # Temporary night data
+      self.night_deaths = []  # List of player objects
+      
    def create_sitting_order_stats_string(self):
       """Create a stats board:
 
@@ -573,7 +588,7 @@ class Game(GameMeta):
       # Unload extensions
       globvars.client.unload_extension("botc.commands.abilities")
       globvars.client.unload_extension("botc.commands.townhall")
-      globvars.client.unload_extension("botc.commands.botc_debug_commands")
+      globvars.client.unload_extension("botc.commands.debug")
       # Load conflicting commands
       for extension in CONFLICTING_CMDS:
          globvars.client.load_extension(extension)
@@ -601,6 +616,9 @@ class Game(GameMeta):
       # Initialize the master switches at the start of a phase
       import botc.switches
       botc.switches.init_switches()
+
+      # Initialize the temporary night data set
+      self.init_temporary_night_data()
 
       # Stop all tasks of the day phase
       if nomination_loop.is_running():
@@ -652,24 +670,60 @@ class Game(GameMeta):
       import botc.switches
       botc.switches.init_switches()
 
-      self.chopping_block = None
-      self.today_executed_player = None
+      # Initialize the temporary day data set
+      self.init_temporary_day_data()
 
       # Move the chrono forward by one phase
       self._chrono.next()
 
       # Prepare the phase announcement message
+      # Night 1 end is Storyteller death
       if self._chrono.cycle == 1 and self._chrono.phase == Phase.day:
-         death_message = storyteller_death
+         final_death_message = storyteller_death
+
+      # Not night 1 end, we look at the death list
       else:
-         death_message = ""
+
+         night_deaths_names = [player.game_nametag for player in self.night_deaths]
+         night_deaths_names = list(set(night_deaths_names))
+
+         if len(night_deaths_names) == 0:
+            death_messages = strings["lore"]["night_death"]["zero"]["outputs"]
+            death_weights = strings["lore"]["night_death"]["zero"]["weights"]
+            death_msg = random.choices(
+                  death_messages,
+                  weights = death_weights
+            )
+            final_death_message = death_msg[0]
+
+         elif len(night_deaths_names) == 1:
+            death_messages = strings["lore"]["night_death"]["singular"]["outputs"]
+            death_weights = strings["lore"]["night_death"]["singular"]["weights"]
+            death_msg = random.choices(
+                  death_messages,
+                  weights = death_weights
+            )
+            final_death_message = death_msg[0]
+            final_death_message = final_death_message.format(night_deaths_names[0])
+
+         else:
+            death_messages = strings["lore"]["night_death"]["plural"]["outputs"]
+            death_weights = strings["lore"]["night_death"]["plural"]["weights"]
+            death_msg = random.choices(
+                  death_messages,
+                  weights = death_weights
+            )
+            final_death_message = death_msg[0]
+            final_death_message = final_death_message.format(", ".join(night_deaths_names))
+
       embed = discord.Embed(
-         description = daybreak + " " + death_message,
+         description = daybreak + " " + final_death_message,
          color = CARD_DAY
       )
       embed.set_footer(text = copyrights_str)
       embed.set_image(url = daybreak_image)
       embed.timestamp = datetime.datetime.utcnow()
+
       await botutils.send_lobby(message = "", embed = embed)
 
    def generate_role_set(self):

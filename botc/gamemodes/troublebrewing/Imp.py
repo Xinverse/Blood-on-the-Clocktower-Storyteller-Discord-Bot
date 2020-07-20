@@ -174,6 +174,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
                 return
             try:
                 await killed_player.exec_real_death()
+                globvars.master_state.game.night_deaths.append(killed_player)
             except AlreadyDead:
                 pass
     

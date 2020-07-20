@@ -147,13 +147,41 @@
 
         "night_death" : {
 
-            "outputs" : [
-                
-            ],
+            "singular" : {
 
-            "weights" : [
+                "outputs" : [
+                    "{} *has died during the night.*"
+                ],
+    
+                "weights" : [
+                    1.0
+                ]
 
-            ]
+            },
+
+            "plural" : {
+
+                "outputs" : [
+                    "{} *have died during the night.*"
+                ],
+    
+                "weights" : [
+                    1.0
+                ]
+
+            },
+
+            "zero" : {
+
+                "outputs" : [
+                    "*There are no deaths last night.*"
+                ],
+    
+                "weights" : [
+                    1.0
+                ]
+
+            }
         },
 
         "day_lynch" : {

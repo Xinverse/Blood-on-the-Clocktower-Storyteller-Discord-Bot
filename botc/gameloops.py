@@ -386,10 +386,9 @@ async def day_loop(game):
     # Start day
     await game.make_daybreak()
     # Base day length
-    # base_day_length = math.sqrt(game.nb_players)
-    # base_day_length = math.ceil(base_day_length)
-    # base_day_length = base_day_length * 60
-    base_day_length = 15
+    base_day_length = math.sqrt(2 * game.nb_players)
+    base_day_length = math.ceil(base_day_length)
+    base_day_length = base_day_length * 60
     base_day_loop.start(base_day_length)
 
     for _ in range(base_day_length):
@@ -433,6 +432,7 @@ async def day_loop(game):
                 if game.chopping_block:
                     if game.chopping_block.player_about_to_die:
                         await game.chopping_block.player_about_to_die.exec_real_death()
+                        game.today_executed_player = game.chopping_block.player_about_to_die
                         msg = botutils.BotEmoji.grimoire + " " + execution.format(
                             game.chopping_block.player_about_to_die.game_nametag, 
                             game.chopping_block.nb_votes

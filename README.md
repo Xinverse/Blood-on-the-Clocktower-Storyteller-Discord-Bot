@@ -7,7 +7,7 @@ The copyrights to the BoTC game are owned by the Pandemonium Institute.
 
 ## Author
 
-* **Xinverse#4011** - *Initial work* - [Xinverse](https://github.com/Xinverse)
+* **Xinverse#4011** - *Developer* - [Xinverse](https://github.com/Xinverse)
 * **Picowchew#1559** - *Contributor* - [Picowchew](https://github.com/Picowchew)
 
 ## License

@@ -360,30 +360,12 @@ class Character:
     
     # -------------------- Event "Listeners" --------------------
 
-    async def on_demon_attack(self, demon_player, attacked_player):
-        """Function that runs after the player gets attacked by the demon at night.
-        Override by child classes and/or other classes inherited by child classes.
-        """
-        pass
-
     async def on_being_nominated(self, nominator_player, nominated_player):
         """Function that runs after the player is nominated.
         Override by child classes and/or other classes inherited by child classes.
         """
         from botc.gameloops import nomination_loop
         nomination_loop.start(globvars.master_state.game, nominator_player, nominated_player)
-
-    async def on_night_death(self, dead_player):
-        """Function that runs after the player dies at night, for any reason.
-        Override by child classes and/or other classes inherited by child classes.
-        """
-        pass
-
-    async def on_day_lynching(self, lynched_player):
-        """Function that runs after the player dies by lynching at day.
-        Override by child classes and/or other classes inherited by child classes.
-        """
-        pass
     
     # -------------------- Character ABILITIES --------------------
 
