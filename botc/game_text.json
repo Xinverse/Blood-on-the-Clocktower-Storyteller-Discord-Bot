@@ -125,23 +125,41 @@
 
             "outputs" : [
                 "No one owns life, but anyone who can pick up a frying pan owns death. Frying pan in hand, {slayer} smacks {slain} with full force, and the Clocktower is now stained with the Demon's blood. Congratulations! The Demon has been slayed by our brave Dragon Sla-- oh wait, sorry, it's *Demon* Slayer.\nPlayer {slain} is now **dead**.",
-                "According to most studies, people's number one fear is public speaking. Number two is death. Death is number two! Does that sound right? This means to the average person, if you go to a funeral, you're better off in the casket than doing the eulogy. And the casket was where {slayer} decided to send {slain}.\nPlayer {slain} is now **dead**."
+                "According to most studies, people's number one fear is public speaking. Number two is death. Death is number two! Does that sound right? This means to the average person, if you go to a funeral, you're better off in the casket than doing the eulogy. And the casket was where {slayer} decided to send {slain}.\nPlayer {slain} is now **dead**.",
+                "They say that death doesn't discriminate, between the slayers and the saints. It takes and it takes and it takes. History obliterates in every picture it paints, and it paints {slain} in all their mistakes. When {Slayer} aimed at the sky, {slain} might've been the first one to **die**. But the imp is the one who paid for it. They survived and they paid for it. \nPlayer {slain} is now **dead**.", 
+                "When one transcends the boundaries from life to death as {slain} has done before us, they present us a moral dilemna. Who is {slayer} to irrevocably take away this blessing (a curse if you will) from any of us? What do we gain, what do we lose? Is it a fair exchange? \nPlayer {slain} is now **dead**.",
+                "Innumerable stars flare into existence daily, becons of light in the void of space. Some say the fallen of our realm rise up and join them - a privileged member of the celestial army. Others such as the {slayer} believe that they are cursed. Doomed to insanity as their conscious rots within the stellar core. One must wonder if {slayer} thought of this prior to the dispatchment of {slain}. \nPlayer {slain} is now **dead**.",
+                "{slain} enters a void. No. Not a void. *The* void. They swims forward, and back. Up, then down. Left, then right. Direction means nothing. Their senses go numb. Fire blazes through their veins, freezing and falling out in place. Is this hell? Has {slayer} helped {slain} achieve immortality? Not too different now, eh? \nPlayer {slain} is now **dead**."
             ],
 
             "weights" : [
-                0.5,
-                0.5
+                16.6,
+                16.6,
+                16.6,
+                16.6,
+                16.6,
+                16.6
             ]
         },
 
         "slay_fail" : {
 
             "outputs" : [
-                "{slayer} launched themself towards {slain}, but tripped instead. As they got up awkwardly, they mumbled, 'I didn't trip. The floor gave me a dirty look, so I attacked it instead.'\nPlayer {slain} is still **alive**."
+                "{slayer} launched themself towards {slain}, but tripped instead. As they got up awkwardly, they mumbled, 'I didn't trip. The floor gave me a dirty look, so I attacked it instead.'\nPlayer {slain} is still **alive**.",
+                "While counting the 10 duel commandments, {slayer} recalled his affinity for prime numbers. In confusion, {slain} slowly backed away. The local empath later helped snap {slayer} out of his trance. \nPlayer {slain} is still **alive**.",
+                "**imad** is a **wolf** and is dying from the silver bullet! However . . . \nPlayer {slain} is still **alive**.",
+                "'Wait, is that Bhaa?', says {slayer}. While he's distracted, {slain} scampers away through the brush. \nPlayer {slain} is still **alive**.",
+                "A small penguin and a ninja panda walkby the town. {slain} is immediately infaturated by them, and much to the annoyance of {slayer}, gets lost in the chaos. \nPlayer {slain} is still **alive**.",
+                "{Slayer} failed. That's it. {Slain} looks around and walks away. \nPlayer {slain} is still **alive**."
             ],
 
             "weights" : [
-                1.0
+                0.16,
+                0.16,
+                0.16,
+                0.16,
+                0.16,
+                0.16
             ]
         },
 
@@ -151,10 +169,16 @@
 
                 "outputs" : [
                     "{} *has died during the night.*"
+                    "As the knocker-up made their rounds in the morning, they discovered that {}'s cottage was empty. Further inspection revealed a trail of blood and claw marks within the small house. {}'s carcass, swarming with flies, was discovered a few hours later by the river."
+                    "Thirty-two thousand troops in New York Harbor could not help the village protect it's people. Blood was streaked on the Clock Tower, later revealed to be that of {}."
+                    "Blood on the Clocktower, is it yours? Blood on the Clocktower, there's the door. The body of {} is behind there for sure."
                 ],
     
                 "weights" : [
-                    1.0
+                    0.70
+                    0.20
+                    0.6
+                    0.4
                 ]
 
             },
@@ -163,10 +187,13 @@
 
                 "outputs" : [
                     "{} *have died during the night.*"
+                    "Someone took {} from Columbine, put them all in a line, added an AK-47 and a revolver and on nine shot them all in the behind."
+                    "
                 ],
     
                 "weights" : [
-                    1.0
+                    0.99
+                    0.01
                 ]
 
             },
@@ -175,10 +202,12 @@
 
                 "outputs" : [
                     "*There are no deaths last night.*"
+                    "The sound of a lone wolf howl echoes through the valley, but no bodies were recovered nor were any people reported missing."
                 ],
     
                 "weights" : [
-                    1.0
+                    0.90
+                    0.1
                 ]
 
             }
