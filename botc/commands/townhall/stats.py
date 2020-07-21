@@ -28,7 +28,7 @@ with open('botc/game_text.json') as json_file:
 
 class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
     """BoTC in-game commands cog
-    Townsquare command - used for viewing the townsquare image
+    Stats command - used for viewing the game's player statistics
     """
     
     def __init__(self, client):
@@ -41,6 +41,7 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         """
         return botutils.check_if_admin(ctx) or \
                botutils.check_if_lobby(ctx) or \
+               botutils.check_if_dm(ctx) or \
                botutils.check_if_spec(ctx)
     
     # ---------- STATS COMMAND (Stats) ----------------------------------------
@@ -105,7 +106,7 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
 
     @stats.error
     async def stats_error(self, ctx, error):
-        # Command on cooldown -> commands.CommandOnCooldown
+        # Check did not pass -> commands.CheckFailure
         if isinstance(error, commands.CheckFailure):
             return
         else:

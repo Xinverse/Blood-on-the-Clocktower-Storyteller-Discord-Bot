@@ -22,7 +22,8 @@
         "people_total" : "**{}** {} total.",
         "clear_ignore" : "{} Are you sure you want to clear the entire ignore list and delete all **{}** entrie(s)? Use `{}ignore clear --force` to proceed.",
         "force_clear" : "{} The ignore list has been cleared. It is now empty.",
-        "ignore_sync" : "{} Purged **{}** user(s) not in server."
+        "ignore_sync" : "{} Purged **{}** user(s) not in server.",
+        "no_game" : "There is currently no active game. Try `{}join` to start a new game!"
 
     },
 

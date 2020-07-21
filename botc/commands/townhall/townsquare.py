@@ -40,6 +40,7 @@ class Townsquare(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         """
         return botutils.check_if_admin(ctx) or \
                botutils.check_if_lobby(ctx) or \
+               botutils.check_if_dm(ctx) or \
                botutils.check_if_spec(ctx)
     
     # ---------- TOWNSQUARE COMMAND (Stats) ----------------------------------------

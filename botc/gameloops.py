@@ -396,6 +396,10 @@ async def day_loop(game):
         if botc.switches.master_proceed_to_night:
             base_day_loop.cancel()
             return
+        # The master switch has been turned on. Go to nominations.
+        if botc.switches.master_proceed_to_nomination:
+            base_day_loop.cancel()
+            break
         await asyncio.sleep(1)
 
     # Nominations are open
@@ -433,7 +437,7 @@ async def day_loop(game):
                     if game.chopping_block.player_about_to_die:
                         await game.chopping_block.player_about_to_die.exec_real_death()
                         game.today_executed_player = game.chopping_block.player_about_to_die
-                        msg = botutils.BotEmoji.grimoire + " " + execution.format(
+                        msg = botutils.BotEmoji.guillotine + " " + execution.format(
                             game.chopping_block.player_about_to_die.game_nametag, 
                             game.chopping_block.nb_votes
                         )

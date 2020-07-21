@@ -1,4 +1,4 @@
-"""Contains the fnight command cog"""
+"""Contains the fnomination command cog"""
 
 import json
 import traceback
@@ -14,8 +14,8 @@ with open('botutils/bot_text.json') as json_file:
     error_str = bot_text["system"]["error"]
 
 
-class Fnight(commands.Cog, name = documentation["misc"]["debug_cog"]):
-    """Fnight command"""
+class Fnomination(commands.Cog, name = documentation["misc"]["debug_cog"]):
+    """Fnomination command"""
 
     def __init__(self, client):
         self.client = client
@@ -23,27 +23,27 @@ class Fnight(commands.Cog, name = documentation["misc"]["debug_cog"]):
     def cog_check(self, ctx):
         return botutils.check_if_admin(ctx)
 
-    # ---------- FNIGHT command ----------------------------------------
+    # ---------- FNOMINATION command ----------------------------------------
     @commands.command(
         pass_context = True, 
-        name = "fnight",
+        name = "fnomination",
         hidden = False,
-        brief = documentation["doc"]["fnight"]["brief"],
-        help = documentation["doc"]["fnight"]["help"],
-        description = documentation["doc"]["fnight"]["description"]
+        brief = documentation["doc"]["fnomination"]["brief"],
+        help = documentation["doc"]["fnomination"]["help"],
+        description = documentation["doc"]["fnomination"]["description"]
     )
-    async def fnight(self, ctx):
-        """Fnight command"""
+    async def fnomination(self, ctx):
+        """fnomination command"""
         
         import globvars
         if globvars.master_state.game.current_phase == Phase.day:
             import botc.switches
-            botc.switches.master_proceed_to_night = True
-            msg = documentation["doc"]["fnight"]["feedback"].format(botutils.BotEmoji.success)
+            botc.switches.master_proceed_to_nomination = True
+            msg = documentation["doc"]["fnomination"]["feedback"].format(botutils.BotEmoji.success)
             await ctx.send(msg)
     
-    @fnight.error
-    async def fnight_error(self, ctx, error):
+    @fnomination.error
+    async def fnomination_error(self, ctx, error):
         # Check did not pass -> commands.CheckFailure
         if isinstance(error, commands.CheckFailure):
             return

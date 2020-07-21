@@ -21,7 +21,7 @@ class BOTCFormatter(FormatterMeta):
     def create_complete_roles_list(self):
         """Create the list of roles from the game pack when the !roles command is used without argument."""
         final_text = self.make_header("Blood on the Clocktower (BoTC)")
-        final_text += "\n"
+        final_text += "\n\n"
         global setup
         for mode_title in setup["botc"]["gamemodes"]: 
             final_text += self.make_section_header(mode_title)

@@ -2,7 +2,7 @@
 
 import json
 import botutils
-import discord
+import botutils
 from discord.ext import commands
 
 with open('botutils/bot_text.json') as json_file: 
@@ -24,8 +24,7 @@ class on_ready(commands.Cog):
         print(f"Logged in as {self.client.user.name}")
         print(f"Bot ID {self.client.user.id}")
         print("----------")
-        activity = discord.Activity(name='Blood on the Clocktower', type=discord.ActivityType.playing)
-        await self.client.change_presence(activity=activity)
+        botutils.cycling_bot_status.start()
         await botutils.log(botutils.Level.info, restart_msg)
 
 def setup(client):

@@ -4,6 +4,7 @@
 master_proceed_to_day = False
 master_proceed_to_dawn = False
 master_proceed_to_night = False
+master_proceed_to_nomination = False
 
 
 def init_switches():
@@ -11,6 +12,8 @@ def init_switches():
     global master_proceed_to_day
     global master_proceed_to_night
     global master_proceed_to_dawn
+    global master_proceed_to_nomination
     master_proceed_to_day = False
     master_proceed_to_dawn = False
     master_proceed_to_night = False
+    master_proceed_to_nomination = False
