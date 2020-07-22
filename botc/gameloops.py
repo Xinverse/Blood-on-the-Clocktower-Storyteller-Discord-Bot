@@ -93,6 +93,7 @@ async def nomination_loop(game, nominator, nominated):
     import globvars
 
     # Debate time
+    debate_timer.start()
     await asyncio.sleep(DEBATE_TIME)
 
     # Counts
@@ -364,12 +365,20 @@ async def dawn_loop(game):
     # Start dawn
     await game.make_dawn()
     # Base dawn length
-    await asyncio.sleep(INCREMENT)
+    await asyncio.sleep(BASE_DAWN)
     # Increment (dawn)
     for _ in range(DAWN_MULTIPLIER):
         if game.has_received_all_expected_dawn_actions():
             break
         await asyncio.sleep(INCREMENT)
+
+
+def calculate_base_day_duration(game):
+    """Calculate the base day length."""
+    base_day_length = math.sqrt(2 * game.nb_alive_players)
+    base_day_length = math.ceil(base_day_length)
+    base_day_length = base_day_length * 60
+    return base_day_length
 
 
 @tasks.loop(count = 1)
@@ -378,17 +387,22 @@ async def base_day_loop(duration):
     await asyncio.sleep(duration)
 
 
+@tasks.loop(seconds = DEBATE_TIME, count=2)
+async def debate_timer():
+    """Debate phase timer, for the time command"""
+    pass
+
+
 async def day_loop(game):
     """Day loop"""
 
     import botc.switches
+    import globvars
 
     # Start day
     await game.make_daybreak()
     # Base day length
-    base_day_length = math.sqrt(2 * game.nb_players)
-    base_day_length = math.ceil(base_day_length)
-    base_day_length = base_day_length * 60
+    base_day_length = calculate_base_day_duration(game)
     base_day_loop.start(base_day_length)
 
     for _ in range(base_day_length):
@@ -409,6 +423,11 @@ async def day_loop(game):
     timers = [90, 60, 45, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
 
     for timer in timers:
+
+        globvars.master_state.game.nomination_iteration_date = (
+            datetime.datetime.now(), 
+            timer
+        )
 
         msg = botutils.BotEmoji.grimoire + " " + nomination_countdown.format(timer)
         await botutils.send_lobby(msg)

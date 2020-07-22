@@ -255,7 +255,14 @@
         "from" : "{} From {}: *{}*",
         "to" : "{} To {}: *{}*",
         "whisper_announcement" : "{} {} is whispering to {}.",
-        "immediately_executed" : "{} {} is immediately executed. Goodnight."
+        "immediately_executed" : "{} {} is immediately executed. Goodnight.",
+        "setup_info" : "**{}** players base setup with **{}** `townsfolk{}`, **{}** `outsider{}`, **{}** `minion{}`, **{}** `demon{}`.",
+        "time_night" : "It is currently **nighttime**. The night phase lasts a minimum of `{}` and a maximum of `{}`. There {} **{}** left until dawn.",
+        "time_dawn" : "It is currently **dawn**. The dawn phase lasts a minimum of `{}` and a maximum of `{}`. There {} **{}** left until daytime.",
+        "time_day_base" : "It is currently **daytime**. The daytime discussion phase lasts `{}`. There {} **{}** left until nominations are open.",
+        "time_voting" : "It is currently **daytime**. This is the nominations phase. Votes are being counted right now.",
+        "time_debate" : "It is currently **daytime**. You have `{}` for discussion. The voting will start in **{}**.",
+        "time_nomination" : "It is currently **daytime**. You have `{}` to nominate someone. The game will progress to the night phase in **{}**."
 
     },
 

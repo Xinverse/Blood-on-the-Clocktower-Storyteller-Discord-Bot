@@ -37,10 +37,13 @@ class Fnomination(commands.Cog, name = documentation["misc"]["debug_cog"]):
         
         import globvars
         if globvars.master_state.game.current_phase == Phase.day:
-            import botc.switches
-            botc.switches.master_proceed_to_nomination = True
-            msg = documentation["doc"]["fnomination"]["feedback"].format(botutils.BotEmoji.success)
-            await ctx.send(msg)
+            from botc.gameloops import base_day_loop
+            if base_day_loop.is_running():
+                base_day_loop.cancel()
+                import botc.switches
+                botc.switches.master_proceed_to_nomination = True
+                msg = documentation["doc"]["fnomination"]["feedback"].format(botutils.BotEmoji.success)
+                await ctx.send(msg)
     
     @fnomination.error
     async def fnomination_error(self, ctx, error):

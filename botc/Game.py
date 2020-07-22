@@ -25,7 +25,7 @@ from .gamemodes.troublebrewing.Saint import Saint
 from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
-from .gameloops import master_game_loop, nomination_loop, base_day_loop
+from .gameloops import master_game_loop, nomination_loop, base_day_loop, debate_timer
 from models import GameMeta
 
 Config = configparser.ConfigParser()
@@ -203,9 +203,15 @@ class Game(GameMeta):
       # Temporary day data
       self.chopping_block = None  # ChoppingBlock object
       self.today_executed_player = None  # Player object
+      self.day_start_time = None  # datetime()
+      self.nomination_iteration_date = tuple()  # tuple(datetime() for start time, duration in secs)
 
       # Temporary night data
       self.night_deaths = []  # List of player objects
+      self.night_start_time = None  # datetime()
+
+      # Temporary dawn data
+      self.dawn_start_time = None  # datetime()
    
    @property
    def nb_players(self):
@@ -274,7 +280,7 @@ class Game(GameMeta):
       ```
       """
 
-      msg = "```css\n"
+      msg = "\n\n**Players**: ```css\n"
       for player in self.sitting_order:
          if player.is_alive():
             line = f"{player.user.display_name} ({player.user.id}) [alive]\n"
@@ -602,6 +608,9 @@ class Game(GameMeta):
       # Stop the base day loop if it is running
       if base_day_loop.is_running():
          base_day_loop.cancel()
+      # Stop the debate timer loop if it is running
+      if debate_timer.is_running():
+         debate_timer.cancel()
       # Clear the game object
       self.__init__()
       globvars.master_state.game = None
@@ -612,6 +621,9 @@ class Game(GameMeta):
 
    async def make_nightfall(self):
       """Transition the game into night phase"""
+
+      # Store the starting time
+      self.night_start_time = datetime.datetime.now()
 
       # Initialize the master switches at the start of a phase
       import botc.switches
@@ -625,6 +637,8 @@ class Game(GameMeta):
          nomination_loop.cancel()
       if base_day_loop.is_running():
          base_day_loop.cancel()
+      if debate_timer.is_running():
+         debate_timer.cancel()
 
       # Move the chrono forward by one phase
       self._chrono.next()
@@ -646,6 +660,9 @@ class Game(GameMeta):
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""
 
+      # Store the starting time
+      self.dawn_start_time = datetime.datetime.now()
+
       # Initialize the master switches at the start of a phase
       import botc.switches
       botc.switches.init_switches()
@@ -665,6 +682,9 @@ class Game(GameMeta):
 
    async def make_daybreak(self):
       """Transition the game into day phase"""
+
+      # Store the starting time
+      self.day_start_time = datetime.datetime.now()
 
       # Initialize the master switches at the start of a phase
       import botc.switches

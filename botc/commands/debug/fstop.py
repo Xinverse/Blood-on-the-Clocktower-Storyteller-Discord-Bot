@@ -34,7 +34,7 @@ class Fstop(commands.Cog, name = documentation["misc"]["debug_cog"]):
     async def fstop(self, ctx):
         """Fstop command"""
 
-        from botc.gameloops import nomination_loop, base_day_loop
+        from botc.gameloops import nomination_loop, base_day_loop, debate_timer
 
         # Stop the nomination loop if it is running
         if nomination_loop.is_running():
@@ -43,6 +43,10 @@ class Fstop(commands.Cog, name = documentation["misc"]["debug_cog"]):
         # Stop the base day loop if it is running
         if base_day_loop.is_running():
             base_day_loop.cancel()
+        
+        # Stop the debate timer loop if it is running
+        if debate_timer.is_running():
+            debate_timer.cancel()
         
         # Stop the gameplay loop if it is running
         import globvars
