@@ -88,10 +88,11 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
             nb_demons,
             "s" if nb_demons > 1 else ""
         )
-        msg += "\n"
         
         # If the phase is daytime, then include voting information
         if game.current_phase == Phase.day:
+
+            msg += "\n"
 
             chopping_block = game.chopping_block
             nb_alive_players = len([player for player in game.sitting_order if player.is_apparently_alive()])

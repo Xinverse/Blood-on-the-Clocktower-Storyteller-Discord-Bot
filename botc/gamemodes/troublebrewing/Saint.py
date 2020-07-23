@@ -1,7 +1,7 @@
 """Contains the Saint Character class"""
 
 import json 
-from botc import Outsider, Character, NonRecurringAction
+from botc import Outsider, Character, NonRecurringAction, AlreadyDead, Team
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -67,3 +67,21 @@ class Saint(Outsider, TroubleBrewing, Character, NonRecurringAction):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
+    
+    async def on_being_executed(self, executed_player):
+        """Funtion that runs after the player has been nominated.
+        If a healthy and sober saint is executed, then the game ends with evil win.
+        """
+        try:
+            await executed_player.exec_real_death()
+        # The saint is already dead
+        except AlreadyDead:
+            pass
+        # The saint was alive and has been executed
+        else:
+            if not executed_player.is_droisoned():
+                import globvars
+                globvars.master_state.game.winners = Team.evil
+                from botc.gameloops import master_game_loop
+                if master_game_loop.is_running():
+                    master_game_loop.cancel()

@@ -7,6 +7,7 @@ import datetime
 import configparser
 from .Category import Category
 from .Team import Team
+from .errors import AlreadyDead
 from .BOTCUtils import LorePicker
 from .flag_inventory import Inventory, Flags
 from .abilities import ActionTypes, Action
@@ -366,6 +367,38 @@ class Character:
         """
         from botc.gameloops import nomination_loop
         nomination_loop.start(globvars.master_state.game, nominator_player, nominated_player)
+    
+    async def after_death(self, dead_player):
+        """Function that runs after the player has died.
+        Default behaviour is to do nothing. Override by child classes to have special 
+        behaviours.
+        """
+        return 
+    
+    async def on_being_executed(self, executed_player):
+        """Funtion that runs after the player has been executed.
+        Default behaviour is to execute the player's real death (real state)
+        Override by child classes and / or other classes inherited by child classes.
+        """
+        try:
+            await executed_player.exec_real_death()
+        except AlreadyDead:
+            pass
+        else:
+            await self.after_death(executed_player)
+    
+    async def on_being_demon_killed(self, killed_player):
+        """Function that runs after the player has been killed by the demon at night.
+        Default behaviour is to make the player die (real death state)
+        Override by child classes and / or other classes inherited by child classes.
+        """
+        try:
+            await killed_player.exec_real_death()
+        except AlreadyDead:
+            pass
+        else:
+            globvars.master_state.game.night_deaths.append(killed_player)
+            await self.after_death(killed_player)
     
     # -------------------- Character ABILITIES --------------------
 

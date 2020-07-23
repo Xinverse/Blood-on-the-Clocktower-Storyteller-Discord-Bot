@@ -165,18 +165,11 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
         """Execute the kill action (night ability interaction)"""
 
         if demon_player.is_alive() and not demon_player.is_droisoned():
-            # Healthy soldier does not die
-            if not killed_player.is_droisoned() and killed_player.role.true_self.name == Soldier().name:
-                return
             # Players who have received a status effect granting them safety from the demon 
             # do not die
-            elif killed_player.has_status_effect(StatusList.safety_from_demon):
+            if killed_player.has_status_effect(StatusList.safety_from_demon):
                 return
-            try:
-                await killed_player.exec_real_death()
-                globvars.master_state.game.night_deaths.append(killed_player)
-            except AlreadyDead:
-                pass
+            await killed_player.role.true_self.on_being_demon_killed(killed_player)
     
     async def process_night_ability(self, player):
         """Process night actions for the imp character.

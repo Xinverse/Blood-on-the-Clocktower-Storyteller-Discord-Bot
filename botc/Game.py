@@ -27,6 +27,7 @@ from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
 from .gameloops import master_game_loop, nomination_loop, base_day_loop, debate_timer
 from models import GameMeta
+from botc import Team
 
 Config = configparser.ConfigParser()
 Config.read("preferences.INI")
@@ -262,11 +263,15 @@ class Game(GameMeta):
       # Temporary day data
       self.chopping_block = None  # ChoppingBlock object
       self.today_executed_player = None  # Player object
+      self.day_start_time = None  # datetime()
+      self.nomination_iteration_date = tuple()  # tuple(datetime() for start time, duration in secs)
+
    
    def init_temporary_night_data(self):
       """Initialize temporary night data. To be called at the start of the night"""
       # Temporary night data
       self.night_deaths = []  # List of player objects
+      self.night_start_time = None  # datetime()
       
    def create_sitting_order_stats_string(self):
       """Create a stats board:
@@ -331,7 +336,7 @@ class Game(GameMeta):
       elif self.gamemode == Gamemode.bad_moon_rising:
          pass
    
-   async def send_lobby_closing_message(self):
+   async def send_lobby_closing_message(self, win_con_reason = ""):
       """Send the closing message in lobby"""
 
       from botc import Team
@@ -506,15 +511,15 @@ class Game(GameMeta):
 
          night_regular_order = [
 
-            TBRole.poisoner,
-            TBRole.monk,
-            TBRole.scarletwoman,
-            TBRole.imp,
-            TBRole.ravenkeeper,
+            TBRole.poisoner,      # Poison
+            TBRole.monk,          # Protect
+            TBRole.scarletwoman,  # Let her know of any demon promotion
+            TBRole.soldier,       # Add the safe from demon status effect if not droisoned
+            TBRole.imp,           # Save the kill target
             TBRole.empath,
             TBRole.fortuneteller,
             TBRole.butler,
-            TBRole.undertaker,
+            TBRole.undertaker,    # Send the executed player's role
             TBRole.spy
 
          ]
@@ -556,30 +561,46 @@ class Game(GameMeta):
             count += 1
       return count
    
+   @property
+   def list_alive_players(self):
+      """Return the list of alive players (truly alive state)"""
+      return [player for player in self.sitting_order if player.is_alive()]
+   
    async def check_winning_conditions(self):
       """Check if the game has reached the winning conditons. Promote new demons or 
       end the game is necessary.
       """
+
       # Less than or equal to 2 alive players. Winning condition is definitely triggered.
       if self.nb_alive_players <= 2:
+
          # There are still alive demons. The game is over with Evil win.
          if BOTCUtils.has_alive_demons():
-            from botc import Team
             self.winners = Team.evil
             self.gameloop.cancel()
+
          # There is no alive demon. The game is over with Good win.
          else:
-            from botc import Team
             self.winners = Team.good
             self.gameloop.cancel()
+
       # More than 2 players still alive.
       else:
-         # There are still alive demons. The game is not over yet.
+
+         # There are still alive demons. 
          if BOTCUtils.has_alive_demons():
-            return
+            # There is at least one alive good player. The game continues.
+            alives = self.list_alive_players
+            for player in alives:
+               if player.role.true_self.is_good():
+                  return
+            # The remaining players are all evil. The demon can't be nominated, and evil wins.
+            else:
+               self.winners = Team.evil
+               self.gameloop.cancel()
+
          # There is no alive demon. The game is over with Good win.
          else:
-            from botc import Team
             self.winners = Team.good
             self.gameloop.cancel()
 

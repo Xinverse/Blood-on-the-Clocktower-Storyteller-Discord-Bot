@@ -213,6 +213,8 @@
         "evilteammates" : "Your Evil teammates are shown below: ",
         "chef_init" : "You learn a `{}`.",
         "empath_nightly" : "Tonight, you learn a `{}`.",
+        "undertaker_nightly" : "Tonight, you learn `{}`.",
+        "undertaker_none" : "No one has been executed today.",
         "fortune_teller_nightly" : "Tonight, you learn a `{}`.",
         "investigator_init" : "You learn that one of the following two players is the ``{}``: ",
         "librarian_init" : "You learn that one of the following two players is the ``{}``: ", 
