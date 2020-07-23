@@ -272,6 +272,11 @@ class Game(GameMeta):
       # Temporary night data
       self.night_deaths = []  # List of player objects
       self.night_start_time = None  # datetime()
+   
+   def init_temporary_dawn_data(self):
+      """Initialize temporary dawn data. To be called at the start of the dawn"""
+      # Temporary dawn data
+      self.dawn_start_time = None  # datetime()
       
    def create_sitting_order_stats_string(self):
       """Create a stats board:
@@ -643,15 +648,15 @@ class Game(GameMeta):
    async def make_nightfall(self):
       """Transition the game into night phase"""
 
+      # Initialize the temporary night data set
+      self.init_temporary_night_data()
+
       # Store the starting time
       self.night_start_time = datetime.datetime.now()
 
       # Initialize the master switches at the start of a phase
       import botc.switches
       botc.switches.init_switches()
-
-      # Initialize the temporary night data set
-      self.init_temporary_night_data()
 
       # Stop all tasks of the day phase
       if nomination_loop.is_running():
@@ -681,6 +686,9 @@ class Game(GameMeta):
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""
 
+      # Initalize the temporary dawn data
+      self.init_temporary_dawn_data()
+
       # Store the starting time
       self.dawn_start_time = datetime.datetime.now()
 
@@ -704,15 +712,15 @@ class Game(GameMeta):
    async def make_daybreak(self):
       """Transition the game into day phase"""
 
+      # Initialize the temporary day data set
+      self.init_temporary_day_data()
+
       # Store the starting time
       self.day_start_time = datetime.datetime.now()
 
       # Initialize the master switches at the start of a phase
       import botc.switches
       botc.switches.init_switches()
-
-      # Initialize the temporary day data set
-      self.init_temporary_day_data()
 
       # Move the chrono forward by one phase
       self._chrono.next()
