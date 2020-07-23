@@ -295,7 +295,7 @@ class Game(GameMeta):
          if player.is_alive():
             line = f"{player.user.display_name} ({player.user.id}) [alive]\n"
          elif player.is_dead():
-            if player.has_vote:
+            if player.has_vote():
                line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode} {botutils.BotEmoji.vote}\n"
             else:
                line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode}\n"

@@ -88,25 +88,27 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
             nb_demons,
             "s" if nb_demons > 1 else ""
         )
+
+        msg += "\n"
+
+        nb_alive_players = len([player for player in game.sitting_order if player.is_apparently_alive()])
+        nb_available_votes = len([player for player in game.sitting_order if player.has_vote()])
+
+        # Vote stats
+        msg += votes_stats.format(
+            total = nb_total_players,
+            emoji_total = botutils.BotEmoji.people,
+            alive = nb_alive_players,
+            emoji_alive = botutils.BotEmoji.alive,
+            votes = nb_available_votes,
+            emoji_votes = botutils.BotEmoji.votes
+        )
         
         # If the phase is daytime, then include voting information
         if game.current_phase == Phase.day:
 
-            msg += "\n"
-
             chopping_block = game.chopping_block
-            nb_alive_players = len([player for player in game.sitting_order if player.is_apparently_alive()])
-            nb_available_votes = len([player for player in game.sitting_order if player.has_vote()])
-
-            # Vote stats
-            msg += votes_stats.format(
-                total = nb_total_players,
-                emoji_total = botutils.BotEmoji.people,
-                alive = nb_alive_players,
-                emoji_alive = botutils.BotEmoji.alive,
-                votes = nb_available_votes,
-                emoji_votes = botutils.BotEmoji.votes
-            )
+            
             msg += "\n"
 
             if chopping_block:
