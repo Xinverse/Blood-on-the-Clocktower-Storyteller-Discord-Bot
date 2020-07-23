@@ -228,7 +228,7 @@
         "washerwoman_init" : "You learn that one of the following two players is the ``{}``: ",
         "tb_lore" : "*Clouds roll in over Ravenswood Bluff, engulfing this sleepy town and its superstitious inhabitants in foreboding shadow. Anxious mothers call their children home from play, as thunder begins to clap on the horizon. Those who can read the signs know there is...* ***Trouble Brewing***.",
         "spy_nightly" : "The Grimoire is shown below.",
-        "action_assign" : "Since you did not pick a target for your manditory action, it has been randomized to {}.",
+        "action_assign" : "Since you did not pick a target for your mandatory action, it has been randomized to {}.",
         "yes" : "yes",
         "no" : "no",
         "call_for_vote" : "Do you vote for the 𝖊𝖝𝖊𝖈𝖚𝖙𝖎𝖔𝖓 of {}?",
