@@ -126,11 +126,13 @@
             "outputs" : [
                 "No one owns life, but anyone who can pick up a frying pan owns death. Frying pan in hand, {slayer} smacks {slain} with full force, and the Clocktower is now stained with the Demon's blood. Congratulations! The Demon has been slayed by our brave Dragon Sla-- oh wait, sorry, it's *Demon* Slayer.\nPlayer {slain} is now **dead**.",
                 "According to most studies, people's number one fear is public speaking. Number two is death. Death is number two! Does that sound right? This means to the average person, if you go to a funeral, you're better off in the casket than doing the eulogy. And the casket was where {slayer} decided to send {slain}.\nPlayer {slain} is now **dead**."
+                "{Slayer} suddenly pulled out their gun, and to everyone's great surprise, aimed at the roof and fired. The bullet ricocheted around the room before finally hitting {slain}. Luckily, they were the demon all along!\nPlayer {slain} is now **dead**."
+                "According to all known laws of aviation, a bee should never be able to fly. The same priniciples apply to {slain}, who was teleported by {slayer} around 10000 meters above the ground. They didn't stick the landing. After they fell, the village looked at the crater, finding a very dead Demon on the ground.\nPlayer {slain} is now **dead**."
             ],
 
             "weights" : [
-                0.5,
-                0.5
+                0.25,
+                0.25
             ]
         },
 
@@ -138,10 +140,12 @@
 
             "outputs" : [
                 "{slayer} launched themself towards {slain}, but tripped instead. As they got up awkwardly, they mumbled, 'I didn't trip. The floor gave me a dirty look, so I attacked it instead.'\nPlayer {slain} is still **alive**."
+                "{slayer} pulled out a gun, and shot at {slain}! But some dust got into {slayer}'s eye, and they missed. '\nPlayer {slain} is still **alive**."
             ],
 
             "weights" : [
-                1.0
+                0.5,
+                0.5
             ]
         },
 
@@ -151,10 +155,12 @@
 
                 "outputs" : [
                     "{} *has died during the night.*"
+                    "*As the village wakes, people started noticing that one of their number has not awakened. Upon further investication, the village found a dead body, covered in scratches and wounds.* {} *has died in the night.*"
                 ],
     
                 "weights" : [
-                    1.0
+                    0.5,
+                    0.5
                 ]
 
             },
