@@ -687,7 +687,7 @@ class Game(GameMeta):
 
       # Prepare the phase announcement message
       embed = discord.Embed(
-         description = nightfall,
+         description = botutils.BotEmoji.moon + " " + nightfall,
          color = CARD_NIGHT
       )
       embed.set_footer(text = copyrights_str)
@@ -717,7 +717,7 @@ class Game(GameMeta):
 
       # Prepare the phase announcement message
       embed = discord.Embed(
-         description = dawn,
+         description = botutils.BotEmoji.sunrise + " " + dawn,
          color = CARD_DAWN
       )
       embed.set_footer(text = copyrights_str)
@@ -769,7 +769,10 @@ class Game(GameMeta):
                   weights = death_weights
             )
             final_death_message = death_msg[0]
-            final_death_message = final_death_message.format(night_deaths_names[0])
+            final_death_message = final_death_message.format(
+               botutils.BotEmoji.murder,
+               night_deaths_names[0]
+            )
 
          else:
             death_messages = strings["lore"]["night_death"]["plural"]["outputs"]
@@ -779,10 +782,13 @@ class Game(GameMeta):
                   weights = death_weights
             )
             final_death_message = death_msg[0]
-            final_death_message = final_death_message.format(", ".join(night_deaths_names))
+            final_death_message = final_death_message.format(
+               botutils.BotEmoji.murder,
+               ", ".join(night_deaths_names)
+            )
 
       embed = discord.Embed(
-         description = daybreak + " " + final_death_message,
+         description = botutils.BotEmoji.sun + " " + daybreak + " " + final_death_message,
          color = CARD_DAY
       )
       embed.set_footer(text = copyrights_str)

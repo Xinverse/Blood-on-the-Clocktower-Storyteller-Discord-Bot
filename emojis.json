@@ -38,6 +38,12 @@
     "unread_message" : "<:unread_message:734201328246456420>",
     "opened_letter" : "<:opened_letter:734201328133341225>",
     "warning_sign" : "<:warning_sign:734221894055886940>",
+    "clocktower" : "<:clocktower:736037098355818577>",
+    "murder" : "<:murder:736042535860043828>",
+    "gallows" : "<:gallows:736042536086536354>",
+    "moon" : "<:custom_moon:736051573469478972>",
+    "sun" : "<:custom_sun:736050274220769292>",
+    "sunrise" : "<:custom_sunrise:736307652086202448>",
     "skull" : "💀",
     "fquit" : "❌",
     "vote" : "🗳️"

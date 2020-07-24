@@ -30,7 +30,6 @@
         "dead_no_lynch" : "https://imgur.com/RHuxhIL.png",
         "approved_seal" : "https://imgur.com/aNzpAin.png",
         "denied_seal" : "https://imgur.com/djYpGOY.png",
-        "clockface" : "https://imgur.com/71J4CTm.png",
         "dove" : "https://imgur.com/SSyMLfJ.png",
         "demon" : "https://imgur.com/zrVfclB.png"
         
@@ -156,7 +155,7 @@
             "singular" : {
 
                 "outputs" : [
-                    "*As the town wakes, people start noticing that one of their number has not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.* {} *has died during the night.*"
+                    "*As the town wakes, people start noticing that one of their number has not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.*\n\n{} {} *has died during the night.*"
                 ],
     
                 "weights" : [
@@ -168,7 +167,7 @@
             "plural" : {
 
                 "outputs" : [
-                    "{} *have died during the night.*"
+                    "{} {} *have died during the night.*"
                 ],
     
                 "weights" : [
@@ -180,7 +179,7 @@
             "zero" : {
 
                 "outputs" : [
-                    "*There are no deaths last night.*"
+                    "*There have been no deaths last night.*"
                 ],
     
                 "weights" : [

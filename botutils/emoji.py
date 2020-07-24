@@ -50,6 +50,12 @@ class BotEmoji:
     unread_message = emojis["unread_message"]
     opened_letter = emojis["opened_letter"]
     warning_sign = emojis["warning_sign"]
+    clocktower = emojis["clocktower"]
+    gallows = emojis["gallows"]
+    murder = emojis["murder"]
+    sun = emojis["sun"]
+    moon = emojis["moon"]
+    sunrise = emojis["sunrise"]
 
     # Unicode emojis
     skull = emojis["skull"]

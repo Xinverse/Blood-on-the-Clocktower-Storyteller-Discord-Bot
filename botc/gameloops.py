@@ -37,7 +37,6 @@ PREFIX = Config["settings"]["PREFIX"]
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
-    clockface = documentation["images"]["clockface"]
     approved_seal = documentation["images"]["approved_seal"]
     denied_seal = documentation["images"]["denied_seal"]
     ghost_vote_url = documentation["images"]["ghost_vote"]
@@ -82,7 +81,7 @@ async def nomination_loop(game, nominator, nominated):
     """
 
     intro_msg = nomination_intro.format(
-        botutils.BotEmoji.demonhead,
+        botutils.BotEmoji.gallows,
         botutils.make_alive_ping(),
         nominator.user.mention, 
         nominated.user.mention,
@@ -318,8 +317,7 @@ async def nomination_loop(game, nominator, nominated):
         
     summary_embed = discord.Embed(description = msg)
     summary_embed.set_author(
-        name = vote_summary,
-        icon_url = clockface
+        name = vote_summary
     )
     summary_embed.set_thumbnail(url = thumbnail_url)
     summary_embed.set_footer(text = copyrights_str)
@@ -417,7 +415,7 @@ async def day_loop(game):
         await asyncio.sleep(1)
 
     # Nominations are open
-    msg = botutils.BotEmoji.grimoire + " " + nominations_open.format(PREFIX)
+    msg = botutils.BotEmoji.clocktower + " " + nominations_open.format(PREFIX)
     await botutils.send_lobby(msg)
 
     timers = [90, 60, 45, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
@@ -429,7 +427,7 @@ async def day_loop(game):
             timer
         )
 
-        msg = botutils.BotEmoji.grimoire + " " + nomination_countdown.format(timer)
+        msg = botutils.BotEmoji.clocktower + " " + nomination_countdown.format(timer)
         await botutils.send_lobby(msg)
 
         countdown = timer
@@ -462,10 +460,10 @@ async def day_loop(game):
                             game.chopping_block.nb_votes
                         )
                     else:
-                        msg = botutils.BotEmoji.grimoire + " " + no_execution
+                        msg = botutils.BotEmoji.clocktower + " " + no_execution
                     await botutils.send_lobby(msg)
                 else:
-                    msg = botutils.BotEmoji.grimoire + " " + no_execution
+                    msg = botutils.BotEmoji.clocktower + " " + no_execution
                     await botutils.send_lobby(msg)
                 return
 
