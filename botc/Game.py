@@ -22,6 +22,7 @@ from .Outsider import Outsider
 from .Minion import Minion
 from .Demon import Demon
 from .gamemodes.troublebrewing.Saint import Saint
+from .gamemodes.troublebrewing.Drunk import Drunk
 from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
@@ -74,6 +75,7 @@ with open('botc/game_text.json') as json_file:
    evil_wins = strings["gameplay"]["evil_wins"]
    role_reveal = strings["gameplay"]["role_reveal"]
    storyteller_death = strings["lore"]["storyteller_death"]
+   ego_role_reveal = strings["gameplay"]["ego_role_reveal"]
 
 with open('botutils/bot_text.json') as json_file: 
    language = json.load(json_file)
@@ -407,12 +409,26 @@ class Game(GameMeta):
          # Revealing the role list
          role_list_str = ""
          for player in self.sitting_order:
-            short = role_reveal.format(
-               "",
-               player.user.mention, 
-               player.role.true_self.emoji, 
-               player.role.true_self.name
-            ) 
+
+            # The player is a drunk, we use the special reveal short string
+            if player.role.true_self.name == Drunk().name:
+               short = ego_role_reveal.format(
+                  "",
+                  player.user.mention, 
+                  player.role.true_self.emoji, 
+                  player.role.true_self.name,
+                  player.role.ego_self.name
+               ) 
+
+            # The player is not a drunk, we use the default reveal short string
+            else:
+               short = role_reveal.format(
+                  "",
+                  player.user.mention, 
+                  player.role.true_self.emoji, 
+                  player.role.true_self.name
+               ) 
+
             role_list_str += short
             role_list_str += "\n"
 
@@ -671,7 +687,7 @@ class Game(GameMeta):
 
       # Prepare the phase announcement message
       embed = discord.Embed(
-         description = nightfall,
+         description = botutils.BotEmoji.moon + " " + nightfall,
          color = CARD_NIGHT
       )
       embed.set_footer(text = copyrights_str)
@@ -701,7 +717,7 @@ class Game(GameMeta):
 
       # Prepare the phase announcement message
       embed = discord.Embed(
-         description = dawn,
+         description = botutils.BotEmoji.sunrise + " " + dawn,
          color = CARD_DAWN
       )
       embed.set_footer(text = copyrights_str)
@@ -753,7 +769,10 @@ class Game(GameMeta):
                   weights = death_weights
             )
             final_death_message = death_msg[0]
-            final_death_message = final_death_message.format(night_deaths_names[0])
+            final_death_message = final_death_message.format(
+               botutils.BotEmoji.murder,
+               night_deaths_names[0]
+            )
 
          else:
             death_messages = strings["lore"]["night_death"]["plural"]["outputs"]
@@ -763,10 +782,13 @@ class Game(GameMeta):
                   weights = death_weights
             )
             final_death_message = death_msg[0]
-            final_death_message = final_death_message.format(", ".join(night_deaths_names))
+            final_death_message = final_death_message.format(
+               botutils.BotEmoji.murder,
+               ", ".join(night_deaths_names)
+            )
 
       embed = discord.Embed(
-         description = daybreak + " " + final_death_message,
+         description = botutils.BotEmoji.sun + " " + daybreak + " " + final_death_message,
          color = CARD_DAY
       )
       embed.set_footer(text = copyrights_str)
