@@ -3,7 +3,7 @@
 
         "copyrights" : "Copyrights of BoTC belong to the Pandemonium Institute.",
         "res_title" : "Blood on the Clocktower (BoTC) - Resources",
-        "res_desc" : "In the quiet village of Ravenswood Bluff, ‌a demon walks amongst you...",
+        "res_desc" : "In the quaint village of Ravenswood Bluff, ‌a demon walks amongst you...",
         "thumnail" : "https://bloodontheclocktower.com/img/website/logo.png?rel=1591572107883",
         "wiki" : "http://bloodontheclocktower.com/wiki/Main_Page",
         "rulebooks" : "https://rebrand.ly/BOTCrulebook\nhttps://rebrand.ly/TBalmanac\nhttps://rebrand.ly/BMRalmanac\nhttps://rebrand.ly/SValmanac\nhttps://rebrand.ly/TravellersFabledAlmanac",
@@ -141,12 +141,14 @@
 
             "outputs" : [
                 "{slayer} launched themself towards {slain}, but tripped instead. As they got up awkwardly, they mumbled, 'I didn't trip. The floor gave me a dirty look, so I attacked it instead.'\nPlayer {slain} is still **alive**.",
-                "{slayer} pulled out a gun, and shot at {slain}! But some dust got into {slayer}'s eye, and they missed.\nPlayer {slain} is still **alive**."
+                "While counting the 10 duel commandments, {slayer} suddenly recalled their affinity for prime numbers. Profiting from this brief moment of confusion, {slain} quickly backed away and disappeared from view into the forest. Only hours later did the townsfolks finally help {slayer} snap out of his prime number reciting trance.\nPlayer {slain} is still **alive**.",
+                "{slayer} pulled out a gun, and shot at {slain}. But some dust got into {slayer}'s eye, and they missed.\nPlayer {slain} is still **alive**."
             ],
 
             "weights" : [
-                0.5,
-                0.5
+                0.3,
+                0.3,
+                0.4         
             ]
         },
 
@@ -155,11 +157,13 @@
             "singular" : {
 
                 "outputs" : [
-                    "*As the town wakes, people start noticing that one of their number has not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.*\n\n{} {} *has died during the night.*"
+                    "*As the knocker-up made their rounds in the morning, they discovered that one of the cottages was empty. Further inspection revealed a trail of blood and claw marks within the small house. A carcass, swarming with flies, was discovered a few hours later by the river.*\n\n {} {} *has died during the night.*",
+                    "*As the town woke, people started noticing that one of their number had not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.*\n\n{} {} *has died during the night.*"
                 ],
     
                 "weights" : [
-                    1.0
+                    0.5,
+                    0.5
                 ]
 
             },
@@ -179,7 +183,7 @@
             "zero" : {
 
                 "outputs" : [
-                    "*There have been no deaths last night.*"
+                    "The sound of a lone wolf howl echoed through the valley, but no bodies were recovered nor were any people reported missing."
                 ],
     
                 "weights" : [
