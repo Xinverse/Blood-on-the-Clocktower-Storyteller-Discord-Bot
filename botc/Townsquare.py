@@ -1,5 +1,6 @@
 """Contains the Townsquare class"""
 
+import random
 import math
 from PIL import Image, ImageFont, ImageDraw
 from botc.gamemodes import Gamemode
@@ -10,9 +11,8 @@ class Townsquare:
     order.
     """
 
-    BACKGROUND_PATH = "botc/assets/grimoire/background2.png"
-    TOWNSQUARE_PATH = "botc/assets/townsquare.png"
     TOKEN_DEATH = "botc/assets/grimoire/death.png"
+    TOWNSQUARE_PATH = "botc/assets/townsquare.png"
     TOKEN_GHOST_VOTE = "botc/assets/grimoire/ghostvote.png"
     TOKEN_LIFE = "botc/assets/grimoire/life.png"
     TB_ICON = "botc/assets/editions/TB_Logo.png"
@@ -29,6 +29,17 @@ class Townsquare:
         self.PIC_LENGTH = max(background.size)
 
         background.save(self.TOWNSQUARE_PATH, format="PNG")
+    
+    @property
+    def BACKGROUND_PATH(self): 
+        """Select a random background"""
+        backgrounds = [
+            "botc/assets/grimoire/townsquare_background1.png",
+            "botc/assets/grimoire/townsquare_background2.png",
+            "botc/assets/grimoire/townsquare_background3.png",
+            "botc/assets/grimoire/townsquare_background4.png"
+        ]
+        return random.choice(backgrounds)
     
     @property
     def token_width(self):

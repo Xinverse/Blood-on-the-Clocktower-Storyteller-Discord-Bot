@@ -165,44 +165,40 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
         """Execute the kill action (night ability interaction)"""
 
         if demon_player.is_alive() and not demon_player.is_droisoned():
-            # Healthy soldier does not die
-            if not killed_player.is_droisoned() and killed_player.role.true_self.name == Soldier().name:
-                return
             # Players who have received a status effect granting them safety from the demon 
             # do not die
-            elif killed_player.has_status_effect(StatusList.safety_from_demon):
+            if killed_player.has_status_effect(StatusList.safety_from_demon):
                 return
-            try:
-                await killed_player.exec_real_death()
-                globvars.master_state.game.night_deaths.append(killed_player)
-            except AlreadyDead:
-                pass
+            await killed_player.role.true_self.on_being_demon_killed(killed_player)
     
     async def process_night_ability(self, player):
         """Process night actions for the imp character.
         @player : the Imp player (Player object)
         """
+
+        # We only do any of the following if the imp is alive. Otherwise skip everything.
+        if player.is_alive():
         
-        phase = globvars.master_state.game._chrono.phase_id
-        action = player.action_grid.retrieve_an_action(phase)
-        # The imp has submitted an action. We call the execution function immediately
-        if action:
-            assert action.action_type == ActionTypes.kill, f"Wrong action type {action} in imp"
-            targets = action.target_player
-            killed_player = targets[0]
-            await self.exec_kill(player, killed_player)
-        # The imp has not submitted an action. We will randomize the action and make 
-        # the imp kill one random player that is not the imp. 
-        else:
-            if player.is_alive():
-                killed_player = BOTCUtils.get_random_player_excluding(player)
+            phase = globvars.master_state.game._chrono.phase_id
+            action = player.action_grid.retrieve_an_action(phase)
+            # The imp has submitted an action. We call the execution function immediately
+            if action:
+                assert action.action_type == ActionTypes.kill, f"Wrong action type {action} in imp"
+                targets = action.target_player
+                killed_player = targets[0]
                 await self.exec_kill(player, killed_player)
-                msg = botutils.BotEmoji.butterfly
-                msg += " "
-                msg += action_assign.format(killed_player.game_nametag)
-                try:
-                    await player.user.send(msg)
-                except discord.Forbidden:
-                    pass
+            # The imp has not submitted an action. We will randomize the action and make 
+            # the imp kill one random player that is not the imp. 
             else:
-                pass
+                if player.is_alive():
+                    killed_player = BOTCUtils.get_random_player_excluding(player)
+                    await self.exec_kill(player, killed_player)
+                    msg = botutils.BotEmoji.butterfly
+                    msg += " "
+                    msg += action_assign.format(killed_player.game_nametag)
+                    try:
+                        await player.user.send(msg)
+                    except discord.Forbidden:
+                        pass
+                else:
+                    pass

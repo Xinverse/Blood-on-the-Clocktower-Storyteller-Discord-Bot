@@ -2,14 +2,21 @@
 
 import botutils
 import json
+import configparser
 import traceback
 from discord.ext import commands
 from ._gameplay import Gameplay
+
+Config = configparser.ConfigParser()
+Config.read("config.INI")
+
+PREFIX = Config["settings"]["PREFIX"]
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
+no_game = language["cmd"]["no_game"]
 
 
 class Stats(Gameplay, name = language["system"]["gameplay_cog"]):
@@ -24,7 +31,6 @@ class Stats(Gameplay, name = language["system"]["gameplay_cog"]):
         description = language["doc"]["stats"]["description"]
     )
     @commands.check(botutils.check_if_lobby_or_spec_or_dm_or_admin)
-    @commands.check(botutils.check_if_not_in_empty)
     async def stats(self, ctx):
         """Stats command"""
 
@@ -36,7 +42,11 @@ class Stats(Gameplay, name = language["system"]["gameplay_cog"]):
 
         # If we are in game:
         elif globvars.master_state.session == botutils.BotState.game:
-            pass
+            return
+        
+        # If we are in empty
+        elif globvars.master_state.session == botutils.BotState.empty:
+            await ctx.send(no_game.format(PREFIX))
     
     @stats.error
     async def stats_error(self, ctx, error):

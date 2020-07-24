@@ -122,24 +122,28 @@ class Butler(Outsider, TroubleBrewing, Character, RecurringAction):
         """Process night actions for the butler character.
         @player : the Butler player (Player object)
         """
+
+        # We only do any of the following if the butler is alive. Otherwise skip everything.
+        if player.is_alive():
         
-        phase = globvars.master_state.game._chrono.phase_id
-        action = player.action_grid.retrieve_an_action(phase)
-        # The butler has submitted an action. We call the execution function immediately
-        if action:
-            assert action.action_type == ActionTypes.serve, f"Wrong action type {action} in butler"
-            targets = action.target_player
-            master_player = targets[0]
-            await self.exec_serve(player, master_player)
-        # The butler has not submitted an action. We randomize the master for him, 
-        # DM him the choice of the master, and then call the execution function
-        else:
-            master_player = BOTCUtils.get_random_player_excluding(player)
-            await self.exec_serve(player, master_player)
-            msg = botutils.BotEmoji.butterfly
-            msg += " "
-            msg += action_assign.format(master_player.game_nametag)
-            try:
-                await player.user.send(msg)
-            except discord.Forbidden:
-                pass
+            phase = globvars.master_state.game._chrono.phase_id
+            action = player.action_grid.retrieve_an_action(phase)
+
+            # The butler has submitted an action. We call the execution function immediately
+            if action:
+                assert action.action_type == ActionTypes.serve, f"Wrong action type {action} in butler"
+                targets = action.target_player
+                master_player = targets[0]
+                await self.exec_serve(player, master_player)
+            # The butler has not submitted an action. We randomize the master for him, 
+            # DM him the choice of the master, and then call the execution function
+            else:
+                master_player = BOTCUtils.get_random_player_excluding(player)
+                await self.exec_serve(player, master_player)
+                msg = botutils.BotEmoji.butterfly
+                msg += " "
+                msg += action_assign.format(master_player.game_nametag)
+                try:
+                    await player.user.send(msg)
+                except discord.Forbidden:
+                    pass

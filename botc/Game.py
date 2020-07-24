@@ -25,8 +25,9 @@ from .gamemodes.troublebrewing.Saint import Saint
 from .gamemodes.troublebrewing._utils import TroubleBrewing
 from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
-from .gameloops import master_game_loop, nomination_loop, base_day_loop
+from .gameloops import master_game_loop, nomination_loop, base_day_loop, debate_timer
 from models import GameMeta
+from botc import Team
 
 Config = configparser.ConfigParser()
 Config.read("preferences.INI")
@@ -203,9 +204,15 @@ class Game(GameMeta):
       # Temporary day data
       self.chopping_block = None  # ChoppingBlock object
       self.today_executed_player = None  # Player object
+      self.day_start_time = None  # datetime()
+      self.nomination_iteration_date = tuple()  # tuple(datetime() for start time, duration in secs)
 
       # Temporary night data
       self.night_deaths = []  # List of player objects
+      self.night_start_time = None  # datetime()
+
+      # Temporary dawn data
+      self.dawn_start_time = None  # datetime()
    
    @property
    def nb_players(self):
@@ -256,11 +263,20 @@ class Game(GameMeta):
       # Temporary day data
       self.chopping_block = None  # ChoppingBlock object
       self.today_executed_player = None  # Player object
+      self.day_start_time = None  # datetime()
+      self.nomination_iteration_date = tuple()  # tuple(datetime() for start time, duration in secs)
+
    
    def init_temporary_night_data(self):
       """Initialize temporary night data. To be called at the start of the night"""
       # Temporary night data
       self.night_deaths = []  # List of player objects
+      self.night_start_time = None  # datetime()
+   
+   def init_temporary_dawn_data(self):
+      """Initialize temporary dawn data. To be called at the start of the dawn"""
+      # Temporary dawn data
+      self.dawn_start_time = None  # datetime()
       
    def create_sitting_order_stats_string(self):
       """Create a stats board:
@@ -274,12 +290,12 @@ class Game(GameMeta):
       ```
       """
 
-      msg = "```css\n"
+      msg = "\n\n**Players**: ```css\n"
       for player in self.sitting_order:
          if player.is_alive():
             line = f"{player.user.display_name} ({player.user.id}) [alive]\n"
          elif player.is_dead():
-            if player.has_vote:
+            if player.has_vote():
                line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode} {botutils.BotEmoji.vote}\n"
             else:
                line = f"{player.user.display_name} ({player.user.id}) [dead] {skull_unicode}\n"
@@ -325,7 +341,7 @@ class Game(GameMeta):
       elif self.gamemode == Gamemode.bad_moon_rising:
          pass
    
-   async def send_lobby_closing_message(self):
+   async def send_lobby_closing_message(self, win_con_reason = ""):
       """Send the closing message in lobby"""
 
       from botc import Team
@@ -500,15 +516,15 @@ class Game(GameMeta):
 
          night_regular_order = [
 
-            TBRole.poisoner,
-            TBRole.monk,
-            TBRole.scarletwoman,
-            TBRole.imp,
-            TBRole.ravenkeeper,
+            TBRole.poisoner,      # Poison
+            TBRole.monk,          # Protect
+            TBRole.scarletwoman,  # Let her know of any demon promotion
+            TBRole.soldier,       # Add the safe from demon status effect if not droisoned
+            TBRole.imp,           # Save the kill target
             TBRole.empath,
             TBRole.fortuneteller,
             TBRole.butler,
-            TBRole.undertaker,
+            TBRole.undertaker,    # Send the executed player's role
             TBRole.spy
 
          ]
@@ -550,30 +566,46 @@ class Game(GameMeta):
             count += 1
       return count
    
+   @property
+   def list_alive_players(self):
+      """Return the list of alive players (truly alive state)"""
+      return [player for player in self.sitting_order if player.is_alive()]
+   
    async def check_winning_conditions(self):
       """Check if the game has reached the winning conditons. Promote new demons or 
       end the game is necessary.
       """
+
       # Less than or equal to 2 alive players. Winning condition is definitely triggered.
       if self.nb_alive_players <= 2:
+
          # There are still alive demons. The game is over with Evil win.
          if BOTCUtils.has_alive_demons():
-            from botc import Team
             self.winners = Team.evil
             self.gameloop.cancel()
+
          # There is no alive demon. The game is over with Good win.
          else:
-            from botc import Team
             self.winners = Team.good
             self.gameloop.cancel()
+
       # More than 2 players still alive.
       else:
-         # There are still alive demons. The game is not over yet.
+
+         # There are still alive demons. 
          if BOTCUtils.has_alive_demons():
-            return
+            # There is at least one alive good player. The game continues.
+            alives = self.list_alive_players
+            for player in alives:
+               if player.role.true_self.is_good():
+                  return
+            # The remaining players are all evil. The demon can't be nominated, and evil wins.
+            else:
+               self.winners = Team.evil
+               self.gameloop.cancel()
+
          # There is no alive demon. The game is over with Good win.
          else:
-            from botc import Team
             self.winners = Team.good
             self.gameloop.cancel()
 
@@ -602,6 +634,9 @@ class Game(GameMeta):
       # Stop the base day loop if it is running
       if base_day_loop.is_running():
          base_day_loop.cancel()
+      # Stop the debate timer loop if it is running
+      if debate_timer.is_running():
+         debate_timer.cancel()
       # Clear the game object
       self.__init__()
       globvars.master_state.game = None
@@ -613,18 +648,23 @@ class Game(GameMeta):
    async def make_nightfall(self):
       """Transition the game into night phase"""
 
+      # Initialize the temporary night data set
+      self.init_temporary_night_data()
+
+      # Store the starting time
+      self.night_start_time = datetime.datetime.now()
+
       # Initialize the master switches at the start of a phase
       import botc.switches
       botc.switches.init_switches()
-
-      # Initialize the temporary night data set
-      self.init_temporary_night_data()
 
       # Stop all tasks of the day phase
       if nomination_loop.is_running():
          nomination_loop.cancel()
       if base_day_loop.is_running():
          base_day_loop.cancel()
+      if debate_timer.is_running():
+         debate_timer.cancel()
 
       # Move the chrono forward by one phase
       self._chrono.next()
@@ -646,6 +686,12 @@ class Game(GameMeta):
    async def make_dawn(self):
       """Transition the game into dawn/interlude phase"""
 
+      # Initalize the temporary dawn data
+      self.init_temporary_dawn_data()
+
+      # Store the starting time
+      self.dawn_start_time = datetime.datetime.now()
+
       # Initialize the master switches at the start of a phase
       import botc.switches
       botc.switches.init_switches()
@@ -666,12 +712,15 @@ class Game(GameMeta):
    async def make_daybreak(self):
       """Transition the game into day phase"""
 
+      # Initialize the temporary day data set
+      self.init_temporary_day_data()
+
+      # Store the starting time
+      self.day_start_time = datetime.datetime.now()
+
       # Initialize the master switches at the start of a phase
       import botc.switches
       botc.switches.init_switches()
-
-      # Initialize the temporary day data set
-      self.init_temporary_day_data()
 
       # Move the chrono forward by one phase
       self._chrono.next()

@@ -5,7 +5,7 @@ import json
 import math
 import botutils
 from library import fancy
-from botc import Phase
+from botc import Phase, RoleGuide
 from discord.ext import commands
 
 with open('botutils/bot_text.json') as json_file: 
@@ -24,11 +24,12 @@ with open('botc/game_text.json') as json_file:
     stats_1 = documentation["gameplay"]["stats_1"]
     stats_2 = documentation["gameplay"]["stats_2"]
     stats_3 = documentation["gameplay"]["stats_3"]
+    setup_info = documentation["gameplay"]["setup_info"]
 
 
 class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
     """BoTC in-game commands cog
-    Townsquare command - used for viewing the townsquare image
+    Stats command - used for viewing the game's player statistics
     """
     
     def __init__(self, client):
@@ -41,6 +42,7 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         """
         return botutils.check_if_admin(ctx) or \
                botutils.check_if_lobby(ctx) or \
+               botutils.check_if_dm(ctx) or \
                botutils.check_if_spec(ctx)
     
     # ---------- STATS COMMAND (Stats) ----------------------------------------
@@ -59,6 +61,9 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         """
         import globvars
         game = globvars.master_state.game
+        nb_total_players = len(game.sitting_order)
+
+        # Header information - edition, phase and game title
         msg = ctx.author.mention
         msg += " "
         msg += stats_header.format(game.nb_players, fancy.bold(game.gamemode.value))
@@ -66,22 +71,44 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         msg += current_phase.format(fancy.bold(game.current_phase.value))
         msg += "\n"
 
+        # Setup information
+        role_guide = RoleGuide(nb_total_players)
+        nb_townsfolks = role_guide.nb_townsfolks
+        nb_outsiders = role_guide.nb_outsiders
+        nb_minions = role_guide.nb_minions
+        nb_demons = role_guide.nb_demons
+        msg += setup_info.format(
+            nb_total_players,
+            nb_townsfolks,
+            "s" if nb_townsfolks > 1 else "",
+            nb_outsiders,
+            "s" if nb_outsiders > 1 else "",
+            nb_minions,
+            "s" if nb_minions > 1 else "",
+            nb_demons,
+            "s" if nb_demons > 1 else ""
+        )
+
+        msg += "\n"
+
+        nb_alive_players = len([player for player in game.sitting_order if player.is_apparently_alive()])
+        nb_available_votes = len([player for player in game.sitting_order if player.has_vote()])
+
+        # Vote stats
+        msg += votes_stats.format(
+            total = nb_total_players,
+            emoji_total = botutils.BotEmoji.people,
+            alive = nb_alive_players,
+            emoji_alive = botutils.BotEmoji.alive,
+            votes = nb_available_votes,
+            emoji_votes = botutils.BotEmoji.votes
+        )
+        
+        # If the phase is daytime, then include voting information
         if game.current_phase == Phase.day:
 
             chopping_block = game.chopping_block
-            nb_total_players = len(game.sitting_order)
-            nb_alive_players = len([player for player in game.sitting_order if player.is_apparently_alive()])
-            nb_available_votes = len([player for player in game.sitting_order if player.has_vote()])
-
-            # Vote stats
-            msg += votes_stats.format(
-                total = nb_total_players,
-                emoji_total = botutils.BotEmoji.people,
-                alive = nb_alive_players,
-                emoji_alive = botutils.BotEmoji.alive,
-                votes = nb_available_votes,
-                emoji_votes = botutils.BotEmoji.votes
-            )
+            
             msg += "\n"
 
             if chopping_block:
@@ -105,7 +132,7 @@ class Stats(commands.Cog, name = documentation["misc"]["townhall_cog"]):
 
     @stats.error
     async def stats_error(self, ctx, error):
-        # Command on cooldown -> commands.CommandOnCooldown
+        # Check did not pass -> commands.CheckFailure
         if isinstance(error, commands.CheckFailure):
             return
         else:

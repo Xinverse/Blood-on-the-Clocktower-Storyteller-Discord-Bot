@@ -28,8 +28,8 @@
         "alive_no_lynch" : "https://imgur.com/HKFuogo.png",
         "dead_lynch" : "https://imgur.com/NikbRVs.png",
         "dead_no_lynch" : "https://imgur.com/RHuxhIL.png",
-        "approved_seal" : "https://imgur.com/IJv9e3y.png",
-        "denied_seal" : "https://imgur.com/JPmfCgL.png",
+        "approved_seal" : "https://imgur.com/aNzpAin.png",
+        "denied_seal" : "https://imgur.com/djYpGOY.png",
         "clockface" : "https://imgur.com/71J4CTm.png",
         "dove" : "https://imgur.com/SSyMLfJ.png",
         "demon" : "https://imgur.com/zrVfclB.png"
@@ -131,6 +131,8 @@
                 "Innumerable stars flare into existence daily, becons of light in the void of space. Some say the fallen of our realm rise up and join them - a privileged member of the celestial army. Others such as the {slayer} believe that they are cursed. Doomed to insanity as their conscious rots within the stellar core. One must wonder if {slayer} thought of this prior to the dispatchment of {slain}. \nPlayer {slain} is now **dead**.",
                 "{slain} enters a void. No. Not a void. *The* void. They swims forward, and back. Up, then down. Left, then right. Direction means nothing. Their senses go numb. Fire blazes through their veins, freezing and falling out in place. Is this hell? Has {slayer} helped {slain} achieve immortality? Not too different now, eh? \nPlayer {slain} is now **dead**.",
                 "We're no strangers to love. You know the rules, and so do I. Always gonna give you, always gonna let you down. Always gonna be {slayer} and murder you. Always gonna make you cry, always gonna say goodbye. Always gonna tell a lie, and hurt you. \nPlayer {slain} is now **dead**."
+                "{slayer} suddenly pulled out their gun, and to everyone's great surprise, aimed carelessly at the roof and fired. The bullet ricocheted around the room before finally hitting {slain}. Luckily, they were the demon all along!\nPlayer {slain} is now **dead**.",
+                "According to all known laws of aviation, a bee should never be able to fly. The same priniciples applied to {slain}, who was teleported by {slayer} around 10000 meters above the ground. They didn't stick the landing. After they fell, the village looked at the crater, finding a very dead Demon on the ground.\nPlayer {slain} is now **dead**."
             ],
 
             "weights" : [
@@ -141,7 +143,7 @@
                 0.16,
                 0.16,
                 0.04
-            ]
+            ],
         },
 
         "slay_fail" : {
@@ -153,6 +155,7 @@
                 "'Wait, is that Bhaa?', says {slayer}. While he's distracted, {slain} scampers away through the brush. \nPlayer {slain} is still **alive**.",
                 "A small penguin and a ninja panda walkby the town. {slain} is immediately infaturated by them, and much to the annoyance of {slayer}, gets lost in the chaos. \nPlayer {slain} is still **alive**.",
                 "{Slayer} failed. That's it. {Slain} looks around and walks away. \nPlayer {slain} is still **alive**."
+                "{slayer} pulled out a gun, and shot at {slain}! But some dust got into {slayer}'s eye, and they missed.\nPlayer {slain} is still **alive**."
             ],
 
             "weights" : [
@@ -161,8 +164,8 @@
                 0.16,
                 0.16,
                 0.16,
-                0.16
-            ]
+                0.16          
+            ],
         },
 
         "night_death" : {
@@ -174,6 +177,7 @@
                     "As the knocker-up made their rounds in the morning, they discovered that {}'s cottage was empty. Further inspection revealed a trail of blood and claw marks within the small house. {}'s carcass, swarming with flies, was discovered a few hours later by the river."
                     "Thirty-two thousand troops in New York Harbor could not help the village protect it's people. Blood was streaked on the Clock Tower, later revealed to be that of {}."
                     "Blood on the Clocktower, is it yours? Blood on the Clocktower, there's the door. The body of {} is behind there for sure."
+                    "*As the town wakes, people start noticing that one of their number has not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.* {} *has died during the night.*"
                 ],
     
                 "weights" : [
@@ -234,9 +238,9 @@
 
         "role_dm" : "***{user}***, your character is the **{role_name_str}**. You are in the **{category_str}** category, on the **{team_str}** team. Type `{prefix}role {role_name_str}` to read your character guide.",
         "welcome_dm" : "**𝖂𝖊𝖑𝖈𝖔𝖒𝖊 𝖙𝖔 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗**",
-        "nightfall" : "It is currently **𝖓𝖎𝖌𝖍𝖙𝖙𝖎𝖒𝖊**.",
-        "dawn" : "It is currently **𝖉𝖆𝖜𝖓**.",
-        "daybreak" : "It is currently **𝖉𝖆𝖞𝖙𝖎𝖒𝖊**.",
+        "nightfall" : "It is currently **nighttime**.",
+        "dawn" : "It is currently **dawn**.",
+        "daybreak" : "It is currently **daytime**.",
         "blocked" : "{} You have either blocked me, or have not enabled direct messages from server members.",
         "lobby_game_start" : "{} Welcome to **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, played using the **{}** Edition with **{}** players. All players should now have received a DM from me for private instructions.",
         "lobby_game_closing" : "{} Game over! Thank you for playing **𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)**, using the **{}** Edition with **{}** players.",
@@ -244,6 +248,8 @@
         "evilteammates" : "Your Evil teammates are shown below: ",
         "chef_init" : "You learn a `{}`.",
         "empath_nightly" : "Tonight, you learn a `{}`.",
+        "undertaker_nightly" : "Tonight, you learn `{}`.",
+        "undertaker_none" : "No one has been executed today.",
         "fortune_teller_nightly" : "Tonight, you learn a `{}`.",
         "investigator_init" : "You learn that one of the following two players is the ``{}``: ",
         "librarian_init" : "You learn that one of the following two players is the ``{}``: ", 
@@ -286,7 +292,14 @@
         "from" : "{} From {}: *{}*",
         "to" : "{} To {}: *{}*",
         "whisper_announcement" : "{} {} is whispering to {}.",
-        "immediately_executed" : "{} {} is immediately executed. Goodnight."
+        "immediately_executed" : "{} {} is immediately executed. Goodnight.",
+        "setup_info" : "**{}** players base setup with **{}** `townsfolk{}`, **{}** `outsider{}`, **{}** `minion{}`, **{}** `demon{}`.",
+        "time_night" : "It is currently **nighttime**. The night phase lasts a minimum of `{}` and a maximum of `{}`. There {} **{}** left until dawn.",
+        "time_dawn" : "It is currently **dawn**. The dawn phase lasts a minimum of `{}` and a maximum of `{}`. There {} **{}** left until daytime.",
+        "time_day_base" : "It is currently **daytime**. The daytime discussion phase lasts `{}`. There {} **{}** left until nominations are open.",
+        "time_voting" : "It is currently **daytime**. This is the nominations phase. Votes are being counted right now.",
+        "time_debate" : "It is currently **daytime**. You have `{}` for discussion. The voting will start in **{}**.",
+        "time_nomination" : "It is currently **daytime**. You have `{}` to nominate someone. The game will progress to the night phase in **{}**."
 
     },
 
@@ -352,6 +365,13 @@
             "feedback" : "{} Successfully transitioned to the Night Phase."
         },
 
+        "fnomination" : {
+            "brief" : "start the nominations if it's daytime",
+            "help" : "This debugging command forcefully fast-forwards the game from the Daytime base phase to the nominations phase.",
+            "description" : "[FNOMINATION] command - BOTC (debug)",
+            "feedback" : "{} Successfully fast-forwarded to the nominations."
+        },
+
         "serve" : {
             "brief" : "pick a 'serve' target",
             "help" : "The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially. If your role allows for multiple targets, use 'and' to separate each of them. Please use the command in DM.",
@@ -410,6 +430,12 @@
             "brief" : "whisper to a player",
             "help" : "Whispers between players will be relayed by the bot using private messages.",
             "description" : "[WHISPER] command - BOTC"
+        },
+
+        "time" : {
+            "brief" : "show the time remaining",
+            "help" : "The game is divided into several stages and phases. Use this command to view the time remaining until the next stage or phase.",
+            "description" : "[TIME] command - BOTC"
         },
 
         "stats" : {

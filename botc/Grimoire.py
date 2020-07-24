@@ -1,5 +1,6 @@
 """Contains the Grimoire class"""
 
+import random
 import math
 from PIL import Image, ImageFont, ImageDraw
 from botc.gamemodes import Gamemode
@@ -8,7 +9,6 @@ from botc.gamemodes import Gamemode
 class Grimoire:
     """Grimoire object to show the grimoire representation to the Spy Character"""
 
-    BACKGROUND_PATH = "botc/assets/grimoire/background.png"
     GRIMOIRE_PATH = "botc/assets/grimoire/grimoire.png"
     TB_ICON = "botc/assets/editions/TB_Logo.png"
     BMR_ICON = "botc/assets/editions/BMR_Logo.png"
@@ -25,6 +25,15 @@ class Grimoire:
         self.PIC_LENGTH = max(background.size)
 
         background.save(self.GRIMOIRE_PATH, format="PNG")
+    
+    @property
+    def BACKGROUND_PATH(self):
+        """Select a random background"""
+        backgrounds = [
+            "botc/assets/grimoire/grimoire_background1.png",
+            "botc/assets/grimoire/grimoire_background2.png"
+        ]
+        return random.choice(backgrounds)
     
     @property
     def token_width(self):
