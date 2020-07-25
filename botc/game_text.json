@@ -158,7 +158,26 @@
 
                 "outputs" : [
                     "*As the knocker-up made their rounds in the morning, they discovered that one of the cottages was empty. Further inspection revealed a trail of blood and claw marks within the small house. A carcass, swarming with flies, was discovered a few hours later by the river.*\n\n {} {} *has died during the night.*",
-                    "*As the town woke, people started noticing that one of their number had not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.*\n\n{} {} *has died during the night.*"
+                    "*As the town woke, people started noticing that one of their number had not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.*\n\n{} {} *has died during the night.*",
+                    "'n/Player drank some really spoiled milk, and has passed away in the outhouse. *\n\n{} {} *has died in the night.*",
+                    "A scream was yelled out in the middle of the night, but no one heard them. When day broke, The villagers saw '/nPlayer's corpse, riddled with wounds and scratches. It was horrifying. *\n\n{} {} *has died during the night.*"
+                    "
+                ],
+    
+                "weights" : [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+
+            },
+
+            "plural" : {
+
+                "outputs" : [
+                    "{} {} *have died during the night.*"
+                    "The Serial Killer isn't a real role, right? *Cause {} and {} have died.*"
                 ],
     
                 "weights" : [
@@ -168,26 +187,20 @@
 
             },
 
-            "plural" : {
-
-                "outputs" : [
-                    "{} {} *have died during the night.*"
-                ],
-    
-                "weights" : [
-                    1.0
-                ]
-
-            },
-
             "zero" : {
 
                 "outputs" : [
-                    "The sound of a lone wolf howl echoed through the valley, but no bodies were recovered nor were any people reported missing."
+                    "The sound of a lone wolf howl echoed through the valley, but no bodies were recovered nor were any people reported missing.",
+                    "Huh. Seems like nothing's happened in the night. Good job! *No one's dead.*",
+                    "Ok, this is kinda creepy. *No one died last night.*",
+                    "Sorry, fell asleep, what's going on? What? *No one died?* Well, you heard them."
                 ],
     
                 "weights" : [
-                    1.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ]
 
             }
@@ -196,10 +209,13 @@
         "day_lynch" : {
 
             "outputs" : [
-                
+                "The village screams for *\n\n{} {}'s **death**, and the executioner is more than happy to oblige.".
+                "A festival was held in *\n\n{} {}'s honor. Unfortunately, *\n\n{} {}'s was stabbed during this, but they already died because of the absolutely boring speeches before hand. *\n\n{} {} is now *dead.*"
             ],
 
             "weights" : [
+                0.50,
+                0.50
 
             ]
         },
