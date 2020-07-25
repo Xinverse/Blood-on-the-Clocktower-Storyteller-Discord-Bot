@@ -128,6 +128,25 @@
                 "According to most studies, people's number one fear is public speaking. Number two is death. Death is number two! Does that sound right? This means to the average person, if you go to a funeral, you're better off in the casket than doing the eulogy. And the casket was where {slayer} decided to send {slain}.\nPlayer {slain} is now **dead**.",
                 "{slayer} suddenly pulled out their gun, and to everyone's great surprise, aimed carelessly at the roof and fired. The bullet ricocheted around the room before finally hitting {slain}. Luckily, they were the demon all along!\nPlayer {slain} is now **dead**.",
                 "According to all known laws of aviation, a bee should never be able to fly. The same priniciples applied to {slain}, who was teleported by {slayer} around 10000 meters above the ground. They didn't stick the landing. After they fell, the village looked at the crater, finding a very dead Demon on the ground.\nPlayer {slain} is now **dead**."
+                "{slayer} starts the 10-second dynamite that has been secretely hidden under the target's house. 10... 9... 8... 7... 6... 5... 4... 3... 2... 1... \* click\*. BOOM ! The town now awoken by this ewplosion and find out that\nPlayer {slain} is a demon... And is **dead**."
+            ]
+
+            "weights" : [
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2
+            ]
+        },
+
+        "slay_fail" : {
+
+            "outputs" : [
+                "{slayer} launched themself towards {slain}, but tripped instead. As they got up awkwardly, they mumbled, 'I didn't trip. The floor gave me a dirty look, so I attacked it instead.'\nPlayer {slain} is still **alive**.",
+                "While counting the 10 duel commandments, {slayer} suddenly recalled their affinity for prime numbers. Profiting from this brief moment of confusion, {slain} quickly backed away and disappeared from view into the forest. Only hours later did the townsfolks finally help {slayer} snap out of his prime number reciting trance.\nPlayer {slain} is still **alive**.",
+                "{slayer} pulled out a gun, and shot at {slain}. But some dust got into {slayer}'s eye, and they missed.\nPlayer {slain} is still **alive**."
+                "{slayer} starts the 10-second dynamite that has been secretely hidden under the target's house. 10... 9... 8... 7... 6... 5... 4... 3... 2... 1... \* click\*. The flame goes wet. \n {slain} is still **alive**."
             ],
 
             "weights" : [
@@ -138,33 +157,20 @@
             ]
         },
 
-        "slay_fail" : {
-
-            "outputs" : [
-                "{slayer} launched themself towards {slain}, but tripped instead. As they got up awkwardly, they mumbled, 'I didn't trip. The floor gave me a dirty look, so I attacked it instead.'\nPlayer {slain} is still **alive**.",
-                "While counting the 10 duel commandments, {slayer} suddenly recalled their affinity for prime numbers. Profiting from this brief moment of confusion, {slain} quickly backed away and disappeared from view into the forest. Only hours later did the townsfolks finally help {slayer} snap out of his prime number reciting trance.\nPlayer {slain} is still **alive**.",
-                "{slayer} pulled out a gun, and shot at {slain}. But some dust got into {slayer}'s eye, and they missed.\nPlayer {slain} is still **alive**."
-            ],
-
-            "weights" : [
-                0.3,
-                0.3,
-                0.4         
-            ]
-        },
-
         "night_death" : {
 
             "singular" : {
 
                 "outputs" : [
                     "*As the knocker-up made their rounds in the morning, they discovered that one of the cottages was empty. Further inspection revealed a trail of blood and claw marks within the small house. A carcass, swarming with flies, was discovered a few hours later by the river.*\n\n {} {} *has died during the night.*",
-                    "*As the town woke, people started noticing that one of their number had not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.*\n\n{} {} *has died during the night.*"
+                    "*As the town woke, people started noticing that one of their number had not awakened. Upon further investigation, the village found a dead body, covered in scratches and wounds.*\n\n{} {} *has died during the night.*",
+                    "*As the bright flames of the sun shine on the land, the bell of the church announces the end of the night : A player is missing the count. The townsfolk find the demon's victim : *\n\n {} {} * has died during the night.*"
                 ],
-    
+  
                 "weights" : [
-                    0.5,
-                    0.5
+                    0.35,
+                    0.35,
+                    0.30
                 ]
 
             },
@@ -172,11 +178,13 @@
             "plural" : {
 
                 "outputs" : [
-                    "{} {} *have died during the night.*"
+                    "{} {} *have died during the night.*",
+                    "*As the sun rises and the bell rings the end of the night, it seems that after the daily count, multiple player are missing.* \n\n {} {} * have died during the night*."
                 ],
     
                 "weights" : [
-                    1.0
+                    0.5
+                    0.5
                 ]
 
             },
@@ -184,11 +192,13 @@
             "zero" : {
 
                 "outputs" : [
-                    "The sound of a lone wolf howl echoed through the valley, but no bodies were recovered nor were any people reported missing."
+                    "The sound of a lone wolf howl echoed through the valley, but no bodies were recovered nor were any people reported missing.",
+                    "*The sun rises. The ineluctable bell rings and as the town wakes up, a white cat runs through the streets. After the never-ending daily count finishes, it has been found that...*/n/n *No player died tonight*"
                 ],
     
                 "weights" : [
-                    1.0
+                    0.5,
+                    0.5
                 ]
 
             }
@@ -197,15 +207,23 @@
         "day_lynch" : {
 
             "outputs" : [
-                
-            ],
+                "After a well-thought vote, the village starts the execution. \n\n {} {} drowns in the water, **dead**. A player dies, one more chance of killing the demon",
+                "After a well-thought vote, the village starts the execution. \n\n {} {} is burnt to death, **dead**. It would surely be a great barbecue.",
+                "After a well-thought vote, the village starts the execution. \n\n {} {}'s blood is drained and falls **dead**. We still accept any blood donations though",
+                "After a well-thought vote, the village starts the execution. \n\n {} {} is beheaded. After the 4 last seconds of consciousness he observes the alive players. This player is **dead**",
+                "4ft3r a 5tup1d n0rm13 v0t3, th3 d4nk v1ll4g3 st4rts th3 3x3cut10n.exe. \n\n {} {} g0t 360 n0sc0ped w4llb4ng 4nd 1s **d34d**. G1t gut k1d gg 3z n0 r3"
+            ]
 
             "weights" : [
-
+                0.25
+                0.25
+                0.25
+                0.249
+                0.001
             ]
         },
 
-        "storyteller_death" : "*During a hellish thunderstorm, on the stroke of midnight, there echoes a bone-chilling scream. The townsfolk found the town storyteller murdered, their body impaled on the hands of the clocktower. It is your duty to avenge the Storyteller's death by klling the Demon!*"
+        "storyteller_death" : "*During a hellish thunderstorm, on the stroke of midnight, there echoes a bone-chilling scream. The townsfolk found the town storyteller murdered, their body impaled on the hands of the clocktower. It is your duty to avenge the Storyteller's death by killing the Demon!*"
         
     },
 
