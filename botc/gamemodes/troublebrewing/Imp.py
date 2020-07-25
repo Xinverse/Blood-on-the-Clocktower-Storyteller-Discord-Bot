@@ -3,6 +3,7 @@
 import json
 import discord
 import random
+import datetime
 import botutils
 from botc import Action, ActionTypes, Demon, Townsfolk, Outsider, Character, \
     RecurringAction, StatusList, AlreadyDead
@@ -18,6 +19,7 @@ with open('botc/game_text.json') as json_file:
     strings = json.load(json_file)
     demon_bluff_str = strings["gameplay"]["demonbluffs"]
     action_assign = strings["gameplay"]["action_assign"]
+    copyrights_str = strings["misc"]["copyrights"]
 
 with open('botutils/bot_text.json') as json_file:
     bot_text = json.load(json_file)
@@ -170,6 +172,82 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
             if killed_player.has_status_effect(StatusList.safety_from_demon):
                 return
             await killed_player.role.true_self.on_being_demon_killed(killed_player)
+    
+    async def _starpass(self, demon_player):
+        """Starpassing ability works when the demon is killed by himself at night"""
+        
+        # If 5 or more players alive (not counting travelers), scarlet woman has priority 
+        # over the promotion to demonhood
+        if globvars.master_state.game.nb_alive_players >= 5:
+
+            from botc.gamemodes.troublebrewing import ScarletWoman
+            # This list of scarletwomen could contain dead players
+            scarletwomen = BOTCUtils.get_players_from_role_name(ScarletWoman()._role_enum)
+
+            if scarletwomen:
+                # We only want the alive players
+                alive_scarletwomen = [player for player in scarletwomen if player.is_alive()]
+                if alive_scarletwomen:
+                    promoted = random.choice(alive_scarletwomen)
+                    await promoted.exec_change_role(Imp())
+
+                    # Construct the message to send
+                    recipient = promoted.user
+                    msg = f"***{recipient.name}#{recipient.discriminator}***:"
+                    msg += "\n"
+                    msg += "You are now the {} **{}**.".format(self.emoji, self.name)
+                    msg += "\n"
+                    msg += self.emoji + " " + self.instruction
+
+                    embed = discord.Embed(description = msg)
+                    embed.set_thumbnail(url = self.art_link)
+                    embed.set_footer(text = copyrights_str)
+                    embed.timestamp = datetime.datetime.utcnow()
+
+                    try:
+                        await promoted.user.send(embed = embed)
+                    except discord.Forbidden:
+                        pass
+                    return
+        
+        # Otherwise, any random minion is selected
+        # This list of minions could contain dead players
+        minions = BOTCUtils.get_all_minions()
+
+        if minions:
+            # We only want the alive players
+            alive_minions = [player for player in minions if player.is_alive()]
+            if alive_minions:
+                promoted = random.choice(alive_minions)
+                await promoted.exec_change_role(Imp())
+
+                # Construct the message to send
+                recipient = promoted.user
+                msg = f"***{recipient.name}#{recipient.discriminator}***:"
+                msg += "\n"
+                msg += "You are now the {} **{}**.".format(self.emoji, self.name)
+                msg += "\n"
+                msg += self.emoji + " " + self.instruction
+
+                embed = discord.Embed(description = msg)
+                embed.set_thumbnail(url = self.art_link)
+                embed.set_footer(text = copyrights_str)
+                embed.timestamp = datetime.datetime.utcnow()
+                
+                try:
+                    await promoted.user.send(embed = embed)
+                except discord.Forbidden:
+                    pass
+
+    async def on_being_demon_killed(self, killed_player):
+        """Function that runs after the player has been killed by the demon at night.
+        Overriding the parent behaviour. 
+        This implements the star passing mechanic.
+        """
+        if killed_player.is_alive():
+            await self._starpass(killed_player)
+            await killed_player.exec_real_death()
+            globvars.master_state.game.night_deaths.append(killed_player)
     
     async def process_night_ability(self, player):
         """Process night actions for the imp character.
