@@ -88,7 +88,7 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             f"The nominated player's role is {virgin_player.role.true_self.name} instead of Virgin"
         
         # Virgin ability is active
-        if not virgin_player.is_droisoned():
+        if virgin_player.is_alive() and not virgin_player.is_droisoned():
             if virgin_player.role.true_self.inventory.has_item_in_inventory(Flags.virgin_first_nomination):
                 # Remove the unique use ability from the player's inventory
                 virgin_player.role.true_self.inventory.remove_item_from_inventory(Flags.virgin_first_nomination)
@@ -99,7 +99,7 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
                         botutils.BotEmoji.guillotine,
                         nominator_player.game_nametag
                     )
-                    await nominator_player.exec_real_death()
+                    await nominator_player.role.true_self.on_being_executed(nominator_player)
                     await botutils.send_lobby(msg)
                     import botc.switches
                     botc.switches.master_proceed_to_night = True

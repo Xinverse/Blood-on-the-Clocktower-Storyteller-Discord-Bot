@@ -266,6 +266,7 @@
         "ego_role_reveal" : "{} **{}** was the {} **{}** **{}**",
         "from" : "{} From {}: *{}*",
         "to" : "{} To {}: *{}*",
+        "role_change" : "You are now the {} **{}**.",
         "whisper_announcement" : "{} {} is whispering to {}.",
         "immediately_executed" : "{} {} is immediately executed. Goodnight.",
         "setup_info" : "**{}** players base setup with **{}** `townsfolk{}`, **{}** `outsider{}`, **{}** `minion{}`, **{}** `demon{}`.",

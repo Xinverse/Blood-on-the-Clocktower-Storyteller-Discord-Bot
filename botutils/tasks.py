@@ -63,7 +63,7 @@ async def cycling_bot_status():
     messages = [
         "Blood on the Clocktower",
         "{p}help | {p}join".format(p = PREFIX),
-        "v0.1.0-alpha"
+        "v0.3.0-alpha"
     ]
 
     import globvars

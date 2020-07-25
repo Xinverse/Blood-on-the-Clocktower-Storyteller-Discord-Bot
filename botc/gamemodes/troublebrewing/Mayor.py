@@ -1,7 +1,8 @@
 """Contains the Mayor Character class"""
 
 import json 
-from botc import Townsfolk, Character, NonRecurringAction
+import random
+from botc import Townsfolk, Character, NonRecurringAction, Category
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -68,3 +69,22 @@ class Mayor(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             msg += f"\n{scroll_emoji} {addendum}"
             
         return msg
+    
+    async def on_being_demon_killed(self, killed_player):
+        """Function that runs after the player has been killed by the demon at night.
+        Overriding the parent behaviour. 
+        This implements the star passing mechanic.
+        """
+        if killed_player.is_alive():
+            import globvars
+            # Tha mayor ability, for now, works 100% of the time if the mayor is 
+            # not droisoned
+            if not killed_player.is_droisoned():
+                possibilities = [player for player in globvars.master_state.game.sitting_order \
+                    if player.is_alive() and player.role.category != Category.demon]
+                deflected_to = random.choice(possibilities)
+                await deflected_to.role.true_self.on_being_demon_killed(deflected_to)
+            # If the mayor is droisoned, then the mayor dies as usual.
+            else:
+                await killed_player.exec_real_death()
+                globvars.master_state.game.night_deaths.append(killed_player)

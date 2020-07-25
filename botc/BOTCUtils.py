@@ -80,6 +80,17 @@ class BOTCUtils:
          if player.role.ego_self.name == character_name_enum.value:
             ret.append(player)
       return ret
+   
+   @staticmethod
+   def get_all_minions():
+      """Return the list of players that are minions, using true_self"""
+      import globvars
+      game = globvars.master_state.game
+      ret = []
+      for player in game.sitting_order:
+         if player.role.true_self.category == Category.minion:
+            ret.append(player)
+      return ret
 
    @staticmethod
    def get_random_player():
