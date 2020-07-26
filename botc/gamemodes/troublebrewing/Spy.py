@@ -6,7 +6,8 @@ import discord
 import asyncio
 import configparser
 import datetime
-from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction
+from botc import Minion, Character, Townsfolk, Outsider, NonRecurringAction, \
+    BOTCUtils
 from ._utils import TroubleBrewing, TBRole
 from discord.ext import tasks
 import globvars
@@ -147,8 +148,12 @@ class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
     
     async def send_n1_end_message(self, recipient):
         """Send the spy grimoire"""
-        await self.__send_grimoire(recipient)
+        player = BOTCUtils.get_player_from_id(recipient.id)
+        if player.is_alive():
+            await self.__send_grimoire(recipient)
     
     async def send_regular_night_end_dm(self, recipient):
         """Send the spy grimoire"""
-        await self.__send_grimoire(recipient)
+        player = BOTCUtils.get_player_from_id(recipient.id)
+        if player.is_alive():
+            await self.__send_grimoire(recipient)
