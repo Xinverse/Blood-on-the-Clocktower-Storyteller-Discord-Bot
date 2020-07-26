@@ -28,7 +28,7 @@ from .RecurringAction import RecurringAction, NonRecurringAction
 from .RoleGuide import RoleGuide
 from .Phase import Phase
 from .status import StatusList, Storyteller, SafetyFromDemon, Drunkenness, Poison, RedHerring, \
-    ButlerService
+    ButlerService, RavenkeeperActivated
 from .Team import Team
 from .Townsfolk import Townsfolk
 from .Townsquare import Townsquare

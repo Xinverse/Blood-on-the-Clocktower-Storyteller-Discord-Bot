@@ -74,6 +74,10 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             
         return msg
     
+    async def exec_learn(self):
+        """Execute the learn command (dawn ability interaction)"""
+        pass
+    
     @GameLogic.requires_one_target
     @GameLogic.changes_not_allowed
     async def register_learn(self, player, targets):
@@ -85,4 +89,12 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         player.action_grid.register_an_action(action, globvars.master_state.game._chrono.phase_id)
         msg = butterfly + " " + character_text["feedback"].format(targets[0].game_nametag)
         await player.user.send(msg)
+    
+    async def on_being_demon_killed(self, killed_player):
+        """Function that runs after the player has been killed by the demon at night.
+        """
+        if killed_player.is_alive():
+            await killed_player.exec_real_death()
+            globvars.master_state.game.night_deaths.append(killed_player)
+    
         

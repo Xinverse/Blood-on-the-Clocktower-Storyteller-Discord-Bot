@@ -2,7 +2,7 @@
 
 import json 
 import random
-from botc import Townsfolk, Character, NonRecurringAction, Category
+from botc import Townsfolk, Character, NonRecurringAction, Category, Team
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -81,10 +81,26 @@ class Mayor(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             # not droisoned
             if not killed_player.is_droisoned():
                 possibilities = [player for player in globvars.master_state.game.sitting_order \
-                    if player.is_alive() and player.role.category != Category.demon]
+                    if player.is_alive() and \
+                        player.role.category != Category.demon and \
+                        player.user.id != killed_player.user.id]
                 deflected_to = random.choice(possibilities)
                 await deflected_to.role.true_self.on_being_demon_killed(deflected_to)
             # If the mayor is droisoned, then the mayor dies as usual.
             else:
                 await killed_player.exec_real_death()
                 globvars.master_state.game.night_deaths.append(killed_player)
+    
+    def check_wincon_after_day(self, mayor_player):
+        """The good team wins if no one has been executed today, 
+        and if the mayor is alive and healthy
+        """
+        import globvars
+        from botc.gameloops import master_game_loop
+
+        if mayor_player.is_alive() and not mayor_player.is_droisoned():
+            if globvars.master_state.game.nb_alive_players == 3:
+                if not globvars.master_state.game.today_executed_player:
+                    globvars.master_state.game.winners = Team.good
+                    if master_game_loop.is_running():
+                        master_game_loop.cancel()

@@ -536,6 +536,9 @@ async def master_game_loop(game_obj):
         await dawn_loop(game_obj)
         # Day
         await day_loop(game_obj)
+        # Check the win con after day
+        for player in game_obj.sitting_order:
+            player.role.true_self.check_wincon_after_day(player)
     
 
 @master_game_loop.after_loop

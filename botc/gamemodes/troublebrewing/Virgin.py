@@ -59,7 +59,8 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._emoji = "<:virgin:722687299363667988>"
 
         self.inventory = Inventory(
-            Flags.virgin_first_nomination
+            Flags.virgin_first_nomination,
+            Flags.slayer_unique_attempt
         )
 
     def create_n1_instr_str(self):

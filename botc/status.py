@@ -12,7 +12,8 @@ class StatusList(enum.Enum):
    drunkenness = "drunkenness"
    poison = "poisoned"
    red_herring = "red_herring"
-   butler_service = "butler_service"  # For butler serving a master
+   butler_service = "butler_service"  # butler serving a master
+   ravenkeeper_activated = "ravenkeeper_activated"  # activated ravenkeeper ability
 
 
 class Storyteller:
@@ -70,6 +71,26 @@ class StatusEffect:
             return self._effect
         else:
             raise NotImplementedError
+
+
+class RavenkeeperActivated(StatusEffect):
+    """Ravenkeerper ability is active."""
+
+    def __init__(
+            self, 
+            source_player, 
+            affected_player, 
+            pointer_player = None, 
+            duration = 2
+        ):
+        """
+        @source_player : the ravenkeeper
+        @affected_player : the ravenkeeper
+        @pointer_player : None
+        @duration : 2 phases (the same night, next dawn)
+        """
+        super().__init__(source_player, affected_player, pointer_player, duration)
+        self._effect = StatusList.ravenkeeper_activated
 
 
 class SafetyFromDemon(StatusEffect):

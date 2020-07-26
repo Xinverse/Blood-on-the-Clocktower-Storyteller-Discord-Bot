@@ -268,7 +268,6 @@ class Game(GameMeta):
       self.day_start_time = None  # datetime()
       self.nomination_iteration_date = tuple()  # tuple(datetime() for start time, duration in secs)
 
-   
    def init_temporary_night_data(self):
       """Initialize temporary night data. To be called at the start of the night"""
       # Temporary night data
