@@ -25,3 +25,5 @@ def init_client():
 ratelimit_dict = dict()
 
 ignore_list = []
+
+start_votes = []

@@ -5,7 +5,7 @@ import botutils
 import json
 from discord.ext import commands
 from ._admin import Admin
-from botutils import lobby_timeout
+from botutils import lobby_timeout, start_votes_timer
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
@@ -37,6 +37,12 @@ class Fleave(Admin, name = language["system"]["admin_cog"]):
             # If you are the last player to leave, then cancel the lobby timeout loop
             if len(globvars.master_state.pregame) == 0:
                 lobby_timeout.cancel()
+            # If the player has voted to start, then remove the start vote
+            if member.id in globvars.start_votes:
+                globvars.start_votes.remove(member.id)
+            # Cancel the start clear timer if no one has voted to start
+            if len(globvars.start_votes) == 0 and start_votes_timer.is_running():
+                start_votes_timer.cancel()
         
         # The player has not joined.
         else:

@@ -359,6 +359,12 @@ class Character:
         """
         pass
 
+    async def send_regular_dawn_start_dm(self, player):
+        """Send the query message at dawn for some abilities that take place at dawn.
+        Override by child classes. The default is to send nothing.
+        """
+        pass
+
     def check_wincon_after_day(self, player):
         """Perform a win con check after the day phase ends.
         Override by child classes.

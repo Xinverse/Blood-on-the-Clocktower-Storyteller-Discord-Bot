@@ -362,6 +362,9 @@ async def dawn_loop(game):
     """
     # Start dawn
     await game.make_dawn()
+    # Query for dawn actions
+    for player in game.sitting_order:
+        await player.role.ego_self.send_regular_dawn_start_dm(player)
     # Base dawn length
     await asyncio.sleep(BASE_DAWN)
     # Increment (dawn)

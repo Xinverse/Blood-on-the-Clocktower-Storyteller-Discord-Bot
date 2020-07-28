@@ -13,6 +13,8 @@ with open('botc/game_text.json') as json_file:
     copyrights_str = strings["misc"]["copyrights"]
 
 
+# ------- For Night -------
+
 class RecurringAction:
     """A class to faciliate the characters who have recurring night actions"""
 

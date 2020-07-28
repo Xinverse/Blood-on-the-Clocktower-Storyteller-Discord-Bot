@@ -20,11 +20,13 @@ LOBBY_TIMEOUT = Config["duration"]["LOBBY_TIMEOUT"]
 LOBBY_TIMEOUT = int(LOBBY_TIMEOUT)
 TOKEN_RESET = int(Config["duration"]["TOKEN_RESET"])
 STATUS_CYCLE = int(Config["duration"]["STATUS_CYCLE"])
+START_CLEAR = int(Config["duration"]["START_CLEAR"])
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
 
 lobby_timeout_str = language["system"]["lobby_timeout"]
+not_enough_votes_to_start = language["system"]["not_enough_votes_to_start"]
 
 
 @tasks.loop(seconds = TOKEN_RESET)
@@ -72,3 +74,14 @@ async def cycling_bot_status():
         activity = discord.Activity(name = message, type = discord.ActivityType.playing)
         await globvars.client.change_presence(activity=activity)
         await asyncio.sleep(STATUS_CYCLE)
+
+
+@tasks.loop(count = 1)
+async def start_votes_timer():
+    """A task to clear start votes periodically."""
+
+    import globvars
+    await asyncio.sleep(START_CLEAR)
+    globvars.start_votes.clear()
+    await botutils.send_lobby(not_enough_votes_to_start)
+

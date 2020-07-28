@@ -7,7 +7,7 @@ import json
 from discord.ext import commands
 from botc import check_if_is_player, check_if_is_night, check_if_dm, RoleCannotUseCommand, \
     check_if_player_really_dead, check_if_can_learn, PlayerParser, AbilityForbidden, \
-    NotAPlayer, BOTCUtils, DeadOnlyCommand, NotNight, NotDMChannel
+    NotAPlayer, BOTCUtils, DeadOnlyCommand, NotDawn, NotDMChannel, check_if_is_dawn
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
@@ -41,7 +41,7 @@ class Learn(commands.Cog, name = documentation["misc"]["abilities_cog"]):
         help = documentation["doc"]["learn"]["help"],
         description = documentation["doc"]["learn"]["description"]
     )
-    @commands.check(check_if_is_night)  # Correct phase -> NotNight
+    @commands.check(check_if_is_dawn)  # Correct phase -> NotNight
     @commands.check(check_if_dm)  # Correct channel -> NotDMChannel
     @commands.check(check_if_player_really_dead)  # Player dead -> DeadOnlyCommand
     @commands.check(check_if_can_learn)  # Correct character -> RoleCannotUseCommand
@@ -73,9 +73,9 @@ class Learn(commands.Cog, name = documentation["misc"]["abilities_cog"]):
         elif isinstance(error, commands.BadArgument):
             return
         # Incorrect phase -> NotNight
-        elif isinstance(error, NotNight):
+        elif isinstance(error, NotDawn):
             try:
-                await ctx.author.send(documentation["cmd_warnings"]["night_only"].format(ctx.author.mention, emoji))
+                await ctx.author.send(documentation["cmd_warnings"]["dawn_only"].format(ctx.author.mention, emoji))
             except discord.Forbidden:
                 pass
         # Player not dead -> DeadOnlyCommand

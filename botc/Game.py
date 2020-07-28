@@ -453,7 +453,9 @@ class Game(GameMeta):
       """Start the game. 
       Must be implemented.
       """
-
+      # Cancel the timer
+      if botutils.start_votes_timer.is_running():
+         botutils.start_votes_timer.cancel()
       # Register the players in game
       self.register_players(globvars.master_state.pregame)
       # Generate the setup (role list)

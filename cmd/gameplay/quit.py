@@ -5,7 +5,7 @@ import traceback
 import json
 from discord.ext import commands
 from ._gameplay import Gameplay
-from botutils import lobby_timeout
+from botutils import lobby_timeout, start_votes_timer
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
@@ -40,7 +40,13 @@ class Quit(Gameplay, name = language["system"]["gameplay_cog"]):
             # If you are the last player to leave, then cancel the lobby timeout loop
             if len(globvars.master_state.pregame) == 0:
                 lobby_timeout.cancel()
-        
+            # If the player has voted to start, then remove the start vote
+            if ctx.author.id in globvars.start_votes:
+                globvars.start_votes.remove(ctx.author.id)
+            # Cancel the start clear timer if no one has voted to start
+            if len(globvars.start_votes) == 0 and start_votes_timer.is_running():
+                start_votes_timer.cancel()
+
         # The command user has not joined
         else:
             await ctx.send(quitted_str.format(ctx.author.mention))

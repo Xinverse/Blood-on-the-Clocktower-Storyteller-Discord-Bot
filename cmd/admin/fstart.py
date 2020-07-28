@@ -54,3 +54,6 @@ class Fstart(Admin, name = language["system"]["admin_cog"]):
         globvars.master_state.game = game
         await globvars.master_state.game.start_game()
         botutils.update_state_machine()
+
+        # Clear the start votes
+        globvars.start_votes.clear()

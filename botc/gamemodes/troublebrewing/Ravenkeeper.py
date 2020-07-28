@@ -1,7 +1,10 @@
 """Contains the Ravenkeeper Character class"""
 
 import json
-from botc import Action, ActionTypes, Townsfolk, Character, NonRecurringAction
+import discord
+import datetime
+from botc import Action, ActionTypes, Townsfolk, Character, NonRecurringAction, \
+    RavenkeeperActivated, StatusList
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -12,6 +15,10 @@ with open('botc/gamemodes/troublebrewing/character_text.json') as json_file:
 with open('botutils/bot_text.json') as json_file:
     bot_text = json.load(json_file)
     butterfly = bot_text["esthetics"]["butterfly"]
+
+with open('botc/game_text.json') as json_file: 
+    strings = json.load(json_file)
+    copyrights_str = strings["misc"]["copyrights"]
 
 
 class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
@@ -74,7 +81,44 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             
         return msg
     
-    async def exec_learn(self):
+    def has_finished_dawn_action(self, player):
+        """Return True if ravenkeeper has submitted the learn action"""
+
+        if player.has_status_effect(StatusList.ravenkeeper_activated):
+            current_phase_id = globvars.master_state.game._chrono.phase_id
+            received_action = player.action_grid.retrieve_an_action(current_phase_id)
+            return received_action is not None and received_action.action_type == ActionTypes.learn
+        return True
+    
+    async def send_regular_dawn_start_dm(self, player):
+        """Send the query message at dawn for the learn ability, if the ravenkeeper 
+        ability is activated. Otherwise send nothing.
+        """
+
+        if player.has_status_effect(StatusList.ravenkeeper_activated):
+
+            recipient = player.user
+            
+            # Construct the message to send
+            msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"
+            msg += "\n"
+            msg += self.emoji + " " + self.instruction
+            msg += "\n"
+
+            embed = discord.Embed(description = msg)
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_footer(text = copyrights_str)
+
+            msg2 = self.action
+            msg2 += globvars.master_state.game.create_sitting_order_stats_string()
+            embed.add_field(name = butterfly + " **「 Your Action 」**", value = msg2, inline = False)
+            
+            try:
+                await recipient.send(embed = embed)
+            except discord.Forbidden:
+                pass
+        
+    async def exec_learn(self, ravenkeeper_player, learn_player):
         """Execute the learn command (dawn ability interaction)"""
         pass
     
@@ -96,5 +140,23 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         if killed_player.is_alive():
             await killed_player.exec_real_death()
             globvars.master_state.game.night_deaths.append(killed_player)
+            killed_player.add_status_effect(RavenkeeperActivated(killed_player, killed_player))
     
+    async def process_dawn_ability(self, player):
+        """Process dawn actions for the ravenkeeper character.
+        @player : the Ravenkeeper player (Player object)
+        """
         
+        phase = globvars.master_state.game._chrono.phase_id
+        action = player.action_grid.retrieve_an_action(phase)
+        # The Ravenkeeper has submitted an action. We call the execution function immediately
+        if action:
+            assert action.action_type == ActionTypes.learn, f"Wrong action type {action} in ravenkeeper"
+            targets = action.target_player
+            learn_player = targets[0]
+            await self.exec_learn(player, learn_player)
+        # The ravenkeeper has not submitted an action. We will not randomize the action since 
+        # the reading ability is a "priviledged" ability
+        else:
+            pass
+    
