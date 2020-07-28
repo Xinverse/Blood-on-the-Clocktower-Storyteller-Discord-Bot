@@ -1,7 +1,7 @@
 # Blood on the Clocktower Storyteller Bot
 
 The Storyteller Bot is a WIP project designed to host text-based, automated, asynchronous games of Blood on the Clocktower (BoTC) on Discord.
-You can join our community using this link: https://discord.gg/GD6R3rQ
+You can join our community using this link: https://discord.gg/M6xffPn
 
 The copyrights to the BoTC game are owned by the Pandemonium Institute.
 
@@ -16,8 +16,7 @@ This project is licensed under the AGPL-3.0 License - see the [LICENSE.md](LICEN
 
 ## Acknowledgments
 
-* Special thanks to the Team of Administrators of the Discord Werewolf Server (belungawhale#4813, Picowchew#1559, 
-PokeSvorlds#0299)
+* Special thanks to the belungawhale#4813, Picowchew#1559, PokeSvorlds#0299, SpikedJackson#8071.
 * Special thanks to the Pandemonium Institute, creator of this wonderful new social deduction game, as well as our friends at the unofficial Blood on the Clocktower Discord server.
 
 ## Player Guidelines for Discord Games
