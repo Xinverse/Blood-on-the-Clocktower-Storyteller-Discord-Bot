@@ -377,7 +377,7 @@ async def dawn_loop(game):
 def calculate_base_day_duration(game):
     """Calculate the base day length."""
     base_day_length = math.sqrt(2 * game.nb_alive_players)
-    base_day_length = math.ceil(base_day_length)
+    base_day_length = math.ceil(base_day_length) + 1
     base_day_length = base_day_length * 60
     return base_day_length
 
