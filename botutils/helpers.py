@@ -10,6 +10,7 @@ Config.read("config.INI")
 
 SERVER_ID = Config["user"]["SERVER_ID"]
 ALIVE_ROLE_ID = Config["user"]["ALIVE_ROLE_ID"]
+DEAD_ROLE_ID = Config["user"]["DEAD_ROLE_ID"]
 
 
 def make_ping(userid):
@@ -26,6 +27,12 @@ def make_alive_ping():
     """Ping the @alive role."""
     global ALIVE_ROLE_ID
     return f"<@&{ALIVE_ROLE_ID}>"
+
+
+def make_dead_ping():
+    """Ping the @dead role."""
+    global DEAD_ROLE_ID
+    return f"<@&{DEAD_ROLE_ID}>" 
 
 
 def strip_ping(raw):

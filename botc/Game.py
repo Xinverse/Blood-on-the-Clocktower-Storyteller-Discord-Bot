@@ -355,12 +355,26 @@ class Game(GameMeta):
          # Revealing the role list
          role_list_str = ""
          for player in self.sitting_order:
-            short = "{} **{}** was the {} **{}**".format(
-               botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
-               player.user.mention, 
-               player.role.true_self.emoji, 
-               player.role.true_self.name
-            ) 
+
+            # The player is a drunk, we use the special reveal short string
+            if player.role.true_self.name == Drunk().name:
+               short = ego_role_reveal.format(
+                  botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                  player.user.mention, 
+                  player.role.true_self.emoji, 
+                  player.role.true_self.name,
+                  player.role.ego_self.name
+               ) 
+
+            # The player is not a drunk, we use the default reveal short string
+            else:
+               short = role_reveal.format(
+                  botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                  player.user.mention, 
+                  player.role.true_self.emoji, 
+                  player.role.true_self.name
+               ) 
+
             role_list_str += short
             role_list_str += "\n"
 
@@ -382,12 +396,26 @@ class Game(GameMeta):
          # Revealing the role list
          role_list_str = ""
          for player in self.sitting_order:
-            short = role_reveal.format(
-               botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
-               player.user.mention, 
-               player.role.true_self.emoji, 
-               player.role.true_self.name
-            ) 
+
+            # The player is a drunk, we use the special reveal short string
+            if player.role.true_self.name == Drunk().name:
+               short = ego_role_reveal.format(
+                  botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
+                  player.user.mention, 
+                  player.role.true_self.emoji, 
+                  player.role.true_self.name,
+                  player.role.ego_self.name
+               ) 
+
+            # The player is not a drunk, we use the default reveal short string
+            else:
+               short = role_reveal.format(
+                  botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
+                  player.user.mention, 
+                  player.role.true_self.emoji, 
+                  player.role.true_self.name
+               ) 
+
             role_list_str += short
             role_list_str += "\n"
 

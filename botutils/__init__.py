@@ -12,7 +12,7 @@ from .emoji import BotEmoji
 from .GameChooser import GameChooser
 from .helpers import make_ping, make_role_ping, strip_ping, get_member_obj, get_user_obj, \
     make_code_block, make_time_string, update_state_machine, find_role_in_all, \
-    make_alive_ping
+    make_alive_ping, make_dead_ping
 from .MasterState import MasterState, StateMachine
 from .Pregame import Pregame
 from .sends import send_lobby, log, Level, send_pregame_stats

@@ -82,7 +82,7 @@ async def nomination_loop(game, nominator, nominated):
 
     intro_msg = nomination_intro.format(
         botutils.BotEmoji.gallows,
-        botutils.make_alive_ping(),
+        botutils.make_alive_ping() + " " + botutils.make_dead_ping(),
         nominator.user.mention, 
         nominated.user.mention,
         DEBATE_TIME

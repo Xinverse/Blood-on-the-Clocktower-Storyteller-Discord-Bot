@@ -5,7 +5,7 @@ import datetime
 import json 
 import random
 from botc import Townsfolk, Character, NonRecurringAction, BOTCUtils, Townsfolk, \
-    Outsider, Minion
+    Outsider, Minion, Demon
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
@@ -91,13 +91,14 @@ class Undertaker(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             tb_townsfolk_all = BOTCUtils.get_role_list(TroubleBrewing, Townsfolk)
             tb_outsider_all = BOTCUtils.get_role_list(TroubleBrewing, Outsider)
             tb_minion_all = BOTCUtils.get_role_list(TroubleBrewing, Minion)
+            tb_demon_all = BOTCUtils.get_role_list(TroubleBrewing, Demon)
 
             executed_player.role.set_new_social_self(executed_player)
 
             # The executed player has a good role. The droisoned undertaker will see a 
             # bad role.
             if executed_player.role.social_self.is_good():
-                pool = tb_minion_all
+                pool = tb_minion_all + tb_demon_all
                 ret = random.choice(pool)
                 return ret
                 
@@ -105,7 +106,7 @@ class Undertaker(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             # a good role.
             else:
                 pool = tb_townsfolk_all + tb_outsider_all
-                pool.remove(Undertaker())
+                pool = [character for character in pool if character.name != Undertaker().name]
                 ret = random.choice(pool)
                 return ret
 
