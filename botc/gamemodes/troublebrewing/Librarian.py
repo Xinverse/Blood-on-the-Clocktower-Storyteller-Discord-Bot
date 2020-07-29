@@ -4,7 +4,8 @@ import json
 import discord
 import random
 import datetime
-from botc import Townsfolk, Character, Category, NonRecurringAction
+from botc import Townsfolk, Character, Category, NonRecurringAction, BOTCUtils, \
+    Outsider
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -84,7 +85,18 @@ class Librarian(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     async def send_n1_end_message(self, recipient):
         """Send two possible players for a particular outsider character."""
 
-        two_player_list = self.get_two_possible_outsiders(recipient)
+        player = BOTCUtils.get_player_from_id(recipient.id)
+
+        # Dead players do not receive anything
+        if not player.is_alive():
+            return 
+
+        # Poisoned info
+        if player.is_droisoned():
+            two_player_list = self.__create_droisoned_info(player)
+        # Good info
+        else:
+            two_player_list = self.get_two_possible_outsiders(recipient)
 
         # If there are outsiders found:
         if two_player_list:
@@ -131,6 +143,22 @@ class Librarian(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
             await recipient.send(embed = embed)
         except discord.Forbidden:
             pass
+    
+    def __create_droisoned_info(self, librarian_player):
+        """Create the droisoned info for librarian"""
+
+        # Choosing outsider type
+        tb_outsider_all = BOTCUtils.get_role_list(TroubleBrewing, Outsider)
+        registered_outsider_type = random.choice(tb_outsider_all)
+
+        # Choosing candidates
+        candidates = [player for player in globvars.master_state.game.sitting_order 
+                      if player.user.id != librarian_player.user.id]
+        random.shuffle(candidates)
+        candidate_1 = candidates.pop()
+        candidate_2 = candidates.pop()
+
+        return [candidate_1, candidate_2, registered_outsider_type]
     
     def get_two_possible_outsiders(self, recipient):
         """Send two possible outsiders"""

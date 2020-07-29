@@ -3,7 +3,7 @@
 import json
 import random
 import discord
-from botc import BOTCUtils, Minion, Character, NonRecurringAction
+from botc import BOTCUtils, Minion, Character, NonRecurringAction, Townsfolk
 from botc.Outsider import Outsider
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -78,8 +78,18 @@ class Baron(Minion, TroubleBrewing, Character, NonRecurringAction):
         """Add two outsiders to the setup, remove two townsfolks from the setup"""
 
         random.shuffle(townsfolk_obj_list)
+
+        # Remove two townsfolks
         townsfolk_obj_list.pop()
         townsfolk_obj_list.pop()
+
+        # If the single remaining townsfolk is a washerwoman, then remove it
+        if len(townsfolk_obj_list) == 1:
+            if townsfolk_obj_list[0].name == TBRole.washerwoman.value:
+                tb_townsfolk_all = BOTCUtils.get_role_list(TroubleBrewing, Townsfolk)
+                all_not_washer = [character for character in tb_townsfolk_all if character.name != TBRole.washerwoman.value]
+                townsfolk_obj_list = [random.choice(all_not_washer)]
+
         tb_outsider_all = BOTCUtils.get_role_list(TroubleBrewing, Outsider)
         random.shuffle(tb_outsider_all)
 

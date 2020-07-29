@@ -1,8 +1,15 @@
 """Playtest command cog"""
 
 import botutils
+import json
+import configparser
 from ._admin import Admin
 from discord.ext import commands
+
+Config = configparser.ConfigParser()
+Config.read("config.INI")
+
+PLAYTESTERS = json.loads(Config["misc"]["PLAYTESTERS"])
 
 
 class Playtest(Admin):
@@ -15,18 +22,7 @@ class Playtest(Admin):
         """Playtest command"""
         
         import globvars
-        playtesters = [
-            600426113285750785,
-            606332710989856778,
-            635674760247771136,
-            614109280508968980,
-            270904126974590976
-            #159985870458322944,
-            #184405311681986560,
-            #235088799074484224,
-            #460105234748801024,
-            #438057969251254293
-            ]
+        playtesters = PLAYTESTERS
         for userid in playtesters:
             globvars.master_state.pregame.safe_add_player(userid)
         globvars.master_state.game = globvars.master_state.game_packs["botc"]["game_obj"]

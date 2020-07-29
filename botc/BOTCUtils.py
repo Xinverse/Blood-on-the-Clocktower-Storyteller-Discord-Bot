@@ -109,7 +109,7 @@ class BOTCUtils:
 
    @staticmethod
    def get_role_list(edition, category):
-      """Get the entire list of an edition and a category """
+      """Get the entire list of an edition and a category"""
       return [role_class() for role_class in edition.__subclasses__() if issubclass(role_class, category)]
    
    @staticmethod

@@ -4,7 +4,7 @@ import json
 import discord
 import random
 import datetime
-from botc import Townsfolk, Character, Category, NonRecurringAction
+from botc import Townsfolk, Character, Category, NonRecurringAction, BOTCUtils
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -81,8 +81,19 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     async def send_n1_end_message(self, recipient):
         """Send two possible players for a particular townsfolk character."""
 
-        # We have a list of two players
-        two_player_list = self.get_two_possible_townsfolks(recipient)
+        player = BOTCUtils.get_player_from_id(recipient.id)
+
+        # Dead players do not receive anything
+        if not player.is_alive():
+            return 
+
+        # Poisoned info
+        if player.is_droisoned():
+            two_player_list = self.__create_droisoned_info(player)
+        # Good info
+        else:
+            two_player_list = self.get_two_possible_townsfolks(recipient)
+
         registered_townsfolk_type = two_player_list[2]
         link = registered_townsfolk_type.art_link
         assert registered_townsfolk_type.category == Category.townsfolk, "Washerwoman did not receive a townsfolk character"
@@ -111,6 +122,22 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         except discord.Forbidden:
             pass
     
+    def __create_droisoned_info(self, washerwoman_player):
+        """Create the droisoned info for washerwoman"""
+
+        # Choosing townsfolk type
+        tb_townsfolk_all = BOTCUtils.get_role_list(TroubleBrewing, Townsfolk)
+        registered_townsfolk_type = random.choice(tb_townsfolk_all)
+
+        # Choosing candidates
+        candidates = [player for player in globvars.master_state.game.sitting_order 
+                      if player.user.id != washerwoman_player.user.id]
+        random.shuffle(candidates)
+        candidate_1 = candidates.pop()
+        candidate_2 = candidates.pop()
+
+        return [candidate_1, candidate_2, registered_townsfolk_type]
+    
     def get_two_possible_townsfolks(self, recipient):
         """Send two possible townsfolks"""
 
@@ -118,10 +145,10 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         for player in globvars.master_state.game.sitting_order:
             player.role.set_new_social_self(player)
 
-        # Choose the player that registers as minion
+        # Choose the player that registers as townsfolk
         townsfolks = []
         for player in globvars.master_state.game.sitting_order:
-            if player.role.social_self.category == Category.townsfolk:
+            if player.role.social_self.category == Category.townsfolk and player.user.id != recipient.id:
                 townsfolks.append(player)
         random.shuffle(townsfolks)
         townsfolk = townsfolks.pop()

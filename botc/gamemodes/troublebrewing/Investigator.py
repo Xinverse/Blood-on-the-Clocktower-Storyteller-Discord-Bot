@@ -4,7 +4,8 @@ import json
 import random
 import datetime
 import discord
-from botc import Townsfolk, Character, Category, NonRecurringAction
+from botc import Townsfolk, Character, Category, NonRecurringAction, BOTCUtils, \
+    Minion
 from ._utils import TroubleBrewing, TBRole
 import globvars
 
@@ -81,8 +82,19 @@ class Investigator(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
     async def send_n1_end_message(self, recipient):
         """Send two possible players for a particular minion character."""
 
-        # We have a list of two players
-        two_player_list = self.get_two_possible_minions()
+        player = BOTCUtils.get_player_from_id(recipient.id)
+
+        # Dead players do not receive anything
+        if not player.is_alive():
+            return 
+
+        # Poisoned info
+        if player.is_droisoned():
+            two_player_list = self.__create_droisoned_info(player)
+        # Good info
+        else:
+            two_player_list = self.get_two_possible_minions(player)
+
         registered_minion_type = two_player_list[2]
         link = registered_minion_type.art_link
         assert registered_minion_type.category == Category.minion, f"Investigator received {registered_minion_type}"
@@ -111,7 +123,23 @@ class Investigator(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         except discord.Forbidden:
             pass
     
-    def get_two_possible_minions(self):
+    def __create_droisoned_info(self, investigator_player):
+        """Create the droisoned info for investigator"""
+
+        # Choosing minion type
+        tb_minion_all = BOTCUtils.get_role_list(TroubleBrewing, Minion)
+        registered_minion_type = random.choice(tb_minion_all)
+
+        # Choosing candidates
+        candidates = [player for player in globvars.master_state.game.sitting_order 
+                      if player.user.id != investigator_player.user.id]
+        random.shuffle(candidates)
+        candidate_1 = candidates.pop()
+        candidate_2 = candidates.pop()
+
+        return [candidate_1, candidate_2, registered_minion_type]
+
+    def get_two_possible_minions(self, investigator_player):
         """Send two possible minions"""
 
         # First set the social self
@@ -139,7 +167,7 @@ class Investigator(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
 
         # Choose the other player
         other_possibilities = [player for player in globvars.master_state.game.sitting_order 
-                               if player.user.id != minion.user.id]
+                               if player.user.id != minion.user.id and player.user.id != investigator_player.user.id]
         other = random.choice(other_possibilities)
         
         # Construct the message
