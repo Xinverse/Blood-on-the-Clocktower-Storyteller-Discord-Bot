@@ -535,10 +535,22 @@ async def master_game_loop(game_obj):
     while True:
         # Night
         await night_loop(game_obj)
+        # Wear off status
+        for player in game_obj.sitting_order:
+            for status in player.status_effects:
+                status.wear_off()
         # Dawn
         await dawn_loop(game_obj)
+        # Wear off status
+        for player in game_obj.sitting_order:
+            for status in player.status_effects:
+                status.wear_off()
         # Day
         await day_loop(game_obj)
+        # Wear off status
+        for player in game_obj.sitting_order:
+            for status in player.status_effects:
+                status.wear_off()
         # Check the win con after day
         for player in game_obj.sitting_order:
             player.role.true_self.check_wincon_after_day(player)
