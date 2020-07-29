@@ -74,7 +74,7 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
             votes_needed = max(2, min(len(globvars.master_state.pregame) // 4 + 1, 4))
 
             # Reached the number of votes needed. Start the game.
-            if len(globvars.start_votes) >= votes_needed:
+            if len(globvars.start_votes) == votes_needed:
                 game = botutils.GameChooser().get_selected_game()
                 globvars.master_state.game = game
                 await globvars.master_state.game.start_game()
