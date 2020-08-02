@@ -2,9 +2,10 @@
 
 import json
 import discord
+import random
 import datetime
 from botc import Action, ActionTypes, Townsfolk, Character, NonRecurringAction, \
-    RavenkeeperActivated, StatusList
+    RavenkeeperActivated, StatusList, BOTCUtils, Minion, Demon, Outsider
 from botc.BOTCUtils import GameLogic
 from ._utils import TroubleBrewing, TBRole
 import globvars
@@ -19,6 +20,7 @@ with open('botutils/bot_text.json') as json_file:
 with open('botc/game_text.json') as json_file: 
     strings = json.load(json_file)
     copyrights_str = strings["misc"]["copyrights"]
+    ravenkeeper_reply = strings["gameplay"]["ravenkeeper_reply"]
 
 
 class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
@@ -120,10 +122,49 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         
     async def exec_learn(self, ravenkeeper_player, learn_player):
         """Execute the learn command (dawn ability interaction)"""
-        pass
+
+        # Correct info
+        if not ravenkeeper_player.is_droisoned():
+            learned_character_type = learn_player.role.social_self
+
+        # Droisoned info
+        else:
+            real_character_type = learn_player.role.true_self
+            # If the real character type is good
+            if real_character_type.is_good():
+                tb_minion_all = BOTCUtils.get_role_list(TroubleBrewing, Minion)
+                tb_demon_all = BOTCUtils.get_role_list(TroubleBrewing, Demon)
+                pool = tb_minion_all + tb_demon_all
+                learned_character_type = random.choice(pool)
+            # If the real character type is bad
+            else:
+                tb_townsfolk_all = BOTCUtils.get_role_list(TroubleBrewing, Townsfolk)
+                tb_outsider_all = BOTCUtils.get_role_list(TroubleBrewing, Outsider)
+                pool = tb_townsfolk_all + tb_outsider_all
+                learned_character_type = random.choice(pool)
+        
+        link = learned_character_type._art_link_cropped
+        recipient = ravenkeeper_player.user
+        
+        msg = f"***{recipient.name}#{recipient.discriminator}***, the **{self.name}**:"
+        msg += "\n"
+        msg += self.emoji + " " + self.instruction
+        msg += "\n"
+        msg += ravenkeeper_reply.format(learned_character_type.name)
+
+        embed = discord.Embed(description = msg)
+        embed.set_thumbnail(url = link)
+        embed.set_footer(text = copyrights_str)
+        embed.timestamp = datetime.datetime.utcnow()
+
+        try:
+            await recipient.send(embed = embed)
+        except discord.Forbidden:
+            pass
     
     @GameLogic.requires_one_target
-    @GameLogic.changes_not_allowed
+    @GameLogic.changes_not_allowed_dawn
+    @GameLogic.requires_status(StatusList.ravenkeeper_activated)
     async def register_learn(self, player, targets):
         """Learn command"""
         

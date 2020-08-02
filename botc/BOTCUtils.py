@@ -24,6 +24,7 @@ with open('botc/game_text.json') as json_file:
     requires_different_targets_str = documentation["cmd_warnings"]["requires_different_targets_str"]
     changes_not_allowed = documentation["cmd_warnings"]["changes_not_allowed"]
     unique_ability_used = documentation["cmd_warnings"]["unique_ability_used"]
+    not_under_status = documentation["cmd_warnings"]["not_under_status"]
     lore = documentation["lore"]
 
 
@@ -237,6 +238,11 @@ class UniqueAbilityError(AbilityForbidden):
    pass
 
 
+class NotUnderStatus(AbilityForbidden):
+   """Attempt to use an ability that works only under a certain status effect"""
+   pass
+
+
 class FirstNightNotAllowed(AbilityForbidden):
    """Attempt to use action on first night when not allowed"""
    pass
@@ -279,6 +285,21 @@ class GameLogic:
                raise NoSelfTargetting(no_self_targetting_str.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner 
+   
+   @staticmethod
+   def requires_status(status_effect):
+      """Decorator for abilities that require the player to be under a specific status. 
+      Decorator factory that creates decorators based on the status type.
+
+      @status_effect: StatusList enum object
+      """
+      def decorator(func):
+         def inner(self, player, targets):
+            if not player.has_status_effect(status_effect):
+               raise NotUnderStatus(not_under_status.format(player.user.mention, x_emoji))
+            return func(self, player, targets)
+         return inner
+      return decorator
 
    @staticmethod
    def unique_ability(ability_type):
@@ -318,6 +339,16 @@ class GameLogic:
       def inner(self, player, targets):
          import globvars
          if player.role.ego_self.has_finished_night_action(player):
+            raise ChangesNotAllowed(changes_not_allowed.format(player.user.mention, x_emoji))
+         return func(self, player, targets)
+      return inner
+   
+   @staticmethod
+   def changes_not_allowed_dawn(func):
+      """Decorator for abilities that cannot modify targets after inputting them"""
+      def inner(self, player, targets):
+         import globvars
+         if player.role.ego_self.has_finished_dawn_action(player):
             raise ChangesNotAllowed(changes_not_allowed.format(player.user.mention, x_emoji))
          return func(self, player, targets)
       return inner
