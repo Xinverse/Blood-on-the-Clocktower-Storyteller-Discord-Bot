@@ -3,6 +3,7 @@
 import botutils
 import json
 import asyncio
+import csv
 import discord
 import configparser
 from discord.ext import tasks
@@ -21,6 +22,7 @@ LOBBY_TIMEOUT = int(LOBBY_TIMEOUT)
 TOKEN_RESET = int(Config["duration"]["TOKEN_RESET"])
 STATUS_CYCLE = int(Config["duration"]["STATUS_CYCLE"])
 START_CLEAR = int(Config["duration"]["START_CLEAR"])
+BACKUP_INTERVAL_MIN = int(Config["duration"]["BACKUP_INTERVAL_MIN"])
 
 with open('botutils/bot_text.json') as json_file: 
     language = json.load(json_file)
@@ -65,7 +67,7 @@ async def cycling_bot_status():
     messages = [
         "Blood on the Clocktower",
         "{p}help | {p}join".format(p = PREFIX),
-        "v0.3.0-alpha"
+        "v0.4.0-alpha"
     ]
 
     import globvars
@@ -85,3 +87,17 @@ async def start_votes_timer():
     globvars.start_votes.clear()
     await botutils.send_lobby(not_enough_votes_to_start)
 
+
+@tasks.loop(count = None, minutes = BACKUP_INTERVAL_MIN)
+async def backup_loop():
+    """A task to backup data in csv files: 
+    Notify and ignore information
+    """
+
+    import globvars
+
+    with open('ignore.csv', mode = 'w') as ignore_file:
+        ignore_writer = csv.writer(ignore_file, delimiter = ',')
+        ignore_writer.writerow(globvars.ignore_list)
+    
+    globvars.logging.info("Backing up data")
