@@ -23,9 +23,13 @@ class Pukka(Demon, BadMoonRising, Character):
         self._examp_string = character_text["examples"]
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
+        self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
 
         self._art_link = "http://bloodontheclocktower.com/wiki/images/9/90/Pukka_Token.png"
+        self._art_link_cropped = "https://imgur.com/vg3nwAN.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Pukka"
 
         self._role_enum = BMRRole.pukka
+        self._emoji = "<:pukka:722688862060806154>"
         

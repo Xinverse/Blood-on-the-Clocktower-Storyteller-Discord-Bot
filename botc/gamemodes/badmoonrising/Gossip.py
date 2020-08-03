@@ -22,9 +22,13 @@ class Gossip(Townsfolk, BadMoonRising, Character):
         self._examp_string = character_text["examples"]
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
+        self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
 
         self._art_link = "http://bloodontheclocktower.com/wiki/images/b/b8/Gossip_Token.png"
+        self._art_link_cropped = "https://imgur.com/uhcVkwz.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Gossip"
 
         self._role_enum = BMRRole.gossip
+        self._emoji = "<:gossip:722688860479422535>"
         

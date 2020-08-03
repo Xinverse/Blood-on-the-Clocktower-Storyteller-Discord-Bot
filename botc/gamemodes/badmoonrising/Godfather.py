@@ -23,8 +23,12 @@ class Godfather(Minion, BadMoonRising, Character):
         self._examp_string = character_text["examples"]
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
+        self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
 
         self._art_link = "http://bloodontheclocktower.com/wiki/images/e/ef/Godfather_Token.png"
+        self._art_link_cropped = "https://imgur.com/7JlfMLc.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Godfather"
 
         self._role_enum = BMRRole.godfather
+        self._emoji = "<:godfather:722688860575891509>"

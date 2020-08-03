@@ -23,8 +23,12 @@ class DevilsAdvocate(Minion, BadMoonRising, Character):
         self._examp_string = character_text["examples"]
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
+        self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
 
         self._art_link = "http://bloodontheclocktower.com/wiki/images/2/23/Devils_Advocate_Token.png"
+        self._art_link_cropped = "https://imgur.com/b2rcp8E.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Devil%27s_Advocate"
 
         self._role_enum = BMRRole.devilsadvocate
+        self._emoji = "<:devilsadvocate:722688859879768107>"

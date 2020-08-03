@@ -23,9 +23,13 @@ class Zombuul(Demon, BadMoonRising, Character):
         self._examp_string = character_text["examples"]
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
+        self._brief_string = character_text["brief"]
+        self._action = character_text["action"]
 
         self._art_link = "http://bloodontheclocktower.com/wiki/images/c/c6/Zombuul_Token.png"
+        self._art_link_cropped = "https://imgur.com/Z84oOaA.png"
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Zombuul"
 
         self._role_enum = BMRRole.zombuul
+        self._emoji = "<:zombuul:722688861980852265>"
         
