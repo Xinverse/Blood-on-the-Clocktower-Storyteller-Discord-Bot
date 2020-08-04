@@ -100,4 +100,8 @@ async def backup_loop():
         ignore_writer = csv.writer(ignore_file, delimiter = ',')
         ignore_writer.writerow(globvars.ignore_list)
     
+    with open('notify.csv', mode = 'w') as notify_file:
+        notify_writer = csv.writer(notify_file, delimiter = ',')
+        notify_writer.writerow(globvars.notify_list)
+    
     globvars.logging.info("Backing up data")

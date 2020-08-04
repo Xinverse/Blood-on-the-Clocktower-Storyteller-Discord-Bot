@@ -14,6 +14,8 @@
         "fleaved" : "{} **{}** is already not in the game!",
         "time_pregame" : "There is **{}** left until the game is automatically cancelled. Lobby timeout is currently set to {}.",
         "stats_pregame_header" : "{} players in lobby:",
+        "add_notify" : "{} You will be notified in the future.",
+        "remove_notify" : "{} You will no longer be notified in the future.",
         "add_ignore" : "{} **{}** ({}) is added to the ignore list.",
         "remove_ignore" : "{} **{}** ({}) is removed from the ignore list.",
         "already_ignored" : "{} {} **{}** ({}) is already in the ignore list.",
@@ -163,6 +165,34 @@
             "weights" : []
         },
 
+        "notify" : {
+
+            "notify" : {
+                "brief" : "notify users",
+                "help" : "The notification command pings users who have registered themselves with the command to be notified of new games. The command will only ping users who are online, idle or on do-not-disturb.",
+                "description" : "[NOTIFY] command",
+                "outputs" : [],
+                "weights" : []
+            },
+
+            "add" : {
+                "brief" : "add yourself to the notify list",
+                "help" : "The notification command pings users who have registered themselves with the command to be notified of new games. The command will only ping users who are online, idle or on do-not-disturb.",
+                "description" : "[NOTIFY] [ADD] command",
+                "outputs" : [],
+                "weights" : []
+            },
+
+            "remove" : {
+                "brief" : "Remove yourself from the notify list",
+                "help" : "The notification command pings users who have registered themselves with the command to be notified of new games. The command will only ping users who are online, idle or on do-not-disturb.",
+                "description" : "[NOTIFY] [REMOVE] command",
+                "outputs" : [],
+                "weights" : []
+            }
+
+        },
+
         "help" : {
             "brief" : "show the help message",
             "help" : "See a list of bot commands grouped by category, or read the documentation of a specified command.",
@@ -278,6 +308,8 @@
         "user_not_found" : "{} :x: Specified user is not found.",
         "missing_user" : "{} :x: Missing argument, please specify a valid user.",
         "cmd_cooldown" : "{} :x: This command is ratelimited.",
+        "already_in_notify" : "{} {} You are already in the notify list.",
+        "already_not_notify" : "{} {} You are already not in the notify list.",
         "fstart_min" : "{} {} The currently selected game is **{}**, with a **minimum** of **{}** players. You may not start the game until the minimum player count is reached.",
         "fstart_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby to run this game.",
         "fjoin_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby."

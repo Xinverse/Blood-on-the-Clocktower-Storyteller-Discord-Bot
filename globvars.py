@@ -26,4 +26,6 @@ ratelimit_dict = dict()
 
 ignore_list = []
 
+notify_list = []
+
 start_votes = []

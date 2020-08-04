@@ -33,6 +33,15 @@ class on_ready(commands.Cog):
                 globvars.ignore_list = [int(item) for item in row]
                 break
         
+        # Import the notify data from csv file
+        globvars.notify_list.clear()
+
+        with open('notify.csv', mode = 'r') as notify_file:
+            csv_reader = csv.reader(notify_file, delimiter = ',')
+            for row in csv_reader:
+                globvars.notify_list = [int(item) for item in row]
+                break
+        
         # Start the backup loop
         botutils.backup_loop.start()
 
