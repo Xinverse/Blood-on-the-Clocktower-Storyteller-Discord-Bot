@@ -1,4 +1,4 @@
 aiohttp
-git+https://github.com/Xinverse/discord.py.git
+git+https://github.com/Rapptz/discord.py.git
 Pillow
 pytz
