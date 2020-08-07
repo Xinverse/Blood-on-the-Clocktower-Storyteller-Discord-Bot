@@ -76,24 +76,40 @@ class Mayor(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         This implements the star passing mechanic.
         """
         if killed_player.is_alive():
+
             import globvars
-            # Tha mayor ability, for now, works 100% of the time if the mayor is 
+
+            # Tha mayor ability, works 50% of the time if the mayor is 
             # not droisoned, unless all surviving players cannot die from demon.
             if not killed_player.is_droisoned():
-                possibilities = [player for player in globvars.master_state.game.sitting_order \
-                    if player.is_alive() and \
-                        player.role.category != Category.demon and \
-                        player.user.id != killed_player.user.id and \
-                        not player.has_status_effect(StatusList.safety_from_demon)]
-                if possibilities:
-                    deflected_to = random.choice(possibilities)
-                    await deflected_to.role.true_self.on_being_demon_killed(deflected_to)
-                # All the surviving players cannot die from demon, the mayor must die.
+
+                mayor_bounce = random.choice([True, False])
+
+                # Mayor bounce is happening
+                if mayor_bounce:
+
+                    possibilities = [player for player in globvars.master_state.game.sitting_order \
+                        if player.is_alive() and \
+                            player.role.category != Category.demon and \
+                            player.user.id != killed_player.user.id and \
+                            not player.has_status_effect(StatusList.safety_from_demon)]
+                    if possibilities:
+                        deflected_to = random.choice(possibilities)
+                        await deflected_to.role.true_self.on_being_demon_killed(deflected_to)
+                    # All the surviving players cannot die from demon, the mayor must die.
+                    else:
+                        await killed_player.exec_real_death()
+                        globvars.master_state.game.night_deaths.append(killed_player)
+                
+                # Mayor bounce is not happening. Mayor dies.
                 else:
+
                     await killed_player.exec_real_death()
                     globvars.master_state.game.night_deaths.append(killed_player)
+
             # If the mayor is droisoned, then the mayor dies as usual.
             else:
+
                 await killed_player.exec_real_death()
                 globvars.master_state.game.night_deaths.append(killed_player)
     
