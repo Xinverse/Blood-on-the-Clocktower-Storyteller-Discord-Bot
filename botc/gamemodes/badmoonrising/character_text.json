@@ -238,7 +238,7 @@
         "instruction" : "Each night*, if no-one died today, choose a player: they die. The 1st time you die, you do not, but appear to.",
         "n1_addendum" : "",
         "action" : "",
-        "feedback" : "",
+        "feedback" : "You have chosen to kill {} tonight.",
         "brief" : "The Zombuul secretly remains alive while in the grave."
     },
 
