@@ -511,7 +511,8 @@ class Game(GameMeta):
       for extension in CONFLICTING_CMDS:
          globvars.client.unload_extension(extension)
       # Load game related commands
-      globvars.client.load_extension("botc.commands.abilities")
+      if self.gamemode == Gamemode.trouble_brewing:
+         globvars.client.load_extension("botc.commands.abilities.tb")
       globvars.client.load_extension("botc.commands.townhall")
       globvars.client.load_extension("botc.commands.debug")
       # Start the game loop
@@ -663,7 +664,8 @@ class Game(GameMeta):
       # Remove roles
       await botutils.remove_all_alive_dead_roles_after_game()
       # Unload extensions
-      globvars.client.unload_extension("botc.commands.abilities")
+      if self.gamemode == Gamemode.trouble_brewing:
+         globvars.client.unload_extension("botc.commands.abilities.tb")
       globvars.client.unload_extension("botc.commands.townhall")
       globvars.client.unload_extension("botc.commands.debug")
       # Load conflicting commands
