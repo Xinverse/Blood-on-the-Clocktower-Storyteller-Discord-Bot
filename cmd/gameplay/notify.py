@@ -49,7 +49,9 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
 
                 # member found, only ping them if they are not offline
                 if member:
-                    if member.status != Status.offline:
+                    if member.status != Status.offline and \
+                        member.id not in globvars.master_state.pregame and \
+                        member.id != ctx.author.id:
                         pings += member.mention
 
                 # member not present in server, remove their id
