@@ -518,6 +518,25 @@ class Game(GameMeta):
       # Start the game loop
       self.gameloop.start(self)
    
+   async def compute_dawn_ability_interactions(self):
+      """Order of Action
+      1. Ravenkeeper
+      """
+      if self.gamemode == Gamemode.trouble_brewing:
+         
+         from botc.gamemodes.troublebrewing._utils import TBRole
+      
+         order = [
+
+            TBRole.ravenkeeper
+
+         ]
+
+         for character_enum in order:
+            list_of_characters = BOTCUtils.get_players_from_role_name(character_enum)
+            for character in list_of_characters:
+               await character.role.ego_self.process_dawn_ability(character)
+   
    async def compute_night_ability_interactions(self):
       """Order of Action (First Night)
       1. poisoner

@@ -21,6 +21,7 @@ class ActionTypes(enum.Enum):
     kill = "kill"
     slay = "slay"
     protect = "protect"
+    assassinate = "assassinate"
 
 
 class Action:

@@ -5,7 +5,7 @@ import json
 import random
 import botutils
 from botc import Character, Demon, Townsfolk, Outsider, BOTCUtils, ActionTypes, \
-    GameLogic, Action, StatusList
+    GameLogic, Action, StatusList, RecurringAction
 from ._utils import BadMoonRising, BMRRole
 import globvars
 
@@ -18,7 +18,7 @@ with open('botc/game_text.json') as json_file:
     action_assign = strings["gameplay"]["action_assign"]
 
 
-class Zombuul(Demon, BadMoonRising, Character):
+class Zombuul(Demon, BadMoonRising, Character, RecurringAction):
     """Zombuul: Each night*, if no-one died today, choose a player: they die. The 1st time you die, 
     you do not, but appear to.
 

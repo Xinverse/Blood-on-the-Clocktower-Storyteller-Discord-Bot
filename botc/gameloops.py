@@ -372,6 +372,7 @@ async def dawn_loop(game):
         if game.has_received_all_expected_dawn_actions():
             break
         await asyncio.sleep(INCREMENT)
+    await after_dawn(game)
 
 
 def calculate_base_day_duration(game):
@@ -497,6 +498,11 @@ async def after_night(game):
     await game.compute_night_ability_interactions()
     for player in game.sitting_order:
         await player.role.ego_self.send_regular_night_end_dm(player.user)
+    
+
+async def after_dawn(game):
+    """Run after the dawn phase. Handle the dawn phase end."""
+    await game.compute_dawn_ability_interactions()
 
 
 @tasks.loop(count = 1)

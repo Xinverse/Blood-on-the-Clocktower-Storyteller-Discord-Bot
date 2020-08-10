@@ -18,7 +18,7 @@ class Role(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     @commands.command(
         pass_context=True, 
         name = "role", 
-        aliases = ["roles", "character", 'characters'],
+        aliases = ["roles", "character", 'characters', 'char'],
         brief = language["doc"]["role"]["brief"],
         help = language["doc"]["role"]["help"],
         description = language["doc"]["role"]["description"]

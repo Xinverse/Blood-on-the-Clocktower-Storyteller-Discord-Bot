@@ -71,7 +71,7 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
                 start_votes_timer.start()
             
             # Calculate the number of votes needed
-            votes_needed = max(2, min(len(globvars.master_state.pregame) // 4 + 1, 4))
+            votes_needed = max(len(globvars.master_state.pregame) - 3, 3)
 
             # Reached the number of votes needed. Start the game.
             if len(globvars.start_votes) == votes_needed:
