@@ -21,7 +21,11 @@ class Miscellaneous(commands.Cog, name = language["system"]["miscellaneous_cog"]
         return botutils.check_if_not_ignored(ctx)
     
     async def cog_command_error(self, ctx, error):
-        """Error handling on command"""
+        """Error handling on commands"""
+
+        # This prevents any commands with local handlers being handled here in on_command_error.
+        if hasattr(ctx.command, 'on_error'):
+            return
 
         # Case: check failure
         if isinstance(error, commands.CheckFailure):
