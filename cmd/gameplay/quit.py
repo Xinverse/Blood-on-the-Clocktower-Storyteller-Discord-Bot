@@ -1,4 +1,4 @@
-"""Quit command cog"""
+"""Contains the quit command cog"""
 
 import botutils
 import traceback
@@ -7,7 +7,7 @@ from discord.ext import commands
 from ._gameplay import Gameplay
 from botutils import lobby_timeout, start_votes_timer
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 quit_str = language["cmd"]["quit"]
@@ -19,8 +19,8 @@ class Quit(Gameplay, name = language["system"]["gameplay_cog"]):
     """Quit command cog"""
 
     @commands.command(
-        pass_context = True, 
-        name = "quit", 
+        pass_context = True,
+        name = "quit",
         aliases = ["q", "leave"],
         brief = language["doc"]["quit"]["brief"],
         help = language["doc"]["quit"]["help"],
@@ -59,7 +59,7 @@ class Quit(Gameplay, name = language["system"]["gameplay_cog"]):
         """Error handling of the quit command"""
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
         
         # For other cases we will want to see the error logged
@@ -68,4 +68,4 @@ class Quit(Gameplay, name = language["system"]["gameplay_cog"]):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc())

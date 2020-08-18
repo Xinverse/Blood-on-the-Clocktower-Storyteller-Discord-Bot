@@ -8,7 +8,7 @@ from discord.ext import commands
 from ._gameplay import Gameplay
 from botutils import lobby_timeout
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 joined_str = language["cmd"]["joined"]
@@ -36,8 +36,8 @@ class Join(Gameplay, name = language["system"]["gameplay_cog"]):
     """Join command cog"""
 
     @commands.command(
-        pass_context=True, 
-        name = "join", 
+        pass_context = True,
+        name = "join",
         aliases = ["j"],
         brief = language["doc"]["join"]["brief"],
         help = language["doc"]["join"]["help"],
@@ -74,9 +74,9 @@ class Join(Gameplay, name = language["system"]["gameplay_cog"]):
             msg = emoji
             msg += " "
             msg += join_str.format(
-                ctx.author.name, 
+                ctx.author.name,
                 len(globvars.master_state.pregame),
-                "player" if len(globvars.master_state.pregame) else "players"
+                "player" if len(globvars.master_state.pregame) == 1 else "players"
             )
             await ctx.send(msg)
 
@@ -92,7 +92,7 @@ class Join(Gameplay, name = language["system"]["gameplay_cog"]):
         """Error handling of the join command"""
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
         
         # For other cases we will want to see the error logged
@@ -101,5 +101,4 @@ class Join(Gameplay, name = language["system"]["gameplay_cog"]):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
-        
+                await botutils.log(botutils.Level.error, traceback.format_exc())

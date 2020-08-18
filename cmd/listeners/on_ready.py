@@ -3,10 +3,9 @@
 import json
 import csv
 import botutils
-import botutils
 from discord.ext import commands
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 restart_msg = language["system"]["restart"]

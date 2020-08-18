@@ -1,4 +1,4 @@
-"""Contains the notify command"""
+"""Contains the notify command cog"""
 
 import botutils
 import json
@@ -13,7 +13,7 @@ Config = configparser.ConfigParser()
 Config.read("config.INI")
 SERVER_ID = int(Config["user"]["SERVER_ID"])
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
@@ -27,8 +27,8 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
     """Notify command cog"""
 
     @commands.group(
-        pass_context=True, 
-        name = "notify", 
+        pass_context = True,
+        name = "notify",
         brief = language["doc"]["notify"]["notify"]["brief"],
         help = language["doc"]["notify"]["notify"]["help"],
         description = language["doc"]["notify"]["notify"]["description"]
@@ -62,8 +62,8 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
             await ctx.send(msg)
 
     @notify.command(
-        pass_context=True, 
-        name = "add", 
+        pass_context = True,
+        name = "add",
         aliases = ["+", "true"],
         brief = language["doc"]["notify"]["add"]["brief"],
         help = language["doc"]["notify"]["add"]["help"],
@@ -82,7 +82,7 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
             await ctx.send(msg)
     
     @notify.command(
-        pass_context=True, 
+        pass_context = True,
         name = "remove",
         aliases = ["-", "false"],
         brief = language["doc"]["notify"]["remove"]["brief"],
@@ -106,7 +106,7 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
         """Error handling of the notify command"""
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
         
         # For other cases we will want to see the error logged
@@ -115,5 +115,4 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
-        
+                await botutils.log(botutils.Level.error, traceback.format_exc())

@@ -15,17 +15,17 @@ ADMINS_ID = json.loads(Config["user"]["ADMINS_ID"])
 
 
 def __is_lobby(ctx):
-    """Check the channel of the context, return True if it is in a private channel."""
+    """Check the channel of the context, return True if it is in the lobby channel"""
     return ctx.channel.id == int(LOBBY_CHANNEL_ID)
 
 
 def __is_specchat(ctx):
-    """Check the channel of the context, return True if it is in the spectators chat."""
+    """Check the channel of the context, return True if it is in the spec chat"""
     return ctx.channel.id == int(SPEC_CHANNEL_ID)
 
 
 def __is_admin(ctx):
-    """Check the author of the context, return True if they have admin perms or higher."""
+    """Check the author of the context, return True if they have admin perms or higher"""
     return ctx.author.id in ADMINS_ID or ctx.author.id == int(OWNER_ID)
 
 
@@ -73,7 +73,7 @@ def check_if_dm(ctx):
 
 
 def check_if_admin(ctx):
-    """Check the author of the context, return True if they have admin perms or higher."""
+    """Check the author of the context, return True if they have admin perms or higher"""
     return __is_admin(ctx)
 
 
@@ -83,7 +83,7 @@ def check_if_lobby(ctx):
 
 
 def check_if_spec(ctx):
-    """Check the channel of the context, return True if it is sent in the spec channel"""
+    """Check the channel of the context, return True if it is sent in the spec chat"""
     return __is_specchat(ctx)
 
 

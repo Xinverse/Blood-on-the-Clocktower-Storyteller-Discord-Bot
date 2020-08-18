@@ -1,11 +1,11 @@
-"""Contains the Ping command cog"""
+"""Contains the ping command cog"""
 
 import botutils
 import json
 from discord.ext import commands
 from ._miscellaneous import Miscellaneous
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 ping_str = language["cmd"]["ping"]
@@ -15,8 +15,8 @@ class Ping(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Ping command"""
 
     @commands.command(
-        pass_context=True, 
-        name = "ping", 
+        pass_context = True,
+        name = "ping",
         aliases = ["pong"],
         brief = language["doc"]["ping"]["brief"],
         help = language["doc"]["ping"]["help"],

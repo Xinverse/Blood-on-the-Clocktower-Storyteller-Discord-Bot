@@ -1,4 +1,4 @@
-"""ignore command"""
+"""Contains the ignore command cog"""
 
 import botutils
 import discord
@@ -13,7 +13,7 @@ Config.read("config.INI")
 PREFIX = Config["settings"]["PREFIX"]
 SERVER_ID = int(Config["user"]["SERVER_ID"])
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
     add_ignore = language["cmd"]["add_ignore"]
     remove_ignore = language["cmd"]["remove_ignore"]
@@ -30,8 +30,8 @@ class Ignore(Admin, name = language["system"]["admin_cog"]):
     """Ignore command"""
 
     @commands.group(
-        pass_context = True, 
-        name = "ignore", 
+        pass_context = True,
+        name = "ignore",
         aliases = ["fignore"],
         brief = language["doc"]["ignore"]["ignore"]["brief"],
         help = language["doc"]["ignore"]["ignore"]["help"],
@@ -48,7 +48,9 @@ class Ignore(Admin, name = language["system"]["admin_cog"]):
                 for userid in globvars.ignore_list:
                     user = globvars.client.get_user(int(userid))
                     msg += f"**{user.name}**#**{user.discriminator}** `({userid})`"
-                    msg += " "
+                    msg += ", "
+                # Remove ", " from the end of msg
+                msg = msg[:-2]
                 await ctx.send(msg)
             else:
                 await ctx.send(ignore_list_empty)
@@ -67,16 +69,16 @@ class Ignore(Admin, name = language["system"]["admin_cog"]):
         if member.id not in globvars.ignore_list:
             globvars.ignore_list.append(member.id)
             msg = add_ignore.format(
-                botutils.BotEmoji.check, 
-                member.display_name, 
+                botutils.BotEmoji.check,
+                member.display_name,
                 member.id
             )
             await ctx.send(msg)
         else:
             msg = already_ignored.format(
-                ctx.author.mention, 
-                botutils.BotEmoji.cross, 
-                member.display_name, 
+                ctx.author.mention,
+                botutils.BotEmoji.cross,
+                member.display_name,
                 member.id
             )
             await ctx.send(msg)
@@ -94,17 +96,17 @@ class Ignore(Admin, name = language["system"]["admin_cog"]):
         import globvars
         if member.id not in globvars.ignore_list:
             msg = not_ignored.format(
-                ctx.author.mention, 
-                botutils.BotEmoji.cross, 
-                member.display_name, 
+                ctx.author.mention,
+                botutils.BotEmoji.cross,
+                member.display_name,
                 member.id
             )
             await ctx.send(msg)
         else:
             globvars.ignore_list.remove(member.id)
             msg = remove_ignore.format(
-                botutils.BotEmoji.check, 
-                member.display_name, 
+                botutils.BotEmoji.check,
+                member.display_name,
                 member.id
             )
             await ctx.send(msg)
@@ -146,7 +148,7 @@ class Ignore(Admin, name = language["system"]["admin_cog"]):
             else:
                 await ctx.send(ignore_list_empty)
 
-    @clear.group(
+    @clear.command(
         pass_context = True,
         name = "--force",
         brief = language["doc"]["ignore"]["--force"]["brief"],

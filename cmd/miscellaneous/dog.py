@@ -6,7 +6,7 @@ import json
 from ._miscellaneous import Miscellaneous
 from discord.ext import commands
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 
@@ -14,8 +14,8 @@ class Dog(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Dog command"""
 
     @commands.command(
-        pass_context=True, 
-        name = "dog", 
+        pass_context = True,
+        name = "dog",
         brief = language["doc"]["dog"]["brief"],
         help = language["doc"]["dog"]["help"],
         description = language["doc"]["dog"]["description"]
@@ -27,7 +27,7 @@ class Dog(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
         dog_replies = language["doc"]["dog"]["outputs"]
         dog_weights = language["doc"]["dog"]["weights"]
         dog_reply = random.choices(
-            dog_replies, 
+            dog_replies,
             weights=dog_weights
         )
         dog_reply = dog_reply[0]

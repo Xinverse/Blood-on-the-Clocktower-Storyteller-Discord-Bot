@@ -13,21 +13,21 @@ IGNORE_THRESHOLD = int(Config["duration"]["IGNORE_THRESHOLD"])
 TOKENS_GIVEN = int(Config["duration"]["TOKENS_GIVEN"])
 TOKEN_RESET = int(Config["duration"]["TOKEN_RESET"])
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 ignore = language["system"]["ignore"]
 
 
 class on_command(commands.Cog):
-    """Event listener on_ready"""
+    """Event listener on_command"""
     
     def __init__(self, client):
         self.client = client
       
     @commands.Cog.listener()
     async def on_command(self, ctx):
-        """on_command event"""
+        """On_command event"""
 
         import globvars
         

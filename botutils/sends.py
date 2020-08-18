@@ -21,7 +21,7 @@ MAX_MESSAGE_LEN = Config["misc"]["MAX_MESSAGE_LEN"]
 MAX_MESSAGE_LEN = int(MAX_MESSAGE_LEN)
 
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 stats_pregame_header = language["cmd"]["stats_pregame_header"]
@@ -46,7 +46,7 @@ def __create_python_code_block(message):
 
 
 def __create_code_block(message):
-    """Create a python code block"""
+    """Create a code block"""
     return f"```\n{message}```"
 
 
@@ -93,5 +93,5 @@ async def log(level, message):
 async def send_lobby(message, embed = None, file = None):
     """Send a message to the lobby"""
     lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
-    ret = await lobby_channel.send(message, embed=embed, file = file)
+    ret = await lobby_channel.send(message, embed = embed, file = file)
     return ret

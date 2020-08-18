@@ -1,12 +1,12 @@
-"""Contains the on_command_error listener cog"""
+"""Contains the on_command_error event listener"""
 
-import sys
+#import sys
 import botutils
 import json
 import traceback
 from discord.ext import commands
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
@@ -59,7 +59,7 @@ class on_command_error(commands.Cog):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc())
 
 
 def setup(client):

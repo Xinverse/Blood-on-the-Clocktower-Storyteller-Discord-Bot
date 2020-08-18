@@ -21,7 +21,7 @@ async def add_admin_role(user):
 
 
 async def remove_admin_role(user):
-    """Remove the admin role to a member"""
+    """Remove the admin role from a member"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ADMINS_ROLE_ID))
     member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(user.id)
     await member_obj.remove_roles(role)
@@ -34,7 +34,7 @@ async def add_alive_role(member_obj):
 
 
 async def remove_alive_role(member_obj):
-    """Remove the alive role to a player"""
+    """Remove the alive role from a player"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
     await member_obj.remove_roles(role)
 
@@ -46,13 +46,13 @@ async def add_dead_role(member_obj):
 
 
 async def remove_dead_role(member_obj):
-    """Remove the dead role to a player"""
+    """Remove the dead role from a player"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(DEAD_ROLE_ID))
     await member_obj.remove_roles(role)
 
 
 async def remove_all_alive_roles_pregame():
-    """Remove the alive roles from all players during pre-game"""
+    """Remove the alive roles from all players during pregame"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
     for userid in globvars.master_state.pregame:
         member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(int(userid))
@@ -60,16 +60,14 @@ async def remove_all_alive_roles_pregame():
 
 
 async def remove_all_alive_dead_roles_after_game():
-    """Remove the alive and the dead roles from all players after the game is 
-    over.
-    """
+    """Remove the alive and the dead roles from all players after the game is over"""
     for player in globvars.master_state.game.sitting_order:
         await remove_alive_role(player.user)
         await remove_dead_role(player.user)
 
 
 async def lock_lobby():
-    """Lock the lobby channel to non players"""
+    """Lock the lobby channel from non players"""
     lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     server = globvars.client.get_guild(int(SERVER_ID))
     await lobby_channel.set_permissions(server.default_role, send_messages=False)

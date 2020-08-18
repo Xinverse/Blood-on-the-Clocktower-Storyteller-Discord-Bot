@@ -38,11 +38,11 @@ if __name__ == "__main__":
             return PREFIX
 
     # The help command
-    with open('botutils/bot_text.json') as json_file: 
+    with open('botutils/bot_text.json') as json_file:
         language = json.load(json_file)
 
     help_command = commands.DefaultHelpCommand(
-        verify_checks = False, 
+        verify_checks = False,
         show_hidden = False,
         dm_help = None,
         dm_help_threshold = 700,
@@ -56,9 +56,9 @@ if __name__ == "__main__":
 
     # The bot
     globvars.client = commands.Bot(
-        command_prefix = command_prefix, 
-        owner_id = int(OWNER_ID), 
-        case_insensitive = True, 
+        command_prefix = command_prefix,
+        owner_id = int(OWNER_ID),
+        case_insensitive = True,
         description = "〘 Blood on the Clocktower Storyteller Bot 〙 - by Xinverse#4011",
         paginator = commands.Paginator(),
         help_command = help_command

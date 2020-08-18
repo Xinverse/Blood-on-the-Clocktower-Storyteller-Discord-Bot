@@ -6,7 +6,7 @@ import traceback
 from discord.ext import commands
 from ._miscellaneous import Miscellaneous
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
@@ -16,9 +16,9 @@ class Role(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Role command cog"""
 
     @commands.command(
-        pass_context=True, 
-        name = "role", 
-        aliases = ["roles", "character", 'characters', 'char'],
+        pass_context = True,
+        name = "role",
+        aliases = ["roles", "character", "characters", "char"],
         brief = language["doc"]["role"]["brief"],
         help = language["doc"]["role"]["help"],
         description = language["doc"]["role"]["description"]
@@ -45,11 +45,11 @@ class Role(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
         import globvars
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
         
         # Case: missing argument -> we will print the entire list of roles
-        elif isinstance(error, commands.errors.MissingRequiredArgument):
+        elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(globvars.master_state.game_packs["botc"]["formatter"].create_complete_roles_list())
         
         # For other cases we will want to see the error logged
@@ -58,4 +58,4 @@ class Role(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc())

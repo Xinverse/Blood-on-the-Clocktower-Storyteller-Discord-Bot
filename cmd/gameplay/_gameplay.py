@@ -1,15 +1,15 @@
-"""Contains the gameplay cog"""
+"""Contains gameplay commands"""
 
 import botutils
 import json
 from discord.ext import commands
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 
 class Gameplay(commands.Cog, name = language["system"]["gameplay_cog"]):
-    """Gamplay cog"""
+    """Gameplay commands cog"""
     
     def __init__(self, client):
 

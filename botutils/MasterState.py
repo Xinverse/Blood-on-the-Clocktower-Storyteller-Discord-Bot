@@ -13,12 +13,12 @@ class State:
         assert 0, "run() method not implemented"
 
     def update(self, master):
-        assert 0, "next() method not implemented"
+        assert 0, "update() method not implemented"
 
 
 class PregameState(State):
-    """Pregame state/phase: 
-    When some players have joined in the lobby, but the game has not started yet
+    """Pregame state/phase
+    When some players have joined in the lobby, but the game has not started yet.
     """
 
     def run(self, master):
