@@ -46,4 +46,4 @@ class GameMeta(metaclass=ABCMeta):
         """End the game, compute winners etc."""
         pass
 
-    
+

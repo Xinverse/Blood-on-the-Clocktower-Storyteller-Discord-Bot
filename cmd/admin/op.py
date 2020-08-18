@@ -5,7 +5,7 @@ import json
 from discord.ext import commands
 from ._admin import Admin
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 
@@ -13,7 +13,7 @@ class Op(Admin, name = language["system"]["admin_cog"]):
     """Op command"""
 
     @commands.command(
-        pass_context=True, 
+        pass_context = True,
         name = "op",
         aliases = ["fop"],
         brief = language["doc"]["op"]["brief"],

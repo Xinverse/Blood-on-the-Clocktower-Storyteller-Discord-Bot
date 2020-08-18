@@ -48,7 +48,7 @@
             "help" : "Leave city, leave reality! Enter lobby, enter fantasy!",
             "description" : "[JOIN] command",
             "outputs" : [
-                "**{}** is rereading the role list before claiming their role.  I'm sure they're innocent. The lobby now holds **{}** {}.",
+                "**{}** is rereading the role list before claiming their role. I'm sure they're innocent. The lobby now holds **{}** {}.",
                 "**{}**, your role is **Server Owner**. Your role does nothing and you die immediately upon receiving it. The lobby now holds **{}** {}.",
                 "Time is an illusion, my dear **{}**, and lunchtime doubly so. The lobby now holds **{}** {}.",
                 "For a moment, nothing happened. Then, after a second or so, nothing continued to happen. Then, after another second, **{}** joined the game. The lobby now holds **{}** {}.",
@@ -141,18 +141,18 @@
             "weights" : []
         },
 
-        "fleave" : {
+        "fjoin" : {
             "brief" : "force a player to join",
-            "help" : "Remove a player from the lobby.",
-            "description" : "[FLEAVE] command",
+            "help" : "Add a player to the lobby.",
+            "description" : "[FJOIN] command",
             "outputs" : [],
             "weights" : []
         },
 
-        "fjoin" : {
+        "fleave" : {
             "brief" : "force a player to leave",
-            "help" : "Add a player to the lobby.",
-            "description" : "[FJOIN] command",
+            "help" : "Remove a player from the lobby.",
+            "description" : "[FLEAVE] command",
             "outputs" : [],
             "weights" : []
         },
@@ -177,15 +177,15 @@
 
             "add" : {
                 "brief" : "add yourself to the notify list",
-                "help" : "The notification command pings users who have registered themselves with the command to be notified of new games. The command will only ping users who are online, idle or on do-not-disturb.",
+                "help" : "Add yourself to the notify list. The notification command pings users who have registered themselves with the command to be notified of new games. The command will only ping users who are online, idle or on do-not-disturb.",
                 "description" : "[NOTIFY] [ADD] command",
                 "outputs" : [],
                 "weights" : []
             },
 
             "remove" : {
-                "brief" : "Remove yourself from the notify list",
-                "help" : "The notification command pings users who have registered themselves with the command to be notified of new games. The command will only ping users who are online, idle or on do-not-disturb.",
+                "brief" : "remove yourself from the notify list",
+                "help" : "Remove yourself from the notify list. The notification command pings users who have registered themselves with the command to be notified of new games. The command will only ping users who are online, idle or on do-not-disturb.",
                 "description" : "[NOTIFY] [REMOVE] command",
                 "outputs" : [],
                 "weights" : []
@@ -210,7 +210,7 @@
         },
 
         "stats" : {
-            "brief" : "see a list players in the pre-game lobby",
+            "brief" : "see a list players in the pregame lobby",
             "help" : "See a list of players who are currently in the lobby waiting for a game.",
             "description" : "[STATS] command",
             "outputs" : [],
@@ -219,7 +219,7 @@
 
         "op" : {
             "brief" : "grant the admin role",
-            "help" : "Removing the admin role allows server admins to participate in gaming sessions without being able to see game logs. Adding the admin role gives administrator permissions back.",
+            "help" : "Adding the admin role gives administrator permissions back.",
             "description" : "[OP] command",
             "outputs" : [],
             "weights" : []
@@ -227,7 +227,7 @@
 
         "deop" : {
             "brief" : "remove the admin role",
-            "help" : "Removing the admin role allows server admins to participate in gaming sessions without being able to see game logs. Adding the admin role gives administrator permissions back.",
+            "help" : "Removing the admin role allows server admins to participate in gaming sessions without being able to see game logs.",
             "description" : "[DEOP] command",
             "outputs" : [],
             "weights" : []
@@ -261,7 +261,7 @@
     
             "add" : {
                 "brief" : "add a user to the ignore list",
-                "help" : "Add a user to the ignore list . An ignored user can no longer invoke commands. Use the ignore feature to prevent abusive behaviour.",
+                "help" : "Add a user to the ignore list. An ignored user can no longer invoke commands. Use the ignore feature to prevent abusive behaviour.",
                 "description" : "[IGNORE] [ADD] command",
                 "outputs" : [],
                 "weights" : []
@@ -278,7 +278,7 @@
             "sync" : {
                 "brief" : "sync the ignore list",
                 "help" : "Remove users found in the ignore list that are not currently in the server.",
-                "description" : "[IGNORE] [CLEAR] command",
+                "description" : "[IGNORE] [SYNC] command",
                 "outputs" : [],
                 "weights" : []
             },
@@ -293,7 +293,7 @@
 
             "--force" : {
                 "brief" : "force flag for the clear subcommand",
-                "help" : "Force the clearing the entire ignore list.",
+                "help" : "Force the clearing of the entire ignore list.",
                 "description" : "[IGNORE] [CLEAR] [--FORCE] command",
                 "outputs" : [],
                 "weights" : []

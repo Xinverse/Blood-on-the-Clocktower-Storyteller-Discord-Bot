@@ -1,4 +1,4 @@
-"""Contains the  start command cog"""
+"""Contains the start command cog"""
 
 import traceback
 import json
@@ -7,7 +7,7 @@ from discord.ext import commands
 from ._gameplay import Gameplay
 from botutils import start_votes_timer
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
@@ -19,8 +19,8 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
     """Start command cog"""
     
     @commands.command(
-        pass_context = True, 
-        name = "start", 
+        pass_context = True,
+        name = "start",
         brief = language["doc"]["start"]["brief"],
         help = language["doc"]["start"]["help"],
         description = language["doc"]["start"]["description"]
@@ -28,7 +28,7 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
     @commands.check(botutils.check_if_lobby)
     @commands.check(botutils.check_if_is_pregame_player)
     async def start(self, ctx):
-        """Join command"""
+        """Start command"""
 
         import globvars
 
@@ -49,8 +49,7 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
             return
 
         if len(globvars.master_state.pregame) > game.MAX_PLAYERS:
-            msg = fstart_min
-            msg = fstart_min.format(
+            msg = fstart_max.format(
                 ctx.author.mention,
                 botutils.BotEmoji.cross,
                 str(game),
@@ -98,7 +97,7 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
         """Error handling of the start command"""
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
         
         # For other cases we will want to see the error logged
@@ -107,4 +106,4 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc())

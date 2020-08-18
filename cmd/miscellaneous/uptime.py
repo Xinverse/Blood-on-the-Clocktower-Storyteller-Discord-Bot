@@ -7,7 +7,7 @@ from discord.ext import commands
 from datetime import timedelta
 from ._miscellaneous import Miscellaneous
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 uptime_str = language["cmd"]["uptime"]
@@ -17,7 +17,7 @@ class Uptime(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Uptime command"""
 
     @commands.command(
-        pass_context=True, 
+        pass_context = True,
         name = "uptime",
         brief = language["doc"]["uptime"]["brief"],
         help = language["doc"]["uptime"]["help"],

@@ -5,7 +5,7 @@ import botutils
 import traceback
 from discord.ext import commands
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
@@ -28,11 +28,13 @@ class Miscellaneous(commands.Cog, name = language["system"]["miscellaneous_cog"]
             return
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
+        
+        # For other cases we will want to see the error logged
         else:
             try:
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc())

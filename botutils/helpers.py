@@ -32,7 +32,7 @@ def make_alive_ping():
 def make_dead_ping():
     """Ping the @dead role."""
     global DEAD_ROLE_ID
-    return f"<@&{DEAD_ROLE_ID}>" 
+    return f"<@&{DEAD_ROLE_ID}>"
 
 
 def strip_ping(raw):
@@ -85,5 +85,5 @@ def find_role_in_all(role_name):
             for role in gamemode_content:
                 if role_name.lower() in role.name.lower():
                     return role
-        
+
 

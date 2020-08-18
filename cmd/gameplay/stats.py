@@ -12,7 +12,7 @@ Config.read("config.INI")
 
 PREFIX = Config["settings"]["PREFIX"]
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
@@ -20,11 +20,11 @@ no_game = language["cmd"]["no_game"]
 
 
 class Stats(Gameplay, name = language["system"]["gameplay_cog"]):
-    """Stats command"""
+    """Stats command cog"""
 
     @commands.command(
-        pass_context = True, 
-        name = "stats", 
+        pass_context = True,
+        name = "stats",
         aliases = ["statistics"],
         brief = language["doc"]["stats"]["brief"],
         help = language["doc"]["stats"]["help"],
@@ -44,7 +44,7 @@ class Stats(Gameplay, name = language["system"]["gameplay_cog"]):
         elif globvars.master_state.session == botutils.BotState.game:
             return
         
-        # If we are in empty
+        # If we are in empty:
         elif globvars.master_state.session == botutils.BotState.empty:
             await ctx.send(no_game.format(PREFIX))
     
@@ -53,7 +53,7 @@ class Stats(Gameplay, name = language["system"]["gameplay_cog"]):
         """Error handling of the stats command"""
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
         
         # For other cases we will want to see the error logged
@@ -62,4 +62,4 @@ class Stats(Gameplay, name = language["system"]["gameplay_cog"]):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc())

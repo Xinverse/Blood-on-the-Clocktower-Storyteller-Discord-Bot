@@ -1,4 +1,4 @@
-"""Contains the fstart command cog"""
+"""Contains the fjoin command cog"""
 
 import discord
 import botutils
@@ -7,7 +7,7 @@ from discord.ext import commands
 from ._admin import Admin
 from botutils import lobby_timeout
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 fjoin_str = language["cmd"]["fjoin"]
@@ -19,7 +19,7 @@ class Fjoin(Admin, name = language["system"]["admin_cog"]):
     """Fjoin command"""
 
     @commands.command(
-        pass_context = True, 
+        pass_context = True,
         name = "fjoin",
         brief = language["doc"]["fjoin"]["brief"],
         help = language["doc"]["fjoin"]["help"],
@@ -34,7 +34,6 @@ class Fjoin(Admin, name = language["system"]["admin_cog"]):
 
         # Too many players
         if len(globvars.master_state.pregame) >= game.MAX_PLAYERS:
-            msg = fjoin_max
             msg = fjoin_max.format(
                 ctx.author.mention,
                 botutils.BotEmoji.cross,

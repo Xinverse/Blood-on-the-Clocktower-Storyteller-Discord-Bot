@@ -4,7 +4,7 @@ class fancy:
 
     @staticmethod
     def bold(text):
-        fancy_bold = { 
+        fancy_bold = {
                     'a' : '\uD835\uDD86'.encode('utf-16', 'surrogatepass').decode('utf-16'),
                     'b' : '\uD835\uDD87'.encode('utf-16', 'surrogatepass').decode('utf-16'),
                     'c' : '\uD835\uDD88'.encode('utf-16', 'surrogatepass').decode('utf-16'),
@@ -64,7 +64,7 @@ class fancy:
 
     @staticmethod
     def light(text):
-        fancy_light = { 
+        fancy_light = {
                     'a' : '\uD835\uDD1E'.encode('utf-16', 'surrogatepass').decode('utf-16'),
                     'b' : '\uD835\uDD1F'.encode('utf-16', 'surrogatepass').decode('utf-16'),
                     'c' : '\uD835\uDD20'.encode('utf-16', 'surrogatepass').decode('utf-16'),

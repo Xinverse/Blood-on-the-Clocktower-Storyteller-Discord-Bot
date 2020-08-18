@@ -24,14 +24,14 @@ STATUS_CYCLE = int(Config["duration"]["STATUS_CYCLE"])
 START_CLEAR = int(Config["duration"]["START_CLEAR"])
 BACKUP_INTERVAL_MIN = int(Config["duration"]["BACKUP_INTERVAL_MIN"])
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 lobby_timeout_str = language["system"]["lobby_timeout"]
 not_enough_votes_to_start = language["system"]["not_enough_votes_to_start"]
 
 
-@tasks.loop(seconds = TOKEN_RESET)
+@tasks.loop(seconds = TOKEN_RESET, count = None)
 async def rate_limit_commands():
     """Rate limit the frequency of commands"""
     import globvars
@@ -40,7 +40,7 @@ async def rate_limit_commands():
     globvars.logging.info("Cleared the rate limit dict")
 
 
-@tasks.loop(seconds = LOBBY_TIMEOUT, count=2)
+@tasks.loop(seconds = LOBBY_TIMEOUT, count = 2)
 async def lobby_timeout():
     """Lobby timeout loop"""
     pass
@@ -74,13 +74,13 @@ async def cycling_bot_status():
 
     for message in messages:
         activity = discord.Activity(name = message, type = discord.ActivityType.playing)
-        await globvars.client.change_presence(activity=activity)
+        await globvars.client.change_presence(activity = activity)
         await asyncio.sleep(STATUS_CYCLE)
 
 
 @tasks.loop(count = 1)
 async def start_votes_timer():
-    """A task to clear start votes periodically."""
+    """A task to clear start votes periodically"""
 
     import globvars
     await asyncio.sleep(START_CLEAR)
@@ -88,7 +88,7 @@ async def start_votes_timer():
     await botutils.send_lobby(not_enough_votes_to_start)
 
 
-@tasks.loop(count = None, minutes = BACKUP_INTERVAL_MIN)
+@tasks.loop(minutes = BACKUP_INTERVAL_MIN, count = None)
 async def backup_loop():
     """A task to backup data in csv files: 
     Notify and ignore information

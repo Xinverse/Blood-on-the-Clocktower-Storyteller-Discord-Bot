@@ -15,7 +15,7 @@ Config.read("preferences.INI")
 LOBBY_TIMEOUT = Config["duration"]["LOBBY_TIMEOUT"]
 LOBBY_TIMEOUT = int(LOBBY_TIMEOUT)
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
@@ -27,8 +27,8 @@ class Time(Gameplay, name = language["system"]["gameplay_cog"]):
     """Time command cog"""
 
     @commands.command(
-        pass_context = True, 
-        name = "time", 
+        pass_context = True,
+        name = "time",
         aliases = ["t"],
         brief = language["doc"]["time"]["brief"],
         help = language["doc"]["time"]["help"],
@@ -60,7 +60,7 @@ class Time(Gameplay, name = language["system"]["gameplay_cog"]):
         """Error handling of the time command"""
 
         # Case: check failure
-        if isinstance(error, commands.errors.CheckFailure):
+        if isinstance(error, commands.CheckFailure):
             return
         
         # For other cases we will want to see the error logged
@@ -70,4 +70,4 @@ class Time(Gameplay, name = language["system"]["gameplay_cog"]):
             except Exception:
                 await ctx.send(error_str)
                 await botutils.log(botutils.Level.error, traceback.format_exc())
-                
+

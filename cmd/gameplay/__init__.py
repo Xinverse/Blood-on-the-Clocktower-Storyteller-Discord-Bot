@@ -12,4 +12,4 @@ def setup(client):
     client.add_cog(Stats(client))
     client.add_cog(Start(client))
     client.add_cog(Notify(client))
-    
+

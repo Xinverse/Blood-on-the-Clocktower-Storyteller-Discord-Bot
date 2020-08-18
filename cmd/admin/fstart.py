@@ -16,7 +16,7 @@ class Fstart(Admin, name = language["system"]["admin_cog"]):
     """Fstart command"""
 
     @commands.command(
-        pass_context = True, 
+        pass_context = True,
         name = "fstart",
         brief = language["doc"]["fstart"]["brief"],
         help = language["doc"]["fstart"]["help"],
@@ -41,8 +41,7 @@ class Fstart(Admin, name = language["system"]["admin_cog"]):
             return
 
         if len(globvars.master_state.pregame) > game.MAX_PLAYERS:
-            msg = fstart_min
-            msg = fstart_min.format(
+            msg = fstart_max.format(
                 ctx.author.mention,
                 botutils.BotEmoji.cross,
                 str(game),

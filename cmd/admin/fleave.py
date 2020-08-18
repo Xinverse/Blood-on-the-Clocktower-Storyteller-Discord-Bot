@@ -7,7 +7,7 @@ from discord.ext import commands
 from ._admin import Admin
 from botutils import lobby_timeout, start_votes_timer
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 fleave_str = language["cmd"]["fleave"]
@@ -18,7 +18,7 @@ class Fleave(Admin, name = language["system"]["admin_cog"]):
     """Fleave command"""
 
     @commands.command(
-        pass_context = True, 
+        pass_context = True,
         name = "fleave",
         brief = language["doc"]["fleave"]["brief"],
         help = language["doc"]["fleave"]["help"],
@@ -29,7 +29,7 @@ class Fleave(Admin, name = language["system"]["admin_cog"]):
 
         import globvars
 
-        # The player has joined; make them leave.
+        # The player has joined; make them leave
         if globvars.master_state.pregame.is_joined(member.id):
             globvars.master_state.pregame.safe_remove_player(member.id)
             await ctx.send(fleave_str.format(member.name, len(globvars.master_state.pregame)))
@@ -44,7 +44,7 @@ class Fleave(Admin, name = language["system"]["admin_cog"]):
             if len(globvars.start_votes) == 0 and start_votes_timer.is_running():
                 start_votes_timer.cancel()
         
-        # The player has not joined.
+        # The player has not joined
         else:
             await ctx.send(fleaved_str.format(ctx.author.mention, member.name))
 

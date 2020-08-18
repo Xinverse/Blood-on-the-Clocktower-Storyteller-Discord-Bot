@@ -12,7 +12,7 @@ class Pregame:
         return self._userid_list
     
     def is_empty(self):
-        """Is the pregame lobby empty? (meaning that there are 0 player who have joined)"""
+        """Is the pregame lobby empty? (meaning that there are 0 players who have joined)"""
         return len(self._userid_list) == 0
 
     def add_player(self, userid):
@@ -33,7 +33,7 @@ class Pregame:
         return userid in self._userid_list
     
     def safe_add_player(self, userid):
-        """Add a player based on its user ID only if the player has joined"""
+        """Add a player based on its user ID only if the player has not joined"""
         userid = int(userid)
         if not self.is_joined(userid):
             self.add_player(userid)
@@ -58,4 +58,4 @@ class Pregame:
         return len(self._userid_list)
     
     def __iter__(self):
-         return iter(self._userid_list)
+        return iter(self._userid_list)

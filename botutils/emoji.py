@@ -2,7 +2,7 @@
 
 import json
 
-with open('emojis.json') as json_file: 
+with open('emojis.json') as json_file:
     emojis = json.load(json_file)
 
 

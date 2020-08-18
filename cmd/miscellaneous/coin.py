@@ -6,7 +6,7 @@ import random
 from ._miscellaneous import Miscellaneous
 from discord.ext import commands
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 
@@ -14,8 +14,8 @@ class Coin(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
     """Coin command"""
 
     @commands.command(
-        pass_context=True, 
-        name = "coin", 
+        pass_context = True,
+        name = "coin",
         brief = language["doc"]["coin"]["brief"],
         help = language["doc"]["coin"]["help"],
         description = language["doc"]["coin"]["description"]
@@ -33,4 +33,4 @@ class Coin(Miscellaneous, name = language["system"]["miscellaneous_cog"]):
         coin_reply = coin_reply[0]
 
         await ctx.send(coin_reply)
-        
+
