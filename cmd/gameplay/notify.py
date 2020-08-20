@@ -33,7 +33,7 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
         help = language["doc"]["notify"]["notify"]["help"],
         description = language["doc"]["notify"]["notify"]["description"]
     )
-    @commands.check(botutils.check_if_lobby)
+    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
     @commands.check(botutils.check_if_not_in_game)
     async def notify(self, ctx):
         """Notify command"""

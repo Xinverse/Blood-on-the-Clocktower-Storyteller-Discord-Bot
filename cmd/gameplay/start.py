@@ -85,6 +85,11 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
                 return
             
             votes_left = votes_needed - len(globvars.start_votes)
+
+            # Do not have a negative number of votes required to start
+            if votes_left < 0:
+                return 
+
             msg = start_str.format(
                 ctx.author.name,
                 votes_left,
