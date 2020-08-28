@@ -40,6 +40,7 @@ class Nominate(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         pass_context = True, 
         name = "nominate", 
         hidden = False, 
+        aliases = ["nom"],
         brief = documentation["doc"]["nominate"]["brief"],
         help = documentation["doc"]["nominate"]["help"],
         description = documentation["doc"]["nominate"]["description"]
