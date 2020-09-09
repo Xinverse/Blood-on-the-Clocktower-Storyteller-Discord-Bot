@@ -30,6 +30,7 @@ with open('botc/game_text.json') as json_file:
     whisper_announcement = documentation["gameplay"]["whisper_announcement"]
     from_str = documentation["gameplay"]["from"]
     to_str = documentation["gameplay"]["to"]
+    whisper_self = documentation["cmd_warnings"]["whisper_self"]
 
 
 class Whisper(commands.Cog, name = documentation["misc"]["townhall_cog"]):
@@ -55,12 +56,23 @@ class Whisper(commands.Cog, name = documentation["misc"]["townhall_cog"]):
         help = documentation["doc"]["whisper"]["help"],
         description = documentation["doc"]["whisper"]["description"]
     )
-    @commands.check(check_if_dm)  # Correct channel -> NotDMChannel
-    @commands.check(check_if_is_day)  # Correct phase -> NotDay
     @commands.cooldown(1, WHISPER_COOLDOWN, commands.BucketType.channel)
+    @commands.check(check_if_is_day)  # Correct phase -> NotDay
+    @commands.check(check_if_dm)  # Correct channel -> NotDMChannel
     async def whisper(self, ctx, recipient: PlayerConverter(), *, content: WhisperConverter()):
         """Whisper command"""
         player = BOTCUtils.get_player_from_id(ctx.author.id)
+        # You may not whisper to yourself
+        if player.user.id == recipient.user.id:
+            msg = whisper_self.format(
+                botutils.BotEmoji.cross,
+                ctx.author.mention
+            )
+            try:
+                await ctx.author.send(msg)
+            except discord.Forbidden:
+                pass
+            return
         try:
             msg = from_str.format(
                 botutils.BotEmoji.unread_message,
