@@ -17,7 +17,7 @@ class Playtest(Admin):
 
     # ---------- PLAYTEST COMMAND ----------------------------------------
     @commands.command(pass_context=True, name = "playtest")
-    @commands.check(botutils.check_if_lobby_or_dm_or_admin)
+    @commands.is_owner()
     async def playtest(self, ctx):
         """Playtest command"""
         
