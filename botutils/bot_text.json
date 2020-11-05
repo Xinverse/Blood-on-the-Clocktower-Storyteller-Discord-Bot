@@ -312,7 +312,8 @@
         "already_not_notify" : "{} {} You are already not in the notify list.",
         "fstart_min" : "{} {} The currently selected game is **{}**, with a **minimum** of **{}** players. You may not start the game until the minimum player count is reached.",
         "fstart_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby to run this game.",
-        "fjoin_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby."
+        "fjoin_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby.",
+        "cant_fjoin_bot": "{} :x: You can't fjoin a bot."
 
         },
 
