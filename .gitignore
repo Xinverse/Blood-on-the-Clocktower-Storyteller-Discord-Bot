@@ -142,3 +142,5 @@ notify.csv
 ignore.csv
 grimoire.png
 playtest.py
+emojis.json
+log.txt
