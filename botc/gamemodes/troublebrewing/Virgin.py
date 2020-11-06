@@ -56,7 +56,7 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Virgin"
 
         self._role_enum = TBRole.virgin
-        self._emoji = "<:virgin:722687299363667988>"
+        self._emoji = "<:tbvirgin:739317351173980201>"
 
         self.inventory = Inventory(
             Flags.virgin_first_nomination,

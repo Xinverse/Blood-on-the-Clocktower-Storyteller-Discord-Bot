@@ -81,7 +81,7 @@ class Character:
 
         # Other
         self._emoji = None
-        self._demon_head_emoji = "<:demonhead:722894653438820432>"
+        self._demon_head_emoji = "<:demonhead:736692927505367190>"
     
     # -------------------- Character Properties --------------------
     

@@ -86,7 +86,7 @@ with open('botutils/bot_text.json') as json_file:
 class Setup:
    """A class to facilitate role to player access"""
 
-   DEMON_HEAD_EMOJI = "<:demonhead:722894653438820432>"
+   DEMON_HEAD_EMOJI = "<:demonhead:736692927505367190>"
 
    def __init__(self):
 

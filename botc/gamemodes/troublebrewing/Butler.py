@@ -66,7 +66,7 @@ class Butler(Outsider, TroubleBrewing, Character, RecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Butler"
 
         self._role_enum = TBRole.butler
-        self._emoji = "<:butler:722687426421719050>"
+        self._emoji = "<:tbbutler:739317349248794685>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

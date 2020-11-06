@@ -64,7 +64,7 @@ class Librarian(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Librarian"
 
         self._role_enum = TBRole.librarian
-        self._emoji = "<:librarian:722685072205152267>"
+        self._emoji = "<:tblibrarian:739317350888767520>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

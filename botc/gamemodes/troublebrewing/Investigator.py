@@ -61,7 +61,7 @@ class Investigator(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Investigator"
 
         self._role_enum = TBRole.investigator
-        self._emoji = "<:investigator:722685830585384971>"
+        self._emoji = "<:tbinvestigator:739317350695698492>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

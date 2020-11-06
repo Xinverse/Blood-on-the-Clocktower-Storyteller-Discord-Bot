@@ -53,7 +53,7 @@ class ScarletWoman(Minion, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Scarlet_Woman"
 
         self._role_enum = TBRole.scarletwoman
-        self._emoji = "<:scarletwoman:722687671847092225>"
+        self._emoji = "<:tbscarletwoman:739317351110934558>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

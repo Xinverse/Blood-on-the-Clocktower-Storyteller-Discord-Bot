@@ -52,7 +52,7 @@ class Mayor(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Mayor"
 
         self._role_enum = TBRole.mayor
-        self._emoji = "<:mayor:722687261879304214>"
+        self._emoji = "<:tbmayor:739317350544965663>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

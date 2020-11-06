@@ -58,7 +58,7 @@ class Monk(Townsfolk, TroubleBrewing, Character, RecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Monk"
 
         self._role_enum = TBRole.monk
-        self._emoji = "<:monk:722687015560151050>"
+        self._emoji = "<:tbmonk:739317350603423746>"
     
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

@@ -60,7 +60,7 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Washerwoman"
 
         self._role_enum = TBRole.washerwoman
-        self._emoji = "<:washerwoman:722684124820668447>"
+        self._emoji = "<:tbwasherwoman:739317350884442112>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

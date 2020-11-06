@@ -61,7 +61,7 @@ class Undertaker(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Undertaker"
 
         self._role_enum = TBRole.undertaker
-        self._emoji = "<:undertaker:722687110599147541>"
+        self._emoji = "<:tbundertaker:739317350553092136>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

@@ -65,7 +65,7 @@ class Ravenkeeper(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Ravenkeeper"
         
         self._role_enum = TBRole.ravenkeeper
-        self._emoji = "<:ravenkeeper:722686977295646731>"
+        self._emoji = "<:tbravenkeeper:739317350913802360>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

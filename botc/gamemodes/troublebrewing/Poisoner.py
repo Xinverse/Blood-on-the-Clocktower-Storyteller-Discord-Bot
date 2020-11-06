@@ -61,7 +61,7 @@ class Poisoner(Minion, TroubleBrewing, Character, RecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Poisoner"
 
         self._role_enum = TBRole.poisoner
-        self._emoji = "<:poisoner:722687671671193620>"
+        self._emoji = "<:tbpoisoner:739317350758875206>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

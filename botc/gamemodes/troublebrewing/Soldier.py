@@ -51,7 +51,7 @@ class Soldier(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Soldier"
 
         self._role_enum = TBRole.soldier
-        self._emoji = "<:soldier:722687220841971753>"
+        self._emoji = "<:tbsoldier:739317350905413632>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

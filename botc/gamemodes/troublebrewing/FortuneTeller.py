@@ -72,7 +72,7 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character, RecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Fortune_Teller"
 
         self._role_enum = TBRole.fortuneteller
-        self._emoji = "<:fortuneteller:722687043666313218>"
+        self._emoji = "<:tbfortuneteller:739317350733578280>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

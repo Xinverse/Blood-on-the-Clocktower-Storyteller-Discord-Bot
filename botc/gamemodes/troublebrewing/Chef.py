@@ -60,7 +60,7 @@ class Chef(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Chef"
 
         self._role_enum = TBRole.chef
-        self._emoji = "<:chef:722686296073699388>"
+        self._emoji = "<:tbchef:739317349600985188>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

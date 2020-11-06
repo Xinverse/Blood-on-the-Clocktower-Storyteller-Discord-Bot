@@ -81,7 +81,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Imp"
 
         self._role_enum = TBRole.imp
-        self._emoji = "<:imp2:722687671377330197>"
+        self._emoji = "<:tbimp:739317350897025054>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

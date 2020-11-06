@@ -54,7 +54,7 @@ class Slayer(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Slayer"
 
         self._role_enum = TBRole.slayer
-        self._emoji = "<:slayer:722687329050820648>"
+        self._emoji = "<:tbslayer:739317350704218274>"
 
         self.inventory = Inventory(
             Flags.slayer_unique_attempt

@@ -31,5 +31,5 @@ class Exorcist(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Exorcist"
 
         self._role_enum = BMRRole.exorcist
-        self._emoji = "<:exorcist:722688860370239508>"
+        self._emoji = "<:bmrexorcist:741554608866066482>"
         

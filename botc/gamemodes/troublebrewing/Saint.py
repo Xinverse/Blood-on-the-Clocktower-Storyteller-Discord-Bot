@@ -50,7 +50,7 @@ class Saint(Outsider, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Saint"
 
         self._role_enum = TBRole.saint
-        self._emoji = "<:saint:722687457946107924>"
+        self._emoji = "<:tbsaint:739317351127711794>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
