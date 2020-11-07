@@ -71,7 +71,7 @@ class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Spy"
 
         self._role_enum = TBRole.spy
-        self._emoji = "<:spy2:722687672002543656>"
+        self._emoji = "<:tbspy:739317350607749200>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
