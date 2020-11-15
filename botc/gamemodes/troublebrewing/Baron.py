@@ -56,7 +56,7 @@ class Baron(Minion, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Baron"
 
         self._role_enum = TBRole.baron
-        self._emoji = "<:baron:722687671499227167>"
+        self._emoji = "<:tbbaron:777526995843285012>"
     
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
