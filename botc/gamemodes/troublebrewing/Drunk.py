@@ -51,7 +51,7 @@ class Drunk(Outsider, TroubleBrewing, Character, NonRecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Drunk"
 
         self._role_enum = TBRole.drunk
-        self._emoji = "<:drunk:722687457828798515>"
+        self._emoji = "<:tbdrunk:777539659349229578>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
