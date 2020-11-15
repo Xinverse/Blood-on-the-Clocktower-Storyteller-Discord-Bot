@@ -39,8 +39,7 @@ class Modkill(commands.Cog, name = documentation["misc"]["debug_cog"]):
         """Modkill command"""
         await player.exec_real_death()
         feedback = documentation["doc"]["modkill"]["feedback"]
-        await ctx.send(feedback.format(check_emoji, player.game_nametag, player.role.emoji, 
-            player.role.true_self))
+        await ctx.send(feedback.format(check_emoji, player.game_nametag))
 
     @modkill.error
     async def modkill_error(self, ctx, error):

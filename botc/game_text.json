@@ -332,7 +332,7 @@
             "brief" : "modkill a player",
             "help" : "This debugging command modkills a specified player. The player will remain in the game, but as a dead player. The bot recognizes usernames, nicknames, user ID's and mentions, typed in full or partially.",
             "description" : "[MODKILL] command - BOTC (debug)",
-            "feedback" : "{} Successfully modkilled {} with the character of {} `{}`."
+            "feedback" : "{} Successfully modkilled {}."
         },
 
         "fstop" : {
