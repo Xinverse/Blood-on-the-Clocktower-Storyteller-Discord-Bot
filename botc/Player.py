@@ -53,17 +53,13 @@ class Player:
         self._role_obj = new_role
         await globvars.master_state.game.check_winning_conditions()
     
-    async def exec_real_death(self, modkill=False):
+    async def exec_real_death(self):
         """Turn the player's real state into the death state"""
         import globvars
         if self.is_dead():
             raise AlreadyDead("Player is already dead, you are trying to kill them again.")
-        if modkill:
-            self._state_obj = PlayerState.fleaved
-            self._apparent_state_obj = PlayerState.fleaved
-        else:
-            self._state_obj = PlayerState.dead
-            self._apparent_state_obj = PlayerState.dead
+        self._state_obj = PlayerState.dead
+        self._apparent_state_obj = PlayerState.dead
         await botutils.add_dead_role(self.user)
         await botutils.remove_alive_role(self.user)
         await globvars.master_state.game.check_winning_conditions()
