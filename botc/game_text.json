@@ -269,6 +269,7 @@
         "evil_wins" : "**Game over! The Evil team has won.**",
         "role_reveal" : "{} **{}** was the {} **{}**",
         "ego_role_reveal" : "{} **{}** was the {} **{}** **{}**",
+        "changed_role_reveal" : "{} **{}** was the {} **{}** ({} **{}**)",
         "from" : "{} From {}: *{}*",
         "to" : "{} To {}: *{}*",
         "role_change" : "You are now the {} **{}**.",

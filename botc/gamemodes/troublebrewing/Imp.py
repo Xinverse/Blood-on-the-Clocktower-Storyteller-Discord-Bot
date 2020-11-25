@@ -198,6 +198,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
                 alive_scarletwomen = [player for player in scarletwomen if player.is_alive() and not player.is_droisoned()]
                 if alive_scarletwomen:
                     promoted = random.choice(alive_scarletwomen)
+                    promoted._old_role_obj = promoted._role_obj
                     await promoted.exec_change_role(Imp())
                     embed = self.__make_demonhood_promo_embed(promoted)
                     try:
@@ -215,6 +216,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
             alive_minions = [player for player in minions if player.is_alive()]
             if alive_minions:
                 promoted = random.choice(alive_minions)
+                promoted._old_role_obj = promoted._role_obj
                 await promoted.exec_change_role(Imp())
                 embed = self.__make_demonhood_promo_embed(promoted)
                 try:

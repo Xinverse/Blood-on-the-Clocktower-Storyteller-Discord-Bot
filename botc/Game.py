@@ -76,6 +76,7 @@ with open('botc/game_text.json') as json_file:
    role_reveal = strings["gameplay"]["role_reveal"]
    storyteller_death = strings["lore"]["storyteller_death"]
    ego_role_reveal = strings["gameplay"]["ego_role_reveal"]
+   changed_role_reveal = strings["gameplay"]["changed_role_reveal"]
 
 with open('botutils/bot_text.json') as json_file: 
    language = json.load(json_file)
@@ -366,6 +367,17 @@ class Game(GameMeta):
                   player.role.ego_self.name
                ) 
 
+            # The player is a minion who became imp
+            elif player.old_role is not None:
+               short = changed_role_reveal.format(
+                  botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                  player.user.mention,
+                  player.role.true_self.emoji,
+                  player.role.true_self.name,
+                  player.old_role.true_self.emoji,
+                  player.old_role.true_self.name,
+               )
+
             # The player is not a drunk, we use the default reveal short string
             else:
                short = role_reveal.format(
@@ -407,6 +419,17 @@ class Game(GameMeta):
                   player.role.ego_self.name
                ) 
 
+            # The player is a minion who became imp
+            elif player.old_role is not None:
+               short = changed_role_reveal.format(
+                  botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
+                  player.user.mention,
+                  player.role.true_self.emoji,
+                  player.role.true_self.name,
+                  player.old_role.true_self.emoji,
+                  player.old_role.true_self.name,
+               )
+
             # The player is not a drunk, we use the default reveal short string
             else:
                short = role_reveal.format(
@@ -446,6 +469,17 @@ class Game(GameMeta):
                   player.role.true_self.name,
                   player.role.ego_self.name
                ) 
+
+            # The player is a minion who became imp
+            elif player.old_role is not None:
+               short = changed_role_reveal.format(
+                  botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                  player.user.mention,
+                  player.role.true_self.emoji,
+                  player.role.true_self.name,
+                  player.old_role.true_self.emoji,
+                  player.old_role.true_self.name,
+               )
 
             # The player is not a drunk, we use the default reveal short string
             else:

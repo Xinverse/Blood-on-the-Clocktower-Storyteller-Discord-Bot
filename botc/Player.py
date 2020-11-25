@@ -18,6 +18,7 @@ class Player:
     def __init__(self, user_obj, role_obj):
         self._user_obj = user_obj  # Discord user object
         self._role_obj = role_obj  # Role object
+        self._old_role_obj = None
         self._state_obj = PlayerState.alive  # Enum object
         self._apparent_state_obj = PlayerState.alive  # Enum object
         self.action_grid = ActionGrid()  # ActionGrib object
@@ -153,6 +154,10 @@ class Player:
     @property
     def role(self):
         return self._role_obj
+
+    @property
+    def old_role(self):
+        return self._old_role_obj
     
     @property
     def state(self):
