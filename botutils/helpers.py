@@ -78,12 +78,14 @@ def find_role_in_all(role_name):
     Recluse Obj, Saint Obj, Scarlet Woman Obj, Slayer Obj, Soldier Obj, Undertaker Obj, 
     Virgin Obj, Washerwoman Obj]}}}
     """
+    match = None
     for game_pack_title in globvars.master_state.game_packs:
         pack_content = globvars.master_state.game_packs[game_pack_title]
         for gamemode_title in pack_content["gamemodes"]:
             gamemode_content = pack_content["gamemodes"][gamemode_title]
             for role in gamemode_content:
-                if role_name.lower() in role.name.lower():
+                if role_name.lower() == role.name.lower():
                     return role
-
-
+                elif role_name.lower() in role.name.lower() and not match:
+                    match = role
+    return match
