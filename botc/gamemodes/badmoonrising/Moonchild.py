@@ -30,5 +30,5 @@ class Moonchild(Outsider, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Moonchild"
 
         self._role_enum = BMRRole.moonchild
-        self._emoji = "<:moonchild:722688861171351582>"
+        self._emoji = "<:bmrmoonchild:781152055011049552>"
         

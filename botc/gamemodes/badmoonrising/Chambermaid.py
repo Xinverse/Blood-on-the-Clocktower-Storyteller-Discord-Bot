@@ -31,4 +31,4 @@ class Chambermaid(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Chambermaid"
 
         self._role_enum = BMRRole.chambermaid
-        self._emoji = "<:chambermaid:722688859946745898>"
+        self._emoji = "<:bmrchambermaid:781151556053499925>"

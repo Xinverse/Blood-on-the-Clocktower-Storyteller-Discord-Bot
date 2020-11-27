@@ -30,4 +30,4 @@ class Courtier(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Courtier"
 
         self._role_enum = BMRRole.courtier
-        self._emoji = "<:courtier:722688860076769311>"
+        self._emoji = "<:bmrcourtier:781151556128342058>"

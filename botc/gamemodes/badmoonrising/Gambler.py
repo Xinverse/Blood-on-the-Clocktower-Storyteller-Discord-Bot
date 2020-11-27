@@ -30,4 +30,4 @@ class Gambler(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Gambler"
 
         self._role_enum = BMRRole.gambler
-        self._emoji = "<:gambler:722688860525690901>"
+        self._emoji = "<:bmrgambler:781151556426792960>"

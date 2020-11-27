@@ -31,5 +31,5 @@ class Minstrel(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Minstrel"
 
         self._role_enum = BMRRole.minstrel
-        self._emoji = "<:minstrel:722688861213556807>"
+        self._emoji = "<:bmrminstrel:781152054944596029>"
         

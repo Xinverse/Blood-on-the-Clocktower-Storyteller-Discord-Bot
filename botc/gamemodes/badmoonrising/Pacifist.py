@@ -30,4 +30,4 @@ class Pacifist(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Pacifist"
 
         self._role_enum = BMRRole.pacifist
-        self._emoji = "<:pacifist:722688860827680840>"
+        self._emoji = "<:bmrpacifist:781152055091396648>"

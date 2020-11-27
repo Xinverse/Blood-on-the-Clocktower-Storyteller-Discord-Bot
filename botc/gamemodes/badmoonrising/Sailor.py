@@ -31,5 +31,5 @@ class Sailor(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Sailor"
 
         self._role_enum = BMRRole.sailor
-        self._emoji = "<:sailor:722688861939171338>"
+        self._emoji = "<:bmrsailor:781152054906716161>"
         

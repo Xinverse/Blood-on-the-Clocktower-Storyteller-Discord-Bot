@@ -64,7 +64,7 @@ class Zombuul(Demon, BadMoonRising, Character, RecurringAction):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Zombuul"
 
         self._role_enum = BMRRole.zombuul
-        self._emoji = "<:zombuul:722688861980852265>"
+        self._emoji = "<:bmrzombuul:781152054910517291>"
     
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

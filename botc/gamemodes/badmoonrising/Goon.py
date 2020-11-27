@@ -31,4 +31,4 @@ class Goon(Outsider, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Goon"
 
         self._role_enum = BMRRole.goon
-        self._emoji = "<:goon:722688860198273105>"
+        self._emoji = "<:bmrgoon:781151556330192966>"

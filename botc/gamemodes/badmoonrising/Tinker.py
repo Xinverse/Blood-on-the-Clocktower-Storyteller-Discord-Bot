@@ -30,5 +30,5 @@ class Tinker(Outsider, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Tinker"
 
         self._role_enum = BMRRole.tinker
-        self._emoji = "<:bmrtinker:741371376971022407>"
+        self._emoji = "<:bmrtinker:781672313066225675>"
         

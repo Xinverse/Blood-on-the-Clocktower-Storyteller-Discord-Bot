@@ -30,5 +30,5 @@ class Gossip(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Gossip"
 
         self._role_enum = BMRRole.gossip
-        self._emoji = "<:gossip:722688860479422535>"
+        self._emoji = "<:bmrgossip:781151556409098240>"
         

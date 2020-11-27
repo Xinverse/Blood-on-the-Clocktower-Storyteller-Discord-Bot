@@ -31,4 +31,4 @@ class Godfather(Minion, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Godfather"
 
         self._role_enum = BMRRole.godfather
-        self._emoji = "<:godfather:722688860575891509>"
+        self._emoji = "<:bmrgodfather:781151556204625930>"

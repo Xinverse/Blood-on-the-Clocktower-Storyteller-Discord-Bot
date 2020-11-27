@@ -31,4 +31,4 @@ class Professor(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Professor"
 
         self._role_enum = BMRRole.professor
-        self._emoji = "<:professor:722688861318414357>"
+        self._emoji = "<:bmrprofessor:781152055208574986>"

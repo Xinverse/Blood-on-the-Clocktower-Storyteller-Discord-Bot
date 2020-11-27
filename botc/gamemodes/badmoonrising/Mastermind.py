@@ -31,5 +31,5 @@ class Mastermind(Minion, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Mastermind"
 
         self._role_enum = BMRRole.mastermind
-        self._emoji = "<:mastermind:722688860731211789>"
+        self._emoji = "<:bmrmastermind:781152055179214869>"
         

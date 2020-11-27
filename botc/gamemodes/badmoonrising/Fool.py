@@ -30,4 +30,4 @@ class Fool(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Fool"
 
         self._role_enum = BMRRole.fool
-        self._emoji = "<:fool:722688859996946493>"
+        self._emoji = "<:bmrfool:781151556254564353>"

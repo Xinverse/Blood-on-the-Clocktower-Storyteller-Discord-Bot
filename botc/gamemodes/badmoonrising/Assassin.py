@@ -31,7 +31,7 @@ class Assassin(Minion, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Assassin"
 
         self._role_enum = BMRRole.assassin
-        self._emoji = "<:assassin:722688859925905419>"
+        self._emoji = "<:bmrassassin:781151556665344010>"
     
     def has_finished_night_action(self, player):
         """Return True if assassin has submitted the assassinate action"""

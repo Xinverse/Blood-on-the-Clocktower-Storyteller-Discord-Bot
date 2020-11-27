@@ -31,5 +31,5 @@ class Lunatic(Outsider, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Lunatic"
 
         self._role_enum = BMRRole.lunatic
-        self._emoji = "<:lunatic:722688861003841616>"
+        self._emoji = "<:bmrlunatic:781152055455776798>"
         

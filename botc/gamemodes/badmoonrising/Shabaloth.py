@@ -37,7 +37,7 @@ class Shabaloth(Demon, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Shabaloth"
 
         self._role_enum = BMRRole.shabaloth
-        self._emoji = "<:shabaloth:722688861788045314>"
+        self._emoji = "<:bmrshabaloth:781152055217094726>"
     
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

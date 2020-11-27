@@ -31,4 +31,4 @@ class DevilsAdvocate(Minion, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Devil%27s_Advocate"
 
         self._role_enum = BMRRole.devilsadvocate
-        self._emoji = "<:devilsadvocate:722688859879768107>"
+        self._emoji = "<:bmrdevilsadvocate:781151556493639680>"

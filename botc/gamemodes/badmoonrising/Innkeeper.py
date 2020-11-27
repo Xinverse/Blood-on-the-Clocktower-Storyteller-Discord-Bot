@@ -30,5 +30,5 @@ class Innkeeper(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Innkeeper"
 
         self._role_enum = BMRRole.innkeeper
-        self._emoji = "<:bmrinnkeeper:748350805769191435>"
+        self._emoji = "<:bmrinnkeeper:781152055003840552>"
         

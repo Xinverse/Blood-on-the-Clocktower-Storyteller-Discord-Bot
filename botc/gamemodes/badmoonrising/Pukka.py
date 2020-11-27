@@ -37,7 +37,7 @@ class Pukka(Demon, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Pukka"
 
         self._role_enum = BMRRole.pukka
-        self._emoji = "<:pukka:722688862060806154>"
+        self._emoji = "<:bmrpukka:781042557869621260>"
     
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

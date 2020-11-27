@@ -30,5 +30,5 @@ class Grandmother(Townsfolk, BadMoonRising, Character):
         self._wiki_link = "http://bloodontheclocktower.com/wiki/Grandmother"
 
         self._role_enum = BMRRole.grandmother
-        self._emoji = "<:grandmother:722688860450062347>"
+        self._emoji = "<:bmrgrandmother:781019504427008010>"
         
