@@ -40,5 +40,5 @@ class SectsAndViolets:
     def __init__(self):
 
         self._gm_of_appearance = Gamemode.sects_and_violets
-        self._gm_art_link = "http://bloodontheclocktower.com/wiki/images/8/8f/SV_Logo.png"
-        self._gm_main_page = "http://bloodontheclocktower.com/wiki/Sects_%26_Violets"
+        self._gm_art_link = "https://bloodontheclocktower.com/wiki/images/8/8f/SV_Logo.png"
+        self._gm_main_page = "https://bloodontheclocktower.com/wiki/Sects_%26_Violets"

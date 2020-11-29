@@ -38,5 +38,5 @@ class TroubleBrewing:
 
         self._gm_of_appearance = Gamemode.trouble_brewing
         self._gm_art_link = "https://imgur.com/3ENrO0y.png"
-        self._gm_main_page = "http://bloodontheclocktower.com/wiki/Trouble_Brewing"
+        self._gm_main_page = "https://bloodontheclocktower.com/wiki/Trouble_Brewing"
 

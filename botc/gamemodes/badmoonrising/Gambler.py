@@ -25,9 +25,9 @@ class Gambler(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/f/f5/Gambler_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/f/f5/Gambler_Token.png"
         self._art_link_cropped = "https://imgur.com/vkiURKP.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Gambler"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Gambler"
 
         self._role_enum = BMRRole.gambler
         self._emoji = "<:bmrgambler:781151556426792960>"

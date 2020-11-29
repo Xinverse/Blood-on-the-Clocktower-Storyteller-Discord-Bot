@@ -46,9 +46,9 @@ class Drunk(Outsider, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
         
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/0/03/Drunk_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/0/03/Drunk_Token.png"
         self._art_link_cropped = "https://imgur.com/vWuRgdS.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Drunk"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Drunk"
 
         self._role_enum = TBRole.drunk
         self._emoji = "<:tbdrunk:781667122644254741>"

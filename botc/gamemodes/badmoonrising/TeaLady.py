@@ -25,9 +25,9 @@ class TeaLady(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/e/e7/Tea_Lady_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/e/e7/Tea_Lady_Token.png"
         self._art_link_cropped = "https://imgur.com/oEHE6oQ.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Tea_Lady"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Tea_Lady"
 
         self._role_enum = BMRRole.tealady
         self._emoji = "<:bmrtealady:781152054986539040>"

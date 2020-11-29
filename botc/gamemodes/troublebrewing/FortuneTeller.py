@@ -67,9 +67,9 @@ class FortuneTeller(Townsfolk, TroubleBrewing, Character, RecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
                             
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/3/3a/Fortune_Teller_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/3/3a/Fortune_Teller_Token.png"
         self._art_link_cropped = "https://imgur.com/23ZXb1y.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Fortune_Teller"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Fortune_Teller"
 
         self._role_enum = TBRole.fortuneteller
         self._emoji = "<:tbfortuneteller:739317350733578280>"

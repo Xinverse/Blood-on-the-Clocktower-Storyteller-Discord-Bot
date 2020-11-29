@@ -76,9 +76,9 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
         
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/4/42/Imp_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/4/42/Imp_Token.png"
         self._art_link_cropped = "https://imgur.com/ptpr9A1.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Imp"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Imp"
 
         self._role_enum = TBRole.imp
         self._emoji = "<:tbimp:739317350897025054>"

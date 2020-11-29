@@ -21,7 +21,7 @@ def alpha_to_color(image, color=(255, 255, 255)):
     This is a very simple solution that might leave over some ugly edges, due
     to semi-transparent areas. You should use alpha_composite_with color instead.
 
-    Source: http://stackoverflow.com/a/9166671/284318
+    Source: https://stackoverflow.com/a/9166671/284318
 
     Keyword Arguments:
     image -- PIL RGBA Image object

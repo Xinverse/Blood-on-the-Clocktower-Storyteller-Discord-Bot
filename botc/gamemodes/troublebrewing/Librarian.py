@@ -59,9 +59,9 @@ class Librarian(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
                             
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/8/86/Librarian_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/8/86/Librarian_Token.png"
         self._art_link_cropped = "https://imgur.com/mWMrJky.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Librarian"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Librarian"
 
         self._role_enum = TBRole.librarian
         self._emoji = "<:tblibrarian:739317350888767520>"

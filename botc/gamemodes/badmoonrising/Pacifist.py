@@ -25,9 +25,9 @@ class Pacifist(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/1/1a/Pacifist_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/1/1a/Pacifist_Token.png"
         self._art_link_cropped = "https://imgur.com/3diVUmW.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Pacifist"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Pacifist"
 
         self._role_enum = BMRRole.pacifist
         self._emoji = "<:bmrpacifist:781152055091396648>"

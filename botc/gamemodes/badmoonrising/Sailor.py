@@ -26,9 +26,9 @@ class Sailor(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/0/01/Sailor_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/0/01/Sailor_Token.png"
         self._art_link_cropped = "https://imgur.com/wXLvtmm.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Sailor"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Sailor"
 
         self._role_enum = BMRRole.sailor
         self._emoji = "<:bmrsailor:781152054906716161>"

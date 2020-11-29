@@ -26,9 +26,9 @@ class Goon(Outsider, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/a/a4/Goon_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/a/a4/Goon_Token.png"
         self._art_link_cropped = "https://imgur.com/NaRvjH3.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Goon"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Goon"
 
         self._role_enum = BMRRole.goon
         self._emoji = "<:bmrgoon:781151556330192966>"

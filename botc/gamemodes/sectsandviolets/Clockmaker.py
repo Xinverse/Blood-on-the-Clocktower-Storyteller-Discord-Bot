@@ -23,7 +23,7 @@ class Clockmaker(Townsfolk, SectsAndViolets, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4b/Clockmaker_Token.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Clockmaker"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/4/4b/Clockmaker_Token.png"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Clockmaker"
 
         self._role_enum = SnVRole.clockmaker

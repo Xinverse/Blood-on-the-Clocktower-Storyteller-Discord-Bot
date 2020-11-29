@@ -47,9 +47,9 @@ class Recluse(Outsider, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
         
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/b/bb/Recluse_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/b/bb/Recluse_Token.png"
         self._art_link_cropped = "https://imgur.com/9VMElqP.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Recluse"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Recluse"
 
         self._role_enum = TBRole.recluse
         self._emoji = "<:tbrecluse:739317350670794794>"

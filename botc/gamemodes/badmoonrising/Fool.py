@@ -25,9 +25,9 @@ class Fool(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/b/ba/Fool_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/b/ba/Fool_Token.png"
         self._art_link_cropped = "https://imgur.com/nA8CXp1.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Fool"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Fool"
 
         self._role_enum = BMRRole.fool
         self._emoji = "<:bmrfool:781151556254564353>"

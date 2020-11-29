@@ -26,9 +26,9 @@ class Professor(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/a/ac/Professor_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/a/ac/Professor_Token.png"
         self._art_link_cropped = "https://imgur.com/6MN8udE.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Professor"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Professor"
 
         self._role_enum = BMRRole.professor
         self._emoji = "<:bmrprofessor:781152055208574986>"

@@ -59,9 +59,9 @@ class Zombuul(Demon, BadMoonRising, Character, RecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/c/c6/Zombuul_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/c/c6/Zombuul_Token.png"
         self._art_link_cropped = "https://imgur.com/Z84oOaA.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Zombuul"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Zombuul"
 
         self._role_enum = BMRRole.zombuul
         self._emoji = "<:bmrzombuul:781152054910517291>"

@@ -53,9 +53,9 @@ class Monk(Townsfolk, TroubleBrewing, Character, RecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
                             
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/1/1b/Monk_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/1/1b/Monk_Token.png"
         self._art_link_cropped = "https://imgur.com/Hiv2lIw.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Monk"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Monk"
 
         self._role_enum = TBRole.monk
         self._emoji = "<:tbmonk:739317350603423746>"
