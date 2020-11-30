@@ -287,7 +287,7 @@
 
     "cmd_warnings" : {
 
-        "x_emoji" : "<a:animated_cross:728029756372680785>",
+        "x_emoji" : "<a:cross:736684985800589412>",
         "whisper_self" : "{} {} You may not whisper to yourself.",
         "nominations_not_open" : "{} {} Nominations are not open yet.",
         "nomination_ongoing" : "{} {} You may not nominate when a nomination is already ongoing. Please wait until the current trial is over.",
