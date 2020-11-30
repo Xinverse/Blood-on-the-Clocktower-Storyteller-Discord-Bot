@@ -31,6 +31,11 @@ class Quit(Gameplay, name = language["system"]["gameplay_cog"]):
         """Quit command"""
 
         import globvars
+
+        if globvars.master_state.game:
+            # This check is to ensure a player doesn't quit right after !start
+            # before the game is fully set up and end up breaking the game.
+            return
         
         # The command user has joined; make them quit
         if globvars.master_state.pregame.is_joined(ctx.author.id):
