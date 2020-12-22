@@ -11,6 +11,8 @@ SERVER_ID = Config["user"]["SERVER_ID"]
 ALIVE_ROLE_ID = Config["user"]["ALIVE_ROLE_ID"]
 DEAD_ROLE_ID = Config["user"]["DEAD_ROLE_ID"]
 ADMINS_ROLE_ID = Config["user"]["ADMINS_ROLE_ID"]
+STGAMES_CHANNEL_ID = Config["user"].get("STGAMES_CHANNEL_ID")
+STGAMES_ROLE_ID = Config["user"].get("STGAMES_ROLE_ID")
 
 
 async def add_admin_role(user):
@@ -68,13 +70,25 @@ async def remove_all_alive_dead_roles_after_game():
 
 async def lock_lobby():
     """Lock the lobby channel from non players"""
-    lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     server = globvars.client.get_guild(int(SERVER_ID))
+
+    lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     await lobby_channel.set_permissions(server.default_role, send_messages=False)
+
+    if STGAMES_CHANNEL_ID:
+        stgames_channel = globvars.client.get_channel(int(STGAMES_CHANNEL_ID))
+        role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
+        await stgames_channel.set_permissions(role, view_channel=None)
 
 
 async def unlock_lobby():
     """Unlock the lobby channel to non players"""
-    lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     server = globvars.client.get_guild(int(SERVER_ID))
+
+    lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     await lobby_channel.set_permissions(server.default_role, send_messages=True)
+
+    if STGAMES_CHANNEL_ID:
+        stgames_channel = globvars.client.get_channel(int(STGAMES_CHANNEL_ID))
+        role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
+        await stgames_channel.set_permissions(role, view_channel=True)
