@@ -52,7 +52,8 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
                 await ctx.send(msg)
                 return
 
-            globvars.last_notify = time.time()
+            if botutils.check_if_lobby(ctx):
+                globvars.last_notify = time.time()
 
             pings = ""
 
