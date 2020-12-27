@@ -2,16 +2,21 @@
 
 import botutils
 import json
+import time
 import traceback
 import configparser
 from ._gameplay import Gameplay
 from discord.ext import commands
 from discord import Status
+from library import display_time
 
 Config = configparser.ConfigParser()
-
 Config.read("config.INI")
 SERVER_ID = int(Config["user"]["SERVER_ID"])
+
+Preferences = configparser.ConfigParser()
+Preferences.read("preferences.INI")
+NOTIFY_COOLDOWN = int(Preferences["duration"]["NOTIFY_COOLDOWN"])
 
 with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
@@ -39,8 +44,15 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
         """Notify command"""
 
         if ctx.invoked_subcommand is None:
-
             import globvars
+
+            delta = time.time() - globvars.last_notify
+            if delta < NOTIFY_COOLDOWN:
+                msg = f"{ctx.author.mention} {botutils.BotEmoji.fquit} This command is rate-limited. Please try again in {display_time(int(NOTIFY_COOLDOWN - delta))}."
+                await ctx.send(msg)
+                return
+
+            globvars.last_notify = time.time()
 
             pings = ""
 

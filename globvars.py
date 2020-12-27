@@ -29,3 +29,5 @@ ignore_list = []
 notify_list = []
 
 start_votes = []
+
+last_notify = 0
