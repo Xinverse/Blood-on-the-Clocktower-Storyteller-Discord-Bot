@@ -323,6 +323,7 @@
         "not_enough_votes_to_start" : "Not enough votes to start, resetting start votes.",
         "error" : "An error occurred and has been logged.",
         "lobby_timeout" : "{} The game has taken too long to start and has been cancelled!",
+        "restarted_notify" : "{} The bot has restarted and the game has been cancelled. Type `!join` to start a new game.",
         "ignore" : "{} You've used {} commands in the last {} seconds; I will ignore you from now on.",
         "others_cog" : "༺ 𝕺𝖙𝖍𝖊𝖗𝖘 ༻",
         "admin_cog" : "༺ 𝕬𝖉𝖒𝖎𝖓𝖎𝖘𝖙𝖗𝖆𝖙𝖔𝖗 ༻",
