@@ -55,7 +55,7 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
             if botutils.check_if_lobby(ctx):
                 globvars.last_notify = time.time()
 
-            pings = ""
+            pings = []
 
             for userid in globvars.notify_list:
                 member = globvars.client.get_guild(SERVER_ID).get_member(userid)
@@ -65,13 +65,13 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
                     if member.status != Status.offline and \
                         member.id not in globvars.master_state.pregame and \
                         member.id != ctx.author.id:
-                        pings += member.mention
+                        pings.append(member.mention)
 
                 # member not present in server, remove their id
                 else:
                     globvars.notify_list.remove(userid)
 
-            msg = f"{ctx.author.mention} {botutils.BotEmoji.mention} {pings}"
+            msg = f"{ctx.author.mention} {botutils.BotEmoji.mention} {' '.join(pings)}"
             await ctx.send(msg)
 
     @notify.command(
