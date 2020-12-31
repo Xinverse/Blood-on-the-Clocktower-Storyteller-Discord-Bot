@@ -13,6 +13,7 @@ DEAD_ROLE_ID = Config["user"]["DEAD_ROLE_ID"]
 ADMINS_ROLE_ID = Config["user"]["ADMINS_ROLE_ID"]
 STGAMES_CHANNEL_ID = Config["user"].get("STGAMES_CHANNEL_ID")
 STGAMES_ROLE_ID = Config["user"].get("STGAMES_ROLE_ID")
+STGAMES_BOTPLAYER_ROLE_ID = Config["user"].get("STGAMES_BOTPLAYER_ROLE_ID")
 
 
 async def add_admin_role(user):
@@ -34,11 +35,25 @@ async def add_alive_role(member_obj):
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
     await member_obj.add_roles(role)
 
+    if STGAMES_CHANNEL_ID:
+        stgames_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
+        stgames_player_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_BOTPLAYER_ROLE_ID))
+        if stgames_role in member_obj.roles:
+            await member_obj.add_roles(stgames_player_role)
+            await member_obj.remove_roles(stgames_role)
+
 
 async def remove_alive_role(member_obj):
     """Remove the alive role from a player"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
     await member_obj.remove_roles(role)
+
+    if STGAMES_CHANNEL_ID:
+        stgames_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
+        stgames_player_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_BOTPLAYER_ROLE_ID))
+        if stgames_player_role in member_obj.roles:
+            await member_obj.add_roles(stgames_role)
+            await member_obj.remove_roles(stgames_player_role)
 
 
 async def add_dead_role(member_obj):
@@ -51,6 +66,13 @@ async def remove_dead_role(member_obj):
     """Remove the dead role from a player"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(DEAD_ROLE_ID))
     await member_obj.remove_roles(role)
+
+    if STGAMES_CHANNEL_ID:
+        stgames_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
+        stgames_player_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_BOTPLAYER_ROLE_ID))
+        if stgames_player_role in member_obj.roles:
+            await member_obj.add_roles(stgames_role)
+            await member_obj.remove_roles(stgames_player_role)
 
 
 async def remove_all_alive_roles_pregame():
@@ -75,11 +97,6 @@ async def lock_lobby():
     lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     await lobby_channel.set_permissions(server.default_role, send_messages=False)
 
-    if STGAMES_CHANNEL_ID:
-        stgames_channel = globvars.client.get_channel(int(STGAMES_CHANNEL_ID))
-        role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
-        await stgames_channel.set_permissions(role, view_channel=None)
-
 
 async def unlock_lobby():
     """Unlock the lobby channel to non players"""
@@ -87,8 +104,3 @@ async def unlock_lobby():
 
     lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
     await lobby_channel.set_permissions(server.default_role, send_messages=True)
-
-    if STGAMES_CHANNEL_ID:
-        stgames_channel = globvars.client.get_channel(int(STGAMES_CHANNEL_ID))
-        role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
-        await stgames_channel.set_permissions(role, view_channel=True)
