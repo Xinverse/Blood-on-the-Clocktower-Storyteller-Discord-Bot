@@ -45,13 +45,14 @@ async def add_alive_role(member_obj):
 
 async def remove_alive_role(member_obj):
     """Remove the alive role from a player"""
-    role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
-    await member_obj.remove_roles(role)
+    alive_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
+    await member_obj.remove_roles(alive_role)
 
     if STGAMES_CHANNEL_ID:
+        dead_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(DEAD_ROLE_ID))
         stgames_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_ROLE_ID))
         stgames_player_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(STGAMES_BOTPLAYER_ROLE_ID))
-        if stgames_player_role in member_obj.roles:
+        if stgames_player_role in member_obj.roles and dead_role not in member_obj.roles:
             await member_obj.add_roles(stgames_role)
             await member_obj.remove_roles(stgames_player_role)
 
