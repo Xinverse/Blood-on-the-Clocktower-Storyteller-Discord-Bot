@@ -57,7 +57,9 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
 
             pings = []
 
-            for userid in globvars.notify_list:
+            users_to_ping = sorted(set(globvars.notify_list) - set(globvars.ignore_list))
+
+            for userid in users_to_ping:
                 member = globvars.client.get_guild(SERVER_ID).get_member(userid)
 
                 # member found, only ping them if they are not offline
