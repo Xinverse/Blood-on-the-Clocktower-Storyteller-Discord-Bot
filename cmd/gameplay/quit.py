@@ -57,7 +57,7 @@ class Quit(Gameplay, name = language["system"]["gameplay_cog"]):
             await ctx.send(quitted_str.format(ctx.author.mention))
         
         # Still take away the role from everyone just in case of discord sync issue
-        await botutils.remove_alive_role(ctx.author)
+        await botutils.remove_alive_role(ctx.author, unlock=True)
     
     @quit.error
     async def quit_error(self, ctx, error):

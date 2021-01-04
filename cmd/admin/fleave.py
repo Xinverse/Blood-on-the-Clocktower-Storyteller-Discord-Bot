@@ -48,4 +48,4 @@ class Fleave(Admin, name = language["system"]["admin_cog"]):
         else:
             await ctx.send(fleaved_str.format(ctx.author.mention, member.name))
 
-        await botutils.remove_alive_role(member)
+        await botutils.remove_alive_role(member, unlock=True)
