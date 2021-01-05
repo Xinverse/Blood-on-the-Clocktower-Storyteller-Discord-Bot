@@ -4,11 +4,10 @@ import configparser
 import json
 import sqlite3
 
-from discord import utils
+from discord import AllowedMentions
 from discord.ext import commands
 
 import botutils
-import globvars
 from ._gameplay import Gameplay
 
 Config = configparser.ConfigParser()
@@ -41,33 +40,18 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                 c = db.execute("SELECT user_id, games FROM playerstats ORDER BY games DESC LIMIT ?", (limit,))
                 msg = f"__Top {limit} by games played__\n\n"
                 for (i, (user_id, games)) in enumerate(c.fetchall()):
-                    user = globvars.client.get_user(user_id)
-                    if user:
-                        name = user.display_name
-                    else:
-                        name = str(user_id)
-                    msg += f"{i + 1}. **{utils.escape_markdown(name)}** - {games}\n"
+                    msg += f"{i + 1}. <@{user_id}> – {games}\n"
             elif arg == "wins":
                 msg = f"__Top {limit} by games won__\n\n"
                 c = db.execute("SELECT user_id, wins FROM playerstats ORDER BY wins DESC LIMIT ?", (limit,))
                 for (i, (user_id, wins)) in enumerate(c.fetchall()):
-                    user = globvars.client.get_user(user_id)
-                    if user:
-                        name = user.display_name
-                    else:
-                        name = str(user_id)
-                    msg += f"{i + 1}. **{utils.escape_markdown(name)}** - {wins}\n"
+                    msg += f"{i + 1}. <@{user_id}> – {wins}\n"
             elif arg == "winrate":
                 msg = f"__Top {limit} by win rate__\n\n"
                 c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= 15 ORDER BY winrate DESC LIMIT ?", (limit,))
                 for (i, (user_id, winrate)) in enumerate(c.fetchall()):
-                    user = globvars.client.get_user(user_id)
-                    if user:
-                        name = user.display_name
-                    else:
-                        name = str(user_id)
-                    msg += f"{i + 1}. **{utils.escape_markdown(name)}** - {winrate * 100:.1f}%\n"
+                    msg += f"{i + 1}. <@{user_id}> – {winrate * 100:.1f}%\n"
             else:
                 msg = "Argument must be one of `games`, `wins` or `winrate`."
 
-        await ctx.send(msg)
+        await ctx.send(msg, allowed_mentions=AllowedMentions.none())

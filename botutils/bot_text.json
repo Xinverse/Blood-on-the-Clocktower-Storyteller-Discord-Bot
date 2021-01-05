@@ -27,8 +27,8 @@
         "force_clear" : "{} The ignore list has been cleared. It is now empty.",
         "ignore_sync" : "{} Purged **{}** user(s) not in server.",
         "no_game" : "There is currently no active game. Try `{}join` to start a new game!",
-        "wins": "**{}** has won **{}** out of **{}** game{} ({:.1f}%).",
-        "wins_nogames": "**{}** has not played any games yet.",
+        "wins": "<@{}> has won **{}** out of **{}** game{} ({:.1f}%).",
+        "wins_nogames": "<@{}> has not played any games yet.",
         "top_usage": "Argument must be one of `games`, `wins` or `winrate`."
 
     },

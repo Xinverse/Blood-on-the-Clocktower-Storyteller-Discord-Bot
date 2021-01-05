@@ -3,11 +3,10 @@
 import json
 import sqlite3
 
-from discord import utils
+from discord import AllowedMentions
 from discord.ext import commands
 
 import botutils
-import globvars
 from ._gameplay import Gameplay
 
 with open("botutils/bot_text.json") as json_file:
@@ -32,22 +31,22 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
     async def wins(self, ctx, arg=None):
         """Wins command"""
 
-        user = None
+        user_id = None
 
         if ctx.message.mentions:
-            user = ctx.message.mentions[0]
+            user_id = ctx.message.mentions[0].id
         elif arg:
             if arg.isnumeric():
-                user = globvars.client.get_user(int(arg))
+                user_id = int(arg)
         else:
-            user = ctx.author
+            user_id = ctx.author.id
 
-        if not user:
+        if not user_id:
             await ctx.send("User not found.")
             return
 
         with sqlite3.connect("data.sqlite3") as db:
-            c = db.execute("SELECT games, wins FROM playerstats WHERE user_id = ?", (user.id,))
+            c = db.execute("SELECT games, wins FROM playerstats WHERE user_id = ?", (user_id,))
             row = c.fetchone()
             print(row)
 
@@ -57,6 +56,6 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
                 games, wins = 0, 0
 
             if games > 0:
-                await ctx.send(wins_str.format(utils.escape_markdown(user.display_name), wins, games, "" if games == 1 else "s", (wins / games) * 100))
+                await ctx.send(wins_str.format(user_id, wins, games, "" if games == 1 else "s", (wins / games) * 100), allowed_mentions=AllowedMentions.none())
             else:
-                await ctx.send(wins_nogames_str.format(utils.escape_markdown(user.display_name)))
+                await ctx.send(wins_nogames_str.format(user_id), allowed_mentions=AllowedMentions.none())
