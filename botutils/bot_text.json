@@ -28,7 +28,8 @@
         "ignore_sync" : "{} Purged **{}** user(s) not in server.",
         "no_game" : "There is currently no active game. Try `{}join` to start a new game!",
         "wins": "**{}** has won **{}** out of **{}** game{} ({:.1f}%).",
-        "wins_nogames": "**{}** has not played any games yet."
+        "wins_nogames": "**{}** has not played any games yet.",
+        "top_usage": "Argument must be one of `games`, `wins` or `winrate`."
 
     },
 
@@ -255,6 +256,14 @@
             "brief" : "check how many games you have won",
             "help" : "See the number of games you have played and your win rate.",
             "description" : "[WINS] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "top" : {
+            "brief" : "check the leaderboard",
+            "help" : "See the top 25 players sorted by games, wins or win rate.",
+            "description" : "[TOP] command",
             "outputs" : [],
             "weights" : []
         },
