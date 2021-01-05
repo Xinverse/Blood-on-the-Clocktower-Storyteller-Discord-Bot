@@ -34,39 +34,45 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
         """Top command"""
 
         msg = ""
-        limit = Config["misc"]["TOP_LIMIT"]
+        limit = int(Config["misc"]["TOP_LIMIT"])
 
         with sqlite3.connect("data.sqlite3") as db:
             if arg == "games":
-                c = db.execute("SELECT user_id, games FROM playerstats ORDER BY games DESC LIMIT ?", (limit,))
+                c = db.execute("SELECT user_id, games FROM playerstats ORDER BY games DESC")
                 msg = f"__Top {limit} by games played__\n\n"
-                for (i, (user_id, games)) in enumerate(c.fetchall()):
+                i = 0
+                for (user_id, games) in c.fetchall():
                     user = globvars.client.get_user(user_id)
-                    if user:
-                        name = user.display_name
-                    else:
-                        name = str(user_id)
-                    msg += f"{i + 1}. **{utils.escape_markdown(name)}** - {games}\n"
+                    if not user:
+                        continue
+                    i += 1
+                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {games}\n"
+                    if i >= limit:
+                        break
             elif arg == "wins":
                 msg = f"__Top {limit} by games won__\n\n"
-                c = db.execute("SELECT user_id, wins FROM playerstats ORDER BY wins DESC LIMIT ?", (limit,))
-                for (i, (user_id, wins)) in enumerate(c.fetchall()):
+                c = db.execute("SELECT user_id, wins FROM playerstats ORDER BY wins DESC")
+                i = 0
+                for (user_id, wins) in c.fetchall():
                     user = globvars.client.get_user(user_id)
-                    if user:
-                        name = user.display_name
-                    else:
-                        name = str(user_id)
-                    msg += f"{i + 1}. **{utils.escape_markdown(name)}** - {wins}\n"
+                    if not user:
+                        continue
+                    i += 1
+                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {wins}\n"
+                    if i >= limit:
+                        break
             elif arg == "winrate":
                 msg = f"__Top {limit} by win rate__\n\n"
-                c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= 15 ORDER BY winrate DESC LIMIT ?", (limit,))
-                for (i, (user_id, winrate)) in enumerate(c.fetchall()):
+                c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= 15 ORDER BY winrate DESC")
+                i = 0
+                for (user_id, winrate) in c.fetchall():
                     user = globvars.client.get_user(user_id)
-                    if user:
-                        name = user.display_name
-                    else:
-                        name = str(user_id)
-                    msg += f"{i + 1}. **{utils.escape_markdown(name)}** - {winrate * 100:.1f}%\n"
+                    if not user:
+                        continue
+                    i += 1
+                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {winrate * 100:.1f}%\n"
+                    if i >= limit:
+                        break
             else:
                 msg = language["cmd"]["top_usage"]
 
