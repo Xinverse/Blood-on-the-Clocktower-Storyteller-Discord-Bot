@@ -3,6 +3,7 @@
 import configparser
 import json
 import csv
+import sqlite3
 import botutils
 from discord.ext import commands
 
@@ -50,6 +51,15 @@ class on_ready(commands.Cog):
             for row in csv_reader:
                 globvars.notify_list = [int(item) for item in row]
                 break
+
+        with sqlite3.connect("data.sqlite3") as db:
+            db.execute("""
+            CREATE TABLE IF NOT EXISTS playerstats (
+                user_id INTEGER PRIMARY KEY,
+                games INTEGER NOT NULL DEFAULT 0,
+                wins INTEGER NOT NULL DEFAULT 0
+            )
+            """)
         
         # Start the backup loop
         botutils.backup_loop.start()
