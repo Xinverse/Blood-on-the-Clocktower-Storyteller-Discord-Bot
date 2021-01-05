@@ -26,7 +26,9 @@
         "clear_ignore" : "{} Are you sure you want to clear the entire ignore list and delete all **{}** entrie(s)? Use `{}ignore clear --force` to proceed.",
         "force_clear" : "{} The ignore list has been cleared. It is now empty.",
         "ignore_sync" : "{} Purged **{}** user(s) not in server.",
-        "no_game" : "There is currently no active game. Try `{}join` to start a new game!"
+        "no_game" : "There is currently no active game. Try `{}join` to start a new game!",
+        "wins": "**{}** has won **{}** out of **{}** game{} ({:.1f}%).",
+        "wins_nogames": "**{}** has not played any games yet."
 
     },
 
@@ -245,6 +247,14 @@
             "brief" : "check the bot's uptime",
             "help" : "See the total time during which the bot has been in operation since its last restart.",
             "description" : "[UPTIME] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "wins" : {
+            "brief" : "check how many games you have won",
+            "help" : "See the number of games you have played and your win rate.",
+            "description" : "[WINS] command",
             "outputs" : [],
             "weights" : []
         },

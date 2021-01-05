@@ -8,6 +8,7 @@ import json
 import pytz
 import configparser
 import discord
+import sqlite3
 from library import fancy
 from .chrono import GameChrono
 from .BOTCUtils import BOTCUtils
@@ -348,166 +349,177 @@ class Game(GameMeta):
 
         gamemode = fancy.bold(self.gamemode.value)
 
-        # ----- The good team wins -----
-        if self.winners == Team.good:
+        with sqlite3.connect("data.sqlite3") as db:
+            # ----- The good team wins -----
+            if self.winners == Team.good:
 
-            # Revealing the role list
-            role_list_str = ""
-            for player in self.sitting_order:
+                # Revealing the role list
+                role_list_str = ""
+                for player in self.sitting_order:
 
-                # The player is a drunk, we use the special reveal short string
-                if player.role.true_self.name == Drunk().name:
-                    short = ego_role_reveal.format(
-                       botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name,
-                       player.role.ego_self.name
-                    )
+                    # The player is a drunk, we use the special reveal short string
+                    if player.role.true_self.name == Drunk().name:
+                        short = ego_role_reveal.format(
+                           botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name,
+                           player.role.ego_self.name
+                        )
 
-                # The player is a minion who became imp
-                elif player.old_role is not None:
-                    short = changed_role_reveal.format(
-                       botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name,
-                       player.old_role.true_self.emoji,
-                       player.old_role.true_self.name,
-                    )
+                    # The player is a minion who became imp
+                    elif player.old_role is not None:
+                        short = changed_role_reveal.format(
+                           botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name,
+                           player.old_role.true_self.emoji,
+                           player.old_role.true_self.name,
+                        )
 
-                # The player is not a drunk, we use the default reveal short string
-                else:
-                    short = role_reveal.format(
-                       botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name
-                    )
+                    # The player is not a drunk, we use the default reveal short string
+                    else:
+                        short = role_reveal.format(
+                           botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name
+                        )
 
-                role_list_str += short
-                role_list_str += "\n"
+                    role_list_str += short
+                    role_list_str += "\n"
 
-            # The embed
-            embed = discord.Embed(
-               title = good_wins,
-               description = role_list_str,
-               color = TOWNSFOLK_COLOR
-            )
-            embed.set_author(
-               name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
-               icon_url = Saint()._botc_logo_link
-            )
-            embed.set_thumbnail(url = dove)
+                    db.execute('INSERT OR IGNORE INTO playerstats (user_id) VALUES (?)', (player.user.id,))
+                    db.execute('UPDATE playerstats SET games = games + 1 WHERE user_id = ?', (player.user.id,))
+                    if player.role.true_self.is_good():
+                        db.execute('UPDATE playerstats SET wins = wins + 1 WHERE user_id = ?', (player.user.id,))
 
-        # ----- The evil team wins -----
-        elif self.winners == Team.evil:
+                # The embed
+                embed = discord.Embed(
+                   title = good_wins,
+                   description = role_list_str,
+                   color = TOWNSFOLK_COLOR
+                )
+                embed.set_author(
+                   name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
+                   icon_url = Saint()._botc_logo_link
+                )
+                embed.set_thumbnail(url = dove)
 
-            # Revealing the role list
-            role_list_str = ""
-            for player in self.sitting_order:
+            # ----- The evil team wins -----
+            elif self.winners == Team.evil:
 
-                # The player is a drunk, we use the special reveal short string
-                if player.role.true_self.name == Drunk().name:
-                    short = ego_role_reveal.format(
-                       botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name,
-                       player.role.ego_self.name
-                    )
+                # Revealing the role list
+                role_list_str = ""
+                for player in self.sitting_order:
 
-                # The player is a minion who became imp
-                elif player.old_role is not None:
-                    short = changed_role_reveal.format(
-                       botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name,
-                       player.old_role.true_self.emoji,
-                       player.old_role.true_self.name,
-                    )
+                    # The player is a drunk, we use the special reveal short string
+                    if player.role.true_self.name == Drunk().name:
+                        short = ego_role_reveal.format(
+                           botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name,
+                           player.role.ego_self.name
+                        )
 
-                # The player is not a drunk, we use the default reveal short string
-                else:
-                    short = role_reveal.format(
-                       botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name
-                    )
+                    # The player is a minion who became imp
+                    elif player.old_role is not None:
+                        short = changed_role_reveal.format(
+                           botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name,
+                           player.old_role.true_self.emoji,
+                           player.old_role.true_self.name,
+                        )
 
-                role_list_str += short
-                role_list_str += "\n"
+                    # The player is not a drunk, we use the default reveal short string
+                    else:
+                        short = role_reveal.format(
+                           botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name
+                        )
 
-            # The embed
-            embed = discord.Embed(
-               title = evil_wins,
-               description = role_list_str,
-               color = DEMON_COLOR
-            )
-            embed.set_author(
-               name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
-               icon_url = Saint()._botc_logo_link
-            )
-            embed.set_thumbnail(url = demon)
+                    role_list_str += short
+                    role_list_str += "\n"
 
-        # ----- No one wins -----
-        else:
-            # Revealing the role list
-            role_list_str = ""
-            for player in self.sitting_order:
+                    db.execute('INSERT OR IGNORE INTO playerstats (user_id) VALUES (?)', (player.user.id,))
+                    db.execute('UPDATE playerstats SET games = games + 1 WHERE user_id = ?', (player.user.id,))
+                    if player.role.true_self.is_evil():
+                        db.execute('UPDATE playerstats SET wins = wins + 1 WHERE user_id = ?', (player.user.id,))
 
-                # The player is a drunk, we use the special reveal short string
-                if player.role.true_self.name == Drunk().name:
-                    short = ego_role_reveal.format(
-                       "",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name,
-                       player.role.ego_self.name
-                    )
+                # The embed
+                embed = discord.Embed(
+                   title = evil_wins,
+                   description = role_list_str,
+                   color = DEMON_COLOR
+                )
+                embed.set_author(
+                   name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
+                   icon_url = Saint()._botc_logo_link
+                )
+                embed.set_thumbnail(url = demon)
 
-                # The player is a minion who became imp
-                elif player.old_role is not None:
-                    short = changed_role_reveal.format(
-                       botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name,
-                       player.old_role.true_self.emoji,
-                       player.old_role.true_self.name,
-                    )
+            # ----- No one wins -----
+            else:
+                # Revealing the role list
+                role_list_str = ""
+                for player in self.sitting_order:
 
-                # The player is not a drunk, we use the default reveal short string
-                else:
-                    short = role_reveal.format(
-                       "",
-                       player.user.mention,
-                       player.role.true_self.emoji,
-                       player.role.true_self.name
-                    )
+                    # The player is a drunk, we use the special reveal short string
+                    if player.role.true_self.name == Drunk().name:
+                        short = ego_role_reveal.format(
+                           "",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name,
+                           player.role.ego_self.name
+                        )
 
-                role_list_str += short
-                role_list_str += "\n"
+                    # The player is a minion who became imp
+                    elif player.old_role is not None:
+                        short = changed_role_reveal.format(
+                           botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name,
+                           player.old_role.true_self.emoji,
+                           player.old_role.true_self.name,
+                        )
 
-            # The embed
-            embed = discord.Embed(
-               title = no_one_wins,
-               description = role_list_str
-            )
-            embed.set_author(
-               name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
-               icon_url = Saint()._botc_logo_link
-            )
+                    # The player is not a drunk, we use the default reveal short string
+                    else:
+                        short = role_reveal.format(
+                           "",
+                           player.user.mention,
+                           player.role.true_self.emoji,
+                           player.role.true_self.name
+                        )
 
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_footer(text = copyrights_str)
+                    role_list_str += short
+                    role_list_str += "\n"
 
-        pings = " ".join([player.user.mention for player in self.sitting_order])
-        msg = lobby_game_closing.format(pings, gamemode, self.nb_players)
+                # The embed
+                embed = discord.Embed(
+                   title = no_one_wins,
+                   description = role_list_str
+                )
+                embed.set_author(
+                   name = "{} - 𝕭𝖑𝖔𝖔𝖉 𝖔𝖓 𝖙𝖍𝖊 𝕮𝖑𝖔𝖈𝖐𝖙𝖔𝖜𝖊𝖗 (𝕭𝖔𝕿𝕮)".format(gamemode),
+                   icon_url = Saint()._botc_logo_link
+                )
 
-        await botutils.send_lobby(msg, embed=embed)
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_footer(text = copyrights_str)
+
+            pings = " ".join([player.user.mention for player in self.sitting_order])
+            msg = lobby_game_closing.format(pings, gamemode, self.nb_players)
+
+            await botutils.send_lobby(msg, embed=embed)
 
     async def start_game(self):
         """Start the game.
