@@ -57,6 +57,6 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
                 games, wins = 0, 0
 
             if games > 0:
-                await ctx.send(wins_str.format(utils.escape_markdown(user.display_name), wins, games, "" if games == 1 else "s", (wins / games) * 100))
+                await ctx.send(wins_str.format(utils.escape_markdown(user.name), wins, games, "" if games == 1 else "s", (wins / games) * 100))
             else:
-                await ctx.send(wins_nogames_str.format(utils.escape_markdown(user.display_name)))
+                await ctx.send(wins_nogames_str.format(utils.escape_markdown(user.name)))
