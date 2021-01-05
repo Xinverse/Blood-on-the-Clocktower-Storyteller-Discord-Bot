@@ -52,6 +52,6 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                 for (i, (user_id, winrate)) in enumerate(c.fetchall()):
                     msg += f"{i + 1}. <@{user_id}> – {winrate * 100:.1f}%\n"
             else:
-                msg = "Argument must be one of `games`, `wins` or `winrate`."
+                msg = language["cmd"]["top_usage"]
 
         await ctx.send(msg, allowed_mentions=AllowedMentions.none())
