@@ -27,7 +27,7 @@ from .gamemodes.Gamemode import Gamemode
 from .RoleGuide import RoleGuide
 from .gameloops import master_game_loop, nomination_loop, base_day_loop, debate_timer
 from models import GameMeta
-from botc import Team
+from botc import StatusList, Team
 
 Config = configparser.ConfigParser()
 Config.read("preferences.INI")
@@ -73,8 +73,10 @@ with open('botc/game_text.json') as json_file:
     good_wins = strings["gameplay"]["good_wins"]
     evil_wins = strings["gameplay"]["evil_wins"]
     role_reveal = strings["gameplay"]["role_reveal"]
+    role_reveal_herring = strings["gameplay"]["role_reveal_herring"]
     storyteller_death = strings["lore"]["storyteller_death"]
     ego_role_reveal = strings["gameplay"]["ego_role_reveal"]
+    ego_role_reveal_herring = strings["gameplay"]["ego_role_reveal_herring"]
     changed_role_reveal = strings["gameplay"]["changed_role_reveal"]
 
 with open('botutils/bot_text.json') as json_file:
@@ -359,7 +361,12 @@ class Game(GameMeta):
 
                     # The player is a drunk, we use the special reveal short string
                     if player.role.true_self.name == Drunk().name:
-                        short = ego_role_reveal.format(
+                        if player.has_status_effect(StatusList.red_herring):
+                            message = ego_role_reveal_herring
+                        else:
+                            message = ego_role_reveal
+
+                        short = message.format(
                            botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
                            player.user.mention,
                            player.role.true_self.emoji,
@@ -380,7 +387,12 @@ class Game(GameMeta):
 
                     # The player is not a drunk, we use the default reveal short string
                     else:
-                        short = role_reveal.format(
+                        if player.has_status_effect(StatusList.red_herring):
+                            message = role_reveal_herring
+                        else:
+                            message = role_reveal
+
+                        short = message.format(
                            botutils.BotEmoji.trophy_animated if player.role.true_self.is_good() else "---",
                            player.user.mention,
                            player.role.true_self.emoji,
@@ -416,7 +428,12 @@ class Game(GameMeta):
 
                     # The player is a drunk, we use the special reveal short string
                     if player.role.true_self.name == Drunk().name:
-                        short = ego_role_reveal.format(
+                        if player.has_status_effect(StatusList.red_herring):
+                            message = ego_role_reveal_herring
+                        else:
+                            message = ego_role_reveal
+
+                        short = message.format(
                            botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
                            player.user.mention,
                            player.role.true_self.emoji,
@@ -437,7 +454,12 @@ class Game(GameMeta):
 
                     # The player is not a drunk, we use the default reveal short string
                     else:
-                        short = role_reveal.format(
+                        if player.has_status_effect(StatusList.red_herring):
+                            message = role_reveal_herring
+                        else:
+                            message = role_reveal
+
+                        short = message.format(
                            botutils.BotEmoji.trophy_animated if player.role.true_self.is_evil() else "---",
                            player.user.mention,
                            player.role.true_self.emoji,
@@ -472,7 +494,12 @@ class Game(GameMeta):
 
                     # The player is a drunk, we use the special reveal short string
                     if player.role.true_self.name == Drunk().name:
-                        short = ego_role_reveal.format(
+                        if player.has_status_effect(StatusList.red_herring):
+                            message = ego_role_reveal_herring
+                        else:
+                            message = ego_role_reveal
+
+                        short = message.format(
                            "",
                            player.user.mention,
                            player.role.true_self.emoji,
@@ -493,7 +520,12 @@ class Game(GameMeta):
 
                     # The player is not a drunk, we use the default reveal short string
                     else:
-                        short = role_reveal.format(
+                        if player.has_status_effect(StatusList.red_herring):
+                            message = role_reveal_herring
+                        else:
+                            message = role_reveal
+
+                        short = message.format(
                            "",
                            player.user.mention,
                            player.role.true_self.emoji,
