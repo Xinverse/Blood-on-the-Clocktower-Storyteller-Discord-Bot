@@ -35,6 +35,7 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
 
         msg = ""
         limit = int(Config["misc"]["TOP_LIMIT"])
+        min_games = int(Config["misc"]["TOP_WINRATE_MIN_GAMES"])
 
         with sqlite3.connect("data.sqlite3") as db:
             if arg == "games":
@@ -63,7 +64,7 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                         break
             elif arg == "winrate":
                 msg = f"__Top {limit} by win rate__\n\n"
-                c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= 15 ORDER BY winrate DESC")
+                c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= ? ORDER BY winrate DESC", (min_games,))
                 i = 0
                 for (user_id, winrate) in c.fetchall():
                     user = globvars.client.get_user(user_id)
