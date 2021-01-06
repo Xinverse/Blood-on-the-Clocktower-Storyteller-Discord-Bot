@@ -38,7 +38,7 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
             user = ctx.message.mentions[0]
         elif arg:
             if arg.isnumeric():
-                user = globvars.client.get_user(int(arg))
+                user = await globvars.client.fetch_user(int(arg))
         else:
             user = ctx.author
 
