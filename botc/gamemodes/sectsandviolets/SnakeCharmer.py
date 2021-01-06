@@ -23,7 +23,7 @@ class SnakeCharmer(Townsfolk, SectsAndViolets, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/6/65/Snake_Charmer_Token.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Snake_Charmer"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/6/65/Snake_Charmer_Token.png"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Snake_Charmer"
 
         self._role_enum = SnVRole.snakecharmer

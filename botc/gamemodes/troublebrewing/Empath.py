@@ -56,12 +56,12 @@ class Empath(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/6/61/Empath_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/6/61/Empath_Token.png"
         self._art_link_cropped = "https://imgur.com/ZMC23sQ.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Empath"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Empath"
 
         self._role_enum = TBRole.empath
-        self._emoji = "<:empath:722686258563907616>"
+        self._emoji = "<:tbempath:739317349768888361>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

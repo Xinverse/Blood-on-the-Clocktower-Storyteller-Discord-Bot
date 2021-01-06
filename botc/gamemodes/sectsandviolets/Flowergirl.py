@@ -23,7 +23,7 @@ class Flowergirl(Townsfolk, SectsAndViolets, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/d/de/Flowergirl_Token.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Flowergirl"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/d/de/Flowergirl_Token.png"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Flowergirl"
 
         self._role_enum = SnVRole.flowergirl

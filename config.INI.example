@@ -14,6 +14,12 @@ ALIVE_ROLE_ID = 124328432840293840
 DEAD_ROLE_ID = 124328432840293840
 ADMINS_ROLE_ID = 124328432840293840
 
+# Roles to take away during game.
+# This should be a list of tuples in the following format:
+#
+# [(normal_role1, ingame_role1), (normal_role2, ingame_role2)]
+LOCK_ROLES_ID = []
+
 [settings]
 
 PREFIX = !
@@ -22,3 +28,5 @@ PREFIX = !
 
 MAX_MESSAGE_LEN = 2000
 PLAYTESTERS = []
+TOP_LIMIT = 15
+TOP_WINRATE_MIN_GAMES = 15

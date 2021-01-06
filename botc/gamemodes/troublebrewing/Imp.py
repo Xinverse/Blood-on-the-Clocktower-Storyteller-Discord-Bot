@@ -76,12 +76,12 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
         
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/4/42/Imp_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/4/42/Imp_Token.png"
         self._art_link_cropped = "https://imgur.com/ptpr9A1.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Imp"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Imp"
 
         self._role_enum = TBRole.imp
-        self._emoji = "<:imp2:722687671377330197>"
+        self._emoji = "<:tbimp:739317350897025054>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
@@ -198,6 +198,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
                 alive_scarletwomen = [player for player in scarletwomen if player.is_alive() and not player.is_droisoned()]
                 if alive_scarletwomen:
                     promoted = random.choice(alive_scarletwomen)
+                    promoted._old_role_obj = promoted._role_obj
                     await promoted.exec_change_role(Imp())
                     embed = self.__make_demonhood_promo_embed(promoted)
                     try:
@@ -215,6 +216,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
             alive_minions = [player for player in minions if player.is_alive()]
             if alive_minions:
                 promoted = random.choice(alive_minions)
+                promoted._old_role_obj = promoted._role_obj
                 await promoted.exec_change_role(Imp())
                 embed = self.__make_demonhood_promo_embed(promoted)
                 try:
@@ -251,6 +253,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
                     alive_scarletwomen = [player for player in scarletwomen if player.is_alive() and not player.is_droisoned()]
                     if alive_scarletwomen:
                         promoted = random.choice(alive_scarletwomen)
+                        promoted._old_role_obj = promoted._role_obj
                         await promoted.exec_change_role(Imp())
                         embed = self.__make_demonhood_promo_embed(promoted)
                         try:

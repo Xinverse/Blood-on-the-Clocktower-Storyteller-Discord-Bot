@@ -55,12 +55,12 @@ class Washerwoman(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
         
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4d/Washerwoman_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/4/4d/Washerwoman_Token.png"
         self._art_link_cropped = "https://imgur.com/nxfAxGm.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Washerwoman"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Washerwoman"
 
         self._role_enum = TBRole.washerwoman
-        self._emoji = "<:washerwoman:722684124820668447>"
+        self._emoji = "<:tbwasherwoman:739317350884442112>"
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

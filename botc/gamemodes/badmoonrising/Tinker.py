@@ -25,10 +25,10 @@ class Tinker(Outsider, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/e/e8/Tinker_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/e/e8/Tinker_Token.png"
         self._art_link_cropped = "https://imgur.com/T2aCAyq.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Tinker"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Tinker"
 
         self._role_enum = BMRRole.tinker
-        self._emoji = "<:tinker:722688861842571312>"
+        self._emoji = "<:bmrtinker:781672313066225675>"
         

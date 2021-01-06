@@ -48,10 +48,10 @@ class Character:
     def __init__(self):
 
         # Parent attributes
-        self._main_wiki_link = "http://bloodontheclocktower.com/wiki/Main_Page"  # Main page url -> string
+        self._main_wiki_link = "https://bloodontheclocktower.com/wiki/Main_Page"  # Main page url -> string
         self._botc_demon_link = "https://bloodontheclocktower.com/img/website/demon-head.png?" \
                               "rel=1589188746616"  # Demon head art url -> string
-        self._botc_logo_link = "http://bloodontheclocktower.com/wiki/images/logo.png"  # Logo art url -> string
+        self._botc_logo_link = "https://bloodontheclocktower.com/wiki/images/logo.png"  # Logo art url -> string
 
         # Override by child role class:
         self._desc_string = None
@@ -81,7 +81,7 @@ class Character:
 
         # Other
         self._emoji = None
-        self._demon_head_emoji = "<:demonhead:722894653438820432>"
+        self._demon_head_emoji = "<:demonhead:736692927505367190>"
     
     # -------------------- Character Properties --------------------
     

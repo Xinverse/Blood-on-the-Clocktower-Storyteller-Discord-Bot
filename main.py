@@ -16,6 +16,7 @@ import configparser
 import botc
 import json
 import botutils
+import discord
 from discord.ext import commands
 
 
@@ -54,6 +55,10 @@ if __name__ == "__main__":
         }
     )
 
+    intents = discord.Intents.default()
+    intents.members = True
+    intents.presences = True
+
     # The bot
     globvars.client = commands.Bot(
         command_prefix = command_prefix,
@@ -61,7 +66,8 @@ if __name__ == "__main__":
         case_insensitive = True,
         description = "〘 Blood on the Clocktower Storyteller Bot 〙 - by Xinverse#4011",
         paginator = commands.Paginator(),
-        help_command = help_command
+        help_command = help_command,
+        intents = intents
     )
 
     globvars.client.add_check(botutils.check_if_not_ignored)

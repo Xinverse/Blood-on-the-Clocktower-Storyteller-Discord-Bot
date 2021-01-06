@@ -32,12 +32,12 @@ class Po(Demon, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/7/7b/Po_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/7/7b/Po_Token.png"
         self._art_link_cropped = "https://imgur.com/aBHkr6t.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Po"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Po"
 
         self._role_enum = BMRRole.po
-        self._emoji = "<:po:722688861343318046>"
+        self._emoji = "<:bmrpo:781152055355506698>"
     
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

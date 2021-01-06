@@ -25,10 +25,10 @@ class Innkeeper(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/3/38/Innkeeper_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/3/38/Innkeeper_Token.png"
         self._art_link_cropped = "https://imgur.com/ru3mIMo.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Innkeeper"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Innkeeper"
 
         self._role_enum = BMRRole.innkeeper
-        self._emoji = "<:innkeeper:722688860877750333>"
+        self._emoji = "<:bmrinnkeeper:781152055003840552>"
         

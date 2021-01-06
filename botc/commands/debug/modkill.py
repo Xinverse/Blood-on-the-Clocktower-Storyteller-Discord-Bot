@@ -3,6 +3,7 @@
 import json
 import traceback
 import botutils
+import globvars
 from botc import PlayerConverter, PlayerNotFound, AlreadyDead
 from discord.ext import commands
 
@@ -38,9 +39,10 @@ class Modkill(commands.Cog, name = documentation["misc"]["debug_cog"]):
     async def modkill(self, ctx, *, player: PlayerConverter()):
         """Modkill command"""
         await player.exec_real_death()
+        player.ghost_vote = 0
+        globvars.master_state.game.invalidated = True
         feedback = documentation["doc"]["modkill"]["feedback"]
-        await ctx.send(feedback.format(check_emoji, player.game_nametag, player.role.emoji, 
-            player.role.true_self))
+        await ctx.send(feedback.format(check_emoji, player.game_nametag))
 
     @modkill.error
     async def modkill_error(self, ctx, error):

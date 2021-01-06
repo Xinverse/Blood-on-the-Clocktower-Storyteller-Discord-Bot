@@ -51,12 +51,12 @@ class Virgin(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
                             
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/5/5e/Virgin_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/5/5e/Virgin_Token.png"
         self._art_link_cropped = "https://imgur.com/1RiN6lr.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Virgin"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Virgin"
 
         self._role_enum = TBRole.virgin
-        self._emoji = "<:virgin:722687299363667988>"
+        self._emoji = "<:tbvirgin:739317351173980201>"
 
         self.inventory = Inventory(
             Flags.virgin_first_nomination,

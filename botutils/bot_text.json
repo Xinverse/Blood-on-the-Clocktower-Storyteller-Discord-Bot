@@ -26,16 +26,19 @@
         "clear_ignore" : "{} Are you sure you want to clear the entire ignore list and delete all **{}** entrie(s)? Use `{}ignore clear --force` to proceed.",
         "force_clear" : "{} The ignore list has been cleared. It is now empty.",
         "ignore_sync" : "{} Purged **{}** user(s) not in server.",
-        "no_game" : "There is currently no active game. Try `{}join` to start a new game!"
+        "no_game" : "There is currently no active game. Try `{}join` to start a new game!",
+        "wins": "**{}** has won **{}** out of **{}** game{} ({:.1f}%).",
+        "wins_nogames": "**{}** has not played any games yet.",
+        "top_usage": "Argument must be one of `games`, `wins` or `winrate`."
 
     },
 
     "esthetics" : {
 
         "loading_emoji" : "<a:loading:723373502052434000>",
-        "scroll" : "<:magicscroll:725879129945407530>",
-        "butterfly" : "<a:butterfly_effect:726137547301978152>",
-        "check_emoji" : "<a:animated_check:728031109094309970>",
+        "scroll" : "<:scroll:736685631710822420>",
+        "butterfly" : "<a:butterfly:736684667452915804>",
+        "check_emoji" : "<a:check:736684957698621551>",
         "skull" : "💀",
         "fquit" : "❌"
 
@@ -249,6 +252,22 @@
             "weights" : []
         },
 
+        "wins" : {
+            "brief" : "check how many games you have won",
+            "help" : "See the number of games you have played and your win rate.",
+            "description" : "[WINS] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
+        "top" : {
+            "brief" : "check the leaderboard",
+            "help" : "See the top 25 players sorted by games, wins or win rate.",
+            "description" : "[TOP] command",
+            "outputs" : [],
+            "weights" : []
+        },
+
         "ignore" : {
 
             "ignore" : {
@@ -312,7 +331,8 @@
         "already_not_notify" : "{} {} You are already not in the notify list.",
         "fstart_min" : "{} {} The currently selected game is **{}**, with a **minimum** of **{}** players. You may not start the game until the minimum player count is reached.",
         "fstart_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby to run this game.",
-        "fjoin_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby."
+        "fjoin_max" : "{} {} The currently selected game is **{}**, with a **maximum** of **{}** players. There are too many players in the lobby.",
+        "cant_fjoin_bot": "{} :x: You can't fjoin a bot."
 
         },
 
@@ -322,6 +342,7 @@
         "not_enough_votes_to_start" : "Not enough votes to start, resetting start votes.",
         "error" : "An error occurred and has been logged.",
         "lobby_timeout" : "{} The game has taken too long to start and has been cancelled!",
+        "restarted_notify" : "{} The bot has restarted and the game has been cancelled. Type `!join` to start a new game.",
         "ignore" : "{} You've used {} commands in the last {} seconds; I will ignore you from now on.",
         "others_cog" : "༺ 𝕺𝖙𝖍𝖊𝖗𝖘 ༻",
         "admin_cog" : "༺ 𝕬𝖉𝖒𝖎𝖓𝖎𝖘𝖙𝖗𝖆𝖙𝖔𝖗 ༻",

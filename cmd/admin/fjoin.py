@@ -13,6 +13,7 @@ with open('botutils/bot_text.json') as json_file:
 fjoin_str = language["cmd"]["fjoin"]
 fjoined_str = language["cmd"]["fjoined"]
 fjoin_max = language["errors"]["fjoin_max"]
+cant_fjoin_bot = language["errors"]["cant_fjoin_bot"]
 
 
 class Fjoin(Admin, name = language["system"]["admin_cog"]):
@@ -32,6 +33,11 @@ class Fjoin(Admin, name = language["system"]["admin_cog"]):
 
         game = botutils.GameChooser().get_selected_game()
 
+        # The player is a bot
+        if member.bot:
+            await ctx.send(cant_fjoin_bot.format(ctx.author.mention))
+            return
+
         # Too many players
         if len(globvars.master_state.pregame) >= game.MAX_PLAYERS:
             msg = fjoin_max.format(
@@ -46,13 +52,13 @@ class Fjoin(Admin, name = language["system"]["admin_cog"]):
         # The player has already joined
         if globvars.master_state.pregame.is_joined(member.id):
             await ctx.send(fjoined_str.format(ctx.author.mention, member.name))
-        
+
         # The player has not yet joined. Make them join.
         else:
             globvars.master_state.pregame.safe_add_player(member.id)
             botutils.update_state_machine()
             await ctx.send(fjoin_str.format(member.name, len(globvars.master_state.pregame)))
-        
+
         # If you are the first player to join the game, then start the lobby timeout loop
         if len(globvars.master_state.pregame) == 1:
             lobby_timeout.start()

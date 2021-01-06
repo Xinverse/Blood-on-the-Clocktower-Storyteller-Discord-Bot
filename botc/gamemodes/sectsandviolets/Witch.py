@@ -23,7 +23,7 @@ class Witch(Minion, SectsAndViolets, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/c/cc/Witch_Token.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Witch"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/c/cc/Witch_Token.png"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Witch"
 
         self._role_enum = SnVRole.witch

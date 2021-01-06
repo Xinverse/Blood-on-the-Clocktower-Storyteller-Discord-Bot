@@ -25,10 +25,10 @@ class Grandmother(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/3/3a/Grandmother_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/3/3a/Grandmother_Token.png"
         self._art_link_cropped = "https://imgur.com/goIkjnU.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Grandmother"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Grandmother"
 
         self._role_enum = BMRRole.grandmother
-        self._emoji = "<:grandmother:722688860450062347>"
+        self._emoji = "<:bmrgrandmother:781019504427008010>"
         

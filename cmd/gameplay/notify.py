@@ -2,16 +2,21 @@
 
 import botutils
 import json
+import time
 import traceback
 import configparser
 from ._gameplay import Gameplay
 from discord.ext import commands
 from discord import Status
+from library import display_time
 
 Config = configparser.ConfigParser()
-
 Config.read("config.INI")
 SERVER_ID = int(Config["user"]["SERVER_ID"])
+
+Preferences = configparser.ConfigParser()
+Preferences.read("preferences.INI")
+NOTIFY_COOLDOWN = int(Preferences["duration"]["NOTIFY_COOLDOWN"])
 
 with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
@@ -39,12 +44,22 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
         """Notify command"""
 
         if ctx.invoked_subcommand is None:
-
             import globvars
 
-            pings = ""
+            delta = time.time() - globvars.last_notify
+            if delta < NOTIFY_COOLDOWN:
+                msg = f"{ctx.author.mention} {botutils.BotEmoji.fquit} This command is rate-limited. Please try again in {display_time(int(NOTIFY_COOLDOWN - delta))}."
+                await ctx.send(msg)
+                return
 
-            for userid in globvars.notify_list:
+            if botutils.check_if_lobby(ctx):
+                globvars.last_notify = time.time()
+
+            pings = []
+
+            users_to_ping = sorted(set(globvars.notify_list) - set(globvars.ignore_list))
+
+            for userid in users_to_ping:
                 member = globvars.client.get_guild(SERVER_ID).get_member(userid)
 
                 # member found, only ping them if they are not offline
@@ -52,13 +67,13 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
                     if member.status != Status.offline and \
                         member.id not in globvars.master_state.pregame and \
                         member.id != ctx.author.id:
-                        pings += member.mention
+                        pings.append(member.mention)
 
                 # member not present in server, remove their id
                 else:
                     globvars.notify_list.remove(userid)
 
-            msg = f"{ctx.author.mention} {botutils.BotEmoji.mention} {pings}"
+            msg = f"{ctx.author.mention} {botutils.BotEmoji.mention} {' '.join(pings)}"
             await ctx.send(msg)
 
     @notify.command(

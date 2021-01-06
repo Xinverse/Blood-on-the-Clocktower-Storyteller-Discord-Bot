@@ -40,5 +40,5 @@ class BadMoonRising:
     def __init__(self):
 
         self._gm_of_appearance = Gamemode.bad_moon_rising
-        self._gm_art_link = "http://bloodontheclocktower.com/wiki/images/d/d9/BMR_Logo.png"
+        self._gm_art_link = "https://bloodontheclocktower.com/wiki/images/d/d9/BMR_Logo.png"
         

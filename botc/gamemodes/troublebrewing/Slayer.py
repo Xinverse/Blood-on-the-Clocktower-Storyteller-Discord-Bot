@@ -49,12 +49,12 @@ class Slayer(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
         
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/2/2f/Slayer_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/2/2f/Slayer_Token.png"
         self._art_link_cropped = "https://imgur.com/MtSElpk.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Slayer"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Slayer"
 
         self._role_enum = TBRole.slayer
-        self._emoji = "<:slayer:722687329050820648>"
+        self._emoji = "<:tbslayer:739317350704218274>"
 
         self.inventory = Inventory(
             Flags.slayer_unique_attempt

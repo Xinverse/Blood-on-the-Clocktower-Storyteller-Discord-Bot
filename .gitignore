@@ -141,4 +141,7 @@ stasis.csv
 notify.csv
 ignore.csv
 grimoire.png
+townsquare.png
 playtest.py
+log.txt
+data.sqlite3

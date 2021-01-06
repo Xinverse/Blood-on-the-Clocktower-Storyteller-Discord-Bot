@@ -48,12 +48,12 @@ class ScarletWoman(Minion, TroubleBrewing, Character, NonRecurringAction):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
         
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/7/7c/Scarlet_Woman_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/7/7c/Scarlet_Woman_Token.png"
         self._art_link_cropped = "https://imgur.com/qgvpSOJ.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Scarlet_Woman"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Scarlet_Woman"
 
         self._role_enum = TBRole.scarletwoman
-        self._emoji = "<:scarletwoman:722687671847092225>"
+        self._emoji = "<:tbscarletwoman:739317351110934558>"
     
     def exec_init_setup(self, townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list):
         """The scarlet woman has a lower chance of appearing at 6p or less"""
@@ -85,7 +85,6 @@ class ScarletWoman(Minion, TroubleBrewing, Character, NonRecurringAction):
                     count += 1
 
         return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list]
-
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""

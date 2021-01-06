@@ -25,9 +25,9 @@ class Courtier(Townsfolk, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/7/7d/Courtier_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/7/7d/Courtier_Token.png"
         self._art_link_cropped = "https://imgur.com/c1wt8jB.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Courtier"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Courtier"
 
         self._role_enum = BMRRole.courtier
-        self._emoji = "<:courtier:722688860076769311>"
+        self._emoji = "<:bmrcourtier:781151556128342058>"

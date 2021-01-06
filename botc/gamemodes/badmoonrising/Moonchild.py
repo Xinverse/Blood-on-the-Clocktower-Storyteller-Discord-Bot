@@ -25,10 +25,10 @@ class Moonchild(Outsider, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/4/4c/Moonchild_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/4/4c/Moonchild_Token.png"
         self._art_link_cropped = "https://imgur.com/iVnwFvV.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Moonchild"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Moonchild"
 
         self._role_enum = BMRRole.moonchild
-        self._emoji = "<:moonchild:722688861171351582>"
+        self._emoji = "<:bmrmoonchild:781152055011049552>"
         

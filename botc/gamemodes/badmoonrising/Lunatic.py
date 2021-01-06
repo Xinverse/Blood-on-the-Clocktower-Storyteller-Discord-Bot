@@ -26,10 +26,10 @@ class Lunatic(Outsider, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/5/56/Lunatic_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/5/56/Lunatic_Token.png"
         self._art_link_cropped = "https://imgur.com/htUUx18.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Lunatic"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Lunatic"
 
         self._role_enum = BMRRole.lunatic
-        self._emoji = "<:lunatic:722688861003841616>"
+        self._emoji = "<:bmrlunatic:781152055455776798>"
         

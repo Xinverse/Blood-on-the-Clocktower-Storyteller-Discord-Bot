@@ -23,7 +23,7 @@ class Barber(Outsider, SectsAndViolets, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/0/08/Barber_Token.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Barber"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/0/08/Barber_Token.png"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Barber"
 
         self._role_enum = SnVRole.barber

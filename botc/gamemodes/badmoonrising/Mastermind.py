@@ -26,10 +26,10 @@ class Mastermind(Minion, BadMoonRising, Character):
         self._brief_string = character_text["brief"]
         self._action = character_text["action"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/d/d5/Mastermind_Token.png"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/d/d5/Mastermind_Token.png"
         self._art_link_cropped = "https://imgur.com/rM0fbDu.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Mastermind"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Mastermind"
 
         self._role_enum = BMRRole.mastermind
-        self._emoji = "<:mastermind:722688860731211789>"
+        self._emoji = "<:bmrmastermind:781152055179214869>"
         

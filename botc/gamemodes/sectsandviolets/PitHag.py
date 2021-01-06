@@ -23,7 +23,7 @@ class PitHag(Minion, SectsAndViolets, Character):
         self._instr_string = character_text["instruction"]
         self._lore_string = character_text["lore"]
 
-        self._art_link = "http://bloodontheclocktower.com/wiki/images/6/63/Pit_Hag_Token.png"
-        self._wiki_link = "http://bloodontheclocktower.com/wiki/Pit_Hag"
+        self._art_link = "https://bloodontheclocktower.com/wiki/images/6/63/Pit_Hag_Token.png"
+        self._wiki_link = "https://bloodontheclocktower.com/wiki/Pit_Hag"
 
         self._role_enum = SnVRole.pithag
