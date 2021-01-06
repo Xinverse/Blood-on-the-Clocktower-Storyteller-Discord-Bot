@@ -63,7 +63,7 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     if i >= limit:
                         break
             elif arg == "winrate":
-                msg = f"__Top {limit} by win rate__\n\n"
+                msg = f"__Top {limit} by win rate__ (minimum {min_games} games)\n\n"
                 c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= ? ORDER BY winrate DESC", (min_games,))
                 i = 0
                 for (user_id, winrate) in c.fetchall():
