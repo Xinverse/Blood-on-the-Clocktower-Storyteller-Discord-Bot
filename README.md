@@ -22,8 +22,6 @@ Clone this repository. Rename `config.INI.example` to `config.INI` and `preferen
 
 Rename `notify.csv.example` to `notify.csv` and `ignore.csv.example` to `ignore.csv`.
 
-Rename `emojis.json.example` to `emojis.json` and change the values as appropriate.
-
 Run `pip install -r requirements.txt` to install the required dependencies.
 
 Finally, run the `main.py` file to start the bot.
