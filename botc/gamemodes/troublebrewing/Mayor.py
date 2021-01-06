@@ -88,14 +88,26 @@ class Mayor(Townsfolk, TroubleBrewing, Character, NonRecurringAction):
                 # Mayor bounce is happening
                 if mayor_bounce:
 
-                    possibilities = [player for player in globvars.master_state.game.sitting_order \
+                    alive_minions = [player for player in BOTCUtils.get_all_minions() if player.is_alive()]
+                    
+                    if alive_minions:
+                        # Star passing is possible. Demon can be a bounce target!
+                        possibilities = [player for player in globvars.master_state.game.sitting_order \
                         if player.is_alive() and \
-                            player.role.category != Category.demon and \
                             player.user.id != killed_player.user.id and \
                             not player.has_status_effect(StatusList.safety_from_demon)]
+                    else:
+                        # Star passing is impossible. Demon cannot be a bounce target.
+                        possibilities = [player for player in globvars.master_state.game.sitting_order \
+                            if player.is_alive() and \
+                                player.role.category != Category.demon and \
+                                player.user.id != killed_player.user.id and \
+                                not player.has_status_effect(StatusList.safety_from_demon)]
+
                     if possibilities:
                         deflected_to = random.choice(possibilities)
                         await deflected_to.role.true_self.on_being_demon_killed(deflected_to)
+                        
                     # All the surviving players cannot die from demon, the mayor must die.
                     else:
                         await killed_player.exec_real_death()
