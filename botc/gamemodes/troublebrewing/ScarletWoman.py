@@ -54,6 +54,38 @@ class ScarletWoman(Minion, TroubleBrewing, Character, NonRecurringAction):
 
         self._role_enum = TBRole.scarletwoman
         self._emoji = "<:scarletwoman:722687671847092225>"
+    
+    def exec_init_setup(self, townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list):
+        """The scarlet woman has a lower chance of appearing at 6p or less"""
+
+        random.shuffle(townsfolk_obj_list)
+
+        # Remove two townsfolks
+        townsfolk_obj_list.pop()
+        townsfolk_obj_list.pop()
+
+        # If the single remaining townsfolk is a washerwoman, then remove it
+        if len(townsfolk_obj_list) == 1:
+            if townsfolk_obj_list[0].name == TBRole.washerwoman.value:
+                tb_townsfolk_all = BOTCUtils.get_role_list(TroubleBrewing, Townsfolk)
+                all_not_washer = [character for character in tb_townsfolk_all if character.name != TBRole.washerwoman.value]
+                townsfolk_obj_list = [random.choice(all_not_washer)]
+
+        tb_outsider_all = BOTCUtils.get_role_list(TroubleBrewing, Outsider)
+        random.shuffle(tb_outsider_all)
+
+        count = 0
+
+        for outsider in tb_outsider_all:
+            if count >= 2:
+                break
+            else:
+                if str(outsider) not in [str(role) for role in outsider_obj_list]:
+                    outsider_obj_list.append(outsider)
+                    count += 1
+
+        return [townsfolk_obj_list, outsider_obj_list, minion_obj_list, demon_obj_list]
+
 
     def create_n1_instr_str(self):
         """Create the instruction field on the opening dm card"""
