@@ -42,6 +42,7 @@ class Frole(commands.Cog, name = documentation["misc"]["debug_cog"]):
         old_role = player.role.true_self
         await player.exec_change_role(role)
         player.role.exec_init_role(globvars.master_state.game.setup)
+        globvars.master_state.game.invalidated = True
         try:
             await player.role.ego_self.send_opening_dm_embed(player.user)
         except discord.Forbidden:
