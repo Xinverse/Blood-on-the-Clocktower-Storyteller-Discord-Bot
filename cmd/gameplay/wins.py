@@ -23,7 +23,7 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
     @commands.command(
         pass_context = True,
         name = "wins",
-        aliases = [],
+        aliases = ["games"],
         brief = language["doc"]["wins"]["brief"],
         help = language["doc"]["wins"]["help"],
         description = language["doc"]["wins"]["description"]
