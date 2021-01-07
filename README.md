@@ -7,8 +7,10 @@ The copyrights to the BoTC game are owned by the Pandemonium Institute.
 
 ## Author
 
-* **Xinverse#4011** - *Developer* - [Xinverse](https://github.com/Xinverse)
+* **Xinverse#5440** - [Xinverse](https://github.com/Xinverse)
 * **Picowchew#1559** - *Contributor* - [Picowchew](https://github.com/Picowchew)
+* **nyuszika7h#0001** - *Contributor* - [Xinverse](https://github.com/nyuszika7h)
+For other contributors, please take a look at the [Contributors](https://github.com/Xinverse/Blood-on-the-Clocktower-Storyteller-Discord-Bot/graphs/contributors) page.
 
 ## License
 
@@ -45,4 +47,4 @@ Finally, run the `main.py` file to start the bot.
 
 ## Contact
 
-You can find me as Xinverse#4011 on Discord.
+You can find me as Xinverse#5440 on Discord.
