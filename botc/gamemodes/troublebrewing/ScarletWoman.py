@@ -3,9 +3,8 @@
 import json 
 import random
 import discord
-from botc import Townsfolk, Outsider, Minion, Character, NonRecurringAction
+from botc import BOTCUtils, Townsfolk, Outsider, Minion, Character, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
-import BOTCUtils
 import globvars
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
