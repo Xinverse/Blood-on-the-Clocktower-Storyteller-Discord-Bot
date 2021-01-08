@@ -35,7 +35,7 @@ class Frestart(commands.Cog, name = language["system"]["admin_cog"]):
         """Frestart command"""
 
         if globvars.master_state.game and arg != "--force":
-            await ctx.send(language["cmd"]["frestart_confirm"].format(ctx.author.mention, botutils.BotEmojidenied))
+            await ctx.send(language["cmd"]["frestart_confirm"].format(ctx.author.mention, botutils.BotEmoji.denied))
             return
 
         await ctx.send(language["cmd"]["frestart"].format(ctx.author.mention, botutils.BotEmoji.approved))
