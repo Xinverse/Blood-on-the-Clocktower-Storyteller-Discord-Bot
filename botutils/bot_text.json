@@ -30,7 +30,7 @@
         "wins": "**{}** has won **{}** out of **{}** game{} ({:.1f}%).",
         "wins_nogames": "**{}** has not played any games yet.",
         "top_usage": "Argument must be one of `games`, `wins` or `winrate`.",
-        "frestart": "{} {} Restarting bot",
+        "frestart": "{} {} Restarting",
         "frestart_confirm": "{} {} A game is currently in progress. If you still want to restart the bot, please use `!frestart --force`."
 
     },
