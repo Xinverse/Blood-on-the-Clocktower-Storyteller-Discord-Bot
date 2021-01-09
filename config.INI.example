@@ -13,12 +13,8 @@ LOGGING_CHANNEL_ID = 124328432840293840
 ALIVE_ROLE_ID = 124328432840293840
 DEAD_ROLE_ID = 124328432840293840
 ADMINS_ROLE_ID = 124328432840293840
-
-# Roles to take away during game.
-# This should be a list of tuples in the following format:
-#
-# [(normal_role1, ingame_role1), (normal_role2, ingame_role2)]
-LOCK_ROLES_ID = []
+# Channels to lock during game
+LOCK_CHANNELS_ID = []
 
 [settings]
 
