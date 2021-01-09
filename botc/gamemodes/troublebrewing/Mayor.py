@@ -2,7 +2,7 @@
 
 import json 
 import random
-from botc import Townsfolk, Character, NonRecurringAction, Category, Team, StatusList
+from botc import BOTCUtils, Townsfolk, Character, NonRecurringAction, Category, Team, StatusList
 from ._utils import TroubleBrewing, TBRole
 
 with open('botc/gamemodes/troublebrewing/character_text.json') as json_file: 
