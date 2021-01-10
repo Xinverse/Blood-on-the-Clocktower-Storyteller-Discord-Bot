@@ -47,6 +47,7 @@ class Townsquare(commands.Cog, name = documentation["misc"]["townhall_cog"]):
     @commands.command(
         pass_context = True, 
         name = "townsquare", 
+        aliases = ["ts"],
         hidden = False, 
         brief = documentation["doc"]["townsquare"]["brief"],
         help = documentation["doc"]["townsquare"]["help"],
