@@ -51,7 +51,7 @@ class Join(Gameplay, name = language["system"]["gameplay_cog"]):
         import globvars
 
         if globvars.master_state.game:
-            # This check is to ensure a player doesn't quit right after !start
+            # This check is to ensure a player doesn't join right after !start
             # before the game is fully set up and end up breaking the game.
             return
 
