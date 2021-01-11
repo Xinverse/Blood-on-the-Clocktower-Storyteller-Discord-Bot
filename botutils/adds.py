@@ -95,4 +95,4 @@ async def unlock_lobby():
     server = globvars.client.get_guild(int(SERVER_ID))
 
     lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
-    await lobby_channel.set_permissions(server.default_role, send_messages=True)
+    await lobby_channel.set_permissions(server.default_role, send_messages=None)
