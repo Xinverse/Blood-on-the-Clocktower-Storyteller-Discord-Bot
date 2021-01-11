@@ -90,8 +90,8 @@ async def log(level, message):
         await __send_log(msg)
 
 
-async def send_lobby(message, embed = None, file = None):
+async def send_lobby(message, embed = None, file = None, delete_after = None):
     """Send a message to the lobby"""
     lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
-    ret = await lobby_channel.send(message, embed = embed, file = file)
+    ret = await lobby_channel.send(message, embed = embed, file = file, delete_after = delete_after)
     return ret
