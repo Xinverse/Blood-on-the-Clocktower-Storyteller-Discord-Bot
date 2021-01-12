@@ -9,6 +9,7 @@ import configparser
 from discord.ext import commands
 from botc import check_if_is_player, check_if_dm, check_if_is_day, PlayerConverter, \
     NotDMChannel, NotAPlayer, NotDay, WhisperConverter, WhisperTooLong, BOTCUtils
+from library import display_time
 
 Config = configparser.ConfigParser()
 Config.read("preferences.INI")
@@ -22,15 +23,16 @@ with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
+cooldown = language["errors"]["cmd_cooldown"]
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
-    cooldown = documentation["cmd_warnings"]["cooldown"]
-    recipient_blocked = documentation["cmd_warnings"]["recipient_blocked"]
-    whisper_announcement = documentation["gameplay"]["whisper_announcement"]
-    from_str = documentation["gameplay"]["from"]
-    to_str = documentation["gameplay"]["to"]
-    whisper_self = documentation["cmd_warnings"]["whisper_self"]
+
+recipient_blocked = documentation["cmd_warnings"]["recipient_blocked"]
+whisper_announcement = documentation["gameplay"]["whisper_announcement"]
+from_str = documentation["gameplay"]["from"]
+to_str = documentation["gameplay"]["to"]
+whisper_self = documentation["cmd_warnings"]["whisper_self"]
 
 
 class Whisper(commands.Cog, name = documentation["misc"]["townhall_cog"]):
@@ -108,7 +110,7 @@ class Whisper(commands.Cog, name = documentation["misc"]["townhall_cog"]):
             return
         # Command on cooldown -> commands.CommandOnCooldown
         elif isinstance(error, commands.CommandOnCooldown):
-            await ctx.send(cooldown.format(ctx.author.mention, emoji))
+            await ctx.send(cooldown.format(ctx.author.mention, emoji, display_time(int(ctx.command.get_cooldown_retry_after(ctx)))))
         # Incorrect argument -> commands.BadArgument
         elif isinstance(error, commands.BadArgument):
             await ctx.send(documentation["cmd_warnings"]["player_not_found"].format(ctx.author.mention, emoji))

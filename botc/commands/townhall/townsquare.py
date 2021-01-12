@@ -6,6 +6,7 @@ import discord
 import configparser
 import botutils
 from botc import Townsquare as TownsquareImage
+from library import display_time
 from discord.ext import commands
 
 Config = configparser.ConfigParser()
@@ -18,11 +19,12 @@ with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
+cooldown = language["errors"]["cmd_cooldown"]
 
 with open('botc/game_text.json') as json_file: 
     documentation = json.load(json_file)
-    townsquare_loading = documentation["cmd_warnings"]["townsquare_loading"]
-    cooldown = documentation["cmd_warnings"]["cooldown"]
+
+townsquare_loading = documentation["cmd_warnings"]["townsquare_loading"]
 
 
 class Townsquare(commands.Cog, name = documentation["misc"]["townhall_cog"]):
@@ -74,7 +76,7 @@ class Townsquare(commands.Cog, name = documentation["misc"]["townhall_cog"]):
             return
         # Command on cooldown -> commands.CommandOnCooldown
         elif isinstance(error, commands.CommandOnCooldown):
-            await ctx.send(cooldown.format(ctx.author.mention, emoji))
+            await ctx.send(cooldown.format(ctx.author.mention, emoji, display_time(int(ctx.command.get_cooldown_retry_after(ctx)))))
         else:
             try:
                 raise error
@@ -84,4 +86,4 @@ class Townsquare(commands.Cog, name = documentation["misc"]["townhall_cog"]):
 
 def setup(client):
     client.add_cog(Townsquare(client))
-    
+

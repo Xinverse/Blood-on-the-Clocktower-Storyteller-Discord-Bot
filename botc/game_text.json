@@ -314,7 +314,6 @@
         "unique_ability_used" : "{} {} Your ability is single-use, and you have used it up already.",
         "no_game_running" : "{} {} No game is currently running.",
         "townsquare_loading" : "{} Generating townsquare image, please wait a moment...",
-        "cooldown" : "{} {} This command has a cooldown.",
         "whisper_too_long" : "{} {} The content of your whisper is too long.",
         "recipient_blocked" : "{} Your whisper cannot be delivered because the recipient has blocked me.",
         "cannot_be_nominated_again" : "{} {} {} cannot be nominated, because they have been nominated once today already.",

@@ -348,7 +348,7 @@
 
         "user_not_found" : "{} :x: Specified user is not found.",
         "missing_user" : "{} :x: Missing argument, please specify a valid user.",
-        "cmd_cooldown" : "{} :x: This command is ratelimited.",
+        "cmd_cooldown" : "{} {} This command has a cooldown. Please try again in **{}**.",
         "already_in_notify" : "{} {} You are already in the notify list.",
         "already_not_notify" : "{} {} You are already not in the notify list.",
         "fstart_min" : "{} {} The currently selected game is **{}**, with a **minimum** of **{}** players. You may not start the game until the minimum player count is reached.",
