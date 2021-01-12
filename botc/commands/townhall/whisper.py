@@ -95,9 +95,7 @@ class Whisper(commands.Cog, name = documentation["misc"]["townhall_cog"]):
                 player.game_nametag,
                 recipient.game_nametag,
             )
-            lobby_message = await botutils.send_lobby(announcement_msg)
-            await asyncio.sleep(WHISPER_SHOW_TIME)
-            await lobby_message.delete()
+            await botutils.send_lobby(announcement_msg, delete_after = WHISPER_SHOW_TIME)
             
     @whisper.error
     async def whisper_error(self, ctx, error):

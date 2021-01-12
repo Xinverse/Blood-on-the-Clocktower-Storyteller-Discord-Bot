@@ -130,21 +130,10 @@ class Spy(Minion, TroubleBrewing, Character, NonRecurringAction):
         embed.set_footer(text = copyrights_str)
 
         try:
-            grimoire = await recipient.send(file = file, embed = embed)
+            await recipient.send(file = file, embed = embed, delete_after = GRIMOIRE_SHOW_TIME)
 
         except discord.Forbidden:
             pass
-
-        else:
-
-            @tasks.loop(count = 1)
-            async def showing_grimoire(sleeptime, message):
-                """Show the grimoire to the spy during the specified time."""
-                showing_grimoire.message = message
-                await asyncio.sleep(sleeptime)
-                await message.delete()
-
-            showing_grimoire.start(GRIMOIRE_SHOW_TIME, grimoire)
     
     async def send_n1_end_message(self, recipient):
         """Send the spy grimoire"""
