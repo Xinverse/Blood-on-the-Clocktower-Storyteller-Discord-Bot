@@ -1,14 +1,24 @@
 """Contains the Pregame class"""
 
+import globvars
+import configparser
+
+Config = configparser.ConfigParser()
+Config.read("config.INI")
+
+SERVER_ID = Config["user"]["SERVER_ID"]
+SERVER_ID = int(SERVER_ID)
+
 class Pregame:
     """Pregame class: for storing session before game start"""
 
     def __init__(self):
         self._userid_list = []
-    
+
     @property
     def list(self):
         """Access the list of user id"""
+        self.remove_left_guild_players()
         return self._userid_list
     
     def is_empty(self):
@@ -29,6 +39,7 @@ class Pregame:
     
     def is_joined(self, userid):
         """Check if a userid is already in self._userid_list"""
+        self.remove_left_guild_players()
         userid = int(userid)
         return userid in self._userid_list
     
@@ -55,7 +66,16 @@ class Pregame:
         return self.__str__()
     
     def __len__(self):
+        self.remove_left_guild_players()
         return len(self._userid_list)
     
     def __iter__(self):
+        self.remove_left_guild_players()
         return iter(self._userid_list)
+
+    def remove_left_guild_players(self):
+        for userid in self._userid_list:
+            fetched_member = globvars.client.get_guild(SERVER_ID).get_member(int(userid))
+            if fetched_member == None:
+                #User left server
+                self._userid_list.remove(userid)

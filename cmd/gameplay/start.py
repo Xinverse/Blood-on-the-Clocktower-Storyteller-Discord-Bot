@@ -32,6 +32,9 @@ class Start(Gameplay, name = language["system"]["gameplay_cog"]):
 
         import globvars
 
+        # Make sure all the players are still in the guild
+        globvars.master_state.pregame.remove_left_guild_players()
+
         # The player has already voted to start
         if ctx.author.id in globvars.start_votes:
             return

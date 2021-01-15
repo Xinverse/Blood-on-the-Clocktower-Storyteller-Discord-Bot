@@ -30,6 +30,9 @@ class Fstart(Admin, name = language["system"]["admin_cog"]):
 
         game = botutils.GameChooser().get_selected_game()
 
+        # Make sure all the players are still in the guild
+        globvars.master_state.pregame.remove_left_guild_players()
+
         if len(globvars.master_state.pregame) < game.MIN_PLAYERS:
             msg = fstart_min.format(
                 ctx.author.mention,
