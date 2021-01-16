@@ -31,7 +31,7 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
         description = language["doc"]["wins"]["description"]
     )
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
-    async def wins(self, ctx, user: discord.User = None):
+    async def wins(self, ctx, *, user: discord.User = None):
         """Wins command"""
 
         if not user:
