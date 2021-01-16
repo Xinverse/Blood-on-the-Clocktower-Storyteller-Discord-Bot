@@ -42,11 +42,18 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                 c = db.execute("SELECT user_id, games FROM playerstats ORDER BY games DESC")
                 msg = f"__Top {limit} by games played__\n\n"
                 i = 0
+                last = None
+                tie = 0
                 for (user_id, games) in c.fetchall():
                     user = globvars.client.get_user(user_id)
                     if not user:
                         continue
-                    i += 1
+                    if last is None or games < last:
+                        i += 1 + tie
+                        tie = 0
+                    else:
+                        tie += 1
+                    last = games
                     msg += f"{i}. **{utils.escape_markdown(user.name)}** - {games}\n"
                     if i >= limit:
                         break
@@ -54,11 +61,19 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                 msg = f"__Top {limit} by games won__\n\n"
                 c = db.execute("SELECT user_id, wins FROM playerstats ORDER BY wins DESC")
                 i = 0
+                last = None
+                tie = 0
                 for (user_id, wins) in c.fetchall():
                     user = globvars.client.get_user(user_id)
                     if not user:
                         continue
-                    i += 1
+                    if last is None or wins < last:
+                        i += 1 + tie
+                        tie = 0
+                    else:
+                        tie += 1
+                    last = wins
+
                     msg += f"{i}. **{utils.escape_markdown(user.name)}** - {wins}\n"
                     if i >= limit:
                         break
@@ -66,14 +81,36 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                 msg = f"__Top {limit} by win rate__ (minimum {min_games} games)\n\n"
                 c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= ? ORDER BY winrate DESC", (min_games,))
                 i = 0
+                last = None
+                tie = 0
+                leaderboard = []
                 for (user_id, winrate) in c.fetchall():
                     user = globvars.client.get_user(user_id)
                     if not user:
                         continue
-                    i += 1
-                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {winrate * 100:.1f}%\n"
+                    if last is None or winrate < last:
+                        i += 1 + tie
+                        tie = 0
+                    else:
+                        tie += 1
+                    last = winrate
+                    leaderboard.append((i, user, winrate))
                     if i >= limit:
                         break
+                precision = 0
+                while True:
+                    for i in range(len(leaderboard) - 1):
+                        cur_pos, _, cur_rate = leaderboard[i]
+                        next_pos, _, next_rate = leaderboard[i + 1]
+                        ok = True
+                        if cur_pos != next_pos and cur_rate != next_rate and f"{cur_rate * 100:.{precision}f}" == f"{next_rate * 100:.{precision}f}":
+                            precision += 1
+                            ok = False
+                            break
+                    if ok:
+                        break
+                for (i, user, winrate) in leaderboard:
+                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {winrate * 100:.{precision}f}%\n"
             else:
                 msg = language["cmd"]["top_usage"]
 
