@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+import traceback
 
 from discord.ext import commands
 
@@ -11,6 +12,8 @@ import globvars
 
 with open("botutils/bot_text.json") as json_file:
     language = json.load(json_file)
+
+error_str = language["system"]["error"]
 
 
 class Frestart(commands.Cog, name = language["system"]["admin_cog"]):
@@ -40,3 +43,15 @@ class Frestart(commands.Cog, name = language["system"]["admin_cog"]):
 
         await ctx.send(language["cmd"]["frestart"].format(ctx.author.mention, botutils.BotEmoji.success))
         os.execl(sys.executable, sys.executable, *sys.argv)
+
+    @frestart.error
+    async def frestart_error(self, ctx, error):
+        """Frestart command error handling"""
+        if isinstance(error, commands.CheckFailure):
+            return
+        else:
+            try:
+                raise error
+            except Exception:
+                await ctx.send(error_str)
+                await botutils.log(botutils.Level.error, traceback.format_exc())
