@@ -94,9 +94,9 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     else:
                         tie += 1
                     last = winrate
-                    leaderboard.append((i, user, winrate))
-                    if i >= limit:
+                    if i > limit:
                         break
+                    leaderboard.append((i, user, winrate))
                 precision = 0
                 while True:
                     for i in range(len(leaderboard) - 1):
