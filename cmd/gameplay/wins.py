@@ -3,6 +3,7 @@
 import json
 import sqlite3
 import traceback
+from typing import Union
 
 import discord
 from discord.ext import commands
@@ -31,7 +32,7 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
         description = language["doc"]["wins"]["description"]
     )
     @commands.check(botutils.check_if_lobby_or_dm_or_admin)
-    async def wins(self, ctx, *, user: discord.User = None):
+    async def wins(self, ctx, *, user: Union[discord.Member, discord.User] = None):
         """Wins command"""
 
         if not user:
@@ -54,7 +55,7 @@ class Wins(Gameplay, name = language["system"]["gameplay_cog"]):
 
     @wins.error
     async def wins_error(self, ctx, error):
-        if isinstance(error, commands.errors.UserNotFound):
+        if isinstance(error, commands.errors.BadUnionArgument):
             await ctx.send(user_not_found_str.format(ctx.author.mention))
         else:
             try:
