@@ -54,9 +54,9 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     else:
                         tie += 1
                     last = games
-                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {games}\n"
-                    if i >= limit:
+                    if i > limit:
                         break
+                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {games}\n"
             elif arg == "wins":
                 msg = f"__Top {limit} by games won__\n\n"
                 c = db.execute("SELECT user_id, wins FROM playerstats ORDER BY wins DESC")
@@ -73,10 +73,9 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     else:
                         tie += 1
                     last = wins
-
-                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {wins}\n"
-                    if i >= limit:
+                    if i > limit:
                         break
+                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {wins}\n"
             elif arg == "winrate":
                 msg = f"__Top {limit} by win rate__ (minimum {min_games} games)\n\n"
                 c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= ? ORDER BY winrate DESC", (min_games,))
