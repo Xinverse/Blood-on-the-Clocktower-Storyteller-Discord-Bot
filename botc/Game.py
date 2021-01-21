@@ -356,6 +356,9 @@ class Game(GameMeta):
             # ----- The good team wins -----
             if self.winners == Team.good:
 
+                if not self.invalidated:
+                    db.execute('UPDATE gamestats SET total_games = total_games + 1')
+                    db.execute('UPDATE gamestats SET good_wins = good_wins + 1')
                 # Revealing the role list
                 role_list_str = ""
                 for player in self.sitting_order:
@@ -423,6 +426,10 @@ class Game(GameMeta):
 
             # ----- The evil team wins -----
             elif self.winners == Team.evil:
+
+                if not self.invalidated:
+                    db.execute('UPDATE gamestats SET total_games = total_games + 1')
+                    db.execute('UPDATE gamestats SET evil_wins = evil_wins + 1')
 
                 # Revealing the role list
                 role_list_str = ""

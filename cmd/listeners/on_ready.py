@@ -54,13 +54,23 @@ class on_ready(commands.Cog):
 
         with sqlite3.connect("data.sqlite3") as db:
             db.execute("""
+            CREATE TABLE IF NOT EXISTS gamestats (
+                id INTEGER PRIMARY KEY CHECK (id = 0),
+                total_games INTEGER NOT NULL DEFAULT 0,
+                good_wins INTEGER NOT NULL DEFAULT 0,
+                evil_wins INTEGER NOT NULL DEFAULT 0
+            )""")
+            db.execute("""
             CREATE TABLE IF NOT EXISTS playerstats (
                 user_id INTEGER PRIMARY KEY,
                 games INTEGER NOT NULL DEFAULT 0,
                 wins INTEGER NOT NULL DEFAULT 0
             )
             """)
-        
+            db.execute("""
+            INSERT OR IGNORE INTO gamestats (id, total_games, good_wins, evil_wins) VALUES (0, 0, 0, 0)
+            """)
+
         # Start the backup loop
         botutils.backup_loop.start()
 
