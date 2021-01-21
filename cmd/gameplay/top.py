@@ -4,7 +4,7 @@ import configparser
 import json
 import sqlite3
 
-from discord import utils
+import discord
 from discord.ext import commands
 
 import botutils
@@ -16,6 +16,12 @@ Config.read("config.INI")
 
 with open("botutils/bot_text.json") as json_file:
     language = json.load(json_file)
+
+top_games_str = language["cmd"]["top_games"]
+top_wins_str = language["cmd"]["top_wins"]
+top_winrate_str = language["cmd"]["top_winrate"]
+top_footer_str = language["cmd"]["top_footer"]
+top_footer_winrate_str = language["cmd"]["top_footer_winrate"]
 
 
 class Top(Gameplay, name = language["system"]["gameplay_cog"]):
@@ -38,9 +44,14 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
         min_games = int(Config["misc"]["TOP_WINRATE_MIN_GAMES"])
 
         with sqlite3.connect("data.sqlite3") as db:
+            c = db.execute("SELECT total_games FROM gamestats")
+            total_games, = c.fetchone()
+
+            footer = top_footer_str.format(total_games, "" if total_games == 1 else "s")
+
             if arg == "games":
                 c = db.execute("SELECT user_id, games FROM playerstats ORDER BY games DESC")
-                msg = f"__Top {limit} by games played__\n\n"
+                title = top_games_str.format(limit)
                 i = 0
                 last = None
                 tie = 0
@@ -56,9 +67,9 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     last = games
                     if i > limit:
                         break
-                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {games}\n"
+                    msg += f"{i}. **{discord.utils.escape_markdown(user.name)}** – {games}\n"
             elif arg == "wins":
-                msg = f"__Top {limit} by games won__\n\n"
+                title = top_wins_str.format(limit)
                 c = db.execute("SELECT user_id, wins FROM playerstats ORDER BY wins DESC")
                 i = 0
                 last = None
@@ -75,9 +86,10 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     last = wins
                     if i > limit:
                         break
-                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {wins}\n"
+                    msg += f"{i}. **{discord.utils.escape_markdown(user.name)}** – {wins}\n"
             elif arg == "winrate":
-                msg = f"__Top {limit} by win rate__ (minimum {min_games} games)\n\n"
+                title = top_winrate_str.format(limit)
+                footer += " · " + top_footer_winrate_str.format(min_games, "" if min_games == 1 else "s")
                 c = db.execute("SELECT user_id, ((wins*1.0) / games) AS winrate FROM playerstats WHERE games >= ? ORDER BY winrate DESC", (min_games,))
                 i = 0
                 last = None
@@ -109,8 +121,11 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     if ok:
                         break
                 for (i, user, winrate) in leaderboard:
-                    msg += f"{i}. **{utils.escape_markdown(user.name)}** - {winrate * 100:.{precision}f}%\n"
+                    msg += f"{i}. **{discord.utils.escape_markdown(user.name)}** – {winrate * 100:.{precision}f}%\n"
             else:
                 msg = language["cmd"]["top_usage"]
+                return await ctx.send(msg)
 
-        await ctx.send(msg)
+            embed = discord.Embed(color=discord.Color.orange(), title=title, description=msg)
+            embed.set_footer(text=footer)
+            await ctx.send(embed=embed)

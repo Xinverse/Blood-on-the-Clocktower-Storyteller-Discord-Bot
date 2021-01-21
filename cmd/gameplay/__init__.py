@@ -4,7 +4,8 @@ from .time import Time
 from .stats import Stats
 from .start import Start
 from .notify import Notify
-from .wins import Wins
+from .gamestats import Gamestats
+from .playerstats import Playerstats
 from .top import Top
 
 def setup(client):
@@ -14,6 +15,7 @@ def setup(client):
     client.add_cog(Stats(client))
     client.add_cog(Start(client))
     client.add_cog(Notify(client))
-    client.add_cog(Wins(client))
+    client.add_cog(Gamestats(client))
+    client.add_cog(Playerstats(client))
     client.add_cog(Top(client))
 

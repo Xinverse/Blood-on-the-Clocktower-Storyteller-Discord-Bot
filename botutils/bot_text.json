@@ -27,8 +27,19 @@
         "force_clear" : "{} The ignore list has been cleared. It is now empty.",
         "ignore_sync" : "{} Purged **{}** user(s) not in server.",
         "no_game" : "There is currently no active game. Try `{}join` to start a new game!",
-        "wins": "**{}** has won **{}** out of **{}** game{} ({:.1f}%).",
-        "wins_nogames": "**{}** has not played any games yet.",
+        "gamestats_title": "Game stats",
+        "gamestats_total_games": "Total games",
+        "gamestats_good_wins": "Good wins",
+        "gamestats_evil_wins": "Evil wins",
+        "playerstats_games": "Games",
+        "playerstats_wins": "Wins",
+        "playerstats_winrate": "Win rate",
+        "playerstats_footer": "Based on {} game{}",
+        "top_games": "Top {} by games played",
+        "top_wins": "Top {} by games won",
+        "top_winrate": "Top {} by win rate",
+        "top_footer": "Based on {} game{}",
+        "top_footer_winrate": "Players with at least {} game{}",
         "top_usage": "Argument must be one of `games`, `wins` or `winrate`.",
         "frestart": "{} {} Restarting",
         "frestart_confirm": "{} {} A game is currently in progress. If you still want to restart the bot, please use `!frestart --force`."
@@ -254,10 +265,18 @@
             "weights" : []
         },
 
-        "wins" : {
+        "gamestats": {
+          "brief": "check the number of games played",
+          "help": "See how many games have been played and the number of good and evil wins.",
+          "description": "[GAMESTATS] command",
+          "outputs": [],
+          "weights": []
+        },
+
+        "playerstats" : {
             "brief" : "check how many games you have won",
             "help" : "See the number of games you have played and your win rate.",
-            "description" : "[WINS] command",
+            "description" : "[PLAYERSTATS] command",
             "outputs" : [],
             "weights" : []
         },
