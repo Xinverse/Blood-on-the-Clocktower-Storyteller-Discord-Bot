@@ -1,7 +1,7 @@
 {
     "cmd" : {
 
-        "github" : "The Github page of the bot can be found here: https://github.com/Xinverse/Blood-on-the-Clocktower-Storyteller-Discord-Bot",
+        "github" : "The GitHub page of the bot can be found here: https://github.com/Xinverse/Blood-on-the-Clocktower-Storyteller-Discord-Bot",
         "ping" : "{} Ping! The bot's latency is **{}** seconds.",
         "uptime" : "{} The current uptime is **{}**.",
         "join" : "**{}** joined the game and raised the number of players to **{}**.",
