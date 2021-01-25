@@ -108,7 +108,7 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
                     if i > limit:
                         break
                     leaderboard.append((i, user, winrate))
-                precision = 0
+                precision = 1
                 while True:
                     for i in range(len(leaderboard) - 1):
                         cur_pos, _, cur_rate = leaderboard[i]
