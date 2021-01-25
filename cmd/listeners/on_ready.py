@@ -24,10 +24,10 @@ restarted_notify_msg = language["system"]["restarted_notify"]
 
 class on_ready(commands.Cog):
     """Event listener on_ready"""
-    
+
     def __init__(self, client):
         self.client = client
-      
+
     @commands.Cog.listener()
     async def on_ready(self):
         """On_ready event"""
@@ -42,7 +42,7 @@ class on_ready(commands.Cog):
             for row in csv_reader:
                 globvars.ignore_list = [int(item) for item in row]
                 break
-        
+
         # Import the notify data from csv file
         globvars.notify_list.clear()
 
@@ -53,6 +53,9 @@ class on_ready(commands.Cog):
                 break
 
         with sqlite3.connect("data.sqlite3") as db:
+            c = db.execute("PRAGMA user_version")
+            schema_version, = c.fetchone()
+
             db.execute("""
             CREATE TABLE IF NOT EXISTS gamestats (
                 id INTEGER PRIMARY KEY CHECK (id = 0),
@@ -70,6 +73,14 @@ class on_ready(commands.Cog):
             db.execute("""
             INSERT OR IGNORE INTO gamestats (id, total_games, good_wins, evil_wins) VALUES (0, 0, 0, 0)
             """)
+
+            if schema_version < 1:
+                print("Performing database migration from version 0 to 1")
+                db.execute("ALTER TABLE playerstats ADD good_games INTEGER NOT NULL DEFAULT 0")
+                db.execute("ALTER TABLE playerstats ADD good_wins INTEGER NOT NULL DEFAULT 0")
+                db.execute("ALTER TABLE playerstats ADD evil_games INTEGER NOT NULL DEFAULT 0")
+                db.execute("ALTER TABLE playerstats ADD evil_wins INTEGER NOT NULL DEFAULT 0")
+                db.execute("PRAGMA user_version = 1")
 
         # Start the backup loop
         botutils.backup_loop.start()

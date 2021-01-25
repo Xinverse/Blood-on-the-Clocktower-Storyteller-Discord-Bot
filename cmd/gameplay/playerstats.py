@@ -14,9 +14,16 @@ from ._gameplay import Gameplay
 with open("botutils/bot_text.json") as json_file:
     language = json.load(json_file)
 
+playerstats_title_str = language["cmd"]["playerstats_title"]
 playerstats_games_str = language["cmd"]["playerstats_games"]
 playerstats_wins_str = language["cmd"]["playerstats_wins"]
 playerstats_winrate_str = language["cmd"]["playerstats_winrate"]
+playerstats_good_games_str = language["cmd"]["playerstats_good_games"]
+playerstats_good_wins_str = language["cmd"]["playerstats_good_wins"]
+playerstats_good_winrate_str = language["cmd"]["playerstats_good_winrate"]
+playerstats_evil_games_str = language["cmd"]["playerstats_evil_games"]
+playerstats_evil_wins_str = language["cmd"]["playerstats_evil_wins"]
+playerstats_evil_winrate_str = language["cmd"]["playerstats_evil_winrate"]
 playerstats_footer_str = language["cmd"]["playerstats_footer"]
 user_not_found_str = language["errors"]["user_not_found"]
 error_str = language["system"]["error"]
@@ -44,25 +51,41 @@ class Playerstats(Gameplay, name = language["system"]["gameplay_cog"]):
             c = db.execute("SELECT total_games FROM gamestats")
             total_games, = c.fetchone()
 
-            c = db.execute("SELECT games, wins FROM playerstats WHERE user_id = ?", (user.id,))
+            c = db.execute("SELECT games, wins, good_games, good_wins, evil_games, evil_wins FROM playerstats WHERE user_id = ?", (user.id,))
             row = c.fetchone()
             print(row)
 
             if row:
-                games, wins = row
+                games, wins, good_games, good_wins, evil_games, evil_wins = row
             else:
-                games, wins = 0, 0
+                games, wins, good_games, good_wins, evil_games, evil_wins = 0, 0, 0, 0, 0, 0
 
             if games > 0:
                 winrate = f"{(wins / games) * 100:.1f}%"
             else:
                 winrate = "N/A"
 
-            embed = discord.Embed(color=discord.Color.green())
+            if good_games > 0:
+                good_winrate = f"{(good_wins / good_games) * 100:.1f}%"
+            else:
+                good_winrate = "N/A"
+
+            if evil_games > 0:
+                evil_winrate = f"{(evil_wins / evil_games) * 100:.1f}%"
+            else:
+                evil_winrate = "N/A"
+
+            embed = discord.Embed(color=discord.Color.green(), title=playerstats_title_str)
             embed.set_author(name=str(user), icon_url=user.avatar_url)
             embed.add_field(name=playerstats_games_str, value=str(games), inline=True)
             embed.add_field(name=playerstats_wins_str, value=str(wins), inline=True)
-            embed.add_field(name=playerstats_winrate_str, value=str(winrate), inline=True)
+            embed.add_field(name=playerstats_winrate_str, value=str(winrate) + '\n\u200b', inline=True)
+            embed.add_field(name=playerstats_good_games_str, value=str(good_games), inline=True)
+            embed.add_field(name=playerstats_good_wins_str, value=str(good_wins), inline=True)
+            embed.add_field(name=playerstats_good_winrate_str, value=str(good_winrate) + '\n\u200b', inline=True)
+            embed.add_field(name=playerstats_evil_games_str, value=str(evil_games), inline=True)
+            embed.add_field(name=playerstats_evil_wins_str, value=str(evil_wins), inline=True)
+            embed.add_field(name=playerstats_evil_winrate_str, value=str(evil_winrate), inline=True)
             embed.set_footer(text=playerstats_footer_str.format(total_games, "" if total_games == 1 else "s"))
             await ctx.send(embed=embed)
 
