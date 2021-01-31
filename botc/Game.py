@@ -409,10 +409,12 @@ class Game(GameMeta):
                     if not self.invalidated:
                         db.execute('INSERT OR IGNORE INTO playerstats (user_id) VALUES (?)', (player.user.id,))
                         db.execute('UPDATE playerstats SET games = games + 1 WHERE user_id = ?', (player.user.id,))
-                        db.execute('UPDATE playerstats SET good_games = good_games + 1 WHERE user_id = ?', (player.user.id,))
                         if player.role.true_self.is_good():
                             db.execute('UPDATE playerstats SET wins = wins + 1 WHERE user_id = ?', (player.user.id,))
+                            db.execute('UPDATE playerstats SET good_games = good_games + 1 WHERE user_id = ?', (player.user.id,))
                             db.execute('UPDATE playerstats SET good_wins = good_wins + 1 WHERE user_id = ?', (player.user.id,))
+                        else:
+                            db.execute('UPDATE playerstats SET evil_games = evil_games + 1 WHERE user_id = ?', (player.user.id,))
 
                 # The embed
                 embed = discord.Embed(
@@ -483,10 +485,12 @@ class Game(GameMeta):
                     if not self.invalidated:
                         db.execute('INSERT OR IGNORE INTO playerstats (user_id) VALUES (?)', (player.user.id,))
                         db.execute('UPDATE playerstats SET games = games + 1 WHERE user_id = ?', (player.user.id,))
-                        db.execute('UPDATE playerstats SET evil_games = evil_games + 1 WHERE user_id = ?', (player.user.id,))
                         if player.role.true_self.is_evil():
                             db.execute('UPDATE playerstats SET wins = wins + 1 WHERE user_id = ?', (player.user.id,))
+                            db.execute('UPDATE playerstats SET evil_games = evil_games + 1 WHERE user_id = ?', (player.user.id,))
                             db.execute('UPDATE playerstats SET evil_wins = evil_wins + 1 WHERE user_id = ?', (player.user.id,))
+                        else:
+                            db.execute('UPDATE playerstats SET good_games = good_games + 1 WHERE user_id = ?', (player.user.id,))
 
                 # The embed
                 embed = discord.Embed(
