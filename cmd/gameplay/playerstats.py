@@ -91,7 +91,9 @@ class Playerstats(Gameplay, name = language["system"]["gameplay_cog"]):
 
     @playerstats.error
     async def playerstats_error(self, ctx, error):
-        if isinstance(error, commands.errors.BadUnionArgument):
+        if isinstance(error, commands.CheckFailure):
+            return
+        elif isinstance(error, commands.errors.BadUnionArgument):
             await ctx.send(user_not_found_str.format(ctx.author.mention))
         else:
             try:
