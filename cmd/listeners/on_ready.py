@@ -113,9 +113,9 @@ class on_ready(commands.Cog):
             await lobby_channel.send(restarted_notify_msg.format(" ".join(pings)))
 
         for player in alive_role.members:
-            await botutils.remove_alive_role(player, unlock=True)
+            await botutils.remove_alive_role(player)
         for player in dead_role.members:
-            await botutils.remove_dead_role(player, unlock=True)
+            await botutils.remove_dead_role(player)
 
         await botutils.unlock_lobby()
 

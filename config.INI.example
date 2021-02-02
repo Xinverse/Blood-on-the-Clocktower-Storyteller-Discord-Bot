@@ -13,8 +13,11 @@ LOGGING_CHANNEL_ID = 124328432840293840
 ALIVE_ROLE_ID = 124328432840293840
 DEAD_ROLE_ID = 124328432840293840
 ADMINS_ROLE_ID = 124328432840293840
-# Channels to lock during game
+
+# Channels/categories to lock during game
 LOCK_CHANNELS_ID = []
+# Use this if the channel you want to lock is gated behind a special role
+LOCK_CHANNELS_SPECIAL_ID = []
 
 [settings]
 
