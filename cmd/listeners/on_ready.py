@@ -120,6 +120,7 @@ class on_ready(commands.Cog):
         for player in alive_role.members + dead_role.members:
             for channel_id in LOCK_CHANNELS_SPECIAL_ID:
                 channel = globvars.client.get_channel(int(channel_id))
+                print(f'Unhiding channel {channel} from {player}')
                 await channel.set_permissions(player, view_channel=None)
 
         await botutils.unlock_lobby()
