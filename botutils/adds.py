@@ -71,10 +71,10 @@ async def remove_all_alive_dead_roles_after_game():
             await remove_dead_role(player.user)
 
     for channel_id in LOCK_CHANNELS_SPECIAL_ID:
+        channel = globvars.client.get_channel(int(channel_id))
         for player in globvars.master_state.game.sitting_order:
-            channel = globvars.client.get_channel(int(channel_id))
             print(f'Unhiding channel {channel} from {player}')
-            await channel.set_permissions(player, view_channel=None)
+            await channel.set_permissions(player.user, view_channel=None)
 
 
 async def lock_lobby():
