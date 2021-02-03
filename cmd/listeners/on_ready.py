@@ -113,10 +113,11 @@ class on_ready(commands.Cog):
             lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
             await lobby_channel.send(restarted_notify_msg.format(" ".join(pings)))
 
-        for player in alive_role.members + dead_role.members:
+        for player in alive_role.members:
             await botutils.remove_alive_role(player)
+        for player in dead_role.members:
             await botutils.remove_dead_role(player)
-
+        for player in alive_role.members + dead_role.members:
             for channel_id in LOCK_CHANNELS_SPECIAL_ID:
                 channel = globvars.client.get_channel(int(channel_id))
                 await channel.set_permissions(player, view_channel=None)

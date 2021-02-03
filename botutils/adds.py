@@ -65,8 +65,10 @@ async def remove_all_alive_roles_pregame():
 async def remove_all_alive_dead_roles_after_game():
     """Remove the alive and the dead roles from all players after the game is over"""
     for player in globvars.master_state.game.sitting_order:
-        await remove_alive_role(player.user)
-        await remove_dead_role(player.user)
+        if player.is_alive():
+            await remove_alive_role(player.user)
+        else:
+            await remove_dead_role(player.user)
 
         for channel_id in LOCK_CHANNELS_SPECIAL_ID:
             channel = globvars.client.get_channel(int(channel_id))
@@ -102,8 +104,6 @@ async def unlock_lobby():
     await lobby_channel.set_permissions(server.default_role, send_messages=None)
 
     alive_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
-    dead_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
-
     for lock_category_id in LOCK_CHANNELS_ID:
         lock_category = globvars.client.get_channel(int(lock_category_id))
         await lock_category.set_permissions(alive_role, view_channel=None)
