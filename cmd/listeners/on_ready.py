@@ -14,6 +14,7 @@ SERVER_ID = Config["user"]["SERVER_ID"]
 LOBBY_CHANNEL_ID = Config["user"]["LOBBY_CHANNEL_ID"]
 ALIVE_ROLE_ID = Config["user"]["ALIVE_ROLE_ID"]
 DEAD_ROLE_ID = Config["user"]["DEAD_ROLE_ID"]
+LOCK_CHANNELS_SPECIAL_ID = json.loads(Config["user"].get("LOCK_CHANNELS_SPECIAL_ID", "[]"))
 
 with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
@@ -112,10 +113,13 @@ class on_ready(commands.Cog):
             lobby_channel = globvars.client.get_channel(int(LOBBY_CHANNEL_ID))
             await lobby_channel.send(restarted_notify_msg.format(" ".join(pings)))
 
-        for player in alive_role.members:
+        for player in alive_role.members + dead_role.members:
             await botutils.remove_alive_role(player)
-        for player in dead_role.members:
             await botutils.remove_dead_role(player)
+
+            for channel_id in LOCK_CHANNELS_SPECIAL_ID:
+                channel = globvars.client.get_channel(int(channel_id))
+                await channel.set_permissions(player, view_channel=None)
 
         await botutils.unlock_lobby()
 
