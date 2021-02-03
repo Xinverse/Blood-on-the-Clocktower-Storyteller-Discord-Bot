@@ -68,6 +68,10 @@ async def remove_all_alive_dead_roles_after_game():
         await remove_alive_role(player.user)
         await remove_dead_role(player.user)
 
+        for channel_id in LOCK_CHANNELS_SPECIAL_ID:
+            channel = globvars.client.get_channel(int(channel_id))
+            await channel.set_permissions(player, view_channel=None)
+
 
 async def lock_lobby():
     """Lock the lobby channel from non players"""
@@ -103,8 +107,3 @@ async def unlock_lobby():
     for lock_category_id in LOCK_CHANNELS_ID:
         lock_category = globvars.client.get_channel(int(lock_category_id))
         await lock_category.set_permissions(alive_role, view_channel=None)
-
-    for channel_id in LOCK_CHANNELS_SPECIAL_ID:
-        channel = globvars.client.get_channel(int(channel_id))
-        for player in alive_role.members + dead_role.members:
-            await channel.set_permissions(player, view_channel=None)
