@@ -93,9 +93,8 @@ async def lock_lobby():
 
     for channel_id in LOCK_CHANNELS_SPECIAL_ID:
         channel = globvars.client.get_channel(int(channel_id))
-        for player in alive_role.members:
-            print(f'Hiding channel {channel} from {player}')
-            await channel.set_permissions(player, view_channel=False)
+        print(f'Hiding channel {channel}')
+        await channel.set_permissions(alive_role, view_message_history=False, send_messages=False)
 
 
 async def unlock_lobby():
@@ -106,7 +105,13 @@ async def unlock_lobby():
     await lobby_channel.set_permissions(server.default_role, send_messages=None)
 
     alive_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
+
     for channel_id in LOCK_CHANNELS_ID:
         channel = globvars.client.get_channel(int(channel_id))
         print(f'Unhiding channel {channel}')
         await channel.set_permissions(alive_role, view_channel=None)
+
+    for channel_id in LOCK_CHANNELS_SPECIAL_ID:
+        channel = globvars.client.get_channel(int(channel_id))
+        print(f'Unhiding channel {channel}')
+        await channel.set_permissions(alive_role, view_message_history=None, send_messages=None)
