@@ -20,6 +20,7 @@ gamestats_evil_wins_str = language["cmd"]["gamestats_evil_wins"]
 error_title_str = language["errors"]["error_title"]
 gamestats_invalid_str = language["cmd"]["gamestats_invalid"]
 gamestats_no_games_str = language["cmd"]["gamestats_no_games"]
+gamestats_no_games_players_str = language["cmd"]["gamestats_no_games_players"]
 
 
 class Gamestats(Gameplay, name = language["system"]["gameplay_cog"]):
@@ -50,7 +51,11 @@ class Gamestats(Gameplay, name = language["system"]["gameplay_cog"]):
 
             total_games, good_wins, evil_wins = row
             if not total_games:
-                return await ctx.send(embed=discord.Embed(color=discord.Color.red(), title=error_title_str, description=gamestats_no_games_str))
+                if players:
+                    desc = gamestats_no_games_players_str.format(players)
+                else:
+                    desc = gamestats_no_games_str
+                return await ctx.send(embed=discord.Embed(color=discord.Color.red(), title=error_title_str, description=desc))
 
             embed = discord.Embed(color=discord.Color.blue(), title=title)
             embed.add_field(name=gamestats_total_games_str, value=str(total_games), inline=True)

@@ -34,6 +34,7 @@
         "gamestats_evil_wins": "Evil wins",
         "gamestats_invalid": "Invalid player count.",
         "gamestats_no_games": "No games have been played yet.",
+        "gamestats_no_games_players": "No {} player games have been played yet.",
         "playerstats_title": "Player stats",
         "playerstats_games": "Games",
         "playerstats_wins": "Wins",
