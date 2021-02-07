@@ -48,7 +48,7 @@ class Playerstats(Gameplay, name = language["system"]["gameplay_cog"]):
             user = ctx.author
 
         with sqlite3.connect("data.sqlite3") as db:
-            c = db.execute("SELECT total_games FROM gamestats")
+            c = db.execute("SELECT SUM(total_games) FROM gamestats")
             total_games, = c.fetchone()
 
             c = db.execute("SELECT games, wins, good_games, good_wins, evil_games, evil_wins FROM playerstats WHERE user_id = ?", (user.id,))

@@ -44,7 +44,7 @@ class Top(Gameplay, name = language["system"]["gameplay_cog"]):
         min_games = int(Config["misc"]["TOP_WINRATE_MIN_GAMES"])
 
         with sqlite3.connect("data.sqlite3") as db:
-            c = db.execute("SELECT total_games FROM gamestats")
+            c = db.execute("SELECT SUM(total_games) FROM gamestats")
             total_games, = c.fetchone()
 
             footer = top_footer_str.format(total_games, "" if total_games == 1 else "s")
