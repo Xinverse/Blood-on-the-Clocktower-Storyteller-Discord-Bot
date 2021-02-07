@@ -57,31 +57,44 @@ class on_ready(commands.Cog):
             c = db.execute("PRAGMA user_version")
             schema_version, = c.fetchone()
 
-            db.execute("""
-            CREATE TABLE IF NOT EXISTS gamestats (
-                id INTEGER PRIMARY KEY CHECK (id = 0),
-                total_games INTEGER NOT NULL DEFAULT 0,
-                good_wins INTEGER NOT NULL DEFAULT 0,
-                evil_wins INTEGER NOT NULL DEFAULT 0
-            )""")
-            db.execute("""
-            CREATE TABLE IF NOT EXISTS playerstats (
-                user_id INTEGER PRIMARY KEY,
-                games INTEGER NOT NULL DEFAULT 0,
-                wins INTEGER NOT NULL DEFAULT 0
-            )
-            """)
-            db.execute("""
-            INSERT OR IGNORE INTO gamestats (id, total_games, good_wins, evil_wins) VALUES (0, 0, 0, 0)
-            """)
-
             if schema_version < 1:
                 print("Performing database migration from version 0 to 1")
+                db.execute("""
+                CREATE TABLE IF NOT EXISTS gamestats (
+                    id INTEGER PRIMARY KEY CHECK (id = 0),
+                    total_games INTEGER NOT NULL DEFAULT 0,
+                    good_wins INTEGER NOT NULL DEFAULT 0,
+                    evil_wins INTEGER NOT NULL DEFAULT 0
+                )""")
+                db.execute("""
+                CREATE TABLE IF NOT EXISTS playerstats (
+                    user_id INTEGER PRIMARY KEY,
+                    games INTEGER NOT NULL DEFAULT 0,
+                    wins INTEGER NOT NULL DEFAULT 0
+                )
+                """)
+                db.execute("INSERT OR IGNORE INTO gamestats (id, total_games, good_wins, evil_wins) VALUES (0, 0, 0, 0)")
                 db.execute("ALTER TABLE playerstats ADD good_games INTEGER NOT NULL DEFAULT 0")
                 db.execute("ALTER TABLE playerstats ADD good_wins INTEGER NOT NULL DEFAULT 0")
                 db.execute("ALTER TABLE playerstats ADD evil_games INTEGER NOT NULL DEFAULT 0")
                 db.execute("ALTER TABLE playerstats ADD evil_wins INTEGER NOT NULL DEFAULT 0")
                 db.execute("PRAGMA user_version = 1")
+                schema_version = 1
+
+            if schema_version < 2:
+                print("Performing database migration from version 1 to 2")
+                db.execute("ALTER TABLE gamestats RENAME TO gamestats_old")
+                db.execute("""
+                CREATE TABLE IF NOT EXISTS gamestats (
+                    players INTEGER PRIMARY KEY,
+                    total_games INTEGER NOT NULL DEFAULT 0,
+                    good_wins INTEGER NOT NULL DEFAULT 0,
+                    evil_wins INTEGER NOT NULL DEFAULT 0
+                )""")
+                for i in range(5, 16):
+                    db.execute("INSERT OR IGNORE INTO gamestats (players, total_games, good_wins, evil_wins) VALUES (?, 0, 0, 0)", (i,))
+                db.execute("PRAGMA user_version = 2")
+                schema_version = 2
 
         # Start the backup loop
         botutils.backup_loop.start()

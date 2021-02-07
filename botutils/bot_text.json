@@ -28,9 +28,12 @@
         "ignore_sync" : "{} Purged **{}** user(s) not in server.",
         "no_game" : "There is currently no active game. Try `{}join` to start a new game!",
         "gamestats_title": "Game stats",
+        "gamestats_title_players": "Game stats ({} players)",
         "gamestats_total_games": "Total games",
         "gamestats_good_wins": "Good wins",
         "gamestats_evil_wins": "Evil wins",
+        "gamestats_invalid": "Invalid player count.",
+        "gamestats_no_games": "No games have been played yet.",
         "playerstats_title": "Player stats",
         "playerstats_games": "Games",
         "playerstats_wins": "Wins",
@@ -372,6 +375,7 @@
 
     "errors" : {
 
+        "error_title": "Error",
         "user_not_found" : "{} :x: Specified user is not found.",
         "missing_user" : "{} :x: Missing argument, please specify a valid user.",
         "cmd_cooldown" : "{} {} This command has a cooldown. Please try again in **{}**.",
