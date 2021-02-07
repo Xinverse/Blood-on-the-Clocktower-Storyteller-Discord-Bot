@@ -353,12 +353,14 @@ class Game(GameMeta):
         gamemode = fancy.bold(self.gamemode.value)
 
         with sqlite3.connect("data.sqlite3") as db:
+            player_count = len(self.sitting_order)
+
             # ----- The good team wins -----
             if self.winners == Team.good:
 
                 if not self.invalidated:
-                    db.execute('UPDATE gamestats SET total_games = total_games + 1')
-                    db.execute('UPDATE gamestats SET good_wins = good_wins + 1')
+                    db.execute('UPDATE gamestats SET total_games = total_games + 1 WHERE players = ?', (player_count,))
+                    db.execute('UPDATE gamestats SET good_wins = good_wins + 1 WHERE players = ?', (player_count,))
                 # Revealing the role list
                 role_list_str = ""
                 for player in self.sitting_order:
@@ -432,8 +434,8 @@ class Game(GameMeta):
             elif self.winners == Team.evil:
 
                 if not self.invalidated:
-                    db.execute('UPDATE gamestats SET total_games = total_games + 1')
-                    db.execute('UPDATE gamestats SET evil_wins = evil_wins + 1')
+                    db.execute('UPDATE gamestats SET total_games = total_games + 1 WHERE players = ?', (player_count,))
+                    db.execute('UPDATE gamestats SET evil_wins = evil_wins + 1 WHERE players = ?', (player_count,))
 
                 # Revealing the role list
                 role_list_str = ""
