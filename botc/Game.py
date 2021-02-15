@@ -15,6 +15,7 @@ from .BOTCUtils import BOTCUtils
 from .Category import Category
 from .Phase import Phase
 from .Player import Player
+from .PlayerState import PlayerState
 from .errors import GameError, TooFewPlayers, TooManyPlayers
 from .Townsfolk import Townsfolk
 from .Outsider import Outsider
@@ -29,22 +30,28 @@ from .gameloops import master_game_loop, nomination_loop, base_day_loop, debate_
 from models import GameMeta
 from botc import StatusList, Team
 
-Config = configparser.ConfigParser()
-Config.read("preferences.INI")
+Preferences = configparser.ConfigParser()
+Preferences.read("preferences.INI")
 
-CARD_NIGHT = Config["colors"]["CARD_NIGHT"]
+CARD_NIGHT = Preferences["colors"]["CARD_NIGHT"]
 CARD_NIGHT = int(CARD_NIGHT, 16)
 
-CARD_DAWN = Config["colors"]["CARD_DAWN"]
+CARD_DAWN = Preferences["colors"]["CARD_DAWN"]
 CARD_DAWN = int(CARD_DAWN, 16)
 
-CARD_DAY = Config["colors"]["CARD_DAY"]
+CARD_DAY = Preferences["colors"]["CARD_DAY"]
 CARD_DAY = int(CARD_DAY, 16)
 
-TOWNSFOLK_COLOR = Config["colors"]["TOWNSFOLK_COLOR"]
-DEMON_COLOR = Config["colors"]["DEMON_COLOR"]
+TOWNSFOLK_COLOR = Preferences["colors"]["TOWNSFOLK_COLOR"]
+DEMON_COLOR = Preferences["colors"]["DEMON_COLOR"]
 TOWNSFOLK_COLOR = int(TOWNSFOLK_COLOR, 16)
 DEMON_COLOR = int(DEMON_COLOR, 16)
+
+Config = configparser.ConfigParser()
+Config.read("config.INI")
+
+SERVER_ID = Config["user"]["SERVER_ID"]
+SERVER_ID = int(SERVER_ID)
 
 CONFLICTING_CMDS = [
 
@@ -204,7 +211,7 @@ class Game(GameMeta):
         self._setup = Setup()
         self.gameloop = master_game_loop
         self.winners = None  # botc.Team object
-        self.invalidated = False  # Don't count in win rates due to modkill/frole
+        self.invalidated = False  # Don't count in win rates due to modkill/frole/player leaving guild
 
         # Temporary day data
         self.chopping_block = None  # ChoppingBlock object
@@ -577,6 +584,7 @@ class Game(GameMeta):
         """Start the game.
         Must be implemented.
         """
+
         # Cancel the timer
         if botutils.start_votes_timer.is_running():
             botutils.start_votes_timer.cancel()
@@ -618,6 +626,9 @@ class Game(GameMeta):
         """Order of Action
         1. Ravenkeeper
         """
+
+        await self.remove_left_guild_players()
+
         if self.gamemode == Gamemode.trouble_brewing:
 
             from botc.gamemodes.troublebrewing._utils import TBRole
@@ -657,6 +668,9 @@ class Game(GameMeta):
         9. undertaker
         10. spy
         """
+
+        await self.remove_left_guild_players()
+
         if self.gamemode == Gamemode.trouble_brewing:
 
             from botc.gamemodes.troublebrewing._utils import TBRole
@@ -1030,3 +1044,19 @@ class Game(GameMeta):
 
     def __repr__(self):
         return "Blood on the Clocktower"
+
+    async def remove_left_guild_players(self):
+        for member in self.member_obj_list:
+            fetched_member = globvars.client.get_guild(SERVER_ID).get_member(int(member.id))
+            if fetched_member == None: #player left guild
+                self.invalidated = True
+                for player in self._player_obj_list:
+                    if player.user == member: #discord.py implements equality check between users and members
+
+                        #We can't call player.exec_real_death() because we would then try to give a role to a nonexistent player
+                        player.ghost_vote = 0
+                        player._state_obj = PlayerState.dead
+                        player._apparent_state_obj = PlayerState.dead
+
+                        break
+        await self.check_winning_conditions()
