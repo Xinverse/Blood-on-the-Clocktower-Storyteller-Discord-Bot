@@ -21,7 +21,7 @@ async def add_admin_role(user):
     """Grant the admin role to a member"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ADMINS_ROLE_ID))
     member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(user.id)
-    if member_obj != None:
+    if member_obj is not None:
         await member_obj.add_roles(role)
 
 
@@ -29,7 +29,7 @@ async def remove_admin_role(user):
     """Remove the admin role from a member"""
     role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ADMINS_ROLE_ID))
     member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(user.id)
-    if member_obj != None:
+    if member_obj is not None:
         await member_obj.remove_roles(role)
 
 
@@ -37,10 +37,10 @@ async def add_alive_role(member_obj):
     """Grant the alive role to a player"""
     alive_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
 
-    #refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
+    # Refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
     member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(int(member_obj.id))
 
-    if member_obj != None:
+    if member_obj is not None:
         await member_obj.add_roles(alive_role)
 
 
@@ -48,10 +48,10 @@ async def remove_alive_role(member_obj):
     """Remove the alive role from a player"""
     alive_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(ALIVE_ROLE_ID))
 
-    #refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
+    # Refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
     member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(int(member_obj.id))
 
-    if member_obj != None:
+    if member_obj is not None:
         await member_obj.remove_roles(alive_role)
 
 
@@ -59,10 +59,10 @@ async def add_dead_role(member_obj):
     """Grant the dead role to a player"""
     dead_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(DEAD_ROLE_ID))
 
-    #refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
+    # Refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
     member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(int(member_obj.id))
 
-    if member_obj != None:
+    if member_obj is not None:
         await member_obj.add_roles(dead_role)
 
 
@@ -70,10 +70,10 @@ async def remove_dead_role(member_obj):
     """Remove the dead role from a player"""
     dead_role = globvars.client.get_guild(int(SERVER_ID)).get_role(int(DEAD_ROLE_ID))
 
-    #refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
+    # Refetch member from server before proceeding so that we don't accidentally try to give a role to a nonexistent user
     member_obj = globvars.client.get_guild(int(SERVER_ID)).get_member(int(member_obj.id))
 
-    if member_obj != None:
+    if member_obj is not None:
         await member_obj.remove_roles(dead_role)
 
 
