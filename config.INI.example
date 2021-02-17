@@ -29,3 +29,5 @@ MAX_MESSAGE_LEN = 2000
 PLAYTESTERS = []
 TOP_LIMIT = 15
 TOP_WINRATE_MIN_GAMES = 15
+# Do not enable this for real games. Only enable it if you are testing and don't want people to be pinged.
+DISABLE_PINGS = False
