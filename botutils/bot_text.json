@@ -36,6 +36,7 @@
         "gamestats_no_games": "No games have been played yet.",
         "gamestats_no_games_players": "No {} player games have been played yet.",
         "playerstats_title": "Player stats",
+        "playerstats_no_games": "This user hasn't played any games yet.",
         "playerstats_games": "Games",
         "playerstats_wins": "Wins",
         "playerstats_winrate": "Win rate",
