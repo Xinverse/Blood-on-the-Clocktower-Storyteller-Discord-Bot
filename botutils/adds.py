@@ -111,7 +111,7 @@ async def lock_lobby():
         try:
             await channel.set_permissions(alive_role, view_channel=False)
         except discord.errors.Forbidden:
-            await log(Level.error, f'Unable to lock {channel.mention}')
+            await log(Level.error, f'Unable to lock {channel}')
             await log(Level.error, traceback.format_exc())
 
     for channel_id in LOCK_CHANNELS_SPECIAL_ID:
@@ -119,7 +119,7 @@ async def lock_lobby():
         try:
             await channel.set_permissions(alive_role, send_messages=False, connect=False)
         except discord.errors.Forbidden:
-            await log(Level.error, f'Unable to lock {channel.mention}')
+            await log(Level.error, f'Unable to lock {channel}')
             await log(Level.error, traceback.format_exc())
 
 
@@ -137,7 +137,7 @@ async def unlock_lobby():
         try:
             await channel.set_permissions(alive_role, view_channel=None)
         except discord.errors.Forbidden:
-            await log(Level.error, f'Unable to unlock {channel.mention}')
+            await log(Level.error, f'Unable to unlock {channel}')
             await log(Level.error, traceback.format_exc())
 
     for channel_id in LOCK_CHANNELS_SPECIAL_ID:
@@ -145,5 +145,5 @@ async def unlock_lobby():
         try:
             await channel.set_permissions(alive_role, send_messages=None, connect=None)
         except discord.errors.Forbidden:
-            await log(Level.error, f'Unable to unlock {channel.mention}')
+            await log(Level.error, f'Unable to unlock {channel}')
             await log(Level.error, traceback.format_exc())
