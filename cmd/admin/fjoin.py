@@ -26,41 +26,42 @@ class Fjoin(Admin, name = language["system"]["admin_cog"]):
         help = language["doc"]["fjoin"]["help"],
         description = language["doc"]["fjoin"]["description"]
     )
-    async def fjoin(self, ctx, *, member: discord.Member):
+    async def fjoin(self, ctx, *members: discord.Member):
         """Force join command"""
 
         import globvars
 
         game = botutils.GameChooser().get_selected_game()
 
-        # The player is a bot
-        if member.bot:
-            await ctx.send(cant_fjoin_bot.format(ctx.author.mention))
-            return
+        for member in members:
+            # The player is a bot
+            if member.bot:
+                await ctx.send(cant_fjoin_bot.format(ctx.author.mention))
+                return
 
-        # Too many players
-        if len(globvars.master_state.pregame) >= game.MAX_PLAYERS:
-            msg = fjoin_max.format(
-                ctx.author.mention,
-                botutils.BotEmoji.cross,
-                str(game),
-                game.MAX_PLAYERS
-            )
-            await ctx.send(msg)
-            return
+            # Too many players
+            if len(globvars.master_state.pregame) >= game.MAX_PLAYERS:
+                msg = fjoin_max.format(
+                    ctx.author.mention,
+                    botutils.BotEmoji.cross,
+                    str(game),
+                    game.MAX_PLAYERS
+                )
+                await ctx.send(msg)
+                return
 
-        # The player has already joined
-        if globvars.master_state.pregame.is_joined(member.id):
-            await ctx.send(fjoined_str.format(ctx.author.mention, member.name))
+            # The player has already joined
+            if globvars.master_state.pregame.is_joined(member.id):
+                await ctx.send(fjoined_str.format(ctx.author.mention, member.name))
 
-        # The player has not yet joined. Make them join.
-        else:
-            globvars.master_state.pregame.safe_add_player(member.id)
-            botutils.update_state_machine()
-            await ctx.send(fjoin_str.format(member.name, len(globvars.master_state.pregame)))
+            # The player has not yet joined. Make them join.
+            else:
+                globvars.master_state.pregame.safe_add_player(member.id)
+                botutils.update_state_machine()
+                await ctx.send(fjoin_str.format(member.name, len(globvars.master_state.pregame)))
 
-        # If you are the first player to join the game, then start the lobby timeout loop
-        if len(globvars.master_state.pregame) == 1:
-            lobby_timeout.start()
+            # If you are the first player to join the game, then start the lobby timeout loop
+            if len(globvars.master_state.pregame) == 1:
+                lobby_timeout.start()
 
-        await botutils.add_alive_role(member)
+            await botutils.add_alive_role(member)

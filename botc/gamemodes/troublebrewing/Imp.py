@@ -180,7 +180,7 @@ class Imp(Demon, TroubleBrewing, Character, RecurringAction):
             # do not die
             if killed_player.has_status_effect(StatusList.safety_from_demon):
                 return
-            await killed_player.role.true_self.on_being_demon_killed(killed_player)
+            await killed_player.role.ego_self.on_being_demon_killed(killed_player)
     
     async def _starpass(self, demon_player):
         """Starpassing ability works when the demon is killed by himself at night"""

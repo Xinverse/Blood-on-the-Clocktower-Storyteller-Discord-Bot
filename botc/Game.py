@@ -360,9 +360,14 @@ class Game(GameMeta):
         gamemode = fancy.bold(self.gamemode.value)
 
         with sqlite3.connect("data.sqlite3") as db:
+            player_count = len(self.sitting_order)
+
             # ----- The good team wins -----
             if self.winners == Team.good:
 
+                if not self.invalidated:
+                    db.execute('UPDATE gamestats SET total_games = total_games + 1 WHERE players = ?', (player_count,))
+                    db.execute('UPDATE gamestats SET good_wins = good_wins + 1 WHERE players = ?', (player_count,))
                 # Revealing the role list
                 role_list_str = ""
                 for player in self.sitting_order:
@@ -415,6 +420,10 @@ class Game(GameMeta):
                         db.execute('UPDATE playerstats SET games = games + 1 WHERE user_id = ?', (player.user.id,))
                         if player.role.true_self.is_good():
                             db.execute('UPDATE playerstats SET wins = wins + 1 WHERE user_id = ?', (player.user.id,))
+                            db.execute('UPDATE playerstats SET good_games = good_games + 1 WHERE user_id = ?', (player.user.id,))
+                            db.execute('UPDATE playerstats SET good_wins = good_wins + 1 WHERE user_id = ?', (player.user.id,))
+                        else:
+                            db.execute('UPDATE playerstats SET evil_games = evil_games + 1 WHERE user_id = ?', (player.user.id,))
 
                 # The embed
                 embed = discord.Embed(
@@ -430,6 +439,10 @@ class Game(GameMeta):
 
             # ----- The evil team wins -----
             elif self.winners == Team.evil:
+
+                if not self.invalidated:
+                    db.execute('UPDATE gamestats SET total_games = total_games + 1 WHERE players = ?', (player_count,))
+                    db.execute('UPDATE gamestats SET evil_wins = evil_wins + 1 WHERE players = ?', (player_count,))
 
                 # Revealing the role list
                 role_list_str = ""
@@ -483,6 +496,10 @@ class Game(GameMeta):
                         db.execute('UPDATE playerstats SET games = games + 1 WHERE user_id = ?', (player.user.id,))
                         if player.role.true_self.is_evil():
                             db.execute('UPDATE playerstats SET wins = wins + 1 WHERE user_id = ?', (player.user.id,))
+                            db.execute('UPDATE playerstats SET evil_games = evil_games + 1 WHERE user_id = ?', (player.user.id,))
+                            db.execute('UPDATE playerstats SET evil_wins = evil_wins + 1 WHERE user_id = ?', (player.user.id,))
+                        else:
+                            db.execute('UPDATE playerstats SET good_games = good_games + 1 WHERE user_id = ?', (player.user.id,))
 
                 # The embed
                 embed = discord.Embed(

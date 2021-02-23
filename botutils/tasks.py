@@ -50,6 +50,9 @@ async def lobby_timeout():
 async def after_lobby_timeout():
     """After lobby timeout"""
     import globvars
+    # Don't cancel the game if it just started
+    if globvars.master_state.game:
+        return
     # Only send the lobby timeout message if someone is still in the game
     if not lobby_timeout.is_being_cancelled():
         await botutils.send_lobby(lobby_timeout_str.format(botutils.make_role_ping(ALIVE_ROLE_ID)))

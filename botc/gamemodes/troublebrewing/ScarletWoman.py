@@ -1,8 +1,9 @@
 """Contains the Scarlet Woman Character class"""
 
 import json 
+import random
 import discord
-from botc import Minion, Character, NonRecurringAction
+from botc import BOTCUtils, Townsfolk, Outsider, Minion, Character, NonRecurringAction
 from ._utils import TroubleBrewing, TBRole
 import globvars
 

@@ -9,12 +9,12 @@ from botc import check_if_is_player, check_if_is_night, check_if_dm, RoleCannotU
     check_if_player_really_alive, check_if_can_poison, PlayerParser, AbilityForbidden, \
     NotAPlayer, BOTCUtils, AliveOnlyCommand, NotNight, NotDMChannel
 
-with open('botutils/bot_text.json') as json_file: 
+with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
 
-with open('botc/game_text.json') as json_file: 
+with open('botc/game_text.json') as json_file:
     documentation = json.load(json_file)
 
 
@@ -22,19 +22,19 @@ class Poison(commands.Cog, name = documentation["misc"]["abilities_cog"]):
     """BoTC in-game commands cog
     Poison command - used by poisoner
     """
-    
+
     def __init__(self, client):
         self.client = client
-    
+
     def cog_check(self, ctx):
         """Check performed on all commands of this cog.
         Must be a non-fleaved player to use these commands.
         """
         return check_if_is_player(ctx)  # Registered non-quit player -> NotAPlayer
-    
+
    # ---------- POISON COMMAND (Poisoner) ----------------------------------------
     @commands.command(
-        pass_context = True, 
+        pass_context = True,
         name = "poison",
         hidden = False,
         brief = documentation["doc"]["poison"]["brief"],
@@ -97,8 +97,7 @@ class Poison(commands.Cog, name = documentation["misc"]["abilities_cog"]):
                 raise error
             except Exception:
                 await ctx.send(error_str)
-                await botutils.log(botutils.Level.error, traceback.format_exc()) 
+                await botutils.log(botutils.Level.error, traceback.format_exc())
 
 def setup(client):
     client.add_cog(Poison(client))
-    

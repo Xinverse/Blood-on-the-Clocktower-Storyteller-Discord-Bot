@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 
 STORYTELLER BOT
@@ -59,6 +61,11 @@ if __name__ == "__main__":
     intents.members = True
     intents.presences = True
 
+    if Config["misc"].get("DISABLE_PINGS", "").lower() == "true":
+        allowed_mentions = discord.AllowedMentions.none()
+    else:
+        allowed_mentions = discord.AllowedMentions(everyone=False)
+
     # The bot
     globvars.client = commands.Bot(
         command_prefix = command_prefix,
@@ -67,7 +74,8 @@ if __name__ == "__main__":
         description = "〘 Blood on the Clocktower Storyteller Bot 〙 - by Xinverse#4011",
         paginator = commands.Paginator(),
         help_command = help_command,
-        intents = intents
+        intents = intents,
+        allowed_mentions = allowed_mentions,
     )
 
     globvars.client.add_check(botutils.check_if_not_ignored)

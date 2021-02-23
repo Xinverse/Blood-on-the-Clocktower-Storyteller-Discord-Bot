@@ -22,6 +22,7 @@ with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
 
 error_str = language["system"]["error"]
+cooldown_str = language["errors"]["cmd_cooldown"]
 already_in_notify = language["errors"]["already_in_notify"]
 already_not_notify = language["errors"]["already_not_notify"]
 add_notify = language["cmd"]["add_notify"]
@@ -48,8 +49,7 @@ class Notify(Gameplay, name = language["system"]["gameplay_cog"]):
 
             delta = time.time() - globvars.last_notify
             if delta < NOTIFY_COOLDOWN:
-                msg = f"{ctx.author.mention} {botutils.BotEmoji.fquit} This command is rate-limited. Please try again in {display_time(int(NOTIFY_COOLDOWN - delta))}."
-                await ctx.send(msg)
+                await ctx.send(cooldown_str.format(ctx.author.mention, botutils.BotEmoji.cross, display_time(int(NOTIFY_COOLDOWN - delta))))
                 return
 
             if botutils.check_if_lobby(ctx):

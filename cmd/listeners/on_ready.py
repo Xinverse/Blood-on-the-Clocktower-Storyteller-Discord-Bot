@@ -14,6 +14,7 @@ SERVER_ID = Config["user"]["SERVER_ID"]
 LOBBY_CHANNEL_ID = Config["user"]["LOBBY_CHANNEL_ID"]
 ALIVE_ROLE_ID = Config["user"]["ALIVE_ROLE_ID"]
 DEAD_ROLE_ID = Config["user"]["DEAD_ROLE_ID"]
+LOCK_CHANNELS_SPECIAL_ID = json.loads(Config["user"].get("LOCK_CHANNELS_SPECIAL_ID", "[]"))
 
 with open('botutils/bot_text.json') as json_file:
     language = json.load(json_file)
@@ -24,10 +25,10 @@ restarted_notify_msg = language["system"]["restarted_notify"]
 
 class on_ready(commands.Cog):
     """Event listener on_ready"""
-    
+
     def __init__(self, client):
         self.client = client
-      
+
     @commands.Cog.listener()
     async def on_ready(self):
         """On_ready event"""
@@ -42,7 +43,7 @@ class on_ready(commands.Cog):
             for row in csv_reader:
                 globvars.ignore_list = [int(item) for item in row]
                 break
-        
+
         # Import the notify data from csv file
         globvars.notify_list.clear()
 
@@ -53,14 +54,48 @@ class on_ready(commands.Cog):
                 break
 
         with sqlite3.connect("data.sqlite3") as db:
-            db.execute("""
-            CREATE TABLE IF NOT EXISTS playerstats (
-                user_id INTEGER PRIMARY KEY,
-                games INTEGER NOT NULL DEFAULT 0,
-                wins INTEGER NOT NULL DEFAULT 0
-            )
-            """)
-        
+            c = db.execute("PRAGMA user_version")
+            schema_version, = c.fetchone()
+
+            if schema_version < 1:
+                print("Performing database migration from version 0 to 1")
+                db.execute("""
+                CREATE TABLE IF NOT EXISTS gamestats (
+                    id INTEGER PRIMARY KEY CHECK (id = 0),
+                    total_games INTEGER NOT NULL DEFAULT 0,
+                    good_wins INTEGER NOT NULL DEFAULT 0,
+                    evil_wins INTEGER NOT NULL DEFAULT 0
+                )""")
+                db.execute("""
+                CREATE TABLE IF NOT EXISTS playerstats (
+                    user_id INTEGER PRIMARY KEY,
+                    games INTEGER NOT NULL DEFAULT 0,
+                    wins INTEGER NOT NULL DEFAULT 0
+                )
+                """)
+                db.execute("INSERT OR IGNORE INTO gamestats (id, total_games, good_wins, evil_wins) VALUES (0, 0, 0, 0)")
+                db.execute("ALTER TABLE playerstats ADD good_games INTEGER NOT NULL DEFAULT 0")
+                db.execute("ALTER TABLE playerstats ADD good_wins INTEGER NOT NULL DEFAULT 0")
+                db.execute("ALTER TABLE playerstats ADD evil_games INTEGER NOT NULL DEFAULT 0")
+                db.execute("ALTER TABLE playerstats ADD evil_wins INTEGER NOT NULL DEFAULT 0")
+                db.execute("PRAGMA user_version = 1")
+                schema_version = 1
+
+            if schema_version < 2:
+                print("Performing database migration from version 1 to 2")
+                db.execute("ALTER TABLE gamestats RENAME TO gamestats_old")
+                db.execute("""
+                CREATE TABLE IF NOT EXISTS gamestats (
+                    players INTEGER PRIMARY KEY,
+                    total_games INTEGER NOT NULL DEFAULT 0,
+                    good_wins INTEGER NOT NULL DEFAULT 0,
+                    evil_wins INTEGER NOT NULL DEFAULT 0
+                )""")
+                for i in range(5, 16):
+                    db.execute("INSERT OR IGNORE INTO gamestats (players, total_games, good_wins, evil_wins) VALUES (?, 0, 0, 0)", (i,))
+                db.execute("PRAGMA user_version = 2")
+                schema_version = 2
+
         # Start the backup loop
         botutils.backup_loop.start()
 
@@ -92,9 +127,9 @@ class on_ready(commands.Cog):
             await lobby_channel.send(restarted_notify_msg.format(" ".join(pings)))
 
         for player in alive_role.members:
-            await botutils.remove_alive_role(player, unlock=True)
+            await botutils.remove_alive_role(player)
         for player in dead_role.members:
-            await botutils.remove_dead_role(player, unlock=True)
+            await botutils.remove_dead_role(player)
 
         await botutils.unlock_lobby()
 

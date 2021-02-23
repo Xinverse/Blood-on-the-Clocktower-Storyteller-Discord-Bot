@@ -1,7 +1,7 @@
 {
     "cmd" : {
 
-        "github" : "The Github page of the bot can be found here: https://github.com/Xinverse/Blood-on-the-Clocktower-Storyteller-Discord-Bot",
+        "github" : "The GitHub page of the bot can be found here: https://github.com/Xinverse/Blood-on-the-Clocktower-Storyteller-Discord-Bot",
         "ping" : "{} Ping! The bot's latency is **{}** seconds.",
         "uptime" : "{} The current uptime is **{}**.",
         "join" : "**{}** joined the game and raised the number of players to **{}**.",
@@ -27,9 +27,34 @@
         "force_clear" : "{} The ignore list has been cleared. It is now empty.",
         "ignore_sync" : "{} Purged **{}** user(s) not in server.",
         "no_game" : "There is currently no active game. Try `{}join` to start a new game!",
-        "wins": "**{}** has won **{}** out of **{}** game{} ({:.1f}%).",
-        "wins_nogames": "**{}** has not played any games yet.",
-        "top_usage": "Argument must be one of `games`, `wins` or `winrate`."
+        "gamestats_title": "Game stats",
+        "gamestats_title_players": "Game stats ({} players)",
+        "gamestats_total_games": "Total games",
+        "gamestats_good_wins": "Good wins",
+        "gamestats_evil_wins": "Evil wins",
+        "gamestats_invalid": "Invalid player count.",
+        "gamestats_no_games": "No games have been played yet.",
+        "gamestats_no_games_players": "No {} player games have been played yet.",
+        "playerstats_title": "Player stats",
+        "playerstats_no_games": "This user hasn't played any games yet.",
+        "playerstats_games": "Games",
+        "playerstats_wins": "Wins",
+        "playerstats_winrate": "Win rate",
+        "playerstats_good_games": "Games (Good)",
+        "playerstats_good_wins": "Wins (Good)",
+        "playerstats_good_winrate": "Win rate (Good)",
+        "playerstats_evil_games": "Games (Evil)",
+        "playerstats_evil_wins": "Wins (Evil)",
+        "playerstats_evil_winrate": "Win rate (Evil)",
+        "playerstats_footer": "Based on {} game{}",
+        "top_games": "Top {} by games played",
+        "top_wins": "Top {} by games won",
+        "top_winrate": "Top {} by win rate",
+        "top_footer": "Based on {} game{}",
+        "top_footer_winrate": "Players with at least {} game{}",
+        "top_usage": "Argument must be one of `games`, `wins` or `winrate`.",
+        "frestart": "{} {} Restarting",
+        "frestart_confirm": "{} {} A game is currently in progress. If you still want to restart the bot, please use `!frestart --force`."
 
     },
 
@@ -252,10 +277,18 @@
             "weights" : []
         },
 
-        "wins" : {
+        "gamestats": {
+          "brief": "check the number of games played",
+          "help": "See how many games have been played and the number of good and evil wins.",
+          "description": "[GAMESTATS] command",
+          "outputs": [],
+          "weights": []
+        },
+
+        "playerstats" : {
             "brief" : "check how many games you have won",
             "help" : "See the number of games you have played and your win rate.",
-            "description" : "[WINS] command",
+            "description" : "[PLAYERSTATS] command",
             "outputs" : [],
             "weights" : []
         },
@@ -318,15 +351,36 @@
                 "weights" : []
             }
 
+        },
+
+        "frestart" : {
+
+            "frestart" : {
+                "brief": "restart the bot",
+                "help": "Restart the bot.",
+                "description": "[FRESTART] command",
+                "outputs": [],
+                "weights": []
+            },
+
+            "--force" : {
+                "brief": "force flag for the frestart command",
+                "help": "Force restarting the bot even if a game is currently in progress.",
+                "description": "[FRESTART] [--FORCE] command",
+                "outputs": [],
+                "weights": []
+            }
+
         }
 
     },
 
     "errors" : {
 
+        "error_title": "Error",
         "user_not_found" : "{} :x: Specified user is not found.",
         "missing_user" : "{} :x: Missing argument, please specify a valid user.",
-        "cmd_cooldown" : "{} :x: This command is ratelimited.",
+        "cmd_cooldown" : "{} {} This command has a cooldown. Please try again in **{}**.",
         "already_in_notify" : "{} {} You are already in the notify list.",
         "already_not_notify" : "{} {} You are already not in the notify list.",
         "fstart_min" : "{} {} The currently selected game is **{}**, with a **minimum** of **{}** players. You may not start the game until the minimum player count is reached.",

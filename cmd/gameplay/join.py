@@ -50,6 +50,11 @@ class Join(Gameplay, name = language["system"]["gameplay_cog"]):
         
         import globvars
 
+        if globvars.master_state.game:
+            # This check is to ensure a player doesn't join right after !start
+            # before the game is fully set up and end up breaking the game.
+            return
+
         # The command user has already joined
         if globvars.master_state.pregame.is_joined(ctx.author.id):
             await ctx.send(joined_str.format(ctx.author.mention))
