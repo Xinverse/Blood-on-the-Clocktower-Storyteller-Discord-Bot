@@ -2,8 +2,12 @@
 
 import configparser
 import json
+import traceback
+
+import discord
 
 import globvars
+from .sends import Level, log
 
 Config = configparser.ConfigParser()
 Config.read("config.INI")
@@ -104,13 +108,19 @@ async def lock_lobby():
 
     for channel_id in LOCK_CHANNELS_ID:
         channel = globvars.client.get_channel(int(channel_id))
-        print(f'Hiding channel {channel}')
-        await channel.set_permissions(alive_role, view_channel=False)
+        try:
+            await channel.set_permissions(alive_role, view_channel=False)
+        except discord.errors.Forbidden:
+            await log(Level.error, f'Unable to lock {channel.mention}')
+            await log(Level.error, traceback.format_exc())
 
     for channel_id in LOCK_CHANNELS_SPECIAL_ID:
         channel = globvars.client.get_channel(int(channel_id))
-        print(f'Hiding channel {channel}')
-        await channel.set_permissions(alive_role, send_messages=False, connect=False)
+        try:
+            await channel.set_permissions(alive_role, send_messages=False, connect=False)
+        except discord.errors.Forbidden:
+            await log(Level.error, f'Unable to lock {channel.mention}')
+            await log(Level.error, traceback.format_exc())
 
 
 async def unlock_lobby():
@@ -124,10 +134,16 @@ async def unlock_lobby():
 
     for channel_id in LOCK_CHANNELS_ID:
         channel = globvars.client.get_channel(int(channel_id))
-        print(f'Unhiding channel {channel}')
-        await channel.set_permissions(alive_role, view_channel=None)
+        try:
+            await channel.set_permissions(alive_role, view_channel=None)
+        except discord.errors.Forbidden:
+            await log(Level.error, f'Unable to unlock {channel.mention}')
+            await log(Level.error, traceback.format_exc())
 
     for channel_id in LOCK_CHANNELS_SPECIAL_ID:
         channel = globvars.client.get_channel(int(channel_id))
-        print(f'Unhiding channel {channel}')
-        await channel.set_permissions(alive_role, send_messages=None, connect=None)
+        try:
+            await channel.set_permissions(alive_role, send_messages=None, connect=None)
+        except discord.errors.Forbidden:
+            await log(Level.error, f'Unable to unlock {channel.mention}')
+            await log(Level.error, traceback.format_exc())
